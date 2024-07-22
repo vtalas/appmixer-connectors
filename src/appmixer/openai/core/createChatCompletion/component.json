@@ -104,9 +104,10 @@
                         "path": "top_p"
                     },
                     "tools": {
-                        "type": "array",
+                        "type": "string",
                         "description": "A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for.\n",
                         "path": "tools",
+                        "originalType": "array",
                         "items": {
                             "type": "object",
                             "required": [
@@ -173,10 +174,11 @@
                     "functions": {
                         "deprecated": true,
                         "description": "Deprecated in favor of `tools`.\n\nA list of functions the model may generate JSON inputs for.\n",
-                        "type": "array",
+                        "type": "string",
                         "minItems": 1,
                         "maxItems": 128,
                         "path": "functions",
+                        "originalType": "array",
                         "items": {
                             "type": "object",
                             "deprecated": true,
@@ -329,7 +331,7 @@
                         "type": "textarea",
                         "index": 10,
                         "label": "Tools",
-                        "tooltip": "<p>A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for.</p> JSON array. Example: [{\"type\":\"function\",\"function\":{\"description\":\"sed incididunt consectetur Excepteur dolore\",\"name\":\"nisi\",\"parameters\":{}}}]."
+                        "tooltip": "<p>A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for.\n <br/>JSON array. Example: [{\"type\":\"function\",\"function\":{\"description\":\"in anim ut\",\"name\":\"deserunt\",\"parameters\":{}}}].</p>"
                     },
                     "tool_choice": {
                         "type": "select",
@@ -373,7 +375,7 @@
                         "type": "textarea",
                         "index": 14,
                         "label": "Functions",
-                        "tooltip": "<p>Deprecated in favor of <code>tools</code>.</p>\n<p>A list of functions the model may generate JSON inputs for.</p> JSON array. Example: [{\"description\":\"ut incididunt labore reprehenderit\",\"name\":\"elit quis\",\"parameters\":{}}]."
+                        "tooltip": "<p>Deprecated in favor of <code>tools</code>.</p>\n<p>A list of functions the model may generate JSON inputs for.\n <br/>JSON array. Example: [{\"description\":\"aliquip deserunt\",\"name\":\"aliqua eu Ut\",\"parameters\":{}}].</p>"
                     },
                     "prompt_role": {
                         "type": "select",

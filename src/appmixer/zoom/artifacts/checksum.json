@@ -4,7 +4,7 @@
         "artifacts/openapi.json": "3ae29b06f1fd959e21dddf9cc3c0d2934f877cf3c603a9ab71cb57658819d1e3",
         "artifacts/openapi.normalized.json-patch": "09b005a494067f734973698b46f7d4d813477d4bdceca206819ff59002819113",
         "artifacts/openapi.original.json-patch": "df7c4fdad4ab84b7ae36028bcf0eac7acacd0b15b0182d2e8cb04a7fcc608c2a",
-        "artifacts/openapi.patched.json": "3cb2fff5d73b6d6b55148e5f548aa43cab40deb195c265c3a0462360525e8d10",
+        "artifacts/openapi.patched.json": "f548bf0a7b7db22ce2b830e9f54dc90c0561cbad9040e226644db16c97c8169b",
         "auth.js": "088b87d35ce6dd59463d1d934b494cdc5830eabd14f37b0cb8fd99e5ac7092af",
         "bundle.json": "109bf9191e7ec379af1189810ea2ebb35503b1b3483bcaed563cdbbba144e46f",
         "lib.js": "361f6a3dea9bbe8fec10c33fb2d5094addbb8bd1615f3895aa1a21121c83f031",

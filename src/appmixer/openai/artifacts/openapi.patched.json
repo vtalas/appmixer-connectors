@@ -114,7 +114,6 @@
                                     },
                                     "max_tokens": {
                                         "description": "The maximum number of [tokens](/tokenizer) to generate in the chat completion.\n\nThe total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.\n",
-                                        "default": "inf",
                                         "type": "integer",
                                         "nullable": true,
                                         "path": "max_tokens"
@@ -182,7 +181,7 @@
                                         "path": "top_p"
                                     },
                                     "tools": {
-                                        "type": "array",
+                                        "type": "string",
                                         "description": "A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for.\n",
                                         "items": {
                                             "type": "object",
@@ -222,7 +221,8 @@
                                                 }
                                             }
                                         },
-                                        "path": "tools"
+                                        "path": "tools",
+                                        "originalType": "array"
                                     },
                                     "tool_choice": {
                                         "type": "string",
@@ -251,7 +251,7 @@
                                     "functions": {
                                         "deprecated": true,
                                         "description": "Deprecated in favor of `tools`.\n\nA list of functions the model may generate JSON inputs for.\n",
-                                        "type": "array",
+                                        "type": "string",
                                         "minItems": 1,
                                         "maxItems": 128,
                                         "items": {
@@ -277,7 +277,8 @@
                                                 }
                                             }
                                         },
-                                        "path": "functions"
+                                        "path": "functions",
+                                        "originalType": "array"
                                     },
                                     "prompt_role": {
                                         "type": "string",
@@ -550,7 +551,8 @@
                             "response": "{\n  \"id\": \"chatcmpl-abc123\",\n  \"object\": \"chat.completion\",\n  \"created\": 1699896916,\n  \"model\": \"gpt-3.5-turbo-0613\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": null,\n        \"tool_calls\": [\n          {\n            \"id\": \"call_abc123\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"get_current_weather\",\n              \"arguments\": \"{\\n\\\"location\\\": \\\"Boston, MA\\\"\\n}\"\n            }\n          }\n        ]\n      },\n      \"finish_reason\": \"tool_calls\",\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 82,\n    \"completion_tokens\": 17,\n    \"total_tokens\": 99\n  }\n}\n"
                         }
                     ]
-                }
+                },
+                "parameters": []
             }
         },
         "/completions": {
@@ -867,7 +869,8 @@
                             "response": "{\n  \"id\": \"cmpl-7iA7iJjj8V2zOkCGvWF2hAkDWBQZe\",\n  \"object\": \"text_completion\",\n  \"created\": 1690759702,\n  \"choices\": [\n    {\n      \"text\": \"This\",\n      \"index\": 0,\n      \"logprobs\": null,\n      \"finish_reason\": null\n    }\n  ],\n  \"model\": \"gpt-3.5-turbo-instruct\"\n  \"system_fingerprint\": \"fp_44709d6fcb\",\n}\n"
                         }
                     ]
-                }
+                },
+                "parameters": []
             }
         },
         "/edits": {
@@ -1048,7 +1051,8 @@
                         },
                         "response": "{\n  \"object\": \"edit\",\n  \"created\": 1589478378,\n  \"choices\": [\n    {\n      \"text\": \"What day of the week is it?\",\n      \"index\": 0,\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 25,\n    \"completion_tokens\": 32,\n    \"total_tokens\": 57\n  }\n}\n"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/images/generations": {
@@ -1221,7 +1225,8 @@
                     "parameters": {
                         "results": "data"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/images/edits": {
@@ -1372,7 +1377,8 @@
                         },
                         "response": "{\n  \"created\": 1589478378,\n  \"data\": [\n    {\n      \"url\": \"https://...\"\n    },\n    {\n      \"url\": \"https://...\"\n    }\n  ]\n}\n"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/images/variations": {
@@ -1510,7 +1516,8 @@
                         },
                         "response": "{\n  \"created\": 1589478378,\n  \"data\": [\n    {\n      \"url\": \"https://...\"\n    },\n    {\n      \"url\": \"https://...\"\n    }\n  ]\n}\n"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/embeddings": {
@@ -1667,7 +1674,8 @@
                         },
                         "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"embedding\",\n      \"embedding\": [\n        0.0023064255,\n        -0.009327292,\n        .... (1536 floats total for ada-002)\n        -0.0028842222,\n      ],\n      \"index\": 0\n    }\n  ],\n  \"model\": \"text-embedding-ada-002\",\n  \"usage\": {\n    \"prompt_tokens\": 8,\n    \"total_tokens\": 8\n  }\n}\n"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/audio/speech": {
@@ -1776,7 +1784,8 @@
                             "node": "import fs from \"fs\";\nimport path from \"path\";\nimport OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nconst speechFile = path.resolve(\"./speech.mp3\");\n\nasync function main() {\n  const mp3 = await openai.audio.speech.create({\n    model: \"tts-1\",\n    voice: \"alloy\",\n    input: \"Today is a wonderful day to build something people love!\",\n  });\n  console.log(speechFile);\n  const buffer = Buffer.from(await mp3.arrayBuffer());\n  await fs.promises.writeFile(speechFile, buffer);\n}\nmain();\n"
                         }
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/audio/transcriptions": {
@@ -1878,7 +1887,8 @@
                         },
                         "response": "{\n  \"text\": \"Imagine the wildest idea that you've ever had, and you're curious about how it might scale to something that's a 100, a 1,000 times bigger. This is a place where you can get to do that.\"\n}\n"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/audio/translations": {
@@ -1968,7 +1978,8 @@
                         },
                         "response": "{\n  \"text\": \"Hello, my name is Wolfgang and I come from Germany. Where are you heading today?\"\n}\n"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/files": {
@@ -2230,7 +2241,8 @@
                         "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"file\",\n  \"bytes\": 120000,\n  \"created_at\": 1677610602,\n  \"filename\": \"mydata.jsonl\",\n  \"purpose\": \"fine-tune\",\n}\n"
                     }
                 },
-                "x-connector-label": "Upload File"
+                "x-connector-label": "Upload File",
+                "parameters": []
             }
         },
         "/files/{file_id}": {
@@ -2744,7 +2756,8 @@
                             "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-3.5-turbo-0613\",\n  \"created_at\": 1614807352,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n}\n"
                         }
                     ]
-                }
+                },
+                "parameters": []
             },
             "get": {
                 "operationId": "listPaginatedFineTuningJobs",
@@ -3563,7 +3576,8 @@
                     "parameters": {
                         "results": "data"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/models/{model}": {
@@ -3929,7 +3943,8 @@
                         },
                         "response": "{\n  \"id\": \"modr-XXXXX\",\n  \"model\": \"text-moderation-005\",\n  \"results\": [\n    {\n      \"flagged\": true,\n      \"categories\": {\n        \"sexual\": false,\n        \"hate\": false,\n        \"harassment\": false,\n        \"self-harm\": false,\n        \"sexual/minors\": false,\n        \"hate/threatening\": false,\n        \"violence/graphic\": false,\n        \"self-harm/intent\": false,\n        \"self-harm/instructions\": false,\n        \"harassment/threatening\": true,\n        \"violence\": true,\n      },\n      \"category_scores\": {\n        \"sexual\": 1.2282071e-06,\n        \"hate\": 0.010696256,\n        \"harassment\": 0.29842457,\n        \"self-harm\": 1.5236925e-08,\n        \"sexual/minors\": 5.7246268e-08,\n        \"hate/threatening\": 0.0060676364,\n        \"violence/graphic\": 4.435014e-06,\n        \"self-harm/intent\": 8.098441e-10,\n        \"self-harm/instructions\": 2.8498655e-11,\n        \"harassment/threatening\": 0.63055265,\n        \"violence\": 0.99011886,\n      }\n    }\n  ]\n}\n"
                     }
-                }
+                },
+                "parameters": []
             }
         },
         "/assistants": {},

@@ -31,16 +31,14 @@ module.exports = {
             'stream': input['stream'],
             'temperature': input['temperature'],
             'top_p': input['top_p'],
-            'tools': input['tools'],
+            'tools': !!input['tools'] ? JSON.parse(input['tools']) : undefined,
             'tool_choice': input['tool_choice'],
             'user': input['user'],
             'function_call': input['function_call'],
-            'functions': input['functions'],
-            'messages': [{
-                role: input['prompt_role'],
-                content: input['prompt_content'],
-                name: input['prompt_name']
-            }],
+            'functions': !!input['functions'] ? JSON.parse(input['functions']) : undefined,
+            'prompt_role': input['prompt_role'],
+            'prompt_content': input['prompt_content'],
+            'prompt_name': input['prompt_name'],
             'response_format.type': input['response_format|type']
         };
         let requestBody = {};

@@ -143,6 +143,10 @@
     },
     {
         "op": "remove",
+        "path": "/paths/~1chat~1completions/post/requestBody/content/application~1json/schema/properties/max_tokens/default"
+    },
+    {
+        "op": "remove",
         "path": "/paths/~1fine_tuning~1jobs/post/requestBody/content/application~1json/schema/properties/hyperparameters/properties/learning_rate_multiplier/oneOf/1/exclusiveMinimum"
     },
     {

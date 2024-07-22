@@ -9,8 +9,8 @@
         "bundle.json": "509d56bde61678ce28ca77813db8ee1afbcc06821deabb859ac6a8db286b044c",
         "core/cancelFineTuningJob/cancelFineTuningJob.js": "d1e8cb9ec8e26e8ccccc9843b4b4efa2d123ccde4a86e3b0d8898f5331d29116",
         "core/cancelFineTuningJob/component.json": "c4bdce1747ac836a1846c38d0cc543195cc6c224362c7ed0b0d19e0763f59715",
-        "core/createChatCompletion/component.json": "f0c66f1ab4c056c006fdae2841797f43551b8eaa0879013fba2a6929e0404ca8",
-        "core/createChatCompletion/createChatCompletion.js": "537b8174c1acea8d0fe6c0a4824e278fa16f467972a1426eb8f99d59825fbfe2",
+        "core/createChatCompletion/component.json": "20c5676b241c2a5a2fc57531dde2737308c391326faac3b8d97c9c3fac2abca2",
+        "core/createChatCompletion/createChatCompletion.js": "6faf9a73be0e35e63801d6dd250ba94714d170fb17de20ea8d41a358e9cb55c4",
         "core/createCompletion/component.json": "2c00f119e5700d4408c5f6f5b9946ab36f616e8c0fb5519d7e82f35022aea99f",
         "core/createCompletion/createCompletion.js": "b978c7eb3c894fdd7251886611e9b70737dea5f0d74515ebcc16537e864b7075",
         "core/createEdit/component.json": "5927b0ac368405b9de64c1f3257ae7c7e6584186d1c1a7db36ee49509f68ed19",
@@ -57,11 +57,13 @@
         "core/retrieveModel/component.json": "3b7213554e0312a5f5d5b178ba8195899034360cb86f8e044c60bd8450c07b3d",
         "core/retrieveModel/retrieveModel.js": "7021d50a6cf819f1df3e50ff8073b24607be6a1caf95e397b1704766372cd021",
         "lib.js": "1d5642ba49bbb5a2a508b8382ad170d2f8dc9a2c8fb270a95165678396646b36",
-        "openapi.json-patch": "04e32b8cf1dab75276cbfc430467089fbafbccf5236eb0cb948057291f565305",
-        "openapi.yaml": "b7746763c625d1cce7d041c32880c01742ede31d6be76387a7ff927e6dec83f1",
+        "openapi.json-patch": "e3f199dd69567699db1e6a466fee72f2843166a13f83a7c2e3c524517fe38b11",
+        "openapi.yaml": "667b313b84ce3068fb3f81dc15776dc920bf212e7bce91c5eacc5423a2c5b3b6",
+        "package-lock.json": "bee196969c6215b52391bbae2214a7c830d3493352afd122cfc11183030d73d4",
         "package.json": "d69e78058280b724aa5ef9eea4eb9dc5b9e6cd2686abf7a8dea2bba86098d1b5",
         "README.md": "0a95e388a302611db490b07bb924359a4bf0cbcb5c407797284da384083bc460",
-        "service.json": "d58ca197d562b39e8fd4cd8004e615a5367705a6e34a68e04e9b09d4b4190210",
-        "test-flow.json": "578ec44d2e39153049b7ab800e9a58be6ac20e3d9bd041f2dd511bcafa2fa78b"
+        "service.json": "ab2a8569eb5efd089bc5aff07f9ce9d729c114f553001d501bf440d04cf620ac",
+        "test-flow-fine-tune-files.json": "52e2d97592229c8750cf1432d18ecc095f8614b6d7065898eb86216951d1373f",
+        "test-flow.json": "5633a920d96c47b4a62034972cf74be15351cd2bf243aa9524fc141fab80b999"
     }
 }

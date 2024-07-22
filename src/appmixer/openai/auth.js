@@ -24,9 +24,8 @@ module.exports = {
         },
 
         requestProfileInfo(context) {
-            const apiKey = this.replaceVariables(context, '{apiKey}');
             return {
-                name: apiKey.substring(0, 3) + '...' + apiKey.substring(apiKey.length - 4)
+                name: this.replaceVariables(context, '{apiKey}')
             };
         },
 
