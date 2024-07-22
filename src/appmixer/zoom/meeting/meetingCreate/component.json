@@ -99,8 +99,9 @@
                     },
                     "tracking_fields": {
                         "description": "Information about the meeting's tracking fields.",
-                        "type": "array",
+                        "type": "string",
                         "path": "tracking_fields",
+                        "originalType": "array",
                         "items": {
                             "required": [
                                 "field"
@@ -242,8 +243,9 @@
                     },
                     "settings|additional_data_center_regions": {
                         "description": "Add additional meeting [data center regions](https://support.zoom.us/hc/en-us/articles/360042411451-Selecting-data-center-regions-for-hosted-meetings-and-webinars). Provide this value as an array of [country codes](https://marketplace.zoom.us/docs/api-reference/other-references/abbreviation-lists#countries) for the countries available as data center regions in the [**Account Profile**](https://zoom.us/account/setting) interface but have been opted out of in the [user settings](https://zoom.us/profile).\n\nFor example, the data center regions selected in your [**Account Profile**](https://zoom.us/account) are \"Europe\", \"Hong Kong SAR\", \"Australia\", \"India\", \"Japan\", \"China\", \"United States\", and \"Canada\". However, in the [**My Profile**](https://zoom.us/profile) settings, you did **not** select \"India\" and \"Japan\" for meeting and webinar traffic routing.\n\nTo include \"India\" and \"Japan\" as additional data centers, use the `[\"IN\", \"TY\"]` value for this field.",
-                        "type": "array",
+                        "type": "string",
                         "path": "settings.additional_data_center_regions",
+                        "originalType": "array",
                         "items": {
                             "type": "string",
                             "example": "TY"
@@ -287,8 +289,9 @@
                     },
                     "settings|approved_or_denied_countries_or_regions": {
                         "description": "The list of approved or blocked users from specific countries or regions who can join the meeting.",
-                        "type": "object",
+                        "type": "string",
                         "path": "settings.approved_or_denied_countries_or_regions",
+                        "originalType": "object",
                         "properties": {
                             "approved_list": {
                                 "description": "The list of approved countries or regions.",
@@ -347,8 +350,9 @@
                     },
                     "settings|authentication_exception": {
                         "description": "A list of participants that can bypass meeting authentication. These participants will receive a unique meeting invite.",
-                        "type": "array",
+                        "type": "string",
                         "path": "settings.authentication_exception",
+                        "originalType": "array",
                         "items": {
                             "type": "object",
                             "properties": {
@@ -391,8 +395,9 @@
                     },
                     "settings|breakout_room": {
                         "description": "The [pre-assigned breakout rooms](https://support.zoom.us/hc/en-us/articles/360032752671-Pre-assigning-participants-to-breakout-rooms) settings.",
-                        "type": "object",
+                        "type": "string",
                         "path": "settings.breakout_room",
+                        "originalType": "object",
                         "properties": {
                             "enable": {
                                 "description": "Whether to enable the [**Breakout Room pre-assign**](https://support.zoom.us/hc/en-us/articles/360032752671-Pre-assigning-participants-to-breakout-rooms) option.",
@@ -489,8 +494,9 @@
                     },
                     "settings|global_dial_in_countries": {
                         "description": "A list of available global dial-in countries.",
-                        "type": "array",
+                        "type": "string",
                         "path": "settings.global_dial_in_countries",
+                        "originalType": "array",
                         "items": {
                             "type": "string",
                             "example": "US"
@@ -530,8 +536,9 @@
                     },
                     "settings|language_interpretation": {
                         "description": "The meeting's [language interpretation settings](https://support.zoom.us/hc/en-us/articles/360034919791-Language-interpretation-in-meetings-and-webinars). Make sure to add the language in the web portal in order to use it in the API. See link for details. \n\n**Note:** This feature is only available for certain Meeting add-on, Education, and Business and higher plans. If this feature is not enabled on the host's account, this setting will **not** be applied to the meeting.",
-                        "type": "object",
+                        "type": "string",
                         "path": "settings.language_interpretation",
+                        "originalType": "object",
                         "properties": {
                             "enable": {
                                 "description": "Whether to enable [language interpretation](https://support.zoom.us/hc/en-us/articles/360034919791-Language-interpretation-in-meetings-and-webinars) for the meeting.",
@@ -568,8 +575,9 @@
                     },
                     "settings|meeting_invitees": {
                         "description": "A list of the meeting's invitees.",
-                        "type": "array",
+                        "type": "string",
                         "path": "settings.meeting_invitees",
+                        "originalType": "array",
                         "items": {
                             "type": "object",
                             "properties": {
@@ -739,7 +747,7 @@
                         "type": "textarea",
                         "index": 10,
                         "label": "Tracking Fields",
-                        "tooltip": "<p>Information about the meeting's tracking fields.</p> JSON array. Example: [{\"field\":\"field1\",\"value\":\"value1\"}]."
+                        "tooltip": "<p>Information about the meeting's tracking fields. <br/>JSON array. Example: [{\"field\":\"field1\",\"value\":\"value1\"}].</p>"
                     },
                     "type": {
                         "type": "number",
@@ -831,7 +839,7 @@
                         "type": "textarea",
                         "index": 20,
                         "label": "Settings Additional Data Center Regions",
-                        "tooltip": "<p>Add additional meeting <a href=\"https://support.zoom.us/hc/en-us/articles/360042411451-Selecting-data-center-regions-for-hosted-meetings-and-webinars\" rel=\"noopener noreferrer\" target=\"_blank\">data center regions</a>. Provide this value as an array of <a href=\"https://marketplace.zoom.us/docs/api-reference/other-references/abbreviation-lists#countries\" rel=\"noopener noreferrer\" target=\"_blank\">country codes</a> for the countries available as data center regions in the <a href=\"https://zoom.us/account/setting\" rel=\"noopener noreferrer\" target=\"_blank\"><strong>Account Profile</strong></a> interface but have been opted out of in the <a href=\"https://zoom.us/profile\" rel=\"noopener noreferrer\" target=\"_blank\">user settings</a>.</p>\n<p>For example, the data center regions selected in your <a href=\"https://zoom.us/account\" rel=\"noopener noreferrer\" target=\"_blank\"><strong>Account Profile</strong></a> are \"Europe\", \"Hong Kong SAR\", \"Australia\", \"India\", \"Japan\", \"China\", \"United States\", and \"Canada\". However, in the <a href=\"https://zoom.us/profile\" rel=\"noopener noreferrer\" target=\"_blank\"><strong>My Profile</strong></a> settings, you did <strong>not</strong> select \"India\" and \"Japan\" for meeting and webinar traffic routing.</p>\n<p>To include \"India\" and \"Japan\" as additional data centers, use the <code>[\"IN\", \"TY\"]</code> value for this field.</p> JSON array. Example: [\"TY\"]."
+                        "tooltip": "<p>Add additional meeting <a href=\"https://support.zoom.us/hc/en-us/articles/360042411451-Selecting-data-center-regions-for-hosted-meetings-and-webinars\" rel=\"noopener noreferrer\" target=\"_blank\">data center regions</a>. Provide this value as an array of <a href=\"https://marketplace.zoom.us/docs/api-reference/other-references/abbreviation-lists#countries\" rel=\"noopener noreferrer\" target=\"_blank\">country codes</a> for the countries available as data center regions in the <a href=\"https://zoom.us/account/setting\" rel=\"noopener noreferrer\" target=\"_blank\"><strong>Account Profile</strong></a> interface but have been opted out of in the <a href=\"https://zoom.us/profile\" rel=\"noopener noreferrer\" target=\"_blank\">user settings</a>.</p>\n<p>For example, the data center regions selected in your <a href=\"https://zoom.us/account\" rel=\"noopener noreferrer\" target=\"_blank\"><strong>Account Profile</strong></a> are \"Europe\", \"Hong Kong SAR\", \"Australia\", \"India\", \"Japan\", \"China\", \"United States\", and \"Canada\". However, in the <a href=\"https://zoom.us/profile\" rel=\"noopener noreferrer\" target=\"_blank\"><strong>My Profile</strong></a> settings, you did <strong>not</strong> select \"India\" and \"Japan\" for meeting and webinar traffic routing.</p>\n<p>To include \"India\" and \"Japan\" as additional data centers, use the <code>[\"IN\", \"TY\"]</code> value for this field. <br/>JSON array. Example: [\"TY\"].</p>"
                     },
                     "settings|allow_multiple_devices": {
                         "type": "toggle",
@@ -860,7 +868,7 @@
                         "defaultValue": 2
                     },
                     "settings|approved_or_denied_countries_or_regions": {
-                        "type": "text",
+                        "type": "textarea",
                         "index": 25,
                         "label": "Settings Approved Or Denied Countries Or Regions",
                         "tooltip": "<p>The list of approved or blocked users from specific countries or regions who can join the meeting.</p>"
@@ -896,7 +904,7 @@
                         "type": "textarea",
                         "index": 28,
                         "label": "Settings Authentication Exception",
-                        "tooltip": "<p>A list of participants that can bypass meeting authentication. These participants will receive a unique meeting invite.</p> JSON array. Example: [{\"email\":\"jchill@example.com\",\"name\":\"Jill Chill\"}]."
+                        "tooltip": "<p>A list of participants that can bypass meeting authentication. These participants will receive a unique meeting invite. <br/>JSON array. Example: [{\"email\":\"jchill@example.com\",\"name\":\"Jill Chill\"}].</p>"
                     },
                     "settings|authentication_option": {
                         "type": "text",
@@ -926,7 +934,7 @@
                         "defaultValue": "none"
                     },
                     "settings|breakout_room": {
-                        "type": "text",
+                        "type": "textarea",
                         "index": 31,
                         "label": "Settings Breakout Room",
                         "tooltip": "<p>The <a href=\"https://support.zoom.us/hc/en-us/articles/360032752671-Pre-assigning-participants-to-breakout-rooms\" rel=\"noopener noreferrer\" target=\"_blank\">pre-assigned breakout rooms</a> settings.</p>"
@@ -996,7 +1004,7 @@
                         "type": "textarea",
                         "index": 40,
                         "label": "Settings Global Dial In Countries",
-                        "tooltip": "<p>A list of available global dial-in countries.</p> JSON array. Example: [\"US\"]."
+                        "tooltip": "<p>A list of available global dial-in countries. <br/>JSON array. Example: [\"US\"].</p>"
                     },
                     "settings|host_video": {
                         "type": "toggle",
@@ -1025,7 +1033,7 @@
                         "defaultValue": false
                     },
                     "settings|language_interpretation": {
-                        "type": "text",
+                        "type": "textarea",
                         "index": 45,
                         "label": "Settings Language Interpretation",
                         "tooltip": "<p>The meeting's <a href=\"https://support.zoom.us/hc/en-us/articles/360034919791-Language-interpretation-in-meetings-and-webinars\" rel=\"noopener noreferrer\" target=\"_blank\">language interpretation settings</a>. Make sure to add the language in the web portal in order to use it in the API. See link for details. </p>\n<p><strong>Note:</strong> This feature is only available for certain Meeting add-on, Education, and Business and higher plans. If this feature is not enabled on the host's account, this setting will <strong>not</strong> be applied to the meeting.</p>"
@@ -1040,7 +1048,7 @@
                         "type": "textarea",
                         "index": 47,
                         "label": "Settings Meeting Invitees",
-                        "tooltip": "<p>A list of the meeting's invitees.</p> JSON array. Example: [{\"email\":\"jchill@example.com\"}]."
+                        "tooltip": "<p>A list of the meeting's invitees. <br/>JSON array. Example: [{\"email\":\"jchill@example.com\"}].</p>"
                     },
                     "settings|mute_upon_entry": {
                         "type": "toggle",

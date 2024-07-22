@@ -24,7 +24,7 @@ module.exports = {
                 try {
                     str = str.replaceAll('{' + variableName + '}', context[variableName]);
                 } catch (error) {
-                    context.log({ msg: 'Failed to replace variable ' + variableName + '.', error });
+                    // no-op, keep the original string
                 }
             });
             return str;

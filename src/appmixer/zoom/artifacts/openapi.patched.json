@@ -1133,7 +1133,7 @@
                                     },
                                     "tracking_fields": {
                                         "description": "Information about the meeting's tracking fields.",
-                                        "type": "array",
+                                        "type": "string",
                                         "items": {
                                             "required": [
                                                 "field"
@@ -1152,7 +1152,8 @@
                                                 }
                                             }
                                         },
-                                        "path": "tracking_fields"
+                                        "path": "tracking_fields",
+                                        "originalType": "array"
                                     },
                                     "type": {
                                         "default": 2,
@@ -1276,12 +1277,13 @@
                                     },
                                     "settings|additional_data_center_regions": {
                                         "description": "Add additional meeting [data center regions](https://support.zoom.us/hc/en-us/articles/360042411451-Selecting-data-center-regions-for-hosted-meetings-and-webinars). Provide this value as an array of [country codes](https://marketplace.zoom.us/docs/api-reference/other-references/abbreviation-lists#countries) for the countries available as data center regions in the [**Account Profile**](https://zoom.us/account/setting) interface but have been opted out of in the [user settings](https://zoom.us/profile).\n\nFor example, the data center regions selected in your [**Account Profile**](https://zoom.us/account) are \"Europe\", \"Hong Kong SAR\", \"Australia\", \"India\", \"Japan\", \"China\", \"United States\", and \"Canada\". However, in the [**My Profile**](https://zoom.us/profile) settings, you did **not** select \"India\" and \"Japan\" for meeting and webinar traffic routing.\n\nTo include \"India\" and \"Japan\" as additional data centers, use the `[\"IN\", \"TY\"]` value for this field.",
-                                        "type": "array",
+                                        "type": "string",
                                         "items": {
                                             "type": "string",
                                             "example": "TY"
                                         },
-                                        "path": "settings.additional_data_center_regions"
+                                        "path": "settings.additional_data_center_regions",
+                                        "originalType": "array"
                                     },
                                     "settings|allow_multiple_devices": {
                                         "description": "Whether to allow attendees to join a meeting from multiple devices. This setting is only applied to meetings with registration enabled.",
@@ -1321,7 +1323,7 @@
                                     },
                                     "settings|approved_or_denied_countries_or_regions": {
                                         "description": "The list of approved or blocked users from specific countries or regions who can join the meeting.",
-                                        "type": "object",
+                                        "type": "string",
                                         "properties": {
                                             "approved_list": {
                                                 "description": "The list of approved countries or regions.",
@@ -1354,7 +1356,8 @@
                                                 "example": "approve"
                                             }
                                         },
-                                        "path": "settings.approved_or_denied_countries_or_regions"
+                                        "path": "settings.approved_or_denied_countries_or_regions",
+                                        "originalType": "object"
                                     },
                                     "settings|audio": {
                                         "default": "both",
@@ -1381,7 +1384,7 @@
                                     },
                                     "settings|authentication_exception": {
                                         "description": "A list of participants that can bypass meeting authentication. These participants will receive a unique meeting invite.",
-                                        "type": "array",
+                                        "type": "string",
                                         "items": {
                                             "type": "object",
                                             "properties": {
@@ -1398,7 +1401,8 @@
                                                 }
                                             }
                                         },
-                                        "path": "settings.authentication_exception"
+                                        "path": "settings.authentication_exception",
+                                        "originalType": "array"
                                     },
                                     "settings|authentication_option": {
                                         "description": "If the `meeting_authentication` value is `true`, the type of authentication required for users to join a meeting.\n\nTo get this value, use the `authentication_options` array's `id` value in the [**Get user settings**](/docs/api-reference/zoom-api/methods#operation/userSettings) API response.",
@@ -1425,7 +1429,7 @@
                                     },
                                     "settings|breakout_room": {
                                         "description": "The [pre-assigned breakout rooms](https://support.zoom.us/hc/en-us/articles/360032752671-Pre-assigning-participants-to-breakout-rooms) settings.",
-                                        "type": "object",
+                                        "type": "string",
                                         "properties": {
                                             "enable": {
                                                 "description": "Whether to enable the [**Breakout Room pre-assign**](https://support.zoom.us/hc/en-us/articles/360032752671-Pre-assigning-participants-to-breakout-rooms) option.",
@@ -1455,7 +1459,8 @@
                                                 }
                                             }
                                         },
-                                        "path": "settings.breakout_room"
+                                        "path": "settings.breakout_room",
+                                        "originalType": "object"
                                     },
                                     "settings|calendar_type": {
                                         "description": "Indicates the type of calendar integration used to schedule the meeting: \n* `1` — [Zoom Outlook add-in](https://support.zoom.us/hc/en-us/articles/360031592971-Getting-started-with-Outlook-plugin-and-add-in) \n* `2` — [Zoom for Google Workspace add-on](https://support.zoom.us/hc/en-us/articles/360020187492-Using-the-Zoom-for-Google-Workspace-add-on)\n\nWorks with the `private_meeting` field to determine whether to share details of meetings or not.",
@@ -1523,12 +1528,13 @@
                                     },
                                     "settings|global_dial_in_countries": {
                                         "description": "A list of available global dial-in countries.",
-                                        "type": "array",
+                                        "type": "string",
                                         "items": {
                                             "type": "string",
                                             "example": "US"
                                         },
-                                        "path": "settings.global_dial_in_countries"
+                                        "path": "settings.global_dial_in_countries",
+                                        "originalType": "array"
                                     },
                                     "settings|host_video": {
                                         "description": "Whether to start meetings with the host video on.",
@@ -1564,7 +1570,7 @@
                                     },
                                     "settings|language_interpretation": {
                                         "description": "The meeting's [language interpretation settings](https://support.zoom.us/hc/en-us/articles/360034919791-Language-interpretation-in-meetings-and-webinars). Make sure to add the language in the web portal in order to use it in the API. See link for details. \n\n**Note:** This feature is only available for certain Meeting add-on, Education, and Business and higher plans. If this feature is not enabled on the host's account, this setting will **not** be applied to the meeting.",
-                                        "type": "object",
+                                        "type": "string",
                                         "properties": {
                                             "enable": {
                                                 "description": "Whether to enable [language interpretation](https://support.zoom.us/hc/en-us/articles/360034919791-Language-interpretation-in-meetings-and-webinars) for the meeting.",
@@ -1592,7 +1598,8 @@
                                                 }
                                             }
                                         },
-                                        "path": "settings.language_interpretation"
+                                        "path": "settings.language_interpretation",
+                                        "originalType": "object"
                                     },
                                     "settings|meeting_authentication": {
                                         "description": "If true, only [authenticated](https://support.zoom.us/hc/en-us/articles/360037117472-Authentication-Profiles-for-Meetings-and-Webinars) users can join the meeting.",
@@ -1602,7 +1609,7 @@
                                     },
                                     "settings|meeting_invitees": {
                                         "description": "A list of the meeting's invitees.",
-                                        "type": "array",
+                                        "type": "string",
                                         "items": {
                                             "type": "object",
                                             "properties": {
@@ -1614,7 +1621,8 @@
                                                 }
                                             }
                                         },
-                                        "path": "settings.meeting_invitees"
+                                        "path": "settings.meeting_invitees",
+                                        "originalType": "array"
                                     },
                                     "settings|mute_upon_entry": {
                                         "default": false,
@@ -31424,7 +31432,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "meeting.deleted": {
@@ -31615,7 +31624,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "meeting.updated": {
@@ -32342,7 +32352,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "meeting.started": {
@@ -32480,7 +32491,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "meeting.ended": {
@@ -32628,7 +32640,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "meeting.participant_joined": {
@@ -32826,7 +32839,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "webinar.participant_joined": {
@@ -33026,7 +33040,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "meeting.participant_left": {
@@ -33246,7 +33261,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "webinar.participant_left": {
@@ -33457,7 +33473,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "recording.completed": {
@@ -33892,7 +33909,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "recording.started": {
@@ -34078,7 +34096,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         },
         "recording.stopped": {
@@ -34273,7 +34292,8 @@
                         "digest": "hex"
                     },
                     "output": "$request.body"
-                }
+                },
+                "parameters": []
             }
         }
     }
