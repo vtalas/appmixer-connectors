@@ -15,8 +15,6 @@ module.exports = {
             params
         };
 
-
-        console.log(options);
         return await context.httpRequest(options);
     }
 };
