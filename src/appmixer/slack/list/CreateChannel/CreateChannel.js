@@ -1,6 +1,6 @@
 'use strict';
-
-const { WebClient } = require('@slack/web-api');
+const commons = require('../../slack-commons');
+const { SlackAPIError } = require('../../errors');
 
 /**
  * Component which creates new public channel.
@@ -11,13 +11,17 @@ module.exports = {
     async receive(context) {
 
         let channel = context.messages.channel.content;
-        const web = new WebClient(context.auth.accessToken);
+        let client = commons.getSlackAPIClient(context.auth.accessToken);
 
-        const { channel: createdChannel } = await web.conversations.create({
-            name: channel.name,
-            is_private: false
-        });
-        return context.sendJson(createdChannel, 'newChannel');
+        try {
+            const createdChannel = await client.createChannel(channel.name);
+            return context.sendJson(createdChannel, 'newChannel');
+        } catch (err) {
+            if (err instanceof SlackAPIError) {
+                throw new context.CancelError(err.apiError);
+            }
+            throw err;
+        }
     }
 };
 

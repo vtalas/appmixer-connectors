@@ -1,6 +1,6 @@
 'use strict';
 
-const lib = require('../../lib');
+const commons = require('../../slack-commons');
 
 const outputPortName = 'out';
 const TTL_USERS = 20 * 1000; // 20 sec
@@ -27,7 +27,7 @@ module.exports = {
             if (isSource) {
                 const usersCached = await context.staticCache.get(cacheKey);
                 if (usersCached) {
-                    await lib.sendArrayOutput({ context, outputType, records: usersCached });
+                    await commons.sendArrayOutput({ context, outputType, records: usersCached });
                     return;
                 }
             }
@@ -59,10 +59,10 @@ module.exports = {
                 );
             }
 
-            await lib.sendArrayOutput({ context, outputType, records: data.members });
+            await commons.sendArrayOutput({ context, outputType, records: data.members });
         } catch (err) {
             if (isSource) {
-                await lib.sendArrayOutput({ context, outputType, records: [] });
+                await commons.sendArrayOutput({ context, outputType, records: [] });
                 return;
             }
 
@@ -122,7 +122,7 @@ module.exports = {
             return context.sendJson([
                 {
                     label: 'Users',
-                    value: 'records',
+                    value: 'array',
                     schema: {
                         type: 'array',
                         items: {

@@ -1,7 +1,7 @@
 'use strict';
 
 const { WebClient } = require('@slack/web-api');
-const commons = require('../../lib');
+const commons = require('../../slack-commons');
 
 const outputPortName = 'out';
 
@@ -56,7 +56,7 @@ module.exports = {
             return context.sendJson([
                 {
                     label: 'Reactions',
-                    value: 'records',
+                    value: 'array',
                     schema: {
                         type: 'array',
                         items: {

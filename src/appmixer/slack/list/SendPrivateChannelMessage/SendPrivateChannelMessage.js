@@ -1,5 +1,6 @@
 'use strict';
-const lib = require('../../lib');
+const commons = require('../../slack-commons');
+const { SlackAPIError } = require('../../errors');
 
 /**
  * Component which sends new message to private channel.
@@ -9,10 +10,19 @@ module.exports = {
 
     async receive(context) {
 
-        const { channelId, text, asBot } = context.messages.message.content;
+        let { channelId } = context.properties;
+        let { text } = context.messages.message.content;
+        let client = commons.getSlackAPIClient(context.auth.accessToken);
 
-        const message = await lib.sendMessage(context, channelId, text, asBot);
-        return context.sendJson(message, 'newMessage');
+        try {
+            const message = await client.sendMessage(channelId, text);
+            return context.sendJson(message, 'newMessage');
+        } catch (err) {
+            if (err instanceof SlackAPIError) {
+                throw new context.CancelError(err.apiError);
+            }
+            throw err;
+        }
     }
 };
 

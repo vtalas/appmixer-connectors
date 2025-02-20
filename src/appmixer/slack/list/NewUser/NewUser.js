@@ -1,6 +1,7 @@
 'use strict';
-
-const { WebClient } = require('@slack/web-api');
+const commons = require('../../slack-commons');
+const Promise = require('bluebird');
+const { SlackAPIError } = require('../../errors');
 
 /**
  * Process users to find newly created or joined.
@@ -25,9 +26,18 @@ module.exports = {
 
     async tick(context) {
 
-        const web = new WebClient(context.auth.accessToken);
+        let client = commons.getSlackAPIClient(context.auth.accessToken);
         const state = await context.loadState();
-        const { members: users } = await web.users.list({ limit: 999 });
+        let users;
+
+        try {
+            users = await client.listUsers();
+        } catch (err) {
+            if (err instanceof SlackAPIError) {
+                throw new context.CancelError(err.apiError);
+            }
+            throw err;
+        }
 
         let known = Array.isArray(state.known) ? new Set(state.known) : null;
         let actual = new Set();
@@ -36,9 +46,9 @@ module.exports = {
         users.forEach(processUsers.bind(null, known, actual, diff));
 
         if (diff.size) {
-            for (const user of diff) {
-                await context.sendJson(user, 'user');
-            }
+            await Promise.map(diff, user => {
+                return context.sendJson(user, 'user');
+            });
         }
         await context.saveState({ known: Array.from(actual) });
     }
