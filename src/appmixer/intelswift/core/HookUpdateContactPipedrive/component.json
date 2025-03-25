@@ -4,6 +4,9 @@
     "description": "Handle to update contact information in intelswift",
     "version": "1.0.0",
     "private": false,
+    "auth": {
+        "service": "appmixer:intelswift"
+    },
     "inPorts": [
         {
             "name": "in",

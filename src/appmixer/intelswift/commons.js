@@ -3,15 +3,13 @@ module.exports = {
     async makeRequest(context, endpoint, { method = 'POST', params = {}, data = null, headers = {} } = {}) {
 
         const BASE_URL = context.config.BASE_URL || 'https://stage-app.intelswift.com';
-        const ACCESS_KEY = context.config.ACCESS_KEY;
+        
+        // const apiKey = context.customFields?.apiKey;
+        // if (!apiKey) throw 'Token not found in customFields';
 
-        if (!BASE_URL) {
-            throw new context.CancelError('Missing BASE_KEY system setting of the appmixer.intelswift module. Please provide it in the Connector Configuration section of the Appmixer Backoffice.');
-        }
 
-        if (!ACCESS_KEY) {
-            throw new context.CancelError('Missing ACCESS_KEY system setting of the appmixer.intelswift module. Please provide it in the Connector Configuration section of the Appmixer Backoffice.');
-        }
+        // const BASE_URL = 'https://lhh58pkt-80.inc1.devtunnels.ms';
+        const ACCESS_KEY = "appmixer-marketplace-secret-token-12345!@#";
 
         const options = {
             method,

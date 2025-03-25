@@ -4,6 +4,9 @@
     "description": "Save message.",
     "version": "1.0.0",
     "private": false,
+    "auth": {
+        "service": "appmixer:intelswift"
+    },
     "inPorts": [
         {
             "name": "in",

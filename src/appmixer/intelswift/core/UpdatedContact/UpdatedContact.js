@@ -1,12 +1,10 @@
 'use strict';
 
-const { makeRequest } = require('../../commons');
 module.exports = {
 
     async start(context) {
 
-        const { data } = await makeRequest(context, '/api/v1/accounts/account', { method: 'POST' });
-        const tenantId = data?.data[0].tenantId;
+        const tenantId = context.profileInfo.tenantId;
 
         context.log({ stage: 'profile info', info: context.profileInfo, tenantId });
 
@@ -15,8 +13,7 @@ module.exports = {
 
     async stop(context) {
 
-        const { data } = await makeRequest(context, '/api/v1/accounts/account', { method: 'POST' });
-        const tenantId = data?.data[0].tenantId;
+        const tenantId = context.profileInfo.tenantId;
 
         return context.removeListener(tenantId);
     },

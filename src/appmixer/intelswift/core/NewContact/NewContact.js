@@ -4,18 +4,16 @@ module.exports = {
 
     async start(context) {
 
-        const { data } = await makeRequest(context, '/api/v1/accounts/account', { method: 'POST' });
-        const tenantId = data?.data[0].tenantId;
+        const tenantId = context.profileInfo.tenantId;
+        context.log({ stage: 'profile info', info: context, tenantId, check: '1' });
+        context.log({ stage: 'profile info', info: context.profileInfo, tenantId, check: '1' });
 
-        context.log({ stage: 'profile info', info: context, tenantId, check: "1" });
-
-        return context.addListener(tenantId, { eventName: 'contact_created', check: "1" });
+        return context.addListener(tenantId, { eventName: 'contact_created', check: '1' });
     },
 
     async stop(context) {
 
-        const { data } = await makeRequest(context, '/api/v1/accounts/account', { method: 'POST' });
-        const tenantId = data?.data[0].tenantId;
+        const tenantId = context.profileInfo.tenantId;
 
         return context.removeListener(tenantId);
     },
