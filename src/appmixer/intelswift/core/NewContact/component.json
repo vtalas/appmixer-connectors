@@ -25,7 +25,10 @@
                 { "label": "UserId", "value": "userId" },
                 { "label": "IsBot", "value": "isBot" },
                 { "label": "BotName", "value": "botName" },
-                { "label": "Email", "value": "email" },
+                { "label": "Email", "value": "Email" },
+                { "label": "FullName", "value": "Full name" },
+                { "label": "PhoneNumber", "value": "PhoneNumber" },
+                { "label": "origin", "value": "origin" },
                 { "label": "Segment", "value": "segment" },
                 { "label": "Sentiment", "value": "sentiment" },
                 {
@@ -57,7 +60,54 @@
                         "type": "array",
                         "items": { "type": "string" }
                     }
-                }
+                },
+                { "label": "pipedriveId", "value": "pipedriveId" },
+                { "label": "zohoId", "value": "zohoId" },
+                { "label": "hubspotId", "value": "hubspotId" },
+
+                { "label": "First Name", "value": "First Name" },
+                { "label": "Last Name", "value": "Last Name" },
+                { "label": "Postal Code", "value": "Postal Code" },
+                { "label": "Street Address", "value": "Street Address" },
+                { "label": "City", "value": "City" },
+                { "label": "Date Of Birth", "value": "Date Of Birth" },
+                { "label": "Phone", "value": "Phone" },
+                { "label": "Country", "value": "Country" },
+                { "label": "State", "value": "State" },
+                { "label": "Mobile", "value": "Mobile" },
+                { "label": "Contact Owner", "value": "Contact Owner" },
+
+                { "label": "Company Name", "value": "Company Name" },
+                { "label": "Company Size", "value": "Company Size" },
+                { "label": "Create Date", "value": "Create Date" },
+                { "label": "Fax Number", "value": "Fax Number" },
+                { "label": "Gender", "value": "Gender" },
+                { "label": "Registered At", "value": "Registered At" },
+                { "label": "Preferred language", "value": "Preferred language" },
+                { "label": "Persona", "value": "Persona" },
+                { "label": "Time Zone", "value": "Time Zone" },
+                { "label": "Marital Status", "value": "Marital Status" },
+                { "label": "Message", "value": "Message" },
+
+                { "label": "Notes", "value": "Notes" },
+                { "label": "job title", "value": "job title" },
+                { "label": "Postal Address", "value": "Postal Address" },
+                { "label": "Name", "value": "Name" },
+                { "label": "Label", "value": "Label" },
+
+                { "label": "Lead Source", "value": "Lead Source" },
+                { "label": "Account Name", "value": "Account Name" },
+                { "label": "Vendor Name", "value": "Vendor Name" },
+                { "label": "Title", "value": "Title" },
+                { "label": "Department", "value": "Department" },
+                { "label": "Home Phone", "value": "Home Phone" },
+                { "label": "Other Phone", "value": "Other Phone" },
+                { "label": "Fax", "value": "Fax" },
+                { "label": "Assistant", "value": "Assistant" },
+                { "label": "Asst Phone", "value": "Asst Phone" },
+                { "label": "Skype Id", "value": "Skype Id" },
+                { "label": "Tag", "value": "Tag" },
+                { "label": "Description", "value": "Description" }
             ]
         }
     ],

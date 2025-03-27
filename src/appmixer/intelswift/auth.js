@@ -7,7 +7,7 @@ module.exports = {
     definition: {
 
         accountNameFromProfileInfo: 'displayName',
-
+        
         auth: {
             apiKey: {
                 type: 'text',
@@ -19,7 +19,7 @@ module.exports = {
 
         requestProfileInfo: async context => {
 
-            const { data } = await makeRequest(context, '/accounts/account', { method: 'POST' });
+            const { data } = await makeRequest(context, '/api/v1/accounts/account', { method: 'POST' });
 
             if (!data?.data) {
                 throw 'Authentication Failed';
@@ -35,7 +35,7 @@ module.exports = {
 
         validate: async context => {
 
-            const { data } = await makeRequest(context, '/accounts/account', { method: 'POST' });
+            const { data } = await makeRequest(context, '/api/v1/accounts/account', { method: 'POST' });
             return !!data?.data;
         }
     }

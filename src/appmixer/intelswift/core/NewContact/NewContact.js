@@ -5,10 +5,10 @@ module.exports = {
     async start(context) {
 
         const tenantId = context.profileInfo.tenantId;
+        context.log({ stage: 'profile info', info: context, tenantId, check: "1" });
+        context.log({ stage: 'profile info', info: context.profileInfo, tenantId, check: "1" });
 
-        context.log({ stage: 'profile info', info: context.profileInfo, tenantId });
-
-        return context.addListener(tenantId, { eventName: 'contact_created' });
+        return context.addListener(tenantId, { eventName: 'contact_created', check: "1" });
     },
 
     async stop(context) {

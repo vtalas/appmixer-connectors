@@ -12,14 +12,18 @@
         {
             "name": "out",
             "options": [
-                { "label": "TenantId", "value": "tenantId" },
-                { "label": "ContactId", "value": "contactId" },
-                { "label": "AgentId", "value": "agentId" },
-                { "label": "Description", "value": "description" },
-                { "label": "ResolvedBy", "value": "resolvedBy" },
-                { "label": "ResolvedAt", "value": "resolvedAt" },
+                { "label": "Tenant Id", "value": "tenantId" },
+                { "label": "Project UUID", "value": "projectUUID" },
+                { "label": "Contact Id", "value": "contactId" },
+                { "label": "Ticket Number", "value": "ticketNumber" },
+                { "label": "Ticket Id", "value": "_id" },
+                { "label": "Segment", "value": "segment" },
+                { "label": "AgentId", "value": "agentIDaasId" },
+                { "label": "Type", "value": "type" },
                 { "label": "Priority", "value": "priority" },
-                { "label": "Status", "value": "status" }
+                { "label": "Status", "value": "status" },
+                { "label": "Description", "value": "Description" },
+                { "label": "description", "value": "description" }
             ]
         }
     ],

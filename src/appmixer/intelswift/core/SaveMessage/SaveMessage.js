@@ -7,7 +7,7 @@ module.exports = {
 
         const { contactId, text } = context.messages.in.content;
 
-        const { data } = await makeRequest(context, '/conversation/message', { data: { contactId, text } });
+        const { data } = await makeRequest(context, '/api/v1/conversation/message', { data: { contactId, text } });
 
         return context.sendJson(data, 'out');
     }
