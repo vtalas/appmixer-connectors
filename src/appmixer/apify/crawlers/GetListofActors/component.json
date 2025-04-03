@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.apify.core.GetListofActors",
+    "name": "appmixer.apify.crawlers.GetListofActors",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Retrieve a list of actors available in the Apify service.",
     "version": "1.0.0",
@@ -112,7 +112,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/apify/core/GetListofActors?outPort=out",
+                "url": "/component/appmixer/apify/crawlers/GetListofActors?outPort=out",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true

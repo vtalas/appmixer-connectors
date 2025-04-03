@@ -39,6 +39,6 @@ module.exports = {
 
         const records = getProperty(data, 'data.items');
 
-        return lib.sendArrayOutput({ context, records, outputType: 'first' });
+        return lib.sendArrayOutput({ context, records, outputType });
     }
 };
