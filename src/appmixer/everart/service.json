@@ -1,0 +1,8 @@
+{
+    "name": "appmixer.everart",
+    "label": "EverArt",
+    "category": "applications",
+    "description": "The EverArt REST API allows you to create and retrieve text-to-image generations. You can use this API to generate images based on a text prompt. For more information, visit https://everart.ai.",
+    "version": "1.0.0",
+    "icon": "https://everart.ai/favicon.ico"
+}
