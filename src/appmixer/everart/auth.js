@@ -17,17 +17,20 @@ module.exports = {
                 key: apiKey.substr(0, 3) + '...' + apiKey.substr(4)
             };
         },
+
         accountNameFromProfileInfo: 'key',
 
         async validate(context) {
-            const url = 'https://api.everart.io/v1/me';
-            const headers = {
-                'Authorization': `Bearer ${context.apiKey}`,
-                'Accept': 'application/json'
-            };
-            const response = await context.httpRequest({ url, method: 'GET', headers });
-            if (!response.data || !response.data.id) {
-                throw new Error('Invalid API Key or unexpected response from everart API.');
+            // Replace with the actual everart API endpoint for authentication/validation
+            const response = await context.httpRequest({
+                method: 'GET',
+                url: 'https://api.everart.io/v1/models?limt=1',
+                headers: {
+                    'Authorization': `Bearer ${context.apiKey}`
+                }
+            });
+            if (!response.data) {
+                throw new Error('Authentication failed: Invalid API Key or unexpected response.');
             }
             return true;
         }
