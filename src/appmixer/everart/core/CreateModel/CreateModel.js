@@ -1,4 +1,3 @@
-
 const lib = require('../../lib.generated');
 module.exports = {
     async receive(context) {
@@ -9,7 +8,14 @@ module.exports = {
             method: 'POST',
             url: 'https://api.everart.ai/v1/models',
             headers: {
-                'Authorization': `Bearer ${context.auth.apiToken}`
+                'Authorization': `Bearer ${context.auth.apiKey}`
+            },
+            data: {
+                name,
+                subject,
+                image_urls,
+                image_upload_tokens,
+                webhook_url
             }
         });
 

@@ -40,20 +40,6 @@
                         },
                         "minItems": 1,
                         "maxItems": 25
-                    },
-                    "image_upload_tokens": {
-                        "type": "array",
-                        "description": "Array of upload tokens from /images/uploads endpoint",
-                        "items": {
-                            "type": "string"
-                        },
-                        "minItems": 1,
-                        "maxItems": 25
-                    },
-                    "webhook_url": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "Optional URL that will receive POST requests with status updates"
                     }
                 }
             },
@@ -66,28 +52,36 @@
                         "index": 0
                     },
                     "subject": {
-                        "type": "text",
+                        "type": "select",
                         "tooltip": "Subject type of the model.",
                         "label": "Subject",
-                        "index": 1
+                        "index": 1,
+                        "options": [
+                            {
+                                "label": "STYLE",
+                                "value": "STYLE"
+                            },
+                            {
+                                "label": "PERSON",
+                                "value": "PERSON"
+                            },
+                            {
+                                "label": "OBJECT",
+                                "value": "OBJECT"
+                            }
+                        ]
                     },
                     "image_urls": {
-                        "type": "text",
+                        "type": "expression",
                         "tooltip": "Array of URLs pointing to training images",
                         "label": "Image Urls",
-                        "index": 2
-                    },
-                    "image_upload_tokens": {
-                        "type": "text",
-                        "tooltip": "Array of upload tokens from /images/uploads endpoint",
-                        "label": "Image Upload Tokens",
-                        "index": 3
-                    },
-                    "webhook_url": {
-                        "type": "text",
-                        "tooltip": "Optional URL that will receive POST requests with status updates",
-                        "label": "Webhook Url",
-                        "index": 4
+                        "index": 2,
+                        "fields": {
+                            "image_url": {
+                                "type": "text",
+                                "label": "Street One"
+                            }
+                        }
                     }
                 }
             }
