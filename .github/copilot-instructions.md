@@ -356,6 +356,7 @@ schema
         "name": {
             "type": "string", "pattern": "^[\\w]+\\.[\\w]+\\.[\\w]+\\.[\\w]+$",
             "description": "Component name in the format 'vendor.connectorName.module.componentName'. Use 'core' as default module name"
+            "description": "Component name in the format 'vendor.connectorName.core.componentName'"
         },
         "label": {
             "type": "string",
