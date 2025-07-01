@@ -8,7 +8,10 @@ Appmixer is a workflow engine together with a web user interface that allows end
 - Use `test/` for tests.
 - Use `test/utils.js` for Appmixer stub.
 
-## Connectors
+## Appmixer Connectors
+
+### Structure
+
 Connector consists of files service.json, auth.js, and bundle.json. The service.json file describes the service, auth.js handles authentication, and bundle.json contains metadata about the connector. Connectors are located in the `src/appmixer` folder.
 
 Example folder structure for Twilio connector:
@@ -27,11 +30,11 @@ twilio/
 
 documentation: https://docs.appmixer.com/building-connectors/example-component#component-behaviour-sms-sendsms-sendsms.js
 
-**package.json**
+#### package.json
 Optional file that contains dependencies.
 
-**service.json**
-
+#### service.json
+s
 json schema
 ```json
 {
@@ -95,9 +98,11 @@ module.exports = {
 **throttling**: The throttling mechanism. Can be either a string 'window-sliding' or an object with type and getStartOfNextWindow function.
 **resource**: An identifier of the resource to which the rule applies. The resource is a way for a component to pick rules that apply to that specific component. This can be done in the component manifest file in the quota.resources section.
 
-**auth.js**
+#### auth.js
 
 **type**: The type of authentication mechanism. Any of `apiKey`, `pwd`, `oauth2`.
+
+##### apiKey
 
 type `apiKey` example from Freshdesk connector:
 
@@ -160,6 +165,8 @@ module.exports = {
     }
 };
 ```
+
+##### oauth2
 
 type `oauth2` example :
 
@@ -313,8 +320,10 @@ module.exports = {
 
 ```
 
-**bundle.json**
-schema:
+#### bundle.json
+
+##### JSON schema of the bundle.json file:
+
 ```json
 {
     "type": "object",
@@ -337,18 +346,19 @@ schema:
 ```
 
 ### Components
+
 A component is a self-contained unit of functionality that can be used in Appmixer workflows. It can have multiple inPorts and outPorts, and it can be used to process data, trigger actions, or perform other tasks.
 A component is defined by a `component.json` file and a "behavior" file with the same name as the component folder.
 
-#### When adding new field to component.json
+#### When adding a new field to component.json
 > Use-case: "I want to add a new number field `itemCount` to the `MyAwesomeComponent` component."
-- Add the field to both `schema` and `inspector` sections in the `inPorts` array. Follow json schema format.
-- Add the fields to behavior JS file, especially in `context.httpRequest` call.
+- Add the field to both `schema` and `inspector` sections in the `inPorts` array. Follow JSON schema format.
+- Add the fields to the behavior JS file, especially in `context.httpRequest` call.
 
+#### component.json
 
-**component.json**
+##### JSON schema of the component.json file:
 
-schema
 ```json
 {
     "type": "object",
@@ -356,7 +366,6 @@ schema
         "name": {
             "type": "string", "pattern": "^[\\w]+\\.[\\w]+\\.[\\w]+\\.[\\w]+$",
             "description": "Component name in the format 'vendor.connectorName.module.componentName'. Use 'core' as default module name"
-            "description": "Component name in the format 'vendor.connectorName.core.componentName'"
         },
         "label": {
             "type": "string",
@@ -593,22 +602,22 @@ schema
 }
 ```
 
-# Code style
-- Add one empty line after function definition.
-- Use 4 spaces for indentation.
-
-**behavior file**
+#### behavior file
 
 JavaScript file that contains the logic of the component. It can be used to handle input and output data, call external APIs, and perform other actions. The behavior file is where the main functionality of the component is implemented.
 
-**receive**
+##### `receive` function
+
 function is called when the component receives data from the input port.
 
 - do not check for the required properties, required properties are checked in the input schema in the component.json file.
 
+# Code style
+- Add one empty line after function definition.
+- Use 4 spaces for indentation.
+
 TODO:
-- purge, add descriptions to schema https://github.com/clientIO/appmixer-core/blob/3747601f0bc455f38bd252fff58f41cf92de5f63/gridvalidator/schemas/component-schema.json#L19
-- input file (type: filepicker)
+- describe input file (type: filepicker)
 - select input with different source component
 - outputType
 
