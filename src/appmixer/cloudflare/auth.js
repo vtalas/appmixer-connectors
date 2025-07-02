@@ -11,6 +11,15 @@ module.exports = {
         accountNameFromProfileInfo: 'account',
 
         auth: {
+            tokenType: {
+                type: 'select',
+                name: 'Token Type',
+                placeholder: 'Select token type',
+                options: [
+                    { label: 'Global API', value: 'true' },
+                    { label: 'API Token', value: 'false' }
+                ]
+            },
             email: {
                 type: 'text',
                 name: 'Email',
