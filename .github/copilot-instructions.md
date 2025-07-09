@@ -562,7 +562,7 @@ Each component consists of:
 - `component.json` - Configuration and metadata
 - `ComponentName.js` - Behavior and logic
 
-## component.json
+### component.json
 
 json schema of the component.json
 
@@ -809,13 +809,13 @@ json schema of the component.json
 }
 ```
 
-## Component Behavior (JavaScript)
+### Component Behavior (JavaScript)
 
 The behavior file contains the component's logic.
 
-### Basic Structure
+#### Basic Structure
 
-#### receive
+##### `receive`
 function is called when the component receives data from the input port.
 
 ```javascript
@@ -846,11 +846,11 @@ module.exports = {
 };
 ```
 
-### `context` Object
+#### `context` Object
 
-### Advanced Features
+#### Advanced Features
 
-#### Trigger Components
+##### Trigger Components
 
 ```javascript
 module.exports = {
@@ -865,7 +865,7 @@ module.exports = {
 };
 ```
 
-#### Webhook Components
+##### Webhook Components
 
 ```javascript
 module.exports = {
