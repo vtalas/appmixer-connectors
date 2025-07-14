@@ -1,0 +1,111 @@
+{
+    "name": "appmixer.github.project.GetProjectFields",
+    "label": "Get Project Fields",
+    "description": "Get all fields configured for a GitHub project including their types, names, and options",
+    "author": "Appmixer <info@appmixer.com>",
+    "version": "1.0.0",
+    "auth": {
+        "service": "appmixer:github",
+        "scope": [
+            "read:project"
+        ]
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "projectId": {
+                        "type": "string",
+                        "title": "Project ID",
+                        "description": "The node ID of the GitHub project"
+                    }
+                },
+                "required": ["projectId"]
+            },
+            "inspector": {
+                "inputs": {
+                    "projectId": {
+                        "type": "text",
+                        "index": 1,
+                        "tooltip": "The project ID from the GitHub project URL or ListProjects component"
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "options": [
+                {
+                    "label": "Fields",
+                    "value": "fields",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "title": "Field ID"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "title": "Field Name"
+                                },
+                                "type": {
+                                    "type": "string",
+                                    "title": "Field Type"
+                                },
+                                "options": {
+                                    "type": "array",
+                                    "title": "Options",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "title": "Option ID"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "title": "Option Name"
+                                            }
+                                        }
+                                    }
+                                },
+                                "iterations": {
+                                    "type": "array",
+                                    "title": "Iterations",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "title": "Iteration ID"
+                                            },
+                                            "startDate": {
+                                                "type": "string",
+                                                "title": "Start Date"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "quota": {
+        "manager": "appmixer:github",
+        "resources": ["github.api"],
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "icon": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+}
