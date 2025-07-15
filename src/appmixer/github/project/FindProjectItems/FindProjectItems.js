@@ -34,7 +34,7 @@ module.exports = {
         const { projectId, status, outputType = 'array' } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Items', value: 'items' });
+            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Items' });
         }
 
         const query = `
@@ -173,10 +173,10 @@ module.exports = {
             };
 
             // Find status field value
-            const statusField = item.fieldValues.nodes.find(fv => 
+            const statusField = item.fieldValues.nodes.find(fv =>
                 fv.field && fv.field.name && fv.field.name.toLowerCase() === 'status'
             );
-            
+
             if (statusField) {
                 processedItem.status = statusField.name || statusField.text || statusField.title;
             }
@@ -187,7 +187,7 @@ module.exports = {
         // Filter by status if provided
         let filteredItems = processedItems;
         if (status) {
-            filteredItems = processedItems.filter(item => 
+            filteredItems = processedItems.filter(item =>
                 item.status && item.status.toLowerCase() === status.toLowerCase()
             );
         }

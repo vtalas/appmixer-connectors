@@ -1,11 +1,14 @@
 {
     "name": "appmixer.github.project.FindProjects",
     "label": "Find Projects",
-    "description": "Retrieve all projects accessible to the authenticated user (either via organization or personal projects) using GitHub's GraphQL API.",
+    "description": "Retrieve all projects accessible to the authenticated user (either via organization or personal projects) using GitHub's GraphQL API. Supports filtering by project name using the query parameter.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "auth": {
-        "service": "appmixer:github"
+        "service": "appmixer:github",
+        "scope": [
+            "read:project"
+        ]
     },
     "inPorts": [
         {
@@ -21,6 +24,10 @@
                         "type": "string",
                         "enum": ["user", "organization"],
                         "description": "Type of project to look for"
+                    },
+                    "query": {
+                        "type": "string",
+                        "description": "Optional search query to filter projects by name (case-insensitive partial match)"
                     },
                     "outputType": {
                         "type": "string",
@@ -54,10 +61,16 @@
                             }
                         ]
                     },
+                    "query": {
+                        "type": "text",
+                        "tooltip": "Optional search query to filter projects by name (case-insensitive partial match). Leave empty to get all projects.",
+                        "label": "Query",
+                        "index": 3
+                    },
                     "outputType": {
                         "type": "select",
                         "label": "Output Type",
-                        "index": 3,
+                        "index": 4,
                         "defaultValue": "array",
                         "tooltip": "Choose whether you want to receive the result set as one complete list, or first item only or one item at a time or stream the items to a file.",
                         "options": [
@@ -87,7 +100,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/github/core/FindProjects?outPort=out",
+                "url": "/component/appmixer/github/project/FindProjects?outPort=out",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true

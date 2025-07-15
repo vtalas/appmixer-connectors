@@ -18,10 +18,10 @@ const schema = {
 
 module.exports = {
     async receive(context) {
-        const { owner, projectType = 'user', outputType = 'array' } = context.messages.in.content;
+        const { owner, projectType = 'user', query: searchQuery, outputType = 'array' } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Projects', value: 'projects' });
+            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Projects' });
         }
 
         const query = projectType === 'organization' ?
@@ -104,6 +104,21 @@ module.exports = {
 
         const projects = entityData.projectsV2.nodes || [];
 
-        return lib.sendArrayOutput({ context, records: projects, outputType });
+        // Filter projects by query if provided
+        let filteredProjects = projects;
+        if (searchQuery && searchQuery.trim()) {
+            const queryLower = searchQuery.trim().toLowerCase();
+            filteredProjects = projects.filter(project => {
+                const title = project.title || '';
+                const shortDescription = project.shortDescription || '';
+                const readme = project.readme || '';
+
+                return title.toLowerCase().includes(queryLower) ||
+                    shortDescription.toLowerCase().includes(queryLower) ||
+                    readme.toLowerCase().includes(queryLower);
+            });
+        }
+
+        return lib.sendArrayOutput({ context, records: filteredProjects, outputType });
     }
 };
