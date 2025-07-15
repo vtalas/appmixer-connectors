@@ -58,14 +58,21 @@
                     }
                 },
                 {
-                    "label": "Description",
-                    "value": "description",
+                    "label": "Short Description",
+                    "value": "shortDescription",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "URL",
+                    "label": "Readme",
+                    "value": "readme",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Url",
                     "value": "url",
                     "schema": {
                         "type": "string"
@@ -103,7 +110,17 @@
                     "label": "Owner",
                     "value": "owner",
                     "schema": {
-                        "type": "object"
+                        "type": "object",
+                        "properties": {
+                            "__typename": {
+                                "type": "string",
+                                "title": "Owner.Typename"
+                            },
+                            "login": {
+                                "type": "string",
+                                "title": "Owner.Login"
+                            }
+                        }
                     }
                 },
                 {
@@ -112,7 +129,28 @@
                     "schema": {
                         "type": "array",
                         "items": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "title": "Fields.Id"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "title": "Fields.Name"
+                                },
+                                "dataType": {
+                                    "type": "string",
+                                    "title": "Fields.Data Type"
+                                },
+                                "options": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    },
+                                    "title": "Fields.Options"
+                                }
+                            }
                         }
                     }
                 }
