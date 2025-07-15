@@ -5,7 +5,10 @@
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "auth": {
-        "service": "appmixer:github"
+        "service": "appmixer:github",
+        "scope": [
+            "read:project"
+        ]
     },
     "inPorts": [
         {
@@ -14,8 +17,7 @@
                 "type": "object",
                 "properties": {
                     "projectItemId": {
-                        "type": "string",
-                        "description": "The unique identifier of the project item"
+                        "type": "string"
                     }
                 },
                 "required": ["projectItemId"]

@@ -5,7 +5,10 @@
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "auth": {
-        "service": "appmixer:github"
+        "service": "appmixer:github",
+        "scope": [
+            "read:project"
+        ]
     },
     "inPorts": [
         {
