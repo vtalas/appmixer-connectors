@@ -1,6 +1,6 @@
 module.exports = {
     async receive(context) {
-        const { projectId } = context.messages.in;
+        const { projectId } = context.messages.in.content || context.messages.in || {};
 
         if (!projectId) {
             throw new Error('Project ID is required');
@@ -82,13 +82,13 @@ module.exports = {
                             ...baseField,
                             options: field.options || []
                         };
-                    
+
                     case 'ProjectV2IterationField':
                         return {
                             ...baseField,
                             iterations: field.configuration?.iterations || []
                         };
-                    
+
                     default:
                         return baseField;
                 }

@@ -1,6 +1,11 @@
 module.exports = {
     async receive(context) {
-        const { projectId, statusValue, statusFieldName = 'Status', limit = 50 } = context.messages.in;
+        const {
+            projectId,
+            statusValue,
+            statusFieldName = 'Status',
+            limit = 50
+        } = context.messages.in.content || context.messages.in || {};
 
         if (!projectId || !statusValue) {
             throw new Error('Project ID and status value are required');
@@ -48,6 +53,8 @@ module.exports = {
                 }
             });
 
+            console.log(JSON.stringify(fieldsResponse.data));
+
             if (fieldsResponse.data.errors) {
                 throw new Error(`GraphQL errors: ${JSON.stringify(fieldsResponse.data.errors)}`);
             }
@@ -68,6 +75,8 @@ module.exports = {
                 }
                 statusOptionId = statusOption.id;
             }
+
+            console.log(statusField, statusOptionId);
 
             // Now get the project items
             const itemsQuery = `
@@ -177,6 +186,8 @@ module.exports = {
                 }
             });
 
+            console.log(itemsResponse.data);
+
             if (itemsResponse.data.errors) {
                 throw new Error(`GraphQL errors: ${JSON.stringify(itemsResponse.data.errors)}`);
             }
@@ -188,7 +199,8 @@ module.exports = {
             // Filter items by status
             const filteredItems = items.filter(item => {
                 const statusFieldValue = item.fieldValues.nodes.find(fieldValue => {
-                    if (fieldValue.field.name === statusFieldName) {
+
+                    if (fieldValue?.field?.name === statusFieldName) {
                         if (statusField.__typename === 'ProjectV2SingleSelectField') {
                             return fieldValue.optionId === statusOptionId;
                         } else {
@@ -223,20 +235,20 @@ module.exports = {
 
                 if (item.content) {
                     title = item.content.title || 'Untitled';
-                    
+
                     if (item.content.__typename === 'DraftIssue') {
                         type = 'Draft Issue';
                     } else if (item.content.__typename === 'Issue') {
                         type = 'Issue';
                         url = item.content.url;
-                        repository = item.content.repository ? 
+                        repository = item.content.repository ?
                             `${item.content.repository.owner.login}/${item.content.repository.name}` : null;
                         assignees = item.content.assignees?.nodes?.map(a => a.login) || [];
                         labels = item.content.labels?.nodes?.map(l => l.name) || [];
                     } else if (item.content.__typename === 'PullRequest') {
                         type = 'Pull Request';
                         url = item.content.url;
-                        repository = item.content.repository ? 
+                        repository = item.content.repository ?
                             `${item.content.repository.owner.login}/${item.content.repository.name}` : null;
                         assignees = item.content.assignees?.nodes?.map(a => a.login) || [];
                         labels = item.content.labels?.nodes?.map(l => l.name) || [];
@@ -263,6 +275,7 @@ module.exports = {
             }, 'out');
 
         } catch (error) {
+            console.log(error);
             throw new Error(`Failed to list project items by status: ${error.message}`);
         }
     }

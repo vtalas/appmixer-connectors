@@ -62,7 +62,7 @@
     ],
     "quota": {
         "manager": "appmixer:github",
-        "resources": ["github.api"],
+        "resources": ["requests"],
         "scope": {
             "userId": "{{userId}}"
         }

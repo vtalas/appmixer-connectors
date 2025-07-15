@@ -1,9 +1,11 @@
 module.exports = {
     async receive(context) {
-        const { organizationLogin, limit = 20 } = context.messages.in;
+        const { organizationLogin, limit = 20 } = context.messages.in.content || context.messages.in || {};
 
         try {
-            let query, variables;
+
+            let query;
+            let variables;
 
             if (organizationLogin) {
                 // List organization projects
@@ -99,13 +101,13 @@ module.exports = {
                 throw new Error(`GraphQL errors: ${JSON.stringify(response.data.errors)}`);
             }
 
-            const projectsData = organizationLogin ? 
-                response.data.data.organization?.projectsV2 : 
+            const projectsData = organizationLogin ?
+                response.data.data.organization?.projectsV2 :
                 response.data.data.user?.projectsV2;
 
             if (!projectsData) {
-                throw new Error(organizationLogin ? 
-                    `Organization '${organizationLogin}' not found or no access` : 
+                throw new Error(organizationLogin ?
+                    `Organization '${organizationLogin}' not found or no access` :
                     'User projects not found');
             }
 
@@ -121,6 +123,7 @@ module.exports = {
                 updatedAt: project.updatedAt
             }));
 
+            console.log(projects);
             return context.sendJson({
                 projects,
                 totalCount: projectsData.totalCount

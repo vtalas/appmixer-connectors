@@ -1,6 +1,6 @@
 module.exports = {
     async receive(context) {
-        const { projectId, contentId } = context.messages.in;
+        const { projectId, contentId } = context.messages.in.content || context.messages.in || {};
 
         if (!projectId || !contentId) {
             throw new Error('Project ID and Content ID are required');
