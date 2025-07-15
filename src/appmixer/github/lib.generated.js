@@ -31,7 +31,7 @@ module.exports = {
             }
         } else if (outputType === 'array') {
             // All at once.
-            await context.sendJson({ result: records, count: records.length }, outputPortName);
+            return await context.sendJson({ result: records, count: records.length }, outputPortName);
         } else if (outputType === 'file') {
 
             // Into CSV file.

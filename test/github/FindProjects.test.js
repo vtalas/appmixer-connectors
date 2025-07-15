@@ -41,10 +41,13 @@ describe('FindProjects', () => {
         accessToken: process.env.GITHUB_ACCESS_TOKEN
     };
 
-    // Skip all tests if the access token is not set
-    if (!auth) { this.skip(); }
+    before(async function() {
+        // Skip all tests if the access token is not set
+        if (!auth.accessToken) { this.skip(); }
+    });
 
     it('should find user projects', async () => {
+
         const messages = {
             in: {
                 content: {
@@ -80,6 +83,7 @@ describe('FindProjects', () => {
     });
 
     it('should find organization projects', async () => {
+
         const messages = {
             in: {
                 content: {
@@ -93,13 +97,12 @@ describe('FindProjects', () => {
         const context = createMockContext(auth, messages);
 
         try {
-            const result = await FindProjects.receive(context);
+            const { data, port } = await FindProjects.receive(context);
 
-            assert(result, 'Should return result');
-            assert(result.port === 'out', 'Should use out port');
-            assert(result.data, 'Should have data');
-            assert(Array.isArray(result.data.result), 'Should return array of projects');
-            assert(typeof result.data.count === 'number', 'Should have count');
+            assert(port === 'out', 'Should use out port');
+            assert(data, 'Should have data');
+            assert(Array.isArray(data.result), 'Should return array of projects');
+            assert(typeof data.count === 'number', 'Should have count');
         } catch (error) {
             // If organization doesn't exist or has restricted access, that's acceptable
             if (error.message.includes('not found') || error.message.includes('Forbidden') || error.message.includes('access restrictions')) {
