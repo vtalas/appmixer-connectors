@@ -61,22 +61,6 @@ module.exports = {
                                             }
                                         }
                                     }
-                                    ... on PullRequest {
-                                        id
-                                        title
-                                        url
-                                        number
-                                        repository {
-                                            name
-                                            owner {
-                                                login
-                                            }
-                                        }
-                                    }
-                                    ... on DraftIssue {
-                                        id
-                                        title
-                                    }
                                 }
                                 fieldValues(first: 20) {
                                     nodes {
@@ -192,6 +176,7 @@ module.exports = {
             );
         }
 
+        console.log(filteredItems);
         return lib.sendArrayOutput({ context, records: filteredItems, outputType });
     }
 };

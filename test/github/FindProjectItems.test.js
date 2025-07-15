@@ -99,6 +99,8 @@ describe('FindProjectItems', () => {
         try {
             const result = await FindProjectItems.receive(context);
 
+            console.log(result.data);
+
             assert(result, 'Should return result');
             assert(result.port === 'out', 'Should use out port');
             assert(result.data, 'Should have data');
