@@ -60,7 +60,8 @@
                     "statusFieldName": {
                         "type": "text",
                         "index": 4,
-                        "tooltip": "The name of the status field in your project (usually 'Status')"
+                        "tooltip": "The name of the status field in your project (usually 'Status')",
+                        "defaultValue": "Status"
                     }
                 }
             }
@@ -72,15 +73,27 @@
             "options": [
                 {
                     "label": "Item ID",
-                    "value": "itemId"
+                    "value": "itemId",
+                    "schema": {
+                        "type": "string",
+                        "title": "Item ID"
+                    }
                 },
                 {
                     "label": "Success",
-                    "value": "success"
+                    "value": "success",
+                    "schema": {
+                        "type": "boolean",
+                        "title": "Success"
+                    }
                 },
                 {
                     "label": "Status",
-                    "value": "status"
+                    "value": "status",
+                    "schema": {
+                        "type": "string",
+                        "title": "Status"
+                    }
                 }
             ]
         }

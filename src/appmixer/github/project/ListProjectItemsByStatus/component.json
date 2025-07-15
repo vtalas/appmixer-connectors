@@ -58,12 +58,14 @@
                     "statusFieldName": {
                         "type": "text",
                         "index": 3,
-                        "tooltip": "The name of the status field in your project (usually 'Status')"
+                        "tooltip": "The name of the status field in your project (usually 'Status')",
+                        "defaultValue": "Status"
                     },
                     "limit": {
                         "type": "number",
                         "index": 4,
-                        "tooltip": "Number of items to return (1-100)"
+                        "tooltip": "Number of items to return (1-100)",
+                        "defaultValue": 50
                     }
                 }
             }
@@ -129,11 +131,19 @@
                 },
                 {
                     "label": "Total Count",
-                    "value": "totalCount"
+                    "value": "totalCount",
+                    "schema": {
+                        "type": "number",
+                        "title": "Total Count"
+                    }
                 },
                 {
                     "label": "Filtered Count",
-                    "value": "filteredCount"
+                    "value": "filteredCount",
+                    "schema": {
+                        "type": "number",
+                        "title": "Filtered Count"
+                    }
                 }
             ]
         }

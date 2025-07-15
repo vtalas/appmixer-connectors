@@ -51,11 +51,19 @@
             "options": [
                 {
                     "label": "Item ID",
-                    "value": "itemId"
+                    "value": "itemId",
+                    "schema": {
+                        "type": "string",
+                        "title": "Item ID"
+                    }
                 },
                 {
                     "label": "Success",
-                    "value": "success"
+                    "value": "success",
+                    "schema": {
+                        "type": "boolean",
+                        "title": "Success"
+                    }
                 }
             ]
         }

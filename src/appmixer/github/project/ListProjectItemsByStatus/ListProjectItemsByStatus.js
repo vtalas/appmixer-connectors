@@ -53,8 +53,6 @@ module.exports = {
                 }
             });
 
-            console.log(JSON.stringify(fieldsResponse.data));
-
             if (fieldsResponse.data.errors) {
                 throw new Error(`GraphQL errors: ${JSON.stringify(fieldsResponse.data.errors)}`);
             }
@@ -75,8 +73,6 @@ module.exports = {
                 }
                 statusOptionId = statusOption.id;
             }
-
-            console.log(statusField, statusOptionId);
 
             // Now get the project items
             const itemsQuery = `
@@ -186,8 +182,6 @@ module.exports = {
                 }
             });
 
-            console.log(itemsResponse.data);
-
             if (itemsResponse.data.errors) {
                 throw new Error(`GraphQL errors: ${JSON.stringify(itemsResponse.data.errors)}`);
             }
@@ -199,7 +193,6 @@ module.exports = {
             // Filter items by status
             const filteredItems = items.filter(item => {
                 const statusFieldValue = item.fieldValues.nodes.find(fieldValue => {
-
                     if (fieldValue?.field?.name === statusFieldName) {
                         if (statusField.__typename === 'ProjectV2SingleSelectField') {
                             return fieldValue.optionId === statusOptionId;
@@ -275,7 +268,6 @@ module.exports = {
             }, 'out');
 
         } catch (error) {
-            console.log(error);
             throw new Error(`Failed to list project items by status: ${error.message}`);
         }
     }

@@ -3,7 +3,6 @@ module.exports = {
         const { organizationLogin, limit = 20 } = context.messages.in.content || context.messages.in || {};
 
         try {
-
             let query;
             let variables;
 
@@ -123,7 +122,6 @@ module.exports = {
                 updatedAt: project.updatedAt
             }));
 
-            console.log(projects);
             return context.sendJson({
                 projects,
                 totalCount: projectsData.totalCount

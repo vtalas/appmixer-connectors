@@ -42,7 +42,8 @@
                     "limit": {
                         "type": "number",
                         "index": 2,
-                        "tooltip": "Number of projects to return (1-100)"
+                        "tooltip": "Number of projects to return (1-100)",
+                        "defaultValue": 20
                     }
                 }
             }
@@ -102,7 +103,11 @@
                 },
                 {
                     "label": "Total Count",
-                    "value": "totalCount"
+                    "value": "totalCount",
+                    "schema": {
+                        "type": "number",
+                        "title": "Total Count"
+                    }
                 }
             ]
         }
