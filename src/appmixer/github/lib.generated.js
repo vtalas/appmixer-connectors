@@ -1,10 +1,16 @@
 const pathModule = require('path');
 
-const DEFAULT_PREFIX = 'google-slides-objects-export';
+const DEFAULT_PREFIX = '{{connector_name}}-objects-export';
 
 module.exports = {
 
-    async sendArrayOutput({ context, outputPortName = 'out', outputType = 'array', records = [] }) {
+    async sendArrayOutput({
+        context,
+        outputPortName = 'out',
+        outputType = 'array',
+        records = []
+    }) {
+
         if (outputType === 'first') {
             if (records.length === 0) {
                 throw new context.CancelError('No records available for first output type');
@@ -15,6 +21,7 @@ module.exports = {
                 outputPortName
             );
         } else if (outputType === 'object') {
+            // One by one.
             // One by one.
             for (let index = 0; index < records.length; index++) {
                 await context.sendJson(

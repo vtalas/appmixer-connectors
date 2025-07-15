@@ -2,15 +2,15 @@
 'use strict';
 
 const lib = require('../../lib.generated');
-const schema = { 'id':{ 'type':'string','title':'Id' },'name':{ 'type':'string','title':'Name' },'type':{ 'type':'string','title':'Type' },'options':{ 'type':'array','items':{ 'type':'object','properties':{ 'id':{ 'type':'string','title':'Options.Id' },'name':{ 'type':'string','title':'Options.Name' } } },'title':'Options' } };
+const schema = { 'id':{ 'type':'string','title':'Id' },'content':{ 'type':'string','title':'Content' },'status':{ 'type':'string','title':'Status' } };
 
 module.exports = {
     async receive(context) {
 
-        const { projectId, outputType } = context.messages.in.content;
+        const { projectId, status, outputType } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Fields', value: 'fields' });
+            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Items', value: 'items' });
         }
 
         // https://docs.github.com/en/graphql

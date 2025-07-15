@@ -1,7 +1,7 @@
 {
-    "name": "appmixer.github.project.GetProjectFields",
+    "name": "appmixer.github.project.FindProjects",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Retrieve all field definitions and configurations for a specified project, including custom fields.",
+    "description": "Retrieve all projects accessible to the authenticated user (either via organization or personal projects) using GitHub's GraphQL API.",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -17,7 +17,10 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "projectId": {
+                    "owner": {
+                        "type": "string"
+                    },
+                    "projectType": {
                         "type": "string"
                     },
                     "outputType": {
@@ -27,11 +30,17 @@
             },
             "inspector": {
                 "inputs": {
-                    "projectId": {
+                    "owner": {
                         "type": "text",
-                        "tooltip": "The ID of the project for which fields are requested.",
-                        "label": "Project Id",
+                        "tooltip": "The username or organization name whose projects are to be retrieved.",
+                        "label": "Owner",
                         "index": 0
+                    },
+                    "projectType": {
+                        "type": "text",
+                        "tooltip": "Type of project to look for, e.g. 'user' or 'organization'.",
+                        "label": "Project Type",
+                        "index": 1
                     },
                     "outputType": {
                         "type": "select",
@@ -66,7 +75,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/github/core/GetProjectFields?outPort=out",
+                "url": "/component/appmixer/github/core/FindProjects?outPort=out",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true

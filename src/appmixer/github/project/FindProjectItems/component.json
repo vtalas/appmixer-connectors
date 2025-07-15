@@ -1,7 +1,7 @@
 {
-    "name": "appmixer.github.project.GetProjectFields",
+    "name": "appmixer.github.project.FindProjectItems",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Retrieve all field definitions and configurations for a specified project, including custom fields.",
+    "description": "Retrieve items from a project that match a specific status (for example, 'Todo', 'In Progress', or 'Done').",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -20,6 +20,9 @@
                     "projectId": {
                         "type": "string"
                     },
+                    "status": {
+                        "type": "string"
+                    },
                     "outputType": {
                         "type": "string"
                     }
@@ -29,9 +32,15 @@
                 "inputs": {
                     "projectId": {
                         "type": "text",
-                        "tooltip": "The ID of the project for which fields are requested.",
+                        "tooltip": "The ID of the project.",
                         "label": "Project Id",
                         "index": 0
+                    },
+                    "status": {
+                        "type": "text",
+                        "tooltip": "The status value to filter items by (e.g., 'Todo', 'In Progress', 'Done').",
+                        "label": "Status",
+                        "index": 1
                     },
                     "outputType": {
                         "type": "select",
@@ -66,7 +75,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/github/core/GetProjectFields?outPort=out",
+                "url": "/component/appmixer/github/core/FindProjectItems?outPort=out",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true
