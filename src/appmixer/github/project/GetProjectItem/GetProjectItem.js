@@ -119,10 +119,10 @@ module.exports = {
         };
 
         // Find status field value
-        const statusField = item.fieldValues.nodes.find(fv => 
+        const statusField = item.fieldValues.nodes.find(fv =>
             fv.field && fv.field.name && fv.field.name.toLowerCase() === 'status'
         );
-        
+
         if (statusField) {
             processedItem.status = statusField.name || statusField.text || statusField.title;
         }
