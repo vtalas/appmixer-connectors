@@ -94,12 +94,12 @@ module.exports = {
         });
 
         if (data.errors) {
-            throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
+            throw new context.CancelError(`GraphQL errors: ${JSON.stringify(data.errors)}`);
         }
 
         const entityData = projectType === 'organization' ? data.data.organization : data.data.user;
         if (!entityData) {
-            throw new Error(`${projectType} '${owner}' not found`);
+            throw new context.CancelError(`${projectType} '${owner}' not found`);
         }
 
         const projects = entityData.projectsV2.nodes || [];
@@ -117,6 +117,10 @@ module.exports = {
                     shortDescription.toLowerCase().includes(queryLower) ||
                     readme.toLowerCase().includes(queryLower);
             });
+
+            if (filteredProjects.length === 0) {
+                return context.sendJson({}, 'notFound');
+            }
         }
 
         return lib.sendArrayOutput({ context, records: filteredProjects, outputType });
