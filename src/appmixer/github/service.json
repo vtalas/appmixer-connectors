@@ -1,5 +1,5 @@
 {
-    "name": "github.projects",
+    "name": "appmixer.github",
     "label": "GitHub Projects",
     "category": "applications",
     "description": "Connector for GitHub Projects (v2) APIs to manage project workflows, including fetching projects, items, fields, and performing actions like adding, updating, or removing items.",

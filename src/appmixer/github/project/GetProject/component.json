@@ -1,15 +1,11 @@
 {
     "name": "appmixer.github.project.GetProject",
-    "author": "Appmixer <info@appmixer.com>",
+    "label": "Get Project",
     "description": "Retrieve detailed information for a specific GitHub project.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:github"
-    },
-    "quota": {
-        "manager": "appmixer:github",
-        "resources": "requests"
     },
     "inPorts": [
         {
@@ -18,17 +14,19 @@
                 "type": "object",
                 "properties": {
                     "projectId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The unique identifier of the project"
                     }
-                }
+                },
+                "required": ["projectId"]
             },
             "inspector": {
                 "inputs": {
                     "projectId": {
                         "type": "text",
                         "tooltip": "The unique identifier of the project.",
-                        "label": "Project Id",
-                        "index": 0
+                        "label": "Project ID",
+                        "index": 1
                     }
                 }
             }
@@ -39,10 +37,17 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Id",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
+                    }
+                },
+                {
+                    "label": "Number",
+                    "value": "number",
+                    "schema": {
+                        "type": "number"
                     }
                 },
                 {
@@ -60,11 +65,55 @@
                     }
                 },
                 {
+                    "label": "URL",
+                    "value": "url",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Created At",
+                    "value": "createdAt",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Updated At",
+                    "value": "updatedAt",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Closed At",
+                    "value": "closedAt",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Public",
+                    "value": "public",
+                    "schema": {
+                        "type": "boolean"
+                    }
+                },
+                {
+                    "label": "Owner",
+                    "value": "owner",
+                    "schema": {
+                        "type": "object"
+                    }
+                },
+                {
                     "label": "Fields",
                     "value": "fields",
                     "schema": {
                         "type": "array",
-                        "items": {}
+                        "items": {
+                            "type": "object"
+                        }
                     }
                 }
             ]

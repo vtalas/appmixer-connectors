@@ -1,15 +1,11 @@
 {
     "name": "appmixer.github.project.FindProjects",
-    "author": "Appmixer <info@appmixer.com>",
+    "label": "Find Projects",
     "description": "Retrieve all projects accessible to the authenticated user (either via organization or personal projects) using GitHub's GraphQL API.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:github"
-    },
-    "quota": {
-        "manager": "appmixer:github",
-        "resources": "requests"
     },
     "inPorts": [
         {
@@ -18,13 +14,18 @@
                 "type": "object",
                 "properties": {
                     "owner": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The username or organization name whose projects are to be retrieved"
                     },
                     "projectType": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": ["user", "organization"],
+                        "description": "Type of project to look for"
                     },
                     "outputType": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": ["array", "first", "object", "file"],
+                        "description": "Output format"
                     }
                 }
             },
@@ -34,18 +35,29 @@
                         "type": "text",
                         "tooltip": "The username or organization name whose projects are to be retrieved.",
                         "label": "Owner",
-                        "index": 0
+                        "index": 1
                     },
                     "projectType": {
-                        "type": "text",
-                        "tooltip": "Type of project to look for, e.g. 'user' or 'organization'.",
+                        "type": "select",
+                        "tooltip": "Type of project to look for",
                         "label": "Project Type",
-                        "index": 1
+                        "index": 2,
+                        "defaultValue": "user",
+                        "options": [
+                            {
+                                "label": "User Projects",
+                                "value": "user"
+                            },
+                            {
+                                "label": "Organization Projects",
+                                "value": "organization"
+                            }
+                        ]
                     },
                     "outputType": {
                         "type": "select",
                         "label": "Output Type",
-                        "index": 2,
+                        "index": 3,
                         "defaultValue": "array",
                         "tooltip": "Choose whether you want to receive the result set as one complete list, or first item only or one item at a time or stream the items to a file.",
                         "options": [

@@ -1,15 +1,11 @@
 {
     "name": "appmixer.github.project.GetProjectItem",
-    "author": "Appmixer <info@appmixer.com>",
+    "label": "Get Project Item",
     "description": "Retrieve detailed information about a specific project item including its field values and metadata.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:github"
-    },
-    "quota": {
-        "manager": "appmixer:github",
-        "resources": "requests"
     },
     "inPorts": [
         {
@@ -18,17 +14,19 @@
                 "type": "object",
                 "properties": {
                     "projectItemId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The unique identifier of the project item"
                     }
-                }
+                },
+                "required": ["projectItemId"]
             },
             "inspector": {
                 "inputs": {
                     "projectItemId": {
                         "type": "text",
                         "tooltip": "The unique identifier of the project item.",
-                        "label": "Project Item Id",
-                        "index": 0
+                        "label": "Project Item ID",
+                        "index": 1
                     }
                 }
             }
@@ -39,24 +37,31 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Item",
-                    "value": "item",
+                    "label": "ID",
+                    "value": "id",
                     "schema": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "string",
-                                "title": "Item.Id"
-                            },
-                            "content": {
-                                "type": "string",
-                                "title": "Item.Content"
-                            },
-                            "status": {
-                                "type": "string",
-                                "title": "Item.Status"
-                            }
-                        }
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Content",
+                    "value": "content",
+                    "schema": {
+                        "type": "object"
+                    }
+                },
+                {
+                    "label": "Field Values",
+                    "value": "fieldValues",
+                    "schema": {
+                        "type": "array"
+                    }
+                },
+                {
+                    "label": "Status",
+                    "value": "status",
+                    "schema": {
+                        "type": "string"
                     }
                 }
             ]
