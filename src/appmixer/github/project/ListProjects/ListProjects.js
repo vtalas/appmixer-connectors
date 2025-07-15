@@ -2,13 +2,12 @@ module.exports = {
     async receive(context) {
         const { organizationLogin, limit = 20 } = context.messages.in.content || context.messages.in || {};
 
-        try {
-            let query;
-            let variables;
+        let query;
+        let variables;
 
-            if (organizationLogin) {
-                // List organization projects
-                query = `
+        if (organizationLogin) {
+            // List organization projects
+            query = `
                     query($organization: String!, $limit: Int!) {
                         organization(login: $organization) {
                             projectsV2(first: $limit) {
@@ -35,24 +34,24 @@ module.exports = {
                         }
                     }
                 `;
-                variables = { organization: organizationLogin, limit };
-            } else {
-                // List user projects - first get current user info
-                const userResponse = await context.httpRequest({
-                    method: 'GET',
-                    url: 'https://api.github.com/user',
-                    headers: {
-                        'Authorization': `Bearer ${context.auth.accessToken}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'User-Agent': 'Appmixer-GitHub-Projects-Connector'
-                    }
-                });
-
-                if (!userResponse.data.login) {
-                    throw new Error('Failed to get current user information');
+            variables = { organization: organizationLogin, limit };
+        } else {
+            // List user projects - first get current user info
+            const userResponse = await context.httpRequest({
+                method: 'GET',
+                url: 'https://api.github.com/user',
+                headers: {
+                    'Authorization': `Bearer ${context.auth.accessToken}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'User-Agent': 'Appmixer-GitHub-Projects-Connector'
                 }
+            });
 
-                query = `
+            if (!userResponse.data.login) {
+                throw new Error('Failed to get current user information');
+            }
+
+            query = `
                     query($user: String!, $limit: Int!) {
                         user(login: $user) {
                             projectsV2(first: $limit) {
@@ -79,56 +78,54 @@ module.exports = {
                         }
                     }
                 `;
-                variables = { user: userResponse.data.login, limit };
-            }
-
-            const response = await context.httpRequest({
-                method: 'POST',
-                url: 'https://api.github.com/graphql',
-                headers: {
-                    'Authorization': `Bearer ${context.auth.accessToken}`,
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Appmixer-GitHub-Projects-Connector'
-                },
-                data: {
-                    query,
-                    variables
-                }
-            });
-
-            if (response.data.errors) {
-                throw new Error(`GraphQL errors: ${JSON.stringify(response.data.errors)}`);
-            }
-
-            const projectsData = organizationLogin ?
-                response.data.data.organization?.projectsV2 :
-                response.data.data.user?.projectsV2;
-
-            if (!projectsData) {
-                throw new Error(organizationLogin ?
-                    `Organization '${organizationLogin}' not found or no access` :
-                    'User projects not found');
-            }
-
-            const projects = projectsData.nodes.map(project => ({
-                id: project.id,
-                title: project.title,
-                shortDescription: project.shortDescription,
-                url: project.url,
-                number: project.number,
-                owner: project.owner.login,
-                public: project.public,
-                createdAt: project.createdAt,
-                updatedAt: project.updatedAt
-            }));
-
-            return context.sendJson({
-                projects,
-                totalCount: projectsData.totalCount
-            }, 'out');
-
-        } catch (error) {
-            throw new Error(`Failed to list projects: ${error.message}`);
+            variables = { user: userResponse.data.login, limit };
         }
+
+        const response = await context.httpRequest({
+            method: 'POST',
+            url: 'https://api.github.com/graphql',
+            headers: {
+                'Authorization': `Bearer ${context.auth.accessToken}`,
+                'Content-Type': 'application/json',
+                'User-Agent': 'Appmixer-GitHub-Projects-Connector'
+            },
+            data: {
+                query,
+                variables
+            }
+        });
+
+        if (response.data.errors) {
+            throw new context.CancelError(`GraphQL errors: ${JSON.stringify(response.data.errors)}`);
+        }
+
+        const projectsData = organizationLogin ?
+            response.data.data.organization?.projectsV2 :
+            response.data.data.user?.projectsV2;
+
+        if (!projectsData) {
+            throw new context.CancelError(organizationLogin ?
+                `Organization '${organizationLogin}' not found or no access` :
+                'User projects not found');
+        }
+
+        const projects = projectsData.nodes.map(project => ({
+            id: project.id,
+            title: project.title,
+            shortDescription: project.shortDescription,
+            url: project.url,
+            number: project.number,
+            owner: project.owner.login,
+            public: project.public,
+            createdAt: project.createdAt,
+            updatedAt: project.updatedAt
+        }));
+
+        console.log(projectsData.nodes);
+        return context.sendJson({
+            projects,
+            totalCount: projectsData.totalCount
+        }, 'out');
+
     }
 };
