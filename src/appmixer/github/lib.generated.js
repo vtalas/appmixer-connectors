@@ -1,6 +1,6 @@
 const pathModule = require('path');
 
-const DEFAULT_PREFIX = '{{connector_name}}-objects-export';
+const DEFAULT_PREFIX = 'github-objects-export';
 
 module.exports = {
 
