@@ -29,13 +29,21 @@ const createMockContext = (auth, messages = {}) => {
                 headers: response.headers
             };
         },
+        CancelError: class CancelError extends Error {
+            constructor(message) {
+                super(message);
+                this.name = 'CancelError';
+            }
+        },
         sendJson: (data, port) => {
             return { data, port };
         }
     };
 };
 
-describe('FindProjectItems', () => {
+describe('FindProjectItems', function() {
+    this.timeout(15000); // 15 seconds
+
     const auth = {
         accessToken: process.env.GITHUB_ACCESS_TOKEN
     };
@@ -48,6 +56,7 @@ describe('FindProjectItems', () => {
     const PROJECT_ID = 'PVT_kwDOAA12oc4AGXUu';
 
     it('should find project items', async () => {
+
         // Note: This test needs a real project ID
         const messages = {
             in: {
@@ -92,13 +101,12 @@ describe('FindProjectItems', () => {
         const context = createMockContext(auth, messages);
 
         try {
-            const result = await FindProjectItems.receive(context);
+            const { data, port } = await FindProjectItems.receive(context);
 
-            assert(result, 'Should return result');
-            assert(result.port === 'out', 'Should use out port');
-            assert(result.data, 'Should have data');
-            assert(Array.isArray(result.data.result), 'Should return array of items');
-            assert(typeof result.data.count === 'number', 'Should have count');
+            assert(port === 'out', 'Should use out port');
+            assert(data, 'Should have data');
+            assert(Array.isArray(data.result), 'Should return array of items');
+            assert(typeof data.count === 'number', 'Should have count');
         } catch (error) {
             // If the specific project ID doesn't exist, that's expected
             if (error.message.includes('not found')) {
@@ -121,10 +129,9 @@ describe('FindProjectItems', () => {
         const context = createMockContext(auth, messages);
         context.properties.generateOutputPortOptions = true;
 
-        const result = await FindProjectItems.receive(context);
+        const { data } = await FindProjectItems.receive(context);
 
-        assert(result, 'Should return result');
-        assert(Array.isArray(result.data), 'Should return array of options');
-        assert(result.data.length > 0, 'Should have options');
+        assert(Array.isArray(data), 'Should return array of options');
+        assert(data.length > 0, 'Should have options');
     });
 });

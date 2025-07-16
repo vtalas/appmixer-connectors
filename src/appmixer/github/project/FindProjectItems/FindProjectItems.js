@@ -131,10 +131,6 @@ const schema = {
         type: 'string',
         title: 'Status'
     },
-    projectId: {
-        type: 'string',
-        title: 'Project Id'
-    },
     content: {
         type: 'object',
         properties: {
@@ -225,16 +221,33 @@ const schema = {
     }
 };
 
+const normalizeContent = (content) => {
+
+    if (!content) return {};
+
+    const timelineItems = content.timelineItems?.nodes || [];
+    return {
+        id: content.id,
+        type: content.url?.includes('/pull/') ? 'PR' : 'issue',
+        title: content.title,
+        url: content.url,
+        state: content.state,
+        assignees: content.assignees ? content.assignees.nodes : [],
+        labels: content.labels ? content.labels.nodes?.map(label => label.name) : [],
+        linkedItems: timelineItems.map(item => normalizeContent(item.subject))
+    };
+};
+
 module.exports = {
+
     async receive(context) {
         const {
             projectId,
             status,
-            outputType = 'array',
-            generateOutputPortOptions
+            outputType = 'array'
         } = context.messages.in.content;
 
-        if (generateOutputPortOptions) {
+        if (context.properties.generateOutputPortOptions) {
             return lib.getOutputPortOptions(context, outputType, schema, { label: 'Items' });
         }
 
@@ -288,13 +301,12 @@ module.exports = {
         }
 
         // Process items to add easier access to status and other fields
-        const processedItems = allItems.map(item => {
+        let processedItems = allItems.map(item => {
             // Process the item to add easier access to status and other fields
             const processedItem = {
                 id: item.id,
                 title: null,
                 status: null,
-                projectId: item?.project?.id,
                 content: normalizeContent(item.content)
             };
 
@@ -316,19 +328,16 @@ module.exports = {
             return processedItem;
         });
 
-        // Filter by status if provided
-        let filteredItems = processedItems;
         if (status) {
-            filteredItems = filteredItems.filter(item =>
+            processedItems = processedItems.filter(item =>
                 item.status && item.status.toLowerCase() === status.toLowerCase()
             );
         }
 
-        if (filteredItems.length === 0) {
+        if (processedItems.length === 0) {
             return context.sendJson({}, 'notFound');
         }
 
-        return lib.sendArrayOutput({ context, records: filteredItems, outputType });
-
+        return lib.sendArrayOutput({ context, records: processedItems, outputType });
     }
 };
