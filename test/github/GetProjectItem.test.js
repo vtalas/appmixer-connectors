@@ -51,7 +51,8 @@ describe('GetProjectItem', () => {
             in: {
                 content: {
                     // valid id
-                    projectItemId: 'PVTI_lADOAA12oc4AGXUuzgbi8fA'
+                    projectItemId: 'PVTI_lADOAA12oc4AGXUuzgbi8fA' // issue
+                    // projectItemId: 'PVTI_lADOAA12oc4AGXUuzgZulYs' // pr
                 }
             }
         };
@@ -59,15 +60,15 @@ describe('GetProjectItem', () => {
         const context = createMockContext(auth, messages);
 
         try {
-            const result = await GetProjectItem.receive(context);
+            const { data, port } = await GetProjectItem.receive(context);
 
-            console.log(result);
-            assert(result, 'Should return result');
-            assert(result.port === 'out', 'Should use out port');
-            assert(result.data, 'Should have data');
-            assert(result.data.id, 'Should have item ID');
-            assert(result.data.content, 'Should have content');
-            assert(Array.isArray(result.data.fieldValues), 'Should have field values array');
+            assert(port === 'out', 'Should use out port');
+            assert(data, 'Should have data');
+            assert(data.id, 'Should have item ID');
+            assert(data.content, 'Should have content');
+            assert(data.content.id, 'Should have content id');
+            assert(data.status, 'Should have status');
+            assert(data.title, 'Should have title');
         } catch (error) {
             // If the specific item ID doesn't exist, that's expected
             if (error.message.includes('not found')) {

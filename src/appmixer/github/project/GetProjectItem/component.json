@@ -39,21 +39,31 @@
             "name": "out",
             "options": [
                 {
-                    "label": "ID",
+                    "label": "Id",
                     "value": "id",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Project",
-                    "value": "project",
+                    "label": "Title",
+                    "value": "title",
                     "schema": {
-                        "type": "object",
-                        "properties": {
-                            "id": { "type": "string", "title": "Project ID" },
-                            "title": { "type": "string", "title": "Project Title" }
-                        }
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Status",
+                    "value": "status",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Project Id",
+                    "value": "projectId",
+                    "schema": {
+                        "type": "string"
                     }
                 },
                 {
@@ -62,172 +72,89 @@
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "id": { "type": "string", "title": "Content ID" },
-                            "title": { "type": "string", "title": "Title" },
-                            "url": { "type": "string", "title": "URL" },
-                            "number": { "type": "number", "title": "Number" },
-                            "state": { "type": "string", "title": "State" },
-                            "type": { "type": "string", "title": "Type" },
+                            "id": {
+                                "type": "string",
+                                "title": "Content.Id"
+                            },
+                            "type": {
+                                "type": "string",
+                                "title": "Content.Type"
+                            },
+                            "title": {
+                                "type": "string",
+                                "title": "Content.Title"
+                            },
+                            "url": {
+                                "type": "string",
+                                "title": "Content.Url"
+                            },
+                            "state": {
+                                "type": "string",
+                                "title": "Content.State"
+                            },
                             "assignees": {
                                 "type": "array",
-                                "title": "Assignees",
                                 "items": {
                                     "type": "object",
                                     "properties": {
-                                        "login": { "type": "string", "title": "Login" }
+                                        "login": {
+                                            "type": "string",
+                                            "title": "Content.Assignees.Login"
+                                        }
                                     }
-                                }
+                                },
+                                "title": "Content.Assignees"
                             },
                             "labels": {
                                 "type": "array",
-                                "title": "Labels",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "name": { "type": "string", "title": "Name" }
-                                    }
-                                }
+                                "items": { },
+                                "title": "Content.Labels"
                             },
-                            "repository": {
-                                "type": "object",
-                                "title": "Repository",
-                                "properties": {
-                                    "name": { "type": "string", "title": "Repository Name" },
-                                    "owner": {
-                                        "type": "object",
-                                        "title": "Owner",
-                                        "properties": {
-                                            "login": { "type": "string", "title": "Owner Login" }
-                                        }
-                                    }
-                                }
-                            },
-                            "linkedPullRequests": {
+                            "linkedItems": {
                                 "type": "array",
-                                "title": "Linked Pull Requests",
                                 "items": {
                                     "type": "object",
                                     "properties": {
-                                        "id": { "type": "string", "title": "PR ID" },
-                                        "title": { "type": "string", "title": "PR Title" },
-                                        "url": { "type": "string", "title": "PR URL" },
-                                        "number": { "type": "number", "title": "PR Number" },
-                                        "state": { "type": "string", "title": "PR State" },
-                                        "type": { "type": "string", "title": "Type" },
+                                        "id": {
+                                            "type": "string",
+                                            "title": "Content.Linked Items.Id"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "title": "Content.Linked Items.Type"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "title": "Content.Linked Items.Title"
+                                        },
+                                        "url": {
+                                            "type": "string",
+                                            "title": "Content.Linked Items.Url"
+                                        },
+                                        "state": {
+                                            "type": "string",
+                                            "title": "Content.Linked Items.State"
+                                        },
                                         "assignees": {
                                             "type": "array",
-                                            "title": "Assignees",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "login": { "type": "string", "title": "Login" }
-                                                }
-                                            }
+                                            "items": { },
+                                            "title": "Content.Linked Items.Assignees"
                                         },
                                         "labels": {
                                             "type": "array",
-                                            "title": "Labels",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "name": { "type": "string", "title": "Name" }
-                                                }
-                                            }
+                                            "items": { },
+                                            "title": "Content.Linked Items.Labels"
                                         },
-                                        "repository": {
-                                            "type": "object",
-                                            "title": "Repository",
-                                            "properties": {
-                                                "name": { "type": "string", "title": "Repository Name" },
-                                                "owner": {
-                                                    "type": "object",
-                                                    "title": "Owner",
-                                                    "properties": {
-                                                        "login": { "type": "string", "title": "Owner Login" }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "linkedIssues": {
-                                "type": "array",
-                                "title": "Linked Issues",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": { "type": "string", "title": "Issue ID" },
-                                        "title": { "type": "string", "title": "Issue Title" },
-                                        "url": { "type": "string", "title": "Issue URL" },
-                                        "number": { "type": "number", "title": "Issue Number" },
-                                        "state": { "type": "string", "title": "Issue State" },
-                                        "type": { "type": "string", "title": "Type" },
-                                        "assignees": {
+                                        "linkedItems": {
                                             "type": "array",
-                                            "title": "Assignees",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "login": { "type": "string", "title": "Login" }
-                                                }
-                                            }
-                                        },
-                                        "labels": {
-                                            "type": "array",
-                                            "title": "Labels",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "name": { "type": "string", "title": "Name" }
-                                                }
-                                            }
-                                        },
-                                        "repository": {
-                                            "type": "object",
-                                            "title": "Repository",
-                                            "properties": {
-                                                "name": { "type": "string", "title": "Repository Name" },
-                                                "owner": {
-                                                    "type": "object",
-                                                    "title": "Owner",
-                                                    "properties": {
-                                                        "login": { "type": "string", "title": "Owner Login" }
-                                                    }
-                                                }
-                                            }
+                                            "items": { },
+                                            "title": "Content.Linked Items.Linked Items"
                                         }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                {
-                    "label": "Field Values",
-                    "value": "fieldValues",
-                    "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "field": {
-                                    "type": "object",
-                                    "title": "Field",
-                                    "properties": {
-                                        "name": { "type": "string", "title": "Field Name" }
                                     }
                                 },
-                                "value": { "type": "string", "title": "Value" }
+                                "title": "Content.Linked Items"
                             }
                         }
-                    }
-                },
-                {
-                    "label": "Status",
-                    "value": "status",
-                    "schema": {
-                        "type": "string"
                     }
                 }
             ]

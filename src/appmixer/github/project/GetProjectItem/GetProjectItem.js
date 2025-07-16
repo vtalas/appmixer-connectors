@@ -173,7 +173,25 @@ const query = `
             }
         `;
 
+const normalizeContent = (content) => {
+
+    if (!content) return {};
+
+    const timelineItems = content.timelineItems?.nodes || [];
+    return {
+        id: content.id,
+        type: content.url?.includes('/pull/') ? 'PR' : 'issue',
+        title: content.title,
+        url: content.url,
+        state: content.state,
+        assignees: content.assignees ? content.assignees.nodes : [],
+        labels: content.labels ? content.labels.nodes?.map(label => label.name) : [],
+        linkedItems: timelineItems.map(item => normalizeContent(item.subject))
+    };
+};
+
 module.exports = {
+
     async receive(context) {
 
         const { projectItemId } = context.messages.in.content;
@@ -192,10 +210,10 @@ module.exports = {
         });
 
         if (data.errors) {
-            throw new context.CancelError(`GraphQL errors: ${JSON.stringify(data.errors)}`);
+            throw new context.CancelError(data.errors);
         }
 
-        const item = data.data.node;
+        const item = data?.data?.node;
         if (!item) {
             throw new context.CancelError(`Project item with ID '${projectItemId}' not found`);
         }
@@ -203,82 +221,26 @@ module.exports = {
         // Process the item to add easier access to status and other fields
         const processedItem = {
             id: item.id,
-            projectId: item?.project.id || null,
-            content: null,
-            fieldValues: [],
-            status: null
+            title: null,
+            status: null,
+            projectId: item?.project?.id,
+            content: normalizeContent(item.content)
         };
 
-        // Process content with type information and flatten arrays
-        if (item.content) {
-            const contentType = item.content.__typename;
-            processedItem.content = {
-                ...item.content,
-                type: contentType
-            };
-            // Remove the __typename field as it's now in type
-            delete processedItem.content.__typename;
-
-            // Process assignees and labels arrays
-            if (processedItem.content.assignees?.nodes) {
-                processedItem.content.assignees = processedItem.content.assignees.nodes;
-            }
-            if (processedItem.content.labels?.nodes) {
-                processedItem.content.labels = processedItem.content.labels.nodes;
-            }
-
-            // Process linked PRs/Issues from timeline items
-            if (processedItem.content.timelineItems?.nodes) {
-                const connectedItems = [];
-                processedItem.content.timelineItems.nodes.forEach(timelineItem => {
-                    if (timelineItem.subject) {
-                        const connectedItem = {
-                            ...timelineItem.subject,
-                            type: contentType === 'Issue' ? 'PullRequest' : 'Issue'
-                        };
-
-                        // Process assignees and labels for connected items
-                        if (connectedItem.assignees?.nodes) {
-                            connectedItem.assignees = connectedItem.assignees.nodes;
-                        }
-                        if (connectedItem.labels?.nodes) {
-                            connectedItem.labels = connectedItem.labels.nodes;
-                        }
-
-                        connectedItems.push(connectedItem);
-                    }
-                });
-
-                // Add connected items to the response
-                if (contentType === 'Issue') {
-                    processedItem.content.linkedPullRequests = connectedItems;
-                } else if (contentType === 'PullRequest') {
-                    processedItem.content.linkedIssues = connectedItems;
-                }
-
-                // Remove the timeline items as they're now processed
-                delete processedItem.content.timelineItems;
-            }
-        }
-
-        // Process field values with better value extraction
         const fieldNodes = item.fieldValues?.nodes || [];
-        processedItem.fieldValues = fieldNodes.map(fv => {
-            const fieldValue = {
-                field: fv.field,
-                value: fv.text || fv.name || fv.title || String(fv.number) || fv.date || null
-            };
-            return fieldValue;
-        });
+        const fields = fieldNodes.reduce((res, item) => {
 
-        // Find status field value for easier filtering
-        const statusField = fieldNodes.find(fv =>
-            fv.field && fv.field.name && fv.field.name.toLowerCase() === 'status'
-        );
+            const key = item.field?.name || item.field?.id;
+            if (key) {
+                res[key.toLowerCase()] = item.text || item.name ||
+                    item.title || String(item.number) ||
+                    item.date || null;
+            }
+            return res;
+        }, {});
 
-        if (statusField) {
-            processedItem.status = statusField.name || statusField.text || statusField.title;
-        }
+        processedItem.title = fields.title;
+        processedItem.status = fields.status;
 
         return context.sendJson(processedItem, 'out');
     }
