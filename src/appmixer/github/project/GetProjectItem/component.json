@@ -46,17 +46,181 @@
                     }
                 },
                 {
+                    "label": "Project",
+                    "value": "project",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string", "title": "Project ID" },
+                            "title": { "type": "string", "title": "Project Title" }
+                        }
+                    }
+                },
+                {
                     "label": "Content",
                     "value": "content",
                     "schema": {
-                        "type": "object"
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string", "title": "Content ID" },
+                            "title": { "type": "string", "title": "Title" },
+                            "url": { "type": "string", "title": "URL" },
+                            "number": { "type": "number", "title": "Number" },
+                            "state": { "type": "string", "title": "State" },
+                            "type": { "type": "string", "title": "Type" },
+                            "assignees": {
+                                "type": "array",
+                                "title": "Assignees",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "login": { "type": "string", "title": "Login" }
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "type": "array",
+                                "title": "Labels",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": { "type": "string", "title": "Name" }
+                                    }
+                                }
+                            },
+                            "repository": {
+                                "type": "object",
+                                "title": "Repository",
+                                "properties": {
+                                    "name": { "type": "string", "title": "Repository Name" },
+                                    "owner": {
+                                        "type": "object",
+                                        "title": "Owner",
+                                        "properties": {
+                                            "login": { "type": "string", "title": "Owner Login" }
+                                        }
+                                    }
+                                }
+                            },
+                            "linkedPullRequests": {
+                                "type": "array",
+                                "title": "Linked Pull Requests",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string", "title": "PR ID" },
+                                        "title": { "type": "string", "title": "PR Title" },
+                                        "url": { "type": "string", "title": "PR URL" },
+                                        "number": { "type": "number", "title": "PR Number" },
+                                        "state": { "type": "string", "title": "PR State" },
+                                        "type": { "type": "string", "title": "Type" },
+                                        "assignees": {
+                                            "type": "array",
+                                            "title": "Assignees",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "login": { "type": "string", "title": "Login" }
+                                                }
+                                            }
+                                        },
+                                        "labels": {
+                                            "type": "array",
+                                            "title": "Labels",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": { "type": "string", "title": "Name" }
+                                                }
+                                            }
+                                        },
+                                        "repository": {
+                                            "type": "object",
+                                            "title": "Repository",
+                                            "properties": {
+                                                "name": { "type": "string", "title": "Repository Name" },
+                                                "owner": {
+                                                    "type": "object",
+                                                    "title": "Owner",
+                                                    "properties": {
+                                                        "login": { "type": "string", "title": "Owner Login" }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "linkedIssues": {
+                                "type": "array",
+                                "title": "Linked Issues",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string", "title": "Issue ID" },
+                                        "title": { "type": "string", "title": "Issue Title" },
+                                        "url": { "type": "string", "title": "Issue URL" },
+                                        "number": { "type": "number", "title": "Issue Number" },
+                                        "state": { "type": "string", "title": "Issue State" },
+                                        "type": { "type": "string", "title": "Type" },
+                                        "assignees": {
+                                            "type": "array",
+                                            "title": "Assignees",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "login": { "type": "string", "title": "Login" }
+                                                }
+                                            }
+                                        },
+                                        "labels": {
+                                            "type": "array",
+                                            "title": "Labels",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": { "type": "string", "title": "Name" }
+                                                }
+                                            }
+                                        },
+                                        "repository": {
+                                            "type": "object",
+                                            "title": "Repository",
+                                            "properties": {
+                                                "name": { "type": "string", "title": "Repository Name" },
+                                                "owner": {
+                                                    "type": "object",
+                                                    "title": "Owner",
+                                                    "properties": {
+                                                        "login": { "type": "string", "title": "Owner Login" }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 {
                     "label": "Field Values",
                     "value": "fieldValues",
                     "schema": {
-                        "type": "array"
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "field": {
+                                    "type": "object",
+                                    "title": "Field",
+                                    "properties": {
+                                        "name": { "type": "string", "title": "Field Name" }
+                                    }
+                                },
+                                "value": { "type": "string", "title": "Value" }
+                            }
+                        }
                     }
                 },
                 {

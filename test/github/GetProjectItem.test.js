@@ -50,7 +50,8 @@ describe('GetProjectItem', () => {
         const messages = {
             in: {
                 content: {
-                    projectItemId: 'PVTI_lADOBumzpM4AH1rMzgBXnT0' // Example project item ID
+                    // valid id
+                    projectItemId: 'PVTI_lADOAA12oc4AGXUuzgbi8fA'
                 }
             }
         };
@@ -60,6 +61,7 @@ describe('GetProjectItem', () => {
         try {
             const result = await GetProjectItem.receive(context);
 
+            console.log(result);
             assert(result, 'Should return result');
             assert(result.port === 'out', 'Should use out port');
             assert(result.data, 'Should have data');
