@@ -83,12 +83,12 @@ module.exports = {
         });
 
         if (data.errors) {
-            throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
+            throw new context.CancelError(data.errors);
         }
 
         const project = data.data.node;
         if (!project) {
-            throw new Error(`Project with ID '${projectId}' not found`);
+            throw context.CancelError(`Project with ID '${projectId}' not found`);
         }
 
         const fields = project.fields.nodes || [];

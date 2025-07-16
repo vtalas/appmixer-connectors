@@ -37,6 +37,9 @@ const createMockContext = (auth, messages = {}) => {
         },
         sendJson: (data, port) => {
             return { data, port };
+        },
+        log: (message) => {
+            console.log(message);
         }
     };
 };
