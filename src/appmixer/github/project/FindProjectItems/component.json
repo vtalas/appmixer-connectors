@@ -24,11 +24,6 @@
                         "type": "string",
                         "description": "The status value to filter items by (e.g., 'Todo', 'In Progress', 'Done')"
                     },
-                    "contentType": {
-                        "type": "string",
-                        "enum": ["Issue", "PullRequest", "DraftIssue"],
-                        "description": "Filter by content type (Issue, PullRequest, or DraftIssue)"
-                    },
                     "outputType": {
                         "type": "string",
                         "enum": ["array", "first", "object", "file"],
@@ -50,26 +45,6 @@
                         "tooltip": "The status value to filter items by (e.g., 'Todo', 'In Progress', 'Done'). Leave empty to get all items.",
                         "label": "Status",
                         "index": 2
-                    },
-                    "contentType": {
-                        "type": "select",
-                        "tooltip": "Filter by content type. Leave empty to get all types (Issues, Pull Requests, and Draft Issues).",
-                        "label": "Content Type",
-                        "index": 3,
-                        "options": [
-                            {
-                                "label": "Issues",
-                                "value": "Issue"
-                            },
-                            {
-                                "label": "Pull Requests",
-                                "value": "PullRequest"
-                            },
-                            {
-                                "label": "Draft Issues",
-                                "value": "DraftIssue"
-                            }
-                        ]
                     },
                     "outputType": {
                         "type": "select",

@@ -47,11 +47,6 @@ describe('FindProjectItems', () => {
 
     const PROJECT_ID = 'PVT_kwDOAA12oc4AGXUu';
 
-    before(async function() {
-        // Skip all tests if the access token is not set
-        if (!auth.accessToken) { this.skip(); }
-    });
-
     it('should find project items', async () => {
         // Note: This test needs a real project ID
         const messages = {
@@ -98,8 +93,6 @@ describe('FindProjectItems', () => {
 
         try {
             const result = await FindProjectItems.receive(context);
-
-            console.log(result.data);
 
             assert(result, 'Should return result');
             assert(result.port === 'out', 'Should use out port');
