@@ -131,6 +131,7 @@ describe('FindProjectItems', function() {
 
         const { data } = await FindProjectItems.receive(context);
 
+        console.log(data);
         assert(Array.isArray(data), 'Should return array of options');
         assert(data.length > 0, 'Should have options');
     });

@@ -38,6 +38,37 @@ const query = `
                                                 login
                                             }
                                         }
+                                        timelineItems(first: 20, itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT]) {
+                                            nodes {
+                                                ... on ConnectedEvent {
+                                                    subject {
+                                                        ... on PullRequest {
+                                                            id
+                                                            title
+                                                            url
+                                                            number
+                                                            state
+                                                            assignees(first: 10) {
+                                                                nodes {
+                                                                    login
+                                                                }
+                                                            }
+                                                            labels(first: 10) {
+                                                                nodes {
+                                                                    name
+                                                                }
+                                                            }
+                                                            repository {
+                                                                name
+                                                                owner {
+                                                                    login
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                     ... on PullRequest {
                                         id
@@ -59,6 +90,37 @@ const query = `
                                             name
                                             owner {
                                                 login
+                                            }
+                                        }
+                                        timelineItems(first: 20, itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT]) {
+                                            nodes {
+                                                ... on ConnectedEvent {
+                                                    subject {
+                                                        ... on Issue {
+                                                            id
+                                                            title
+                                                            url
+                                                            number
+                                                            state
+                                                            assignees(first: 10) {
+                                                                nodes {
+                                                                    login
+                                                                }
+                                                            }
+                                                            labels(first: 10) {
+                                                                nodes {
+                                                                    name
+                                                                }
+                                                            }
+                                                            repository {
+                                                                name
+                                                                owner {
+                                                                    login
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -234,7 +296,7 @@ const normalizeContent = (content) => {
         state: content.state,
         assignees: content.assignees ? content.assignees.nodes : [],
         labels: content.labels ? content.labels.nodes?.map(label => label.name) : [],
-        linkedItems: timelineItems.map(item => normalizeContent(item.subject))
+        linkedItems: timelineItems.map(item => normalizeContent(item?.subject))
     };
 };
 
@@ -296,10 +358,11 @@ module.exports = {
             cursor = project.items.pageInfo.endCursor;
         }
 
-        if (requestCount >= maxRequests && context.log) {
+        if (requestCount >= maxRequests) {
             await context.log({ message: `Reached maximum request limit (${maxRequests}). Some items might be missing.` });
         }
 
+        await context.log({ step: 'raw items', allItems });
         // Process items to add easier access to status and other fields
         let processedItems = allItems.map(item => {
             // Process the item to add easier access to status and other fields

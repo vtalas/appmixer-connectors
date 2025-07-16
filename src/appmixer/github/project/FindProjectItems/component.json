@@ -10,6 +10,13 @@
             "read:project"
         ]
     },
+    "quota": {
+        "manager": "appmixer:github",
+        "resources": "requests-projects",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
     "inPorts": [
         {
             "name": "in",
@@ -85,7 +92,8 @@
                         "generateOutputPortOptions": true
                     },
                     "messages": {
-                        "in/outputType": "inputs/in/outputType"
+                        "in/outputType": "inputs/in/outputType",
+                        "in/projectId": "inputs/in/projectId"
                     }
                 }
             }
