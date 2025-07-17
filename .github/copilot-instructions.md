@@ -927,7 +927,7 @@ module.exports = {
 
 ### When editing existing or creating new component
 
-IMPORTANT! use the `instructions-component-standards` to get comprehensive guidelines on how to create or edit components in Appmixer.
+IMPORTANT! use the `instructions-component-standards` tool to get comprehensive guidelines on how to create or edit components in Appmixer.
 
 ### When adding new field to component.json
 
