@@ -925,6 +925,10 @@ module.exports = {
 
 ## Common Patterns
 
+### When editing existing or creating new component
+
+IMPORTANT! use the `instructions-component-standards` to get comprehensive guidelines on how to create or edit components in Appmixer.
+
 ### When adding new field to component.json
 
 > Use-case: "I want to add a new number field `itemCount` to the `MyAwesomeComponent` component."
