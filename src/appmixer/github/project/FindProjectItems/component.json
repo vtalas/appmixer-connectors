@@ -94,7 +94,7 @@
                     },
                     "messages": {
                         "in/outputType": "inputs/in/outputType",
-                        "in/projectId": "inputs/in/projectId"
+                        "in/projectId": "any"
                     }
                 }
             }

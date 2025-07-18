@@ -83,7 +83,7 @@ module.exports = {
 
         const project = data.data.node;
         if (!project) {
-            throw new context.CancelError(data.errors);
+            throw new context.CancelError(`Project with ID '${projectId}' not found`);
         }
 
         // Flatten fields for easier access
