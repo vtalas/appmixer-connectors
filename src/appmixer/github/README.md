@@ -1,4 +1,4 @@
-
+# Appmixer cli tests for GitHub project components
 
 appmixer test component src/appmixer/github/project/FindProjectItems -i '{"in":{"projectId":"PVT_kwDOAA12oc4AGXUu","status":"Done","outputType":"array"}}'
 

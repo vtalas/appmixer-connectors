@@ -1,6 +1,6 @@
 'use strict';
 
-const lib = require('../../lib.generated');
+const lib = require('../../lib');
 
 const query = `
             query($projectId: ID!, $after: String) {
@@ -362,7 +362,6 @@ module.exports = {
             await context.log({ message: `Reached maximum request limit (${maxRequests}). Some items might be missing.` });
         }
 
-        await context.log({ step: 'raw items', allItems });
         // Process items to add easier access to status and other fields
         let processedItems = allItems.map(item => {
             // Process the item to add easier access to status and other fields

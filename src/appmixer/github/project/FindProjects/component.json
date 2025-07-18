@@ -41,7 +41,8 @@
                         "enum": ["array", "first", "object", "file"],
                         "description": "Output format"
                     }
-                }
+                },
+                "required": ["owner"]
             },
             "inspector": {
                 "inputs": {
