@@ -30,7 +30,7 @@
                     },
                     "status": {
                         "type": "string",
-                        "description": "The status value to filter items by (e.g., 'Todo', 'In Progress', 'Done')"
+                        "description": "Filter items by status. Can be a single status (e.g., 'Todo') or multiple statuses separated by commas (e.g., 'Todo,In Progress,Done'). Case-insensitive."
                     },
                     "outputType": {
                         "type": "string",
@@ -50,7 +50,7 @@
                     },
                     "status": {
                         "type": "text",
-                        "tooltip": "The status value to filter items by (e.g., 'Todo', 'In Progress', 'Done'). Leave empty to get all items.",
+                        "tooltip": "Filter items by status. Enter a single status (e.g., 'Todo') or multiple statuses separated by commas (e.g., 'Todo,In Progress,Done'). Leave empty to get all items. Case-insensitive.",
                         "label": "Status",
                         "index": 2
                     },

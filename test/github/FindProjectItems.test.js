@@ -120,6 +120,36 @@ describe('FindProjectItems', function() {
         }
     });
 
+    it('should filter project items by multiple statuses', async () => {
+        const messages = {
+            in: {
+                content: {
+                    projectId: PROJECT_ID, // Example project ID
+                    status: 'Todo,In Progress,Done', // Multiple statuses
+                    outputType: 'array'
+                }
+            }
+        };
+
+        const context = createMockContext(auth, messages);
+
+        try {
+            const { data, port } = await FindProjectItems.receive(context);
+
+            assert(port === 'out', 'Should use out port');
+            assert(data, 'Should have data');
+            assert(Array.isArray(data.result), 'Should return array of items');
+            assert(typeof data.count === 'number', 'Should have count');
+        } catch (error) {
+            // If the specific project ID doesn't exist, that's expected
+            if (error.message.includes('not found')) {
+                console.log('Project not found - this is expected if using example ID');
+            } else {
+                throw error;
+            }
+        }
+    });
+
     it('should generate output port options', async () => {
         const messages = {
             in: {

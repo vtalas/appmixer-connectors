@@ -390,10 +390,17 @@ module.exports = {
             return processedItem;
         });
 
-        if (status) {
-            processedItems = processedItems.filter(item =>
-                item.status && item.status.toLowerCase() === status.toLowerCase()
-            );
+        // Filter by status if provided
+        const statusItems = status ?
+            status.split(',').filter(s => s.trim()).map(s => s.trim().toLowerCase()) : [];
+
+        if (statusItems.length > 0) {
+            processedItems = processedItems.filter(item => {
+                if (!item.status) {
+                    return false;
+                }
+                return statusItems.includes(item.status.toLowerCase());
+            });
         }
 
         if (processedItems.length === 0) {
