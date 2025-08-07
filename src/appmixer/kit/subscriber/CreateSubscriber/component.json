@@ -29,7 +29,8 @@
                     "customFields": {
                         "type": "object"
                     }
-                }
+                },
+                "required": ["email"]
             },
             "inspector": {
                 "inputs": {
@@ -53,7 +54,7 @@
                     },
                     "customFields": {
                         "type": "text",
-                        "tooltip": "Optional key/value pairs for custom subscriber information.",
+                        "tooltip": "Optional key/value pairs for custom subscriber information (JSON format).",
                         "label": "Custom Fields",
                         "index": 3
                     }

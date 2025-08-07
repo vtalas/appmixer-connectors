@@ -3,11 +3,13 @@
 module.exports = {
     type: 'apiKey',
     definition: {
+        tokenType: 'authentication-token',
+        
         auth: {
             apiKey: {
                 type: 'text',
                 name: 'API Key',
-                tooltip: 'Enter your API Key.'
+                tooltip: 'Enter your Kit API Key. You can find it in your account settings under Developer Settings.'
             }
         },
 
@@ -16,7 +18,7 @@ module.exports = {
                 method: 'GET',
                 url: 'https://api.kit.com/v4/account',
                 headers: {
-                    'X-Kit-Api-Key': `${context.apiKey}`
+                    'X-Kit-Api-Key': context.apiKey
                 }
             });
 
@@ -30,14 +32,15 @@ module.exports = {
                 method: 'GET',
                 url: 'https://api.kit.com/v4/account',
                 headers: {
-                    'X-Kit-Api-Key': `${context.apiKey}`
+                    'X-Kit-Api-Key': context.apiKey
                 }
             });
 
-            if (!response.data) {
+            if (!response.data || !response.data.account) {
                 throw new Error('Authentication failed: Invalid API Key or unexpected response.');
             }
             return true;
         }
     }
 };
+

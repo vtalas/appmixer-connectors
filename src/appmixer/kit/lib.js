@@ -16,22 +16,23 @@ module.exports = {
                 throw new context.CancelError('No records available for first output type');
             }
             // One by one.
-            await context.sendJson(
+            return await context.sendJson(
                 { ...records[0], index: 0, count: records.length },
                 outputPortName
             );
         } else if (outputType === 'object') {
             // One by one.
-            // One by one.
+            let lastResult;
             for (let index = 0; index < records.length; index++) {
-                await context.sendJson(
+                lastResult = await context.sendJson(
                     { ...records[index], index, count: records.length },
                     outputPortName
                 );
             }
+            return lastResult;
         } else if (outputType === 'array') {
             // All at once.
-            await context.sendJson({ result: records, count: records.length }, outputPortName);
+            return await context.sendJson({ result: records, count: records.length }, outputPortName);
         } else if (outputType === 'file') {
 
             // Into CSV file.
@@ -43,7 +44,7 @@ module.exports = {
             const savedFile = await context.saveFileStream(pathModule.normalize(fileName), buffer);
 
             await context.log({ step: 'File was saved', fileName, fileId: savedFile.fileId });
-            await context.sendJson({ fileId: savedFile.fileId }, outputPortName);
+            return await context.sendJson({ fileId: savedFile.fileId }, outputPortName);
         } else {
             throw new context.CancelError('Unsupported outputType ' + outputType);
         }
