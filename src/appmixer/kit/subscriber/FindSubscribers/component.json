@@ -1,0 +1,169 @@
+{
+    "name": "appmixer.kit.subscriber.FindSubscribers",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Retrieve a list of subscribers filtered by query parameters such as search term or status.",
+    "version": "1.0.0",
+    "private": false,
+    "auth": {
+        "service": "appmixer:kit"
+    },
+    "quota": {
+        "manager": "appmixer:kit",
+        "resources": "requests"
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "emailAddress": {
+                        "type": "string"
+                    },
+                    "createdAfter": {
+                        "type": "string"
+                    },
+                    "createdBefore": {
+                        "type": "string"
+                    },
+                    "updatedAfter": {
+                        "type": "string"
+                    },
+                    "updatedBefore": {
+                        "type": "string"
+                    },
+                    "outputType": {
+                        "type": "string"
+                    }
+                }
+            },
+            "inspector": {
+                "inputs": {
+                    "emailAddress": {
+                        "type": "text",
+                        "tooltip": "Filter subscribers by email address.",
+                        "label": "Email Address",
+                        "index": 0
+                    },
+                    "status": {
+                        "type": "select",
+                        "tooltip": "Filter subscribers by status.",
+                        "label": "Status",
+                        "index": 1,
+                        "options": [
+                            {
+                                "label": "Active",
+                                "value": "active"
+                            },
+                            {
+                                "label": "Inactive",
+                                "value": "inactive"
+                            },
+                            {
+                                "label": "Bounced",
+                                "value": "bounced"
+                            },
+                            {
+                                "label": "Complained",
+                                "value": "complained"
+                            },
+                            {
+                                "label": "Cancelled",
+                                "value": "cancelled"
+                            },
+                            {
+                                "label": "All",
+                                "value": "all"
+                            }
+                        ]
+                    },
+                    "createdAfter": {
+                        "type": "date-time",
+                        "tooltip": "Filter subscribers created after this date.",
+                        "label": "Created After",
+                        "index": 2,
+                        "config": {
+                            "enableTime": false,
+                            "format": "YYYY-MM-DD"
+                        }
+                    },
+                    "createdBefore": {
+                        "type": "date-time",
+                        "tooltip": "Filter subscribers created before this date.",
+                        "label": "Created After",
+                        "index": 3,
+                        "config": {
+                            "enableTime": false,
+                            "format": "YYYY-MM-DD"
+                        }
+                    },
+                    "updatedAfter": {
+                        "type": "date-time",
+                        "tooltip": "Filter subscribers updated after this date.",
+                        "label": "Created After",
+                        "index": 4,
+                        "config": {
+                            "enableTime": false,
+                            "format": "YYYY-MM-DD"
+                        }
+                    },
+                    "updatedBefore": {
+                        "type": "date-time",
+                        "tooltip": "Filter subscribers updated before this date.",
+                        "label": "Created After",
+                        "index": 5,
+                        "config": {
+                            "enableTime": false,
+                            "format": "YYYY-MM-DD"
+                        }
+                    },
+                    "outputType": {
+                        "type": "select",
+                        "label": "Output Type",
+                        "index": 6,
+                        "defaultValue": "array",
+                        "tooltip": "Choose whether you want to receive the result set as one complete list, or first item only or one item at a time or stream the items to a file.",
+                        "options": [
+                            {
+                                "label": "First Item Only",
+                                "value": "first"
+                            },
+                            {
+                                "label": "All items at once",
+                                "value": "array"
+                            },
+                            {
+                                "label": "One item at a time",
+                                "value": "object"
+                            },
+                            {
+                                "label": "Store to CSV file",
+                                "value": "file"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "source": {
+                "url": "/component/appmixer/kit/subscriber/FindSubscribers?outPort=out",
+                "data": {
+                    "properties": {
+                        "generateOutputPortOptions": true
+                    },
+                    "messages": {
+                        "in/outputType": "inputs/in/outputType"
+                    }
+                }
+            }
+        }
+    ],
+    "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAOCAYAAABO3B6yAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAAAJ7SURBVEhLpZM9aBRBGIbfb+5MsrtccohcZxHFiFgYCIKWFwRTWFmIgpWFKCKkE8HWJiJBTSGaIIKQRgtBiIVwakAEAyIEUeIPRi3iX+Lt3c7u3e28Fslxu3NnJPjAFPO88818uzsrYeBPAhAkqZuxnr6+t82p1sv9CpuGjeGAykg+Nuqi67qLQfBzawZd1wkMA4gh8qC7xztNMqyF1YnUnquHPOp2c9MpGekK7aG1XwQAY/yCDvx7YeCbZF6trgwBQBj4D+3aMPCnSqVSNgz8sD0rX0sdDkDZookxZnM9lFklclhE0m+oicigrQAMFovFBoDHdqBUxjXGLxjjF1gub8F6DdSi6jgEA7ZPIsBT2xEyCwAx4wskw1RGnqhHslSPZCnKqnf4awMxt4E4bmubrh7vJMkbIBZAvIHB5e8/fp0HAM/Lz6lsZljAl3ZdEol0hbYk+Eoge9am30TkPtF6mkYsY57nfalr/0DDYFerEoDCvOPkSlpXRmC4AwCUyG4IjhJYFFn7NDF1t5c71/ES2iMM/EoYlCfI5XzyrLBavtNh7U0A0IF/tz3bwCVMIiKeiDpT09nnxvcLdv4/dGzAGF4yNFdIBKlAZGc9i6mU2xDiJmdar2zv2AAUZhy3d1TBjJA06VAOVasre9OuHSEj2wE4FgWVqzooj0e68kyYme/cwBpdbu+sADO2z6rMEdu1Iep1mxJxIDirRI0C2A9A1m0Aq//1kw5un+1sKI1pkjXb2/yzAQN+th3AftvYOE7+A8WcItmwsxZCRfAFgLnkUEp+txbxq52DXAAAUZn3bRnkY7PScfpuSYwhkpMgF0hGJGOCnwS8bWAO/gEX9K4U0ajT5gAAAABJRU5ErkJggg=="
+}
