@@ -1,0 +1,28 @@
+{
+    "name": "appmixer.bigCommerce",
+    "label": "BigCommerce",
+    "category": "applications",
+    "description": "BigCommerce Admin APIs for Products (v3), Customers (v3), Orders (v2), and Webhooks (v3). Base URL: https://api.bigcommerce.com/stores/{store_hash}/. Use headers X-Auth-Token and X-Auth-Client on every request. Typical max page size is 250 for list/find endpoints; connector deliberately fetches only the first page. Rate limiting: observe headers X-Rate-Limit-Requests-Left and X-Rate-Limit-Time-Reset-MS and back off accordingly.",
+    "version": "1.0.0",
+    "icon": "data:image/svg+xml;base64,PD94bW",
+    "baseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+    "apiVersions": {
+        "products": "v3",
+        "customers": "v3",
+        "orders": "v2",
+        "webhooks": "v3"
+    },
+    "rateLimiting": {
+        "headers": [
+            "X-Rate-Limit-Requests-Left",
+            "X-Rate-Limit-Time-Reset-MS"
+        ],
+        "notes": "Respect remaining quota and reset time; implement retries with exponential backoff."
+    },
+    "requiredHeaders": [
+        "X-Auth-Token: {access_token}",
+        "X-Auth-Client: {client_id}",
+        "Accept: application/json",
+        "Content-Type: application/json"
+    ]
+}
