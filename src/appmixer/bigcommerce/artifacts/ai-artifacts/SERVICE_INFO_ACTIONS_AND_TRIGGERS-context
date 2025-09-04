@@ -45,7 +45,7 @@ High-level steps to obtain OAuth credentials and connect:
      - Redirect URL (must match your Appmixer OAuth redirect endpoint).
      - Scopes (see Recommended Scopes below).
    - Retrieve Client ID and Client Secret.
-2. In Appmixer, configure the BigCommerce connector’s OAuth settings:
+2. In Appmixer, configure the BigCommerce connector's OAuth settings:
    - Client ID
    - Client Secret
    - Redirect URL (the same as configured in the app settings)
@@ -90,7 +90,7 @@ Note: Scope identifiers and available read-only/write variants are documented in
 How to obtain an API account (token):
 1. In the BigCommerce store control panel, go to: Settings → API → API Accounts.
 2. Create API Account → choose a name and select required permissions (read/write as needed for Products, Customers, Orders; Webhooks if needed).
-3. After creation, you’ll receive:
+3. After creation, you'll receive:
    - Access Token
    - Client ID
    - (Also an API Path showing your store hash)
@@ -199,7 +199,7 @@ All triggers will prefer webhooks and fall back to polling when webhook creation
 
 2) OrderStatusChanged (Trigger)
 - Event: store/order/statusUpdated
-- Behavior: Fires when an order’s status changes. Can include previous/new status in payload; fetch full order if necessary.
+- Behavior: Fires when an order's status changes. Can include previous/new status in payload; fetch full order if necessary.
 - Related API: GET /v2/orders/{order_id}
 
 3) ProductCreated (Trigger)

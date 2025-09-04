@@ -1,122 +1,74 @@
 'use strict';
 
 module.exports = {
-    type: 'oauth2',
+    type: 'apiKey',
 
-    definition: () => {
-        
-        return {
+    definition: {
+        tokenType: 'authentication-token',
 
-            scope: [
-                'store_v2_orders'
-                // 'store_v2_products',
-                // 'store_v2_customers',
-                // 'store_v2_orders_read',
-                // 'store_v2_information_read',
-                // 'store_webhook'
-            ],
-
-            accountNameFromProfileInfo: (context) => {
-                return context.profileInfo.domain || context.profileInfo.store_name;
+        auth: {
+            storeHash: {
+                type: 'text',
+                name: 'Store Hash',
+                tooltip: 'You can find it by login to your BigCommerce Store -> Go to Settings -> Click API Accounts -> Create API Account (V2/V3 Token), in the "API path" field it shows the store hash in this url: https://api.bigcommerce.com/stores/<storehash>/v3'
             },
+            accessToken: {
+                type: 'text',
+                name: 'Access Token',
+                tooltip: 'You can generate it by login to your BigCommerce Store -> Go to Settings -> Click API Accounts -> Create API Account (V2/V3 Token), more information <a href="https://developer.bigcommerce.com/docs/start/authentication#access-tokens" target="_blank">here</a>.'
+            }
+        },
 
-            emailFromProfileInfo: (context) => {
-                return context.profileInfo.admin_email || context.profileInfo.email;
-            },
+        accountNameFromProfileInfo: 'store_name',
 
-            authUrl: (context) => {
-                const params = new URLSearchParams({
-                    client_id: context.clientId,
-                    redirect_uri: context.callbackUrl,
-                    response_type: 'code',
-                    scope: context.scope.join(' '),
-                    state: context.ticket
-                });
-                return `https://login.bigcommerce.com/oauth2/authorize?${params}`;
-            },
+        requestProfileInfo: async (context) => {
 
-            requestAccessToken: async (context) => {
-                console.log("lajsdkljasjdl");
-                const response = await context.httpRequest({
-                    method: 'POST',
-                    url: 'https://login.bigcommerce.com/oauth2/token',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    data: {
-                        client_id: context.clientId,
-                        client_secret: context.clientSecret,
-                        code: context.authorizationCode,
-                        scope: context.scope.join(' '),
-                        grant_type: 'authorization_code',
-                        redirect_uri: context.callbackUrl,
-                        context: context.context
-                    }
-                });
+            const url = `https://api.bigcommerce.com/stores/${context.storeHash}/v2/store`;
+            const headers = {
+                'X-Auth-Token': context.accessToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            };
 
-                const { access_token: accessToken, context: storeContext, user, owner } = response.data;
-                
-                // Extract store hash from context (format: stores/{store_hash})
-                const storeHash = storeContext.replace('stores/', '');
+            const response = await context.httpRequest({
+                method: 'GET',
+                url,
+                headers
+            });
 
-                return {
-                    accessToken: accessToken,
-                    storeHash: storeHash,
-                    context: storeContext,
-                    user: user,
-                    owner: owner
-                };
-            },
+            if (!response.data) {
+                throw new Error('Failed to retrieve store profile info');
+            }
 
-            requestProfileInfo: async (context) => {
-                const url = `https://api.bigcommerce.com/stores/${context.storeHash}/v3/store`;
-                const headers = {
-                    'X-Auth-Token': context.accessToken,
-                    'X-Auth-Client': context.clientId,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                };
+            return {
+                domain: response.data.domain,
+                store_name: response.data.name,
+                admin_email: response.data.admin_email,
+                email: response.data.admin_email,
+                store_hash: context.storeHash
+            };
+        },
 
+        validate: async (context) => {
+
+            const url = `https://api.bigcommerce.com/stores/${context.storeHash}/v2/store`;
+            const headers = {
+                'X-Auth-Token': context.accessToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            };
+
+            try {
                 const response = await context.httpRequest({
                     method: 'GET',
                     url,
                     headers
                 });
 
-                if (!response.data || !response.data.data) {
-                    throw new Error('Failed to retrieve store profile info');
-                }
-
-                return {
-                    domain: response.data.data.domain,
-                    store_name: response.data.data.name,
-                    admin_email: response.data.data.admin_email,
-                    email: response.data.data.admin_email
-                };
-            },
-
-            validateAccessToken: async (context) => {
-                const url = `https://api.bigcommerce.com/stores/${context.storeHash}/v3/store`;
-                const headers = {
-                    'X-Auth-Token': context.accessToken,
-                    'X-Auth-Client': context.clientId,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                };
-
-                try {
-                    const response = await context.httpRequest({
-                        method: 'GET',
-                        url,
-                        headers
-                    });
-                    
-                    return !!(response.data && response.data.data && response.data.data.domain);
-                } catch (error) {
-                    return false;
-                }
+                return !!(response.data && response.data.domain);
+            } catch (error) {
+                return false;
             }
-        };
+        }
     }
 };

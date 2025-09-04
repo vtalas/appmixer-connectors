@@ -2,101 +2,41 @@
     "actions": [
         {
             "title": "Find Products",
-            "description": "Search products (Catalog v3). Returns up to 250 records (first page only). Use filters like name, sku, visibility, categories, and date ranges.",
+            "description": "Search products by common filters (such as name, SKU, visibility, and modification date range) and return a maximum of 250 results. Pagination parameters are omitted.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/catalog/products/getproducts",
             "endpointUrl": "/v3/catalog/products",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "GET",
             "sampleResponse": {
                 "data": [
                     {
-                        "id": 112,
-                        "name": "T-Shirt",
-                        "type": "physical",
-                        "sku": "TS-001",
-                        "price": 19.99,
-                        "weight": 0.2,
-                        "is_visible": true,
-                        "availability": "available",
-                        "categories": [
-                            23,
-                            45
-                        ],
-                        "custom_url": {
-                            "url": "/t-shirt/",
-                            "is_customized": false
-                        },
-                        "date_created": "2024-01-10T09:15:10Z",
-                        "date_modified": "2024-02-02T11:37:00Z"
+                        "id": 1001,
+                        "name": "Example Product",
+                        "sku": "SKU-EXAMPLE",
+                        "price": "29.99",
+                        "is_visible": true
                     }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 50,
-                        "current_page": 1,
-                        "total_pages": 1
-                    }
-                }
+                ]
             },
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "query": {
                         "type": "string",
-                        "description": "Substring match on product name."
-                    },
-                    "sku": {
-                        "type": "string",
-                        "description": "Exact SKU match. For multiple SKUs, use sku:in."
-                    },
-                    "sku:in": {
-                        "type": "string",
-                        "description": "Comma-separated list of SKUs to include."
-                    },
-                    "id:in": {
-                        "type": "string",
-                        "description": "Comma-separated list of product IDs."
-                    },
-                    "categories:in": {
-                        "type": "string",
-                        "description": "Comma-separated list of category IDs."
+                        "description": "Search term to filter products by name or SKU."
                     },
                     "is_visible": {
                         "type": "boolean",
-                        "description": "Filter by storefront visibility."
+                        "description": "Filter products based on their visibility status."
                     },
-                    "availability": {
+                    "date_modified_start": {
                         "type": "string",
-                        "description": "Product availability filter (e.g., available, preorder, disabled)."
+                        "description": "ISO8601 date to filter products modified after this date."
                     },
-                    "date_modified:min": {
+                    "date_modified_end": {
                         "type": "string",
-                        "description": "ISO 8601 start of last-modified window."
-                    },
-                    "date_modified:max": {
-                        "type": "string",
-                        "description": "ISO 8601 end of last-modified window."
-                    },
-                    "include_fields": {
-                        "type": "string",
-                        "description": "Comma-separated list of fields to include."
-                    },
-                    "exclude_fields": {
-                        "type": "string",
-                        "description": "Comma-separated list of fields to exclude."
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "description": "Max items per page. BigCommerce allows up to 250.",
-                        "default": 250
-                    },
-                    "page": {
-                        "type": "integer",
-                        "description": "Page number. Use 1; connector ignores pagination beyond first page.",
-                        "default": 1
+                        "description": "ISO8601 date to filter products modified before this date."
                     }
                 }
             },
@@ -107,47 +47,27 @@
         },
         {
             "title": "Get Product",
-            "description": "Retrieve a single product by ID (Catalog v3).",
+            "description": "Retrieve detailed information for a single product using its product ID. The product ID is usually obtained via the Find Products action.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/catalog/products/getproductbyid",
             "endpointUrl": "/v3/catalog/products/{product_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "GET",
             "sampleResponse": {
-                "data": {
-                    "id": 112,
-                    "name": "T-Shirt",
-                    "type": "physical",
-                    "sku": "TS-001",
-                    "price": 19.99,
-                    "is_visible": true,
-                    "categories": [
-                        23,
-                        45
-                    ],
-                    "date_created": "2024-01-10T09:15:10Z",
-                    "date_modified": "2024-02-02T11:37:00Z"
-                }
+                "id": 1001,
+                "name": "Example Product",
+                "sku": "SKU-EXAMPLE",
+                "price": "29.99",
+                "is_visible": true
             },
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "product_id": {
-                        "type": "integer",
-                        "description": "The BigCommerce product ID (path parameter)."
-                    },
-                    "include_fields": {
-                        "type": "string",
-                        "description": "Comma-separated list of fields to include."
-                    },
-                    "exclude_fields": {
-                        "type": "string",
-                        "description": "Comma-separated list of fields to exclude."
+                        "type": "number",
+                        "description": "Unique identifier for the product."
                     }
-                },
-                "required": [
-                    "product_id"
-                ]
+                }
             },
             "outputType": {
                 "outputType": "object"
@@ -155,26 +75,17 @@
         },
         {
             "title": "Create Product",
-            "description": "Create a product (Catalog v3).",
+            "description": "Create a new product by specifying details like name, SKU, price, type, weight, categories, and visibility. Returns the newly created product.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/catalog/products/createproduct",
             "endpointUrl": "/v3/catalog/products",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "POST",
             "sampleResponse": {
                 "data": {
-                    "id": 415,
-                    "name": "New Mug",
-                    "type": "physical",
-                    "sku": "MUG-100",
-                    "price": 12.5,
-                    "weight": 0.3,
-                    "is_visible": true,
-                    "categories": [
-                        23
-                    ],
-                    "date_created": "2025-01-05T12:05:00Z",
-                    "date_modified": "2025-01-05T12:05:00Z"
+                    "id": 1002,
+                    "name": "New Product",
+                    "sku": "SKU-NEW"
                 }
             },
             "inputSchema": {
@@ -182,62 +93,40 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "Product name."
+                        "description": "Name of the product."
                     },
                     "type": {
                         "type": "string",
-                        "description": "physical or digital."
-                    },
-                    "sku": {
-                        "type": "string",
-                        "description": "Stock-keeping unit (unique per product)."
+                        "description": "Product type (e.g., physical or digital)."
                     },
                     "price": {
                         "type": "number",
-                        "description": "Product price."
+                        "description": "Price of the product."
+                    },
+                    "sku": {
+                        "type": "string",
+                        "description": "Unique SKU for inventory tracking."
                     },
                     "weight": {
                         "type": "number",
-                        "description": "Product weight."
+                        "description": "Weight of the product, applicable for shipping."
                     },
                     "categories": {
                         "type": "array",
-                        "description": "Array of category IDs.",
+                        "description": "List of category IDs the product belongs to.",
                         "items": {
-                            "type": "integer"
+                            "type": "number"
                         }
                     },
                     "description": {
                         "type": "string",
-                        "description": "HTML or plain text description."
+                        "description": "Product description."
                     },
                     "is_visible": {
                         "type": "boolean",
-                        "description": "Visible on storefront."
-                    },
-                    "availability": {
-                        "type": "string",
-                        "description": "available, disabled, preorder."
-                    },
-                    "custom_url": {
-                        "type": "object",
-                        "description": "Optional custom URL.",
-                        "properties": {
-                            "url": {
-                                "type": "string",
-                                "description": "Path beginning with /"
-                            },
-                            "is_customized": {
-                                "type": "boolean",
-                                "description": "Whether URL was customized."
-                            }
-                        }
+                        "description": "Visibility status of the product."
                     }
-                },
-                "required": [
-                    "name",
-                    "type"
-                ]
+                }
             },
             "outputType": {
                 "outputType": "object"
@@ -245,67 +134,33 @@
         },
         {
             "title": "Update Product",
-            "description": "Partially update a product by ID (Catalog v3, PATCH).",
+            "description": "Update an existing product identified by its product ID. Use this endpoint to modify details like name, price, or visibility among others.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/catalog/products/updateproduct",
             "endpointUrl": "/v3/catalog/products/{product_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "PATCH",
-            "sampleResponse": {
-                "data": {
-                    "id": 112,
-                    "name": "T-Shirt - Updated",
-                    "price": 17.99,
-                    "is_visible": true,
-                    "date_modified": "2025-02-15T15:20:45Z"
-                }
-            },
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
+            "method": "PUT",
+            "sampleResponse": {},
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "product_id": {
-                        "type": "integer",
-                        "description": "Product ID (path parameter)."
+                        "type": "number",
+                        "description": "Unique identifier for the product to update."
                     },
                     "name": {
                         "type": "string",
-                        "description": "New product name."
+                        "description": "Updated product name."
                     },
                     "price": {
                         "type": "number",
-                        "description": "New price."
-                    },
-                    "sku": {
-                        "type": "string",
-                        "description": "SKU."
-                    },
-                    "weight": {
-                        "type": "number",
-                        "description": "Weight."
-                    },
-                    "categories": {
-                        "type": "array",
-                        "description": "Category IDs.",
-                        "items": {
-                            "type": "integer"
-                        }
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Description (plain or HTML)."
+                        "description": "Updated product price."
                     },
                     "is_visible": {
                         "type": "boolean",
-                        "description": "Visibility flag."
-                    },
-                    "availability": {
-                        "type": "string",
-                        "description": "available, disabled, preorder."
+                        "description": "Updated visibility status."
                     }
-                },
-                "required": [
-                    "product_id"
-                ]
+                }
             },
             "outputType": {
                 "outputType": "object"
@@ -313,24 +168,21 @@
         },
         {
             "title": "Delete Product",
-            "description": "Delete a product by ID (Catalog v3).",
+            "description": "Delete a product by its product ID. This action permanently removes the product from the store.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/catalog/products/deleteproduct",
             "endpointUrl": "/v3/catalog/products/{product_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "DELETE",
             "sampleResponse": {},
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "product_id": {
-                        "type": "integer",
-                        "description": "Product ID (path parameter)."
+                        "type": "number",
+                        "description": "Unique identifier for the product to be deleted."
                     }
-                },
-                "required": [
-                    "product_id"
-                ]
+                }
             },
             "outputType": {
                 "outputType": "object"
@@ -338,83 +190,36 @@
         },
         {
             "title": "Find Customers",
-            "description": "Search customers (v3). Returns up to 250 records (first page only).",
+            "description": "Search customers by filters such as email, name, or creation date. Returns a maximum of 250 matched customer records.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/customers-v3/customers/getcustomers",
             "endpointUrl": "/v3/customers",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "GET",
             "sampleResponse": {
                 "data": [
                     {
-                        "id": 901,
-                        "email": "jane@example.com",
+                        "id": 501,
+                        "email": "customer@example.com",
                         "first_name": "Jane",
-                        "last_name": "Doe",
-                        "phone": "555-123-4567",
-                        "company": "Acme Co",
-                        "date_created": "2024-12-12T10:00:00Z",
-                        "date_modified": "2025-01-02T09:30:00Z"
+                        "last_name": "Doe"
                     }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 50,
-                        "current_page": 1,
-                        "total_pages": 1
-                    }
-                }
+                ]
             },
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "email": {
+                    "query": {
                         "type": "string",
-                        "description": "Exact email match."
+                        "description": "Search term to filter customers by name or email."
                     },
-                    "first_name": {
+                    "date_created_start": {
                         "type": "string",
-                        "description": "Filter by first name (exact)."
+                        "description": "ISO8601 date to filter customers created after this date."
                     },
-                    "last_name": {
+                    "date_created_end": {
                         "type": "string",
-                        "description": "Filter by last name (exact)."
-                    },
-                    "company": {
-                        "type": "string",
-                        "description": "Filter by company."
-                    },
-                    "id:in": {
-                        "type": "string",
-                        "description": "Comma-separated list of customer IDs."
-                    },
-                    "customer_group_id:in": {
-                        "type": "string",
-                        "description": "Comma-separated customer group IDs."
-                    },
-                    "date_created:min": {
-                        "type": "string",
-                        "description": "ISO 8601 start date for creation time."
-                    },
-                    "date_created:max": {
-                        "type": "string",
-                        "description": "ISO 8601 end date for creation time."
-                    },
-                    "include": {
-                        "type": "string",
-                        "description": "Optional expansions (e.g., formfields)."
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "description": "Max items per page (up to 250).",
-                        "default": 250
-                    },
-                    "page": {
-                        "type": "integer",
-                        "description": "Page number (use 1; connector ignores further pages).",
-                        "default": 1
+                        "description": "ISO8601 date to filter customers created before this date."
                     }
                 }
             },
@@ -425,186 +230,122 @@
         },
         {
             "title": "Get Customer",
-            "description": "Retrieve a single customer by ID (v3).",
+            "description": "Retrieve detailed information for a single customer using their customer ID. The customer ID can be obtained from the Find Customers action.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/customers-v3/customers/getacustomer",
             "endpointUrl": "/v3/customers/{customer_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "GET",
             "sampleResponse": {
-                "data": {
-                    "id": 901,
-                    "email": "jane@example.com",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "phone": "555-123-4567",
-                    "company": "Acme Co",
-                    "date_created": "2024-12-12T10:00:00Z",
-                    "date_modified": "2025-01-02T09:30:00Z"
-                }
+                "id": 501,
+                "email": "customer@example.com",
+                "first_name": "Jane",
+                "last_name": "Doe"
             },
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "customer_id": {
-                        "type": "integer",
-                        "description": "Customer ID (path parameter)."
-                    },
-                    "include": {
-                        "type": "string",
-                        "description": "Optional expansions (e.g., formfields)."
+                        "type": "number",
+                        "description": "Unique identifier for the customer."
                     }
-                },
-                "required": [
-                    "customer_id"
-                ]
+                }
             },
             "outputType": {
                 "outputType": "object"
             }
         },
         {
-            "title": "Create Customer(s)",
-            "description": "Create one or more customers (v3). Body accepts an array; send a single-element array to create one customer.",
+            "title": "Create Customer",
+            "description": "Create a new customer by providing key details such as email, first name, last name, and phone number. Additional information like addresses and company can be provided optionally.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/customers-v3/customers/createcustomers",
             "endpointUrl": "/v3/customers",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "POST",
             "sampleResponse": {
-                "data": [
-                    {
-                        "id": 902,
-                        "email": "john@example.com",
-                        "first_name": "John",
-                        "last_name": "Smith",
-                        "phone": "555-987-6543",
-                        "company": "",
-                        "date_created": "2025-02-01T08:00:00Z",
-                        "date_modified": "2025-02-01T08:00:00Z"
-                    }
-                ],
-                "meta": {}
-            },
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "customers": {
-                        "type": "array",
-                        "description": "Array of customer objects to create.",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "email": {
-                                    "type": "string",
-                                    "description": "Customer email (must be unique)."
-                                },
-                                "first_name": {
-                                    "type": "string",
-                                    "description": "First name."
-                                },
-                                "last_name": {
-                                    "type": "string",
-                                    "description": "Last name."
-                                },
-                                "phone": {
-                                    "type": "string",
-                                    "description": "Phone number."
-                                },
-                                "company": {
-                                    "type": "string",
-                                    "description": "Company name."
-                                },
-                                "addresses": {
-                                    "type": "array",
-                                    "description": "Optional addresses to create with the customer.",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "first_name": {
-                                                "type": "string",
-                                                "description": "First name."
-                                            },
-                                            "last_name": {
-                                                "type": "string",
-                                                "description": "Last name."
-                                            },
-                                            "address1": {
-                                                "type": "string",
-                                                "description": "Address line 1."
-                                            },
-                                            "address2": {
-                                                "type": "string",
-                                                "description": "Address line 2."
-                                            },
-                                            "city": {
-                                                "type": "string",
-                                                "description": "City."
-                                            },
-                                            "state_or_province": {
-                                                "type": "string",
-                                                "description": "State or province."
-                                            },
-                                            "postal_code": {
-                                                "type": "string",
-                                                "description": "Postal/ZIP code."
-                                            },
-                                            "country_code": {
-                                                "type": "string",
-                                                "description": "Two-letter country code."
-                                            },
-                                            "phone": {
-                                                "type": "string",
-                                                "description": "Phone."
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "email",
-                                "first_name",
-                                "last_name"
-                            ]
-                        }
-                    }
-                },
-                "required": [
-                    "customers"
-                ]
-            },
-            "outputType": {
-                "outputType": "array",
-                "arrayPropertyValue": "data"
-            }
-        },
-        {
-            "title": "Update Customer",
-            "description": "Partially update a customer by ID (v3, PATCH).",
-            "type": "action",
-            "documentation": "https://developer.bigcommerce.com/api-reference/store-management/customers-v3/customers/updateacustomer",
-            "endpointUrl": "/v3/customers/{customer_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "PATCH",
-            "sampleResponse": {
                 "data": {
-                    "id": 901,
-                    "email": "jane.new@example.com",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "date_modified": "2025-02-10T10:05:00Z"
+                    "id": 502,
+                    "email": "newcustomer@example.com"
                 }
             },
             "inputSchema": {
                 "type": "object",
                 "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "The customer's email address."
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "description": "The customer's first name."
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "description": "The customer's last name."
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "The customer's phone number."
+                    },
+                    "addresses": {
+                        "type": "array",
+                        "description": "Optional list of addresses for the customer.",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "street_1": {
+                                    "type": "string",
+                                    "description": "Primary street address."
+                                },
+                                "city": {
+                                    "type": "string",
+                                    "description": "City name."
+                                },
+                                "state": {
+                                    "type": "string",
+                                    "description": "State or province."
+                                },
+                                "zip": {
+                                    "type": "string",
+                                    "description": "Postal code."
+                                },
+                                "country": {
+                                    "type": "string",
+                                    "description": "Country name."
+                                }
+                            }
+                        }
+                    },
+                    "company": {
+                        "type": "string",
+                        "description": "Company name (if applicable)."
+                    }
+                }
+            },
+            "outputType": {
+                "outputType": "object"
+            }
+        },
+        {
+            "title": "Update Customer",
+            "description": "Update an existing customer's information using their customer ID. Fields typically updated include email, first name, last name, and phone number.",
+            "type": "action",
+            "documentation": "https://developer.bigcommerce.com/api-reference/store-management/customers-v3/customers/updateacustomer",
+            "endpointUrl": "/v3/customers/{customer_id}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
+            "method": "PUT",
+            "sampleResponse": {},
+            "inputSchema": {
+                "type": "object",
+                "properties": {
                     "customer_id": {
-                        "type": "integer",
-                        "description": "Customer ID (path parameter)."
+                        "type": "number",
+                        "description": "Unique identifier for the customer to update."
                     },
                     "email": {
                         "type": "string",
-                        "description": "Updated email."
+                        "description": "Updated email address."
                     },
                     "first_name": {
                         "type": "string",
@@ -616,16 +357,9 @@
                     },
                     "phone": {
                         "type": "string",
-                        "description": "Updated phone."
-                    },
-                    "company": {
-                        "type": "string",
-                        "description": "Updated company."
+                        "description": "Updated phone number."
                     }
-                },
-                "required": [
-                    "customer_id"
-                ]
+                }
             },
             "outputType": {
                 "outputType": "object"
@@ -633,310 +367,45 @@
         },
         {
             "title": "Find Orders",
-            "description": "Search orders (v2). Returns up to 250 records (first page only).",
+            "description": "Search orders using filters such as status, creation date range, customer ID, or email. Returns a maximum of 250 orders. Pagination parameters are omitted.",
             "type": "action",
             "documentation": "https://developer.bigcommerce.com/api-reference/store-management/orders/orders/getorders",
             "endpointUrl": "/v2/orders",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "GET",
-            "sampleResponse": [
-                {
-                    "id": 12001,
-                    "status_id": 11,
-                    "date_created": "2025-02-01T09:00:00+00:00",
-                    "date_modified": "2025-02-01T09:05:00+00:00",
-                    "customer_id": 901,
-                    "email": "jane@example.com",
-                    "subtotal_ex_tax": "19.99",
-                    "total_inc_tax": "23.99",
-                    "currency_code": "USD"
-                }
-            ],
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "status_id": {
-                        "type": "integer",
-                        "description": "Order status ID filter."
-                    },
-                    "min_date_created": {
-                        "type": "string",
-                        "description": "Start of created date window (RFC 2822 or ISO 8601)."
-                    },
-                    "max_date_created": {
-                        "type": "string",
-                        "description": "End of created date window."
-                    },
-                    "min_date_modified": {
-                        "type": "string",
-                        "description": "Start of modified date window."
-                    },
-                    "max_date_modified": {
-                        "type": "string",
-                        "description": "End of modified date window."
-                    },
-                    "customer_id": {
-                        "type": "integer",
-                        "description": "Filter by customer ID."
-                    },
-                    "email": {
-                        "type": "string",
-                        "description": "Filter by customer email."
-                    },
-                    "min_total": {
-                        "type": "number",
-                        "description": "Minimum total filter."
-                    },
-                    "max_total": {
-                        "type": "number",
-                        "description": "Maximum total filter."
-                    },
-                    "sort": {
-                        "type": "string",
-                        "description": "Sort field (e.g., id:asc, date_created:desc)."
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "description": "Max records per page (up to 250).",
-                        "default": 250
-                    },
-                    "page": {
-                        "type": "integer",
-                        "description": "Page number (use 1; connector ignores further pages).",
-                        "default": 1
-                    }
-                }
-            },
-            "outputType": {
-                "outputType": "array",
-                "arrayPropertyValue": ""
-            }
-        },
-        {
-            "title": "Get Order",
-            "description": "Retrieve a single order by ID (v2).",
-            "type": "action",
-            "documentation": "https://developer.bigcommerce.com/api-reference/store-management/orders/orders/getorderbyid",
-            "endpointUrl": "/v2/orders/{order_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "GET",
-            "sampleResponse": {
-                "id": 12001,
-                "status_id": 11,
-                "date_created": "2025-02-01T09:00:00+00:00",
-                "date_modified": "2025-02-01T09:05:00+00:00",
-                "customer_id": 901,
-                "email": "jane@example.com",
-                "subtotal_ex_tax": "19.99",
-                "total_inc_tax": "23.99",
-                "billing_address": {
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "city": "Austin",
-                    "country": "United States"
-                }
-            },
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "order_id": {
-                        "type": "integer",
-                        "description": "Order ID (path parameter)."
-                    }
-                },
-                "required": [
-                    "order_id"
-                ]
-            },
-            "outputType": {
-                "outputType": "object"
-            }
-        },
-        {
-            "title": "Get Order Statuses",
-            "description": "List available order statuses (v2). Useful for mapping status_id values.",
-            "type": "action",
-            "documentation": "https://developer.bigcommerce.com/api-reference/store-management/orders/orders/getorderstatuses",
-            "endpointUrl": "/v2/order_statuses",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "GET",
-            "sampleResponse": [
-                {
-                    "id": 0,
-                    "name": "Incomplete"
-                },
-                {
-                    "id": 11,
-                    "name": "Awaiting Fulfillment"
-                },
-                {
-                    "id": 2,
-                    "name": "Shipped"
-                }
-            ],
-            "inputSchema": {
-                "type": "object",
-                "properties": {}
-            },
-            "outputType": {
-                "outputType": "array",
-                "arrayPropertyValue": ""
-            }
-        },
-        {
-            "title": "Create Webhook",
-            "description": "Create a webhook subscription (v3). Use scopes like store/order/created, store/order/statusUpdated, store/product/created.",
-            "type": "action",
-            "documentation": "https://developer.bigcommerce.com/api-docs/store-management/webhooks/overview",
-            "endpointUrl": "/v3/hooks",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "POST",
-            "sampleResponse": {
-                "data": {
-                    "id": 3456,
-                    "client_id": "abc123",
-                    "store_hash": "xyz987",
-                    "scope": "store/order/created",
-                    "destination": "https://example.com/bc/webhooks",
-                    "is_active": true,
-                    "created_at": "2025-02-01T00:00:00Z",
-                    "updated_at": "2025-02-01T00:00:00Z"
-                },
-                "meta": {}
-            },
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "scope": {
-                        "type": "string",
-                        "description": "Webhook event scope, e.g., store/order/created, store/order/statusUpdated, store/product/created."
-                    },
-                    "destination": {
-                        "type": "string",
-                        "description": "Public HTTPS endpoint that will receive webhook POSTs."
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "description": "Whether this webhook is active.",
-                        "default": true
-                    }
-                },
-                "required": [
-                    "scope",
-                    "destination"
-                ]
-            },
-            "outputType": {
-                "outputType": "object"
-            }
-        },
-        {
-            "title": "List Webhooks",
-            "description": "List existing webhooks for the store (v3).",
-            "type": "action",
-            "documentation": "https://developer.bigcommerce.com/api-reference/store-management/webhooks/listwebhooks",
-            "endpointUrl": "/v3/hooks",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
+            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}/",
             "method": "GET",
             "sampleResponse": {
                 "data": [
                     {
-                        "id": 3456,
-                        "scope": "store/order/created",
-                        "destination": "https://example.com/bc/webhooks",
-                        "is_active": true,
-                        "created_at": "2025-02-01T00:00:00Z",
-                        "updated_at": "2025-02-01T00:00:00Z"
+                        "id": 601,
+                        "status_id": 1,
+                        "total_inc_tax": "59.99"
                     }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 50,
-                        "current_page": 1,
-                        "total_pages": 1
-                    }
-                }
+                ]
             },
             "inputSchema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Search term to filter orders by customer email or other criteria."
+                    },
+                    "status_id": {
+                        "type": "number",
+                        "description": "Filter orders by their status identifier."
+                    },
+                    "min_date_created": {
+                        "type": "string",
+                        "description": "ISO8601 date to filter orders created after this time."
+                    },
+                    "max_date_created": {
+                        "type": "string",
+                        "description": "ISO8601 date to filter orders created before this time."
+                    }
+                }
             },
             "outputType": {
                 "outputType": "array",
                 "arrayPropertyValue": "data"
-            }
-        },
-        {
-            "title": "Delete Webhook",
-            "description": "Delete a webhook by ID (v3).",
-            "type": "action",
-            "documentation": "https://developer.bigcommerce.com/api-reference/store-management/webhooks/deletewebhook",
-            "endpointUrl": "/v3/hooks/{hook_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "DELETE",
-            "sampleResponse": {},
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "hook_id": {
-                        "type": "integer",
-                        "description": "Webhook ID (path parameter)."
-                    }
-                },
-                "required": [
-                    "hook_id"
-                ]
-            },
-            "outputType": {
-                "outputType": "object"
-            }
-        },
-        {
-            "title": "Update Webhook",
-            "description": "Update an existing webhook (v3).",
-            "type": "action",
-            "documentation": "https://developer.bigcommerce.com/api-reference/store-management/webhooks/updatewebhook",
-            "endpointUrl": "/v3/hooks/{hook_id}",
-            "apiBaseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-            "method": "PUT",
-            "sampleResponse": {
-                "data": {
-                    "id": 3456,
-                    "scope": "store/order/statusUpdated",
-                    "destination": "https://example.com/bc/webhooks",
-                    "is_active": true,
-                    "created_at": "2025-02-01T00:00:00Z",
-                    "updated_at": "2025-02-02T00:00:00Z"
-                }
-            },
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "hook_id": {
-                        "type": "integer",
-                        "description": "Webhook ID (path parameter)."
-                    },
-                    "scope": {
-                        "type": "string",
-                        "description": "New scope (optional)."
-                    },
-                    "destination": {
-                        "type": "string",
-                        "description": "New destination URL (optional)."
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "description": "Set active/inactive (optional)."
-                    }
-                },
-                "required": [
-                    "hook_id"
-                ]
-            },
-            "outputType": {
-                "outputType": "object"
             }
         }
     ],
@@ -944,41 +413,14 @@
         "type": "oauth2",
         "authUrl": "https://login.bigcommerce.com/oauth2/authorize",
         "tokenUrl": "https://login.bigcommerce.com/oauth2/token",
-        "profileInfoUrl": "https://api.bigcommerce.com/stores/{store_hash}/v2/store",
-        "scopes": [
-            "store_v2_products",
-            "store_v2_customers",
-            "store_v2_orders_read_only",
-            "store_v2_webhooks"
-        ],
-        "notes": "OAuth 2.0 Authorization Code flow. On token exchange, BigCommerce returns context (stores/{store_hash}) and often user info. Use headers X-Auth-Token (access_token) and X-Auth-Client (client_id) for API calls. Webhook signature: validate x-bc-signature using HMAC-SHA256 with your client secret."
+        "profileInfoUrl": "https://api.bigcommerce.com/stores/{store_hash}/v3/customers/me"
     },
     "serviceJson": {
-        "name": "appmixer.bigCommerce",
+        "name": "appmixer.bigcommerce",
         "label": "BigCommerce",
         "category": "applications",
-        "description": "BigCommerce Admin APIs for Products (v3), Customers (v3), Orders (v2), and Webhooks (v3). Base URL: https://api.bigcommerce.com/stores/{store_hash}/. Use headers X-Auth-Token and X-Auth-Client on every request. Typical max page size is 250 for list/find endpoints; connector deliberately fetches only the first page. Rate limiting: observe headers X-Rate-Limit-Requests-Left and X-Rate-Limit-Time-Reset-MS and back off accordingly.",
+        "description": "Integration component for managing BigCommerce products, customers, and orders. Supports OAuth2 authentication for multi-store usage and API tokens as an alternative.",
         "version": "1.0.0",
-        "icon": "https://seeklogo.com/images/B/bigcommerce-logo-8B9871E1D9-seeklogo.com.svg",
-        "baseUrl": "https://api.bigcommerce.com/stores/{store_hash}",
-        "apiVersions": {
-            "products": "v3",
-            "customers": "v3",
-            "orders": "v2",
-            "webhooks": "v3"
-        },
-        "rateLimiting": {
-            "headers": [
-                "X-Rate-Limit-Requests-Left",
-                "X-Rate-Limit-Time-Reset-MS"
-            ],
-            "notes": "Respect remaining quota and reset time; implement retries with exponential backoff."
-        },
-        "requiredHeaders": [
-            "X-Auth-Token: {access_token}",
-            "X-Auth-Client: {client_id}",
-            "Accept: application/json",
-            "Content-Type: application/json"
-        ]
+        "icon": "https://cdn.example.com/icons/bigcommerce.svg"
     }
 }
