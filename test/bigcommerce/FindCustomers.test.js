@@ -18,7 +18,7 @@ describe('FindCustomers Component', function() {
         }
 
         // Load the component
-        FindCustomers = require('../../src/appmixer/bigcommerce/core/FindCustomers/FindCustomers');
+        FindCustomers = require('../../src/appmixer/bigCommerce/core/FindCustomers/FindCustomers');
     });
 
     beforeEach(function() {

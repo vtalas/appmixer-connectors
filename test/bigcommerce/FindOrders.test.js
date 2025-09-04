@@ -18,7 +18,7 @@ describe('FindOrders Component', function() {
         }
 
         // Load the component
-        FindOrders = require('../../src/appmixer/bigcommerce/core/FindOrders/FindOrders');
+        FindOrders = require('../../src/appmixer/bigCommerce/core/FindOrders/FindOrders');
     });
 
     beforeEach(function() {

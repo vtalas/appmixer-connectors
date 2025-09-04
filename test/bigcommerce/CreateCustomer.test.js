@@ -18,7 +18,7 @@ describe('CreateCustomer Component', function() {
         }
 
         // Load the component
-        CreateCustomer = require('../../src/appmixer/bigcommerce/core/CreateCustomer/CreateCustomer');
+        CreateCustomer = require('../../src/appmixer/bigCommerce/core/CreateCustomer/CreateCustomer');
     });
 
     beforeEach(function() {

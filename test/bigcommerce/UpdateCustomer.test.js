@@ -18,7 +18,7 @@ describe('UpdateCustomer Component', function() {
         }
 
         // Load the component
-        UpdateCustomer = require('../../src/appmixer/bigcommerce/core/UpdateCustomer/UpdateCustomer');
+        UpdateCustomer = require('../../src/appmixer/bigCommerce/core/UpdateCustomer/UpdateCustomer');
     });
 
     beforeEach(function() {

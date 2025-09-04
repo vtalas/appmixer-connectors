@@ -19,7 +19,7 @@ describe('GetCustomer Component', function() {
         }
 
         // Load the component
-        GetCustomer = require(path.join(__dirname, '../../src/appmixer/bigcommerce/core/GetCustomer/GetCustomer.js'));
+        GetCustomer = require(path.join(__dirname, '../../src/appmixer/bigCommerce/core/GetCustomer/GetCustomer.js'));
 
         // Mock context
         context = {

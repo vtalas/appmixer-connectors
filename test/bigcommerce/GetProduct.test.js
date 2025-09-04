@@ -18,7 +18,7 @@ describe('GetProduct Component', function() {
         }
 
         // Load the component
-        GetProduct = require(path.join(__dirname, '../../src/appmixer/bigcommerce/core/GetProduct/GetProduct.js'));
+        GetProduct = require(path.join(__dirname, '../../src/appmixer/bigCommerce/core/GetProduct/GetProduct.js'));
 
         // Mock context
         context = {

@@ -18,7 +18,7 @@ describe('UpdateProduct Component', function() {
         }
 
         // Load the component
-        UpdateProduct = require('../../src/appmixer/bigcommerce/core/UpdateProduct/UpdateProduct');
+        UpdateProduct = require('../../src/appmixer/bigCommerce/core/UpdateProduct/UpdateProduct');
     });
 
     beforeEach(function() {

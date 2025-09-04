@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const CreateProduct = require('../../src/appmixer/bigcommerce/core/CreateProduct/CreateProduct');
+const CreateProduct = require('../../src/appmixer/bigCommerce/core/CreateProduct/CreateProduct');
 const httpRequest = require('./httpRequest');
 
 describe('CreateProduct Component', function() {

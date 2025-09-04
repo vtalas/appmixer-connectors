@@ -19,8 +19,8 @@ describe('DeleteProduct Component', function() {
         }
 
         // Load the components
-        DeleteProduct = require('../../src/appmixer/bigcommerce/core/DeleteProduct/DeleteProduct');
-        CreateProduct = require('../../src/appmixer/bigcommerce/core/CreateProduct/CreateProduct');
+        DeleteProduct = require('../../src/appmixer/bigCommerce/core/DeleteProduct/DeleteProduct');
+        CreateProduct = require('../../src/appmixer/bigCommerce/core/CreateProduct/CreateProduct');
     });
 
     beforeEach(function() {

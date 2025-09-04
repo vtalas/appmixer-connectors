@@ -18,7 +18,7 @@ describe('FindProducts Component', function() {
         }
 
         // Load the component
-        FindProducts = require('../../src/appmixer/bigcommerce/core/FindProducts/FindProducts');
+        FindProducts = require('../../src/appmixer/bigCommerce/core/FindProducts/FindProducts');
     });
 
     beforeEach(function() {
