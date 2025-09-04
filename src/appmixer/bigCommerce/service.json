@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.bigcommerce",
+    "name": "appmixer.bigCommerce",
     "label": "BigCommerce",
     "category": "applications",
     "description": "Integration component for managing BigCommerce products, customers, and orders. Supports OAuth2 authentication for multi-store usage and API tokens as an alternative.",
