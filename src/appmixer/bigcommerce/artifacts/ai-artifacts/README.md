@@ -106,6 +106,15 @@ TEST_SERVER_URL=http://localhost:2200 npx appmixer test auth login ./src/appmixe
   npx appmixer test component src/appmixer/bigcommerce/core/UpdateCustomer -i '{"in":{"customer_id":1,"email":"updated@example.com","first_name":"John","last_name":"Smith"}}'
   ```
 
+#### DeleteCustomer
+- **Component Files:**
+  - `/src/appmixer/bigCommerce/core/DeleteCustomer/component.json`
+  - `/src/appmixer/bigCommerce/core/DeleteCustomer/DeleteCustomer.js`
+- **Test Command:**
+  ```bash
+  npx appmixer test component src/appmixer/bigcommerce/core/DeleteCustomer -i '{"in":{"customer_id":123}}'
+  ```
+
 ### Order Management Components
 
 #### FindOrders
