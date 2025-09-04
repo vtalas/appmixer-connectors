@@ -1,10 +1,21 @@
-
 'use strict';
 
 module.exports = {
     async receive(context) {
 
         const { customEndpoint, method, parameters } = context.messages.in.content;
+
+        // Parse parameters if it's a JSON string
+        let parsedParameters = {};
+        if (parameters) {
+            if (typeof parameters === 'string') {
+                try {
+                    parsedParameters = JSON.parse(parameters);
+                } catch (error) {
+                    throw new context.CancelError('Invalid JSON format in parameters');
+                }
+            }
+        }
 
         // https://stripe.com/docs/api
         const { data } = await context.httpRequest({
@@ -15,10 +26,12 @@ module.exports = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             data: {
-                ...parameters
+                ...parsedParameters
             }
         });
 
-        return context.sendJson(data, 'out');
+        await context.log({ step: 'http-request-success', response: data });
+
+        return context.sendJson({ response: data }, 'out');
     }
 };
