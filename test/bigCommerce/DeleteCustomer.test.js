@@ -19,8 +19,8 @@ describe('DeleteCustomer Component', function() {
         }
 
         // Load the components
-        DeleteCustomer = require('../../src/appmixer/bigcommerce/core/DeleteCustomer/DeleteCustomer');
-        CreateCustomer = require('../../src/appmixer/bigcommerce/core/CreateCustomer/CreateCustomer');
+        DeleteCustomer = require('../../src/appmixer/bigCommerce/core/DeleteCustomer/DeleteCustomer');
+        CreateCustomer = require('../../src/appmixer/bigCommerce/core/CreateCustomer/CreateCustomer');
     });
 
     beforeEach(function() {
@@ -84,7 +84,7 @@ describe('DeleteCustomer Component', function() {
         });
 
         // Verify the customer is deleted by trying to get it (should fail)
-        const GetCustomer = require('../../src/appmixer/bigcommerce/core/GetCustomer/GetCustomer');
+        const GetCustomer = require('../../src/appmixer/bigCommerce/core/GetCustomer/GetCustomer');
         context.messages.in.content = {
             customer_id: customerId
         };
