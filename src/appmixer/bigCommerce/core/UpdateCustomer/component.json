@@ -32,7 +32,10 @@
                     "phone": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "customer_id"
+                ]
             },
             "inspector": {
                 "inputs": {

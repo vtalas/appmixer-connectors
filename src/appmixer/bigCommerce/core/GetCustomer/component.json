@@ -20,7 +20,10 @@
                     "customer_id": {
                         "type": "number"
                     }
-                }
+                },
+                "required": [
+                    "customer_id"
+                ]
             },
             "inspector": {
                 "inputs": {
