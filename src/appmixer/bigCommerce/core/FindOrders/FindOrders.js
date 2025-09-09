@@ -80,7 +80,7 @@ module.exports = {
         params.include = 'consignments,consignments.line_items,fees'; // Include all useful sub-resources
 
         // https://developer.bigcommerce.com/api-reference/store-management/orders/orders/getorders
-        const response = await context.httpRequest({
+        const { data } = await context.httpRequest({
             method: 'GET',
             url: `https://api.bigcommerce.com/stores/${context.auth.storeHash}/v2/orders`,
             headers: {
@@ -90,8 +90,8 @@ module.exports = {
         });
 
         // BigCommerce API returns orders array directly or in data property
-        const records = Array.isArray(response.data) ? response.data :
-            (response.data && Array.isArray(response.data.data)) ? response.data.data :
+        const records = Array.isArray(data) ? data :
+            (data && Array.isArray(data.data)) ? data.data :
                 [];
 
         // Handle empty results - send to notFound port
