@@ -1,12 +1,18 @@
 'use strict';
 
 module.exports = {
+
     async receive(context) {
 
         const { title, content } = context.messages.in.content;
 
+        // Validate required fields
+        if (!title) {
+            throw new context.CancelError('Title is required!');
+        }
+
         const requestBody = {
-            title: title || 'Untitled Document'
+            title: title
         };
 
         // https://developers.google.com/docs/api/reference/rest/v1/documents/create
@@ -44,7 +50,9 @@ module.exports = {
 
         return context.sendJson({
             documentId: data.documentId,
-            title: data.title
+            title: data.title,
+            revisionId: data.revisionId,
+            documentUrl: `https://docs.google.com/document/d/${data.documentId}/edit`
         }, 'out');
     }
 };
