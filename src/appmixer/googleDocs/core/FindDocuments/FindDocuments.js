@@ -16,7 +16,7 @@ module.exports = {
         const { query, outputType = 'array' } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, { label: 'files', value: 'files' });
+            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Documents', value: 'documents' });
         }
 
         // Build query parameter for Google Drive API to filter for Google Docs
@@ -40,6 +40,11 @@ module.exports = {
         });
 
         const records = data.files || [];
+        
+        if (records.length === 0) {
+            return context.sendJson({}, 'notFound');
+        }
+        
         return lib.sendArrayOutput({ context, records, outputType, outputPortName: 'out' });
     }
 };
