@@ -5,6 +5,11 @@ module.exports = {
 
         const { documentId } = context.messages.in.content;
 
+        // Validate required input
+        if (!documentId) {
+            throw new context.CancelError('Document ID is required!');
+        }
+
         // Use Google Drive API to delete the document
         // https://developers.google.com/drive/api/v3/reference/files/delete
         await context.httpRequest({
@@ -15,9 +20,6 @@ module.exports = {
             }
         });
 
-        return context.sendJson({
-            success: true,
-            documentId: documentId
-        }, 'out');
+        return context.sendJson({}, 'out');
     }
 };

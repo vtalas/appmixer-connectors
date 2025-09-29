@@ -1,9 +1,15 @@
 'use strict';
 
 module.exports = {
+
     async receive(context) {
 
         const { documentId } = context.messages.in.content;
+
+        // Validate required input
+        if (!documentId) {
+            throw new context.CancelError('Document ID is required!');
+        }
 
         // Get document content using Google Docs API
         // https://developers.google.com/docs/api/reference/rest/v1/documents/get
