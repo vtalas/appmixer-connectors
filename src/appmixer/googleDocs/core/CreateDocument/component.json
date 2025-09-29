@@ -1,12 +1,13 @@
 {
     "name": "appmixer.googleDocs.core.CreateDocument",
+    "description": "Creates a new Google document with the provided title and optional initial content.",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Creates a new Google document with the provided title and optional initial content in HTML format.",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:googleDocs",
-        "scope": ["https://www.googleapis.com/auth/documents"]
+        "scope": [
+            "https://www.googleapis.com/auth/documents"
+        ]
     },
     "quota": {
         "manager": "appmixer:googleDocs",
@@ -24,21 +25,24 @@
                     "content": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "title"
+                ]
             },
             "inspector": {
                 "inputs": {
                     "title": {
                         "type": "text",
-                        "tooltip": "The title of the new document.",
                         "label": "Title",
-                        "index": 0
+                        "tooltip": "The title of the new document.",
+                        "index": 1
                     },
                     "content": {
-                        "type": "text",
-                        "tooltip": "Optional initial content in HTML format to populate the document.",
+                        "type": "textarea",
                         "label": "Content",
-                        "index": 1
+                        "tooltip": "Optional initial content to populate the document.",
+                        "index": 2
                     }
                 }
             }
@@ -58,6 +62,20 @@
                 {
                     "label": "Title",
                     "value": "title",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Revision Id",
+                    "value": "revisionId",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Document URL",
+                    "value": "documentUrl",
                     "schema": {
                         "type": "string"
                     }

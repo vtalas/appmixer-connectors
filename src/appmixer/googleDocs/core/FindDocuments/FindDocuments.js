@@ -40,11 +40,11 @@ module.exports = {
         });
 
         const records = data.files || [];
-        
+
         if (records.length === 0) {
             return context.sendJson({}, 'notFound');
         }
-        
+
         return lib.sendArrayOutput({ context, records, outputType, outputPortName: 'out' });
     }
 };

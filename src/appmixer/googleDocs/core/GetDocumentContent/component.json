@@ -1,12 +1,13 @@
 {
     "name": "appmixer.GoogleDocs.core.GetDocumentContent",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Retrieves the full content of a document using its document ID.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:googleDocs",
-        "scope": ["https://www.googleapis.com/auth/drive.readonly"]
+        "scope": [
+            "https://www.googleapis.com/auth/drive.readonly"
+        ]
     },
     "quota": {
         "manager": "appmixer:googleDocs",
@@ -21,15 +22,18 @@
                     "documentId": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "documentId"
+                ]
             },
             "inspector": {
                 "inputs": {
                     "documentId": {
                         "type": "text",
-                        "tooltip": "The ID of the document to retrieve.",
-                        "label": "Document Id",
-                        "index": 0
+                        "index": 1,
+                        "label": "Document ID",
+                        "tooltip": "The ID of the document to retrieve."
                     }
                 }
             }
@@ -40,7 +44,7 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Document Id",
+                    "label": "Document ID",
                     "value": "documentId",
                     "schema": {
                         "type": "string"
@@ -56,6 +60,14 @@
                 {
                     "label": "Body",
                     "value": "body",
+                    "schema": {
+                        "type": "object",
+                        "properties": {}
+                    }
+                },
+                {
+                    "label": "Full Content",
+                    "value": "content",
                     "schema": {
                         "type": "object",
                         "properties": {}
