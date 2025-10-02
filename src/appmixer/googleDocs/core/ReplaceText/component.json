@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.GoogleDocs.core.ReplaceText",
+    "name": "appmixer.googleDocs.core.ReplaceText",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Replaces occurrences of a specified old text with a new text in the document.",
     "version": "1.0.0",

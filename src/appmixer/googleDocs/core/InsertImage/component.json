@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.GoogleDocs.core.InsertImage",
+    "name": "appmixer.googleDocs.core.InsertImage",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Inserts an image into a document at the specified location, with options for size and scaling.",
     "version": "1.0.0",

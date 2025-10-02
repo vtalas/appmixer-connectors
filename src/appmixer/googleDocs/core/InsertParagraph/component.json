@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.GoogleDocs.core.InsertParagraph",
+    "name": "appmixer.googleDocs.core.InsertParagraph",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Inserts or appends a new paragraph to an existing document at a specified location.",
     "version": "1.0.0",
