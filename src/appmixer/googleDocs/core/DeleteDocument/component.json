@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.GoogleDocs.core.DeleteDocument",
+    "name": "appmixer.googleDocs.core.DeleteDocument",
     "description": "Deletes a specified document using its document ID.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",

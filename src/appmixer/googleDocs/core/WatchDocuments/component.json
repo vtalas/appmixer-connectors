@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.GoogleDocs.core.WatchDocuments",
+    "name": "appmixer.googleDocs.core.WatchDocuments",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Triggers when a new document is created or an existing document is modified in a specified folder. Utilizes change notifications.",
     "version": "1.0.0",

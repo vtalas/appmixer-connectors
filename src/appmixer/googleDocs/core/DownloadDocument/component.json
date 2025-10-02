@@ -1,12 +1,14 @@
 {
-    "name": "appmixer.GoogleDocs.core.DownloadDocument",
+    "name": "appmixer.googleDocs.core.DownloadDocument",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Downloads a document in a specified format using its document ID.",
     "version": "1.0.0",
     "private": false,
     "auth": {
         "service": "appmixer:googleDocs",
-        "scope": ["https://www.googleapis.com/auth/drive.readonly"]
+        "scope": [
+            "https://www.googleapis.com/auth/drive.readonly"
+        ]
     },
     "quota": {
         "manager": "appmixer:googleDocs",
@@ -24,7 +26,11 @@
                     "mimeType": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "documentId",
+                    "mimeType"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -32,13 +38,44 @@
                         "type": "text",
                         "tooltip": "The ID of the document to download.",
                         "label": "Document Id",
-                        "index": 0
+                        "index": 1
                     },
                     "mimeType": {
-                        "type": "text",
-                        "tooltip": "The MIME type of the format for export (e.g., application/pdf, text/plain).",
-                        "label": "Mime Type",
-                        "index": 1
+                        "type": "select",
+                        "tooltip": "The MIME type of the format for export.",
+                        "label": "Export Format",
+                        "index": 2,
+                        "defaultValue": "application/pdf",
+                        "options": [
+                            {
+                                "label": "PDF",
+                                "value": "application/pdf"
+                            },
+                            {
+                                "label": "Plain Text",
+                                "value": "text/plain"
+                            },
+                            {
+                                "label": "HTML",
+                                "value": "text/html"
+                            },
+                            {
+                                "label": "Microsoft Word (DOCX)",
+                                "value": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            },
+                            {
+                                "label": "OpenDocument Text (ODT)",
+                                "value": "application/vnd.oasis.opendocument.text"
+                            },
+                            {
+                                "label": "Rich Text Format (RTF)",
+                                "value": "application/rtf"
+                            },
+                            {
+                                "label": "EPUB",
+                                "value": "application/epub+zip"
+                            }
+                        ]
                     }
                 }
             }
@@ -51,6 +88,20 @@
                 {
                     "label": "File Data",
                     "value": "fileData",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "File Name",
+                    "value": "fileName",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "MIME Type",
+                    "value": "mimeType",
                     "schema": {
                         "type": "string"
                     }

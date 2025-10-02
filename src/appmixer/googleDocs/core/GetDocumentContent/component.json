@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.GoogleDocs.core.GetDocumentContent",
+    "name": "appmixer.googleDocs.core.GetDocumentContent",
     "description": "Retrieves the full content of a document using its document ID.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",

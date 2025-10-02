@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.GoogleDocs.core.ReplaceImage",
+    "name": "appmixer.googleDocs.core.ReplaceImage",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Replaces an existing image in the document with a new image from the given URL while maintaining the original image bounds.",
     "version": "1.0.0",
