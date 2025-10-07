@@ -6,8 +6,9 @@
     "private": false,
     "auth": {
         "service": "appmixer:googleDocs",
-        "scope": ["https://www.googleapis.com/auth/documents"]
-
+        "scope": [
+            "https://www.googleapis.com/auth/documents"
+        ]
     },
     "quota": {
         "manager": "appmixer:googleDocs",
@@ -28,26 +29,30 @@
                     "newText": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "documentId",
+                    "oldText"
+                ]
             },
             "inspector": {
                 "inputs": {
                     "documentId": {
                         "type": "text",
-                        "tooltip": "The ID of the document to update.",
                         "label": "Document Id",
+                        "tooltip": "The ID of the document to update.",
                         "index": 0
                     },
                     "oldText": {
                         "type": "text",
-                        "tooltip": "The text to be replaced.",
                         "label": "Old Text",
+                        "tooltip": "The text to be replaced.",
                         "index": 1
                     },
                     "newText": {
                         "type": "text",
-                        "tooltip": "The new text to substitute in place of the old text.",
                         "label": "New Text",
+                        "tooltip": "The new text to substitute in place of the old text.",
                         "index": 2
                     }
                 }
@@ -59,25 +64,31 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Replies",
-                    "value": "replies",
+                    "label": "Document ID",
+                    "value": "documentId",
                     "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "replaceAllText": {
-                                    "type": "object",
-                                    "properties": {
-                                        "occurrencesChanged": {
-                                            "type": "number",
-                                            "title": "Replies.Replace All Text.Occurrences Changed"
-                                        }
-                                    },
-                                    "title": "Replies.Replace All Text"
-                                }
-                            }
-                        }
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Replacements Count",
+                    "value": "replacements",
+                    "schema": {
+                        "type": "number"
+                    }
+                },
+                {
+                    "label": "Old Text",
+                    "value": "oldText",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "New Text",
+                    "value": "newText",
+                    "schema": {
+                        "type": "string"
                     }
                 }
             ]

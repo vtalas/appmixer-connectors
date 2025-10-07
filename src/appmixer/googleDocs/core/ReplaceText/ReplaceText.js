@@ -5,13 +5,21 @@ module.exports = {
 
         const { documentId, oldText, newText } = context.messages.in.content;
 
+        // Validate required inputs
+        if (!documentId) {
+            throw new context.CancelError('Document ID is required.');
+        }
+        if (!oldText) {
+            throw new context.CancelError('Old Text is required.');
+        }
+
         const requests = [{
             replaceAllText: {
                 containsText: {
                     text: oldText,
                     matchCase: false
                 },
-                replaceText: newText
+                replaceText: newText || ''
             }
         }];
 
@@ -36,7 +44,7 @@ module.exports = {
             documentId,
             replacements,
             oldText,
-            newText
+            newText: newText || ''
         }, 'out');
     }
 };
