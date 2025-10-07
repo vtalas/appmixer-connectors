@@ -35,7 +35,11 @@
                     "height": {
                         "type": "integer"
                     }
-                }
+                },
+                "required": [
+                    "documentId",
+                    "imageUrl"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -47,25 +51,25 @@
                     },
                     "imageUrl": {
                         "type": "text",
-                        "tooltip": "URL of the image to insert.",
-                        "label": "Image Url",
+                        "tooltip": "URL of the image to insert. Must be a publicly accessible URL.",
+                        "label": "Image URL",
                         "index": 1
                     },
                     "insertionIndex": {
                         "type": "number",
-                        "tooltip": "The location index where the image will be inserted.",
+                        "tooltip": "The location index where the image will be inserted. If not specified, the image will be inserted at the beginning of the document.",
                         "label": "Insertion Index",
                         "index": 2
                     },
                     "width": {
                         "type": "number",
-                        "tooltip": "Width of the image (optional).",
+                        "tooltip": "Width of the image in points (optional).",
                         "label": "Width",
                         "index": 3
                     },
                     "height": {
                         "type": "number",
-                        "tooltip": "Height of the image (optional).",
+                        "tooltip": "Height of the image in points (optional).",
                         "label": "Height",
                         "index": 4
                     }
@@ -77,6 +81,22 @@
         {
             "name": "out",
             "options": [
+                {
+                    "label": "Document Id",
+                    "value": "documentId"
+                },
+                {
+                    "label": "Image URL",
+                    "value": "imageUrl"
+                },
+                {
+                    "label": "Object Id",
+                    "value": "objectId"
+                },
+                {
+                    "label": "Insertion Index",
+                    "value": "insertionIndex"
+                },
                 {
                     "label": "Replies",
                     "value": "replies",
