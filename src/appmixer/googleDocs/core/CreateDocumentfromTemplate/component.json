@@ -6,8 +6,9 @@
     "private": false,
     "auth": {
         "service": "appmixer:googleDocs",
-        "scope": ["https://www.googleapis.com/auth/documents"]
-
+        "scope": [
+            "https://www.googleapis.com/auth/documents"
+        ]
     },
     "quota": {
         "manager": "appmixer:googleDocs",
