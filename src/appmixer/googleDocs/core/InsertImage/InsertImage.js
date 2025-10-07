@@ -1,15 +1,24 @@
 'use strict';
 
 module.exports = {
+
     async receive(context) {
 
-        const { documentId, imageUrl, index, width, height } = context.messages.in.content;
+        const { documentId, imageUrl, insertionIndex, width, height } = context.messages.in.content;
 
-        // For images, it's safer to use endOfSegmentLocation to append to the end of the document
-        // rather than trying to specify an exact index which can cause 400 errors
-        const location = {
-            endOfSegmentLocation: { segmentId: "" }
-        };
+        // Validate required inputs
+        if (!documentId) {
+            throw new context.CancelError('Document ID is required.');
+        }
+        if (!imageUrl) {
+            throw new context.CancelError('Image URL is required.');
+        }
+
+        // Use proper location structure for Google Docs API
+        // If insertionIndex is provided, use it; otherwise default to index 1 (beginning of document)
+        const location = insertionIndex !== undefined && insertionIndex !== null ? 
+            { index: insertionIndex } : 
+            { index: 1 };
 
         const imageRequest = {
             insertInlineImage: {
@@ -48,10 +57,16 @@ module.exports = {
             data: { requests }
         });
 
+        // Extract the objectId and insertionIndex from the response
+        const reply = data.replies && data.replies[0] && data.replies[0].insertInlineImage;
+        const objectId = reply ? reply.objectId : null;
+        const actualInsertionIndex = reply ? reply.insertionIndex : null;
+
         return context.sendJson({
-            success: true,
             documentId: documentId,
             imageUrl: imageUrl,
+            objectId: objectId,
+            insertionIndex: actualInsertionIndex,
             replies: data.replies
         }, 'out');
     }
