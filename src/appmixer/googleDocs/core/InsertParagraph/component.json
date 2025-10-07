@@ -1,12 +1,14 @@
 {
     "name": "appmixer.googleDocs.core.InsertParagraph",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Inserts or appends a new paragraph to an existing document at a specified location.",
-    "version": "1.0.0",
+    "description": "Inserts or appends a new paragraph to an existing document. If no insertion index is provided, the paragraph will be appended to the end of the document.",
+    "version": "1.0.1",
     "private": false,
     "auth": {
         "service": "appmixer:googleDocs",
-        "scope": ["https://www.googleapis.com/auth/documents"]
+        "scope": [
+            "https://www.googleapis.com/auth/documents"
+        ]
     },
     "quota": {
         "manager": "appmixer:googleDocs",
@@ -27,27 +29,31 @@
                     "insertionIndex": {
                         "type": "integer"
                     }
-                }
+                },
+                "required": [
+                    "documentId",
+                    "paragraphText"
+                ]
             },
             "inspector": {
                 "inputs": {
                     "documentId": {
                         "type": "text",
-                        "tooltip": "The ID of the document to update.",
                         "label": "Document Id",
-                        "index": 0
+                        "index": 0,
+                        "tooltip": "The ID of the document to update."
                     },
                     "paragraphText": {
-                        "type": "text",
-                        "tooltip": "Text content of the new paragraph.",
+                        "type": "textarea",
                         "label": "Paragraph Text",
-                        "index": 1
+                        "index": 1,
+                        "tooltip": "Text content of the new paragraph."
                     },
                     "insertionIndex": {
                         "type": "number",
-                        "tooltip": "The location index where the paragraph will be inserted.",
                         "label": "Insertion Index",
-                        "index": 2
+                        "index": 2,
+                        "tooltip": "The location index where the paragraph will be inserted. If not provided, the paragraph will be appended to the end of the document."
                     }
                 }
             }
@@ -57,6 +63,14 @@
         {
             "name": "out",
             "options": [
+                {
+                    "label": "Document Id",
+                    "value": "documentId"
+                },
+                {
+                    "label": "Inserted Text",
+                    "value": "insertedText"
+                },
                 {
                     "label": "Replies",
                     "value": "replies",
