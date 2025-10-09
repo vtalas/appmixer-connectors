@@ -1,11 +1,14 @@
 'use strict';
 
-const lib = require('../../lib.generated');
-
 module.exports = {
+
     async receive(context) {
 
         const { documentId } = context.messages.in.content;
+
+        if (!documentId) {
+            throw new context.CancelError('Document ID is required.');
+        }
 
         // First, get the document content to find URLs
         const { data: document } = await context.httpRequest({
@@ -20,7 +23,7 @@ module.exports = {
         // Find all text content and search for URLs
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         const requests = [];
-        let linksCount = 0;
+        const links = [];
 
         // Function to process text elements recursively
         function processTextElements(elements) {
@@ -32,7 +35,7 @@ module.exports = {
                 } else if (element.textRun && element.textRun.content) {
                     const text = element.textRun.content;
                     const matches = [...text.matchAll(urlRegex)];
-                    
+
                     for (const match of matches) {
                         const url = match[0];
                         const startIndex = element.startIndex + match.index;
@@ -53,7 +56,7 @@ module.exports = {
                                 fields: 'link'
                             }
                         });
-                        linksCount++;
+                        links.push(url);
                     }
                 } else if (element.table) {
                     // Process table cells
@@ -82,10 +85,6 @@ module.exports = {
             });
         }
 
-        return context.sendJson({
-            documentId: documentId,
-            linksCount: linksCount,
-            success: true
-        }, 'out');
+        return context.sendJson({ links }, 'out');
     }
 };
