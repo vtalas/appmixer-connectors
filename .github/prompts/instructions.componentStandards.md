@@ -8,10 +8,9 @@ This guide provides comprehensive patterns and best practices for creating Appmi
 
 - For components that require an ID as input, there must be another component that returns the entity from which the ID can be obtained. For example, if a connector has a GetEmail component that takes emailId as input, then there must also be a FindEmails component that returns one or more email entities containing the emailId.
 
+### Coding Standards 
 
-## General Principles
-
-- For components that require an ID as input, there must be another component that returns the entity from which the ID can be obtained. For example, if a connector has a GetEmail component that takes emailId as input, then there must also be a FindEmails component that returns one or more email entities containing the emailId.
+- remove all unused variables or imports 
 
 ## Component Types
 
