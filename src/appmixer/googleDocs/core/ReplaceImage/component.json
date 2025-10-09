@@ -1,12 +1,13 @@
 {
     "name": "appmixer.googleDocs.core.ReplaceImage",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Replaces an existing image in the document with a new image from the given URL while maintaining the original image bounds.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:googleDocs",
-        "scope": ["https://www.googleapis.com/auth/documents"]
+        "scope": [
+            "https://www.googleapis.com/auth/documents"
+        ]
     },
     "quota": {
         "manager": "appmixer:googleDocs",
@@ -27,27 +28,32 @@
                     "newImageUrl": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "documentId",
+                    "targetImageId",
+                    "newImageUrl"
+                ]
             },
             "inspector": {
                 "inputs": {
                     "documentId": {
                         "type": "text",
-                        "tooltip": "The ID of the document to update.",
                         "label": "Document Id",
-                        "index": 0
+                        "tooltip": "The ID of the document to update.",
+                        "index": 1
                     },
                     "targetImageId": {
                         "type": "text",
-                        "tooltip": "The object ID of the image to be replaced.",
                         "label": "Target Image Id",
-                        "index": 1
+                        "tooltip": "The object ID of the image to be replaced.",
+                        "index": 2
                     },
                     "newImageUrl": {
                         "type": "text",
-                        "tooltip": "The URL of the new image to insert.",
                         "label": "New Image Url",
-                        "index": 2
+                        "tooltip": "The URL of the new image to insert.",
+                        "index": 3
                     }
                 }
             }
