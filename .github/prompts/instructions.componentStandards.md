@@ -10,7 +10,7 @@ This guide provides comprehensive patterns and best practices for creating Appmi
 
 ### Coding Standards 
 
-- remove all unused variables or imports 
+- unused variables or imports are not allowed 
 
 ## Component Types
 
@@ -649,6 +649,42 @@ Trigger components monitor for events and start workflows when conditions are me
 - Use `webhook()` method for webhook triggers
 - Store state to track changes
 
+##### Webhook 
+
+```javascript
+module.exports = {
+    async receive(context) {
+        const webhookUrl = context.getWebhookUrl();
+        
+        // Register webhook with external service
+        await registerWebhook(context, webhookUrl);
+        
+        return context.sendJson({ webhookUrl }, 'out');
+    },
+    
+    async webhook(context) {
+        // Handle incoming webhook
+        const payload = context.messages.webhook;
+        return context.sendJson(payload, 'out');
+    }
+};
+```
+
+##### Polling 
+
+```javascript
+module.exports = {
+    async tick(context) {
+        // Called periodically for polling
+        const newItems = await fetchNewItems(context);
+        
+        for (const item of newItems) {
+            await context.sendJson(item, 'out');
+        }
+    }
+};
+```
+
 #### New/Created (Item) Triggers
 
 **Purpose**: Trigger when new items are created.
@@ -678,3 +714,6 @@ Trigger components monitor for events and start workflows when conditions are me
 
 **Example behavior pattern**:
 TODO
+
+
+

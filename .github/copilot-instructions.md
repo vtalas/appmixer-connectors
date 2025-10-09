@@ -509,41 +509,6 @@ module.exports = {
 
 #### Advanced Features
 
-##### Trigger Components
-
-```javascript
-module.exports = {
-    async tick(context) {
-        // Called periodically for polling
-        const newItems = await fetchNewItems(context);
-        
-        for (const item of newItems) {
-            await context.sendJson(item, 'out');
-        }
-    }
-};
-```
-
-##### Webhook Components
-
-```javascript
-module.exports = {
-    async receive(context) {
-        const webhookUrl = context.getWebhookUrl();
-        
-        // Register webhook with external service
-        await registerWebhook(context, webhookUrl);
-        
-        return context.sendJson({ webhookUrl }, 'out');
-    },
-    
-    async webhook(context) {
-        // Handle incoming webhook
-        const payload = context.messages.webhook;
-        return context.sendJson(payload, 'out');
-    }
-};
-```
 
 # Best Practices (AI Assistance + Humans)
 Intended for AI assistance like Copilot, CodeRabbit, Claude, etc.
