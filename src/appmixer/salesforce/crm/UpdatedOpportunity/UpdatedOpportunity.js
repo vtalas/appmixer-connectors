@@ -41,9 +41,7 @@ module.exports = {
 
         let res = (data && data.records) ? data.records : [];
         let knownStages = context.state.knownStages || {};
-        context.log({ step: 'know stages', knownStages });
 
-        context.log({ step: 'data', data });
         let newKnownStages = { ...knownStages };
 
         let triggered = [];
@@ -73,9 +71,6 @@ module.exports = {
             opportunity = commons.formatFields(opportunity, dates, commons.formatDate);
             return context.sendJson(opportunity, 'opportunity');
         }));
-        await context.saveState({
-            knownStages: newKnownStages,
-            since: since
-        });
+        await context.saveState({ knownStages: newKnownStages, since });
     }
 };
