@@ -8,8 +8,10 @@ module.exports = {
             objectName
         } = context.messages.in.content;
 
+        const fields = await commons.api.getObjectFields(context, { objectName });
+
         return context.sendJson({
-            fields: await commons.api.getObjectFields(context, { objectName })
+            fields
         }, 'out');
     }
 };

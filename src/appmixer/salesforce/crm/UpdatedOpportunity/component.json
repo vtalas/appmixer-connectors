@@ -15,6 +15,38 @@
         "service": "1.1.2"
     },
     "tick": true,
+    "trigger": true,
+    "properties": {
+        "schema": {
+            "stageName": {
+                "type": "string",
+                "title": "Stage Name"
+            }
+        },
+        "inspector": {
+            "inputs": {
+                "stageName": {
+                    "type": "text",
+                    "title": "Stage Name",
+                    "index": 1,
+                    "description": "Opportunity stage to trigger on.",
+                    "source": {
+                        "url": "/component/appmixer/salesforce/crm/GetFieldProperties?outPort=out",
+                        "data": {
+                            "messages": {
+                                "in": {
+                                    "objectName": "Opportunity",
+                                    "fieldName": "StageName"
+                                }
+                            },
+                            "transform": "./transformers#picklistValuesToSelectArray"
+                        }
+                    }
+                }
+            }
+        }
+    },
+
     "outPorts": [
         {
             "name": "opportunity",
