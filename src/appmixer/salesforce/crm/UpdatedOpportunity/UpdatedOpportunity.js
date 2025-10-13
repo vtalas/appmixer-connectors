@@ -8,10 +8,13 @@ const commons = require('../salesforce-commons');
 module.exports = {
 
     async start(context) {
-        // Use salesForceRq to fetch all Opportunity Id and StageName
+
+        const targetStage = context.properties.stageName;
+
+        const soql = `SELECT Id,StageName FROM Opportunity WHERE StageName != '${targetStage.replace(/'/g, '\\\'')}'`;
         const { data } = await commons.api.salesForceRq(context, {
             method: 'GET',
-            action: 'query?q=SELECT Id,StageName FROM Opportunity'
+            action: `query?q=${encodeURIComponent(soql)}`
         });
 
         let knownStages = {};
@@ -20,6 +23,7 @@ module.exports = {
                 knownStages[opportunity['Id']] = opportunity['StageName'];
             });
         }
+        context.log({ step: 'initial known stages', knownStages });
         await context.saveState({ knownStages });
     },
 
