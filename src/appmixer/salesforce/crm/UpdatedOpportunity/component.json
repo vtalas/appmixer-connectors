@@ -1,7 +1,7 @@
 {
     "name": "appmixer.salesforce.crm.UpdatedOpportunity",
-    "author": "Tomasz Hencel <thencel@ntrc.eu>",
-    "description": "trigger when Opportunity reaches specific stage.",
+    "author": "Appmixer <info@appmixer.ai>",
+    "description": "Trigger when Opportunity reaches specific stage.",
     "private": false,
     "auth": {
         "service": "appmixer:salesforce"
@@ -28,8 +28,8 @@
                 "stageName": {
                     "type": "text",
                     "title": "Stage Name",
+                    "tooltip": "Opportunity stage to trigger on.",
                     "index": 1,
-                    "description": "Opportunity stage to trigger on.",
                     "source": {
                         "url": "/component/appmixer/salesforce/crm/GetFieldProperties?outPort=out",
                         "data": {
@@ -46,7 +46,6 @@
             }
         }
     },
-
     "outPorts": [
         {
             "name": "opportunity",
