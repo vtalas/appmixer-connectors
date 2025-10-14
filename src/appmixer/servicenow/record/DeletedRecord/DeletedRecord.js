@@ -1,19 +1,18 @@
-/* eslint-disable camelcase */
 'use strict';
+
+const eventName = (context) => `${(context.auth.instance)}.${(context.properties.tableName)}.delete`;
 
 module.exports = {
 
     async start(context) {
 
-        const tableName = context.properties.tableName;
-        context.log({ stage: 'start', name: `${tableName}.delete` });
-        return context.addListener(`${tableName}.delete`);
+        context.log({ stage: 'start', eventName: eventName(context) });
+        return context.addListener(eventName(context));
     },
 
     async stop(context) {
 
-        const tableName = context.properties.tableName;
-        return context.removeListener(`${tableName}.delete`);
+        return context.removeListener(eventName(context));
     },
 
     async receive(context) {

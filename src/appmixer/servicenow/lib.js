@@ -191,7 +191,7 @@ async function getTableReferences(context, { tableName, tableId }) {
     }
 }
 
-function toOutputScheme(context, columns, fields = '') {
+function toOutputScheme(columns, fields = '') {
 
     const types = {
         string: 'string',
@@ -205,7 +205,7 @@ function toOutputScheme(context, columns, fields = '') {
         : columns;
 
     const uniq = {}; // temporary object for removing duplicities.
-    const scheme = columnsFiltered.reduce((res, column) => {
+    return  columnsFiltered.reduce((res, column) => {
         if (column.active === 'true' && column.element && !uniq[column.element]) {
             uniq[column.element] = true;
             res.push({
@@ -218,7 +218,6 @@ function toOutputScheme(context, columns, fields = '') {
         return res;
     }, []);
 
-    return context.sendJson(scheme, 'out');
 }
 
 function toInspector(context, { columns, fields = '', schema: initialSchemaFields }) {

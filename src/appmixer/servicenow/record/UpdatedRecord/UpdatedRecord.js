@@ -1,19 +1,18 @@
-/* eslint-disable camelcase */
 'use strict';
+
+const eventName = (context) => `${(context.auth.instance)}.${(context.properties.tableName)}.update`;
 
 module.exports = {
 
     async start(context) {
 
-        const tableName = context.properties.tableName;
-        context.log({ stage: 'start', name: `${tableName}.update` });
-        return context.addListener(`${tableName}.update`);
+        context.log({ stage: 'start', eventName: eventName(context) });
+        return context.addListener(eventName(context));
     },
 
     async stop(context) {
 
-        const tableName = context.properties.tableName;
-        return context.removeListener(`${tableName}.update`);
+        return context.removeListener(eventName(context));
     },
 
     async receive(context) {
