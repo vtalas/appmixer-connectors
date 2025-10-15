@@ -1,10 +1,6 @@
 'use strict';
-const commons = require('../salesforce-commons');
+const commons = require('../lib');
 
-/**
- * Component which triggers whenever new opportunity is added.
- * @extends {Component}
- */
 module.exports = {
 
     async start(context) {
@@ -19,9 +15,7 @@ module.exports = {
 
         let knownStages = {};
         if (data && data.records) {
-            data.records.forEach(opportunity => {
-                knownStages[opportunity['Id']] = opportunity['StageName'];
-            });
+            data.records.forEach(opportunity => { knownStages[opportunity['Id']] = opportunity['StageName']; });
         }
         context.log({ step: 'initial known stages', knownStages });
         await context.saveState({ knownStages });

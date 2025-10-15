@@ -1,4 +1,4 @@
-const commons = require('../salesforce-commons');
+const commons = require('../lib');
 const _ = require('lodash');
 
 module.exports = {
