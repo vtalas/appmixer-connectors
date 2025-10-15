@@ -18,10 +18,15 @@
     "trigger": true,
     "properties": {
         "schema": {
-            "stageName": {
-                "type": "string",
-                "title": "Stage Name"
-            }
+            "type": "object",
+            "properties": {
+                "stageName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "stageName"
+            ]
         },
         "inspector": {
             "inputs": {
@@ -53,7 +58,7 @@
                 "url": "/component/appmixer/salesforce/crm/GetObjectFields?outPort=out",
                 "data": {
                     "messages": {
-                        "in" : {
+                        "in": {
                             "objectName": "Opportunity"
                         }
                     },

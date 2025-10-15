@@ -17,7 +17,6 @@ module.exports = {
         if (data && data.records) {
             data.records.forEach(opportunity => { knownStages[opportunity['Id']] = opportunity['StageName']; });
         }
-        context.log({ step: 'initial known stages', knownStages });
         await context.saveState({ knownStages });
     },
 

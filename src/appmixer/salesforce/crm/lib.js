@@ -119,13 +119,13 @@ module.exports = {
             return data;
         },
 
-        async salesForceRq(context, { method = 'GET', headers = {}, data, action }) {
+        async salesForceRq(context, { method = 'GET', headers = {}, data, action, service = 'data' }) {
 
             const version = `v${context.config.apiVersion || DEFAULT_API_VERSION}`;
 
             return await context.httpRequest({
                 method,
-                url: `${context.profileInfo.instanceUrl}/services/data/${version}/${action}`,
+                url: `${context.profileInfo.instanceUrl}/services/${service}/${version}/${action}`,
                 data,
                 headers: {
                     'Authorization': `Bearer ${context.auth.accessToken}`,
