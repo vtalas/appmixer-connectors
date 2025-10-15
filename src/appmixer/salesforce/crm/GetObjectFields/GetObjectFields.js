@@ -6,7 +6,10 @@ module.exports = {
 
         const { objectName, fieldName } = context.messages.in.content;
 
-        const fields = await commons.api.getObjectFields(context, { objectName });
+        const fields = await commons.api.getObjectFields(context, {
+            objectName,
+            cache: context.properties.variableFectch || false
+        });
 
         if (fieldName) {
             const singleField = fields.find(field => field.name === fieldName);

@@ -58,6 +58,9 @@
                     "messages": {
                         "in/objectName": "inputs/in/objectName"
                     },
+                    "properties": {
+                        "variableFetch": true
+                    },
                     "transform": "./transformers#fieldsToSelectOptions"
                 }
             }

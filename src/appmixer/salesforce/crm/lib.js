@@ -83,7 +83,7 @@ module.exports = {
         async getObjectFields(context, { objectName, cache = false }) {
             let fields = [];
 
-            if (cache) {
+            if (!cache) {
                 const { data } = await this.salesForceRq(context, { action: `sobjects/${objectName}/describe` });
                 return data?.fields || [];
             }
