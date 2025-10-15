@@ -71,8 +71,8 @@ module.exports = {
                 const { data } = await context.httpRequest({
                     method: 'GET',
                     url: instanceId,
-                    auth: {
-                        bearer: context.accessToken
+                    headers: {
+                        'Authorization': `Bearer ${context.accessToken}`
                     }
                 });
 
