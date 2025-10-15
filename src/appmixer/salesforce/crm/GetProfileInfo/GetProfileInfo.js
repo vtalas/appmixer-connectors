@@ -8,6 +8,7 @@ module.exports = {
         if (!instanceId) {
             throw new context.CancelError('Instance Id is not set, please authenticate again.');
         }
+
         const { data } = await context.httpRequest({
             method: 'GET',
             url: instanceId,
@@ -16,10 +17,6 @@ module.exports = {
             }
         });
 
-        console.log(data);
-        // https://test.salesforce.com/services/oauth2/userinfo
-
         return context.sendJson(data, 'out');
     }
 };
-

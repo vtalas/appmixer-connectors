@@ -15,8 +15,6 @@ module.exports = {
             }
         }
 
-        context.log({ step: 'field 0 ', field: fields[0] });
-
         return context.sendJson({ fields }, 'out');
     }
 };
