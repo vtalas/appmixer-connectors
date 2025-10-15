@@ -22,7 +22,7 @@
             "Migration: The Table Name and its columns must be defined."
         ],
         "2.1.0": [
-            "Added trigger: UpdatedRecord."
+            "Added triggers: UpdatedRecord and DeletedRecord."
         ]
     }
 }

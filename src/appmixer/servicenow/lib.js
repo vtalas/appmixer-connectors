@@ -62,7 +62,6 @@ async function callEndpoint(context, {
         params
     };
 
-    context.log({ step: 'Making request', options: { url, data, params } });
     return await context.httpRequest(options);
 }
 
