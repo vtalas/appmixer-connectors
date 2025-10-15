@@ -12,7 +12,7 @@ module.exports = {
 
         if (generateOutputPortOptions) {
             const columns = await lib.getColumns(context, { tableName });
-            const schema = lib.toOutputScheme(context, columns, sysparm_fields);
+            const schema = lib.toOutputScheme(columns, sysparm_fields);
             return context.sendJson(schema, 'out');
         }
 
