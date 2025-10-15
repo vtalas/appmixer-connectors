@@ -59,7 +59,7 @@ async function generateInspector(context) {
 
     if (objectName && !rawJson) {
 
-        const fields = await commons.api.getObjectFields(context, { objectName });
+        const fields = await commons.api.getObjectFields(context, { objectName, cache: true });
 
         fieldsInputs = fields.reduce((res, item, index) => {
 

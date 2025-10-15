@@ -80,8 +80,13 @@ module.exports = {
 
     // API
     api: {
-        async getObjectFields(context, { objectName }) {
+        async getObjectFields(context, { objectName, cache = false }) {
             let fields = [];
+
+            if (cache) {
+                const { data } = await this.salesForceRq(context, { action: `sobjects/${objectName}/describe` });
+                return data?.fields || [];
+            }
 
             const objectPropertiesCacheTTL = context.config.objectPropertiesCacheTTL || (5 * 60 * 1000);
             const cacheKey = 'salesforce_properties_objectFields_' + objectName + '_' + context.auth.userId + context.auth.profileInfo.email;
@@ -92,9 +97,7 @@ module.exports = {
                 if (cached) {
                     fields = cached;
                 } else {
-                    const { data } = await this.salesForceRq(context, {
-                        action: `sobjects/${objectName}/describe`
-                    });
+                    const { data } = await this.salesForceRq(context, { action: `sobjects/${objectName}/describe` });
 
                     fields = data?.fields || [];
 
