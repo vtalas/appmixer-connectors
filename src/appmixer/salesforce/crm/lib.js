@@ -81,10 +81,29 @@ module.exports = {
     // API
     api: {
         async getObjectFields(context, { objectName }) {
-            const { data } = await this.salesForceRq(context, {
-                action: `sobjects/${objectName}/describe`
-            });
-            return data?.fields || [];
+            let fields = [];
+
+            const objectPropertiesCacheTTL = context.config.objectPropertiesCacheTTL || (5 * 60 * 1000);
+            const cacheKey = 'salesforce_properties_objectFields_' + objectName + '_' + context.auth.userId + context.auth.profileInfo.email;
+            let lock;
+            try {
+                lock = await context.lock(cacheKey);
+                const cached = await context.staticCache.get(cacheKey);
+                if (cached) {
+                    fields = cached;
+                } else {
+                    const { data } = await this.salesForceRq(context, {
+                        action: `sobjects/${objectName}/describe`
+                    });
+
+                    fields = data?.fields || [];
+
+                    await context.staticCache.set(cacheKey, fields, objectPropertiesCacheTTL);
+                }
+                return fields;
+            } finally {
+                lock?.unlock();
+            }
         },
 
         async createObject(context, { objectName, json }) {
