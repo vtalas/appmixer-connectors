@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.AddaSharedLinktoaFolder",
-    "author": "Appmixer <info@appmixer.com>",
+    "name": "appmixer.box.core.AddSharedLinkToFolder",
+    "label": "Add Shared Link to Folder",
     "description": "Adds or updates a shared link on a folder.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,63 +17,80 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "folder_id": {
+                    "folderId": {
                         "type": "string"
                     },
-                    "shared_link|access": {
+                    "access": {
                         "type": "string"
                     },
-                    "shared_link|password": {
+                    "password": {
                         "type": "string"
                     },
-                    "shared_link|unshared_at": {
+                    "unsharedAt": {
                         "type": "string"
                     },
-                    "shared_link|permissions|can_download": {
+                    "canDownload": {
                         "type": "boolean"
                     },
-                    "shared_link|permissions|can_preview": {
+                    "canPreview": {
                         "type": "boolean"
                     }
-                }
+                },
+                "required": [
+                    "folderId"
+                ]
             },
             "inspector": {
                 "inputs": {
-                    "folder_id": {
+                    "folderId": {
                         "type": "text",
+                        "label": "Folder ID",
                         "tooltip": "The ID of the folder to set a shared link on.",
-                        "label": "Folder Id",
-                        "index": 0
-                    },
-                    "shared_link|access": {
-                        "type": "text",
-                        "tooltip": "open, company, or collaborators.",
-                        "label": "Shared Link|access",
                         "index": 1
                     },
-                    "shared_link|password": {
-                        "type": "text",
-                        "tooltip": "Password for the link (if enabled).",
-                        "label": "Shared Link|password",
-                        "index": 2
+                    "access": {
+                        "type": "select",
+                        "label": "Access Level",
+                        "tooltip": "The level of access for the shared link.",
+                        "index": 2,
+                        "options": [
+                            {
+                                "label": "Open (anyone with the link)",
+                                "value": "open"
+                            },
+                            {
+                                "label": "Company (only people within your company)",
+                                "value": "company"
+                            },
+                            {
+                                "label": "Collaborators (only collaborators)",
+                                "value": "collaborators"
+                            }
+                        ]
                     },
-                    "shared_link|unshared_at": {
+                    "password": {
                         "type": "text",
-                        "tooltip": "ISO 8601 date-time to disable the link.",
-                        "label": "Shared Link|unshared At",
+                        "label": "Password",
+                        "tooltip": "Optional password to protect the shared link.",
                         "index": 3
                     },
-                    "shared_link|permissions|can_download": {
-                        "type": "toggle",
-                        "tooltip": "Allow downloads.",
-                        "label": "Shared Link|permissions|can Download",
+                    "unsharedAt": {
+                        "type": "text",
+                        "label": "Unshared At",
+                        "tooltip": "ISO 8601 date-time when the link should be disabled (e.g., 2025-12-31T23:59:59Z).",
                         "index": 4
                     },
-                    "shared_link|permissions|can_preview": {
+                    "canDownload": {
                         "type": "toggle",
-                        "tooltip": "Allow previews.",
-                        "label": "Shared Link|permissions|can Preview",
+                        "label": "Can Download",
+                        "tooltip": "Allow downloads through the shared link.",
                         "index": 5
+                    },
+                    "canPreview": {
+                        "type": "toggle",
+                        "label": "Can Preview",
+                        "tooltip": "Allow previews through the shared link.",
+                        "index": 6
                     }
                 }
             }
@@ -91,10 +108,52 @@
                     }
                 },
                 {
-                    "label": "Id",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
+                    }
+                },
+                {
+                    "label": "Name",
+                    "value": "name",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Shared Link URL",
+                    "value": "shared_link.url",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Shared Link Access",
+                    "value": "shared_link.access",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Shared Link Download URL",
+                    "value": "shared_link.download_url",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Shared Link Can Download",
+                    "value": "shared_link.permissions.can_download",
+                    "schema": {
+                        "type": "boolean"
+                    }
+                },
+                {
+                    "label": "Shared Link Can Preview",
+                    "value": "shared_link.permissions.can_preview",
+                    "schema": {
+                        "type": "boolean"
                     }
                 },
                 {
@@ -110,6 +169,10 @@
                             "url": {
                                 "type": "string",
                                 "title": "Shared Link.Url"
+                            },
+                            "download_url": {
+                                "type": "string",
+                                "title": "Shared Link.Download Url"
                             },
                             "permissions": {
                                 "type": "object",

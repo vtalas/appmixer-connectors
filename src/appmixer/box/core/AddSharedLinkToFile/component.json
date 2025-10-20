@@ -1,9 +1,8 @@
 {
     "name": "appmixer.box.core.AddSharedLinkToFile",
+    "description": "Adds or updates a shared link on a file. This allows you to configure access levels, passwords, expiration dates, and download/preview permissions for the shared link.",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Adds or updates a shared link on a file.",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,63 +16,80 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "file_id": {
+                    "fileId": {
                         "type": "string"
                     },
-                    "shared_link|access": {
+                    "access": {
                         "type": "string"
                     },
-                    "shared_link|password": {
+                    "password": {
                         "type": "string"
                     },
-                    "shared_link|unshared_at": {
+                    "unsharedAt": {
                         "type": "string"
                     },
-                    "shared_link|permissions|can_download": {
+                    "canDownload": {
                         "type": "boolean"
                     },
-                    "shared_link|permissions|can_preview": {
+                    "canPreview": {
                         "type": "boolean"
                     }
-                }
+                },
+                "required": [
+                    "fileId"
+                ]
             },
             "inspector": {
                 "inputs": {
-                    "file_id": {
+                    "fileId": {
                         "type": "text",
+                        "label": "File ID",
                         "tooltip": "The ID of the file to set a shared link on.",
-                        "label": "File Id",
-                        "index": 0
-                    },
-                    "shared_link|access": {
-                        "type": "text",
-                        "tooltip": "open, company, or collaborators.",
-                        "label": "Shared Link|access",
                         "index": 1
                     },
-                    "shared_link|password": {
-                        "type": "text",
-                        "tooltip": "Password for the link (if enabled).",
-                        "label": "Shared Link|password",
-                        "index": 2
+                    "access": {
+                        "type": "select",
+                        "label": "Access Level",
+                        "tooltip": "The level of access for the shared link.",
+                        "index": 2,
+                        "options": [
+                            {
+                                "label": "Open (Anyone with the link)",
+                                "value": "open"
+                            },
+                            {
+                                "label": "Company (Only people in your company)",
+                                "value": "company"
+                            },
+                            {
+                                "label": "Collaborators (Only people with access to the folder)",
+                                "value": "collaborators"
+                            }
+                        ]
                     },
-                    "shared_link|unshared_at": {
+                    "password": {
                         "type": "text",
-                        "tooltip": "ISO 8601 date-time to disable the link.",
-                        "label": "Shared Link|unshared At",
+                        "label": "Password",
+                        "tooltip": "The password required to access the shared link. Leave empty for no password.",
                         "index": 3
                     },
-                    "shared_link|permissions|can_download": {
-                        "type": "toggle",
-                        "tooltip": "Allow downloads.",
-                        "label": "Shared Link|permissions|can Download",
+                    "unsharedAt": {
+                        "type": "text",
+                        "label": "Unshared At",
+                        "tooltip": "The date-time when the shared link will be automatically disabled (ISO 8601 format, e.g., 2024-12-31T23:59:59Z). Leave empty for no expiration.",
                         "index": 4
                     },
-                    "shared_link|permissions|can_preview": {
+                    "canDownload": {
                         "type": "toggle",
-                        "tooltip": "Allow previews.",
-                        "label": "Shared Link|permissions|can Preview",
+                        "label": "Can Download",
+                        "tooltip": "Allow users to download the file through the shared link.",
                         "index": 5
+                    },
+                    "canPreview": {
+                        "type": "toggle",
+                        "label": "Can Preview",
+                        "tooltip": "Allow users to preview the file through the shared link.",
+                        "index": 6
                     }
                 }
             }
@@ -91,7 +107,7 @@
                     }
                 },
                 {
-                    "label": "Id",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"

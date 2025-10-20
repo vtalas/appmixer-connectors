@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.box.core.DeleteaFolder",
+    "name": "appmixer.box.core.DeleteFolder",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Deletes a folder by ID. Use recursive=true to delete non-empty folders.",
     "version": "1.0.0",
