@@ -1,7 +1,7 @@
 {
-    "name": "appmixer.box.core.GetFile",
+    "name": "appmixer.box.core.GetFolder",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Retrieves information about a file by its ID.",
+    "description": "Retrieves information about a folder, including the first 100 items in item_collection.",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -17,27 +17,30 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "file_id": {
+                    "folder_id": {
                         "type": "string"
                     },
                     "fields": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "folder_id"
+                ]
             },
             "inspector": {
                 "inputs": {
-                    "file_id": {
+                    "folder_id": {
                         "type": "text",
-                        "tooltip": "The ID of the file to retrieve.",
-                        "label": "File Id",
-                        "index": 0
+                        "tooltip": "The ID of the folder to retrieve.",
+                        "label": "Folder Id",
+                        "index": 1
                     },
                     "fields": {
                         "type": "text",
-                        "tooltip": "A comma-separated list of fields to include in the response for performance optimization.",
+                        "tooltip": "Comma-separated list of fields to include.",
                         "label": "Fields",
-                        "index": 1
+                        "index": 2
                     }
                 }
             }
@@ -69,49 +72,14 @@
                     }
                 },
                 {
-                    "label": "Size",
-                    "value": "size",
-                    "schema": {
-                        "type": "number"
-                    }
-                },
-                {
-                    "label": "Created At",
-                    "value": "created_at",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Modified At",
-                    "value": "modified_at",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Etag",
-                    "value": "etag",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Sha1",
-                    "value": "sha1",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Path Collection",
-                    "value": "path_collection",
+                    "label": "Item Collection",
+                    "value": "item_collection",
                     "schema": {
                         "type": "object",
                         "properties": {
                             "total_count": {
                                 "type": "number",
-                                "title": "Path Collection.Total Count"
+                                "title": "Item Collection.Total Count"
                             },
                             "entries": {
                                 "type": "array",
@@ -120,81 +88,29 @@
                                     "properties": {
                                         "type": {
                                             "type": "string",
-                                            "title": "Path Collection.Entries.Type"
+                                            "title": "Item Collection.Entries.Type"
                                         },
                                         "id": {
                                             "type": "string",
-                                            "title": "Path Collection.Entries.Id"
+                                            "title": "Item Collection.Entries.Id"
                                         },
                                         "name": {
                                             "type": "string",
-                                            "title": "Path Collection.Entries.Name"
+                                            "title": "Item Collection.Entries.Name"
                                         }
                                     }
                                 },
-                                "title": "Path Collection.Entries"
+                                "title": "Item Collection.Entries"
+                            },
+                            "limit": {
+                                "type": "number",
+                                "title": "Item Collection.Limit"
+                            },
+                            "offset": {
+                                "type": "number",
+                                "title": "Item Collection.Offset"
                             }
                         }
-                    }
-                },
-                {
-                    "label": "Parent",
-                    "value": "parent",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string",
-                                "title": "Parent.Type"
-                            },
-                            "id": {
-                                "type": "string",
-                                "title": "Parent.Id"
-                            },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
-                            }
-                        }
-                    }
-                },
-                {
-                    "label": "Owned By",
-                    "value": "owned_by",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string",
-                                "title": "Owned By.Type"
-                            },
-                            "id": {
-                                "type": "string",
-                                "title": "Owned By.Id"
-                            },
-                            "name": {
-                                "type": "string",
-                                "title": "Owned By.Name"
-                            },
-                            "login": {
-                                "type": "string",
-                                "title": "Owned By.Login"
-                            }
-                        }
-                    }
-                },
-                {
-                    "label": "Shared Link",
-                    "value": "shared_link",
-                    "schema": {
-                        "type": "null"
-                    }
-                },
-                {
-                    "label": "Item Status",
-                    "value": "item_status",
-                    "schema": {
-                        "type": "string"
                     }
                 }
             ]
