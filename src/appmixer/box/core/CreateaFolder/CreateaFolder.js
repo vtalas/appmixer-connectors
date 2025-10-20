@@ -6,11 +6,7 @@ module.exports = {
 
     async receive(context) {
 
-        const content = context.messages.in.content || {};
-        const { name, parent } = content;
-        
-        // Handle both flat property 'parent|id' and nested object 'parent.id'
-        const parentId = content['parent|id'] || (parent && parent.id);
+        const { name, parentId } = context.messages.in.content;
 
         if (!name) {
             throw new context.CancelError('Folder name is required.');

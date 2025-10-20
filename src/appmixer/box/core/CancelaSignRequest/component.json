@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.CancelaSignRequest",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Cancels a sign request by its ID. The request cannot be completed afterwards.",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,31 +17,18 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "parentId": {
+                    "sign_request_id": {
                         "type": "string"
                     }
-                },
-                "required": [
-                    "name",
-                    "parentId"
-                ]
+                }
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "sign_request_id": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
-                        "index": 1
-                    },
-                    "parentId": {
-                        "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
-                        "index": 2
+                        "tooltip": "The ID of the sign request to cancel.",
+                        "label": "Sign Request Id",
+                        "index": 0
                     }
                 }
             }
@@ -52,13 +39,6 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Type",
-                    "value": "type",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
                     "label": "Id",
                     "value": "id",
                     "schema": {
@@ -66,31 +46,10 @@
                     }
                 },
                 {
-                    "label": "Name",
-                    "value": "name",
+                    "label": "Status",
+                    "value": "status",
                     "schema": {
                         "type": "string"
-                    }
-                },
-                {
-                    "label": "Parent",
-                    "value": "parent",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string",
-                                "title": "Parent.Type"
-                            },
-                            "id": {
-                                "type": "string",
-                                "title": "Parent.Id"
-                            },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
-                            }
-                        }
                     }
                 }
             ]

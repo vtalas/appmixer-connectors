@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.DownloadaFile",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Downloads the contents of a file by ID. Follows 302 redirect to the actual file location.",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,31 +17,27 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "file_id": {
                         "type": "string"
                     },
-                    "parentId": {
+                    "version": {
                         "type": "string"
                     }
-                },
-                "required": [
-                    "name",
-                    "parentId"
-                ]
+                }
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "file_id": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
-                        "index": 1
+                        "tooltip": "The ID of the file to download.",
+                        "label": "File Id",
+                        "index": 0
                     },
-                    "parentId": {
+                    "version": {
                         "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
-                        "index": 2
+                        "tooltip": "Optional file version ID to download a specific version.",
+                        "label": "Version",
+                        "index": 1
                     }
                 }
             }
@@ -52,45 +48,38 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Type",
-                    "value": "type",
+                    "label": "File Id",
+                    "value": "fileId",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Id",
-                    "value": "id",
+                    "label": "File Name",
+                    "value": "fileName",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Name",
-                    "value": "name",
+                    "label": "Content Type",
+                    "value": "contentType",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Parent",
-                    "value": "parent",
+                    "label": "Size",
+                    "value": "size",
                     "schema": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string",
-                                "title": "Parent.Type"
-                            },
-                            "id": {
-                                "type": "string",
-                                "title": "Parent.Id"
-                            },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
-                            }
-                        }
+                        "type": "number"
+                    }
+                },
+                {
+                    "label": "Note",
+                    "value": "note",
+                    "schema": {
+                        "type": "string"
                     }
                 }
             ]

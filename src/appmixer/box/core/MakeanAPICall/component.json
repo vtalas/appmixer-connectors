@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.MakeanAPICall",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Performs an arbitrary authorized API call to Box endpoints.",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,31 +17,66 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "method": {
                         "type": "string"
                     },
-                    "parentId": {
+                    "path": {
                         "type": "string"
+                    },
+                    "query": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "body": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "useUploadApi": {
+                        "type": "boolean"
                     }
-                },
-                "required": [
-                    "name",
-                    "parentId"
-                ]
+                }
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "method": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
+                        "tooltip": "HTTP method: GET, POST, PUT, PATCH, DELETE.",
+                        "label": "Method",
+                        "index": 0
+                    },
+                    "path": {
+                        "type": "text",
+                        "tooltip": "Relative path, e.g., files/123456789.",
+                        "label": "Path",
                         "index": 1
                     },
-                    "parentId": {
+                    "query": {
                         "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
+                        "tooltip": "Query string parameters.",
+                        "label": "Query",
                         "index": 2
+                    },
+                    "headers": {
+                        "type": "text",
+                        "tooltip": "Additional headers to include.",
+                        "label": "Headers",
+                        "index": 3
+                    },
+                    "body": {
+                        "type": "text",
+                        "tooltip": "JSON body to send (for POST/PUT/PATCH).",
+                        "label": "Body",
+                        "index": 4
+                    },
+                    "useUploadApi": {
+                        "type": "toggle",
+                        "tooltip": "If true, call the Upload API base (https://upload.box.com/api/2.0).",
+                        "label": "Use Upload Api",
+                        "index": 5
                     }
                 }
             }
@@ -52,43 +87,21 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Type",
-                    "value": "type",
+                    "label": "Status",
+                    "value": "status",
                     "schema": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
                 {
-                    "label": "Id",
-                    "value": "id",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Name",
-                    "value": "name",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Parent",
-                    "value": "parent",
+                    "label": "Data",
+                    "value": "data",
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "type": {
+                            "note": {
                                 "type": "string",
-                                "title": "Parent.Type"
-                            },
-                            "id": {
-                                "type": "string",
-                                "title": "Parent.Id"
-                            },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
+                                "title": "Data.Note"
                             }
                         }
                     }

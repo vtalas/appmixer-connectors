@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.AddaSharedLinktoaFolder",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Adds or updates a shared link on a folder.",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,31 +17,63 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "folder_id": {
                         "type": "string"
                     },
-                    "parentId": {
+                    "shared_link|access": {
                         "type": "string"
+                    },
+                    "shared_link|password": {
+                        "type": "string"
+                    },
+                    "shared_link|unshared_at": {
+                        "type": "string"
+                    },
+                    "shared_link|permissions|can_download": {
+                        "type": "boolean"
+                    },
+                    "shared_link|permissions|can_preview": {
+                        "type": "boolean"
                     }
-                },
-                "required": [
-                    "name",
-                    "parentId"
-                ]
+                }
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "folder_id": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
+                        "tooltip": "The ID of the folder to set a shared link on.",
+                        "label": "Folder Id",
+                        "index": 0
+                    },
+                    "shared_link|access": {
+                        "type": "text",
+                        "tooltip": "open, company, or collaborators.",
+                        "label": "Shared Link|access",
                         "index": 1
                     },
-                    "parentId": {
+                    "shared_link|password": {
                         "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
+                        "tooltip": "Password for the link (if enabled).",
+                        "label": "Shared Link|password",
                         "index": 2
+                    },
+                    "shared_link|unshared_at": {
+                        "type": "text",
+                        "tooltip": "ISO 8601 date-time to disable the link.",
+                        "label": "Shared Link|unshared At",
+                        "index": 3
+                    },
+                    "shared_link|permissions|can_download": {
+                        "type": "toggle",
+                        "tooltip": "Allow downloads.",
+                        "label": "Shared Link|permissions|can Download",
+                        "index": 4
+                    },
+                    "shared_link|permissions|can_preview": {
+                        "type": "toggle",
+                        "tooltip": "Allow previews.",
+                        "label": "Shared Link|permissions|can Preview",
+                        "index": 5
                     }
                 }
             }
@@ -66,29 +98,32 @@
                     }
                 },
                 {
-                    "label": "Name",
-                    "value": "name",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Parent",
-                    "value": "parent",
+                    "label": "Shared Link",
+                    "value": "shared_link",
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "type": {
+                            "access": {
                                 "type": "string",
-                                "title": "Parent.Type"
+                                "title": "Shared Link.Access"
                             },
-                            "id": {
+                            "url": {
                                 "type": "string",
-                                "title": "Parent.Id"
+                                "title": "Shared Link.Url"
                             },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
+                            "permissions": {
+                                "type": "object",
+                                "properties": {
+                                    "can_download": {
+                                        "type": "boolean",
+                                        "title": "Shared Link.Permissions.Can Download"
+                                    },
+                                    "can_preview": {
+                                        "type": "boolean",
+                                        "title": "Shared Link.Permissions.Can Preview"
+                                    }
+                                },
+                                "title": "Shared Link.Permissions"
                             }
                         }
                     }

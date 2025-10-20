@@ -1,9 +1,8 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.CreateFolderMetadataInstance",
+    "description": "Applies an instance of a metadata template to a folder.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "label": "Create Folder",
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,31 +16,52 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "folder_id": {
                         "type": "string"
                     },
-                    "parentId": {
+                    "scope": {
                         "type": "string"
+                    },
+                    "templateKey": {
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "additionalProperties": true
                     }
                 },
                 "required": [
-                    "name",
-                    "parentId"
+                    "folder_id",
+                    "scope",
+                    "templateKey",
+                    "metadata"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "folder_id": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
+                        "label": "Folder Id",
+                        "tooltip": "The ID of the folder.",
                         "index": 1
                     },
-                    "parentId": {
+                    "scope": {
                         "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
+                        "label": "Scope",
+                        "tooltip": "Metadata scope. Usually enterprise or global.",
                         "index": 2
+                    },
+                    "templateKey": {
+                        "type": "text",
+                        "label": "Template Key",
+                        "tooltip": "Metadata template key.",
+                        "index": 3
+                    },
+                    "metadata": {
+                        "type": "textarea",
+                        "label": "Metadata",
+                        "tooltip": "Key/value pairs matching the template's fields. Provide as JSON object.",
+                        "index": 4
                     }
                 }
             }
@@ -52,45 +72,38 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Type",
-                    "value": "type",
+                    "label": "$Id",
+                    "value": "$id",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Id",
-                    "value": "id",
+                    "label": "$Parent",
+                    "value": "$parent",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Name",
-                    "value": "name",
+                    "label": "$Scope",
+                    "value": "$scope",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Parent",
-                    "value": "parent",
+                    "label": "$Template",
+                    "value": "$template",
                     "schema": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string",
-                                "title": "Parent.Type"
-                            },
-                            "id": {
-                                "type": "string",
-                                "title": "Parent.Id"
-                            },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
-                            }
-                        }
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Owner",
+                    "value": "owner",
+                    "schema": {
+                        "type": "string"
                     }
                 }
             ]

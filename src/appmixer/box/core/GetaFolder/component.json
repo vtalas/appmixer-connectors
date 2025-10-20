@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.GetaFolder",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Retrieves information about a folder, including the first 100 items in item_collection.",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,30 +17,29 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "folder_id": {
                         "type": "string"
                     },
-                    "parentId": {
+                    "fields": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "name",
-                    "parentId"
+                    "folder_id"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "folder_id": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
+                        "tooltip": "The ID of the folder to retrieve.",
+                        "label": "Folder Id",
                         "index": 1
                     },
-                    "parentId": {
+                    "fields": {
                         "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
+                        "tooltip": "Comma-separated list of fields to include.",
+                        "label": "Fields",
                         "index": 2
                     }
                 }
@@ -73,22 +72,43 @@
                     }
                 },
                 {
-                    "label": "Parent",
-                    "value": "parent",
+                    "label": "Item Collection",
+                    "value": "item_collection",
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "type": {
-                                "type": "string",
-                                "title": "Parent.Type"
+                            "total_count": {
+                                "type": "number",
+                                "title": "Item Collection.Total Count"
                             },
-                            "id": {
-                                "type": "string",
-                                "title": "Parent.Id"
+                            "entries": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "title": "Item Collection.Entries.Type"
+                                        },
+                                        "id": {
+                                            "type": "string",
+                                            "title": "Item Collection.Entries.Id"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "title": "Item Collection.Entries.Name"
+                                        }
+                                    }
+                                },
+                                "title": "Item Collection.Entries"
                             },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
+                            "limit": {
+                                "type": "number",
+                                "title": "Item Collection.Limit"
+                            },
+                            "offset": {
+                                "type": "number",
+                                "title": "Item Collection.Offset"
                             }
                         }
                     }

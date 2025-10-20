@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.CopyaFolder",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Creates a copy of an existing folder to a destination parent folder.",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,31 +17,40 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "folderId": {
                         "type": "string"
                     },
                     "parentId": {
                         "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
                     }
                 },
                 "required": [
-                    "name",
+                    "folderId",
                     "parentId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "folderId": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
+                        "tooltip": "The ID of the folder to copy.",
+                        "label": "Folder ID",
                         "index": 1
                     },
                     "parentId": {
                         "type": "text",
+                        "tooltip": "Destination parent folder ID.",
                         "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
                         "index": 2
+                    },
+                    "name": {
+                        "type": "text",
+                        "tooltip": "Optional new name for the copied folder.",
+                        "label": "Name",
+                        "index": 3
                     }
                 }
             }

@@ -1,9 +1,10 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.GetItemBySharedLink",
+    "label": "Get Item by Shared Link",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Retrieves information about a file or folder using a shared link URL (optionally with a password).",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,30 +18,29 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "sharedLinkUrl": {
                         "type": "string"
                     },
-                    "parentId": {
+                    "sharedLinkPassword": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "name",
-                    "parentId"
+                    "sharedLinkUrl"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "name": {
+                    "sharedLinkUrl": {
                         "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
+                        "tooltip": "The shared link URL to the file or folder.",
+                        "label": "Shared Link URL",
                         "index": 1
                     },
-                    "parentId": {
+                    "sharedLinkPassword": {
                         "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
+                        "tooltip": "Password for the shared link if required.",
+                        "label": "Shared Link Password",
                         "index": 2
                     }
                 }
@@ -59,7 +59,7 @@
                     }
                 },
                 {
-                    "label": "Id",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
@@ -73,24 +73,38 @@
                     }
                 },
                 {
-                    "label": "Parent",
-                    "value": "parent",
+                    "label": "Size",
+                    "value": "size",
                     "schema": {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "type": "string",
-                                "title": "Parent.Type"
-                            },
-                            "id": {
-                                "type": "string",
-                                "title": "Parent.Id"
-                            },
-                            "name": {
-                                "type": "string",
-                                "title": "Parent.Name"
-                            }
-                        }
+                        "type": "number"
+                    }
+                },
+                {
+                    "label": "Created At",
+                    "value": "created_at",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Modified At",
+                    "value": "modified_at",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Shared Link URL",
+                    "value": "shared_link.url",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Shared Link Download URL",
+                    "value": "shared_link.download_url",
+                    "schema": {
+                        "type": "string"
                     }
                 }
             ]

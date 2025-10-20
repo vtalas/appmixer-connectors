@@ -1,0 +1,127 @@
+'use strict';
+
+const lib = require('../../lib.generated');
+
+const schema = {
+    'type': { 'type': 'string', 'title': 'Type' },
+    'id': { 'type': 'string', 'title': 'Id' },
+    'name': { 'type': 'string', 'title': 'Name' },
+    'created_at': { 'type': 'string', 'title': 'Created At' },
+    'modified_at': { 'type': 'string', 'title': 'Modified At' },
+    'size': { 'type': 'integer', 'title': 'Size' },
+    'description': { 'type': 'string', 'title': 'Description' },
+    'path_collection': {
+        'type': 'object',
+        'properties': {
+            'total_count': { 'type': 'integer', 'title': 'Path Collection.Total Count' },
+            'entries': {
+                'type': 'array',
+                'items': {
+                    'type': 'object',
+                    'properties': {
+                        'type': { 'type': 'string', 'title': 'Path Collection.Entries.Type' },
+                        'id': { 'type': 'string', 'title': 'Path Collection.Entries.Id' },
+                        'name': { 'type': 'string', 'title': 'Path Collection.Entries.Name' }
+                    }
+                },
+                'title': 'Path Collection.Entries'
+            }
+        },
+        'title': 'Path Collection'
+    },
+    'created_by': {
+        'type': 'object',
+        'properties': {
+            'type': { 'type': 'string', 'title': 'Created By.Type' },
+            'id': { 'type': 'string', 'title': 'Created By.Id' },
+            'name': { 'type': 'string', 'title': 'Created By.Name' },
+            'login': { 'type': 'string', 'title': 'Created By.Login' }
+        },
+        'title': 'Created By'
+    },
+    'modified_by': {
+        'type': 'object',
+        'properties': {
+            'type': { 'type': 'string', 'title': 'Modified By.Type' },
+            'id': { 'type': 'string', 'title': 'Modified By.Id' },
+            'name': { 'type': 'string', 'title': 'Modified By.Name' },
+            'login': { 'type': 'string', 'title': 'Modified By.Login' }
+        },
+        'title': 'Modified By'
+    },
+    'owned_by': {
+        'type': 'object',
+        'properties': {
+            'type': { 'type': 'string', 'title': 'Owned By.Type' },
+            'id': { 'type': 'string', 'title': 'Owned By.Id' },
+            'name': { 'type': 'string', 'title': 'Owned By.Name' },
+            'login': { 'type': 'string', 'title': 'Owned By.Login' }
+        },
+        'title': 'Owned By'
+    },
+    'shared_link': {
+        'type': 'object',
+        'properties': {
+            'url': { 'type': 'string', 'title': 'Shared Link.Url' },
+            'download_url': { 'type': 'string', 'title': 'Shared Link.Download Url' }
+        },
+        'title': 'Shared Link'
+    }
+};
+
+module.exports = {
+
+    async receive(context) {
+
+        const { query, type, ancestor_folder_ids, content_types, limit, offset, fields, outputType } = context.messages.in.content;
+
+        if (!query) {
+            throw new context.CancelError('Query is required!');
+        }
+
+        if (context.properties.generateOutputPortOptions) {
+            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Entries', value: 'entries' });
+        }
+
+        const params = {
+            query
+        };
+
+        if (type) {
+            params.type = type;
+        }
+        if (ancestor_folder_ids) {
+            params.ancestor_folder_ids = ancestor_folder_ids;
+        }
+        if (content_types) {
+            params.content_types = content_types;
+        }
+        if (limit) {
+            params.limit = limit;
+        }
+        if (offset) {
+            params.offset = offset;
+        }
+        if (fields) {
+            params.fields = fields;
+        }
+
+        // https://developer.box.com/reference/get-search/
+        const { data } = await context.httpRequest({
+            method: 'GET',
+            url: 'https://api.box.com/2.0/search',
+            headers: {
+                'Authorization': `Bearer ${context.auth.apiToken}`
+            },
+            params
+        });
+
+        const records = data.entries || [];
+
+        if (records.length === 0) {
+            return context.sendJson({}, 'notFound');
+        }
+
+        return lib.sendArrayOutput({ context, records, outputType });
+    }
+};

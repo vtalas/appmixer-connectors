@@ -1,9 +1,9 @@
 {
-    "name": "appmixer.box.core.CreateFolder",
-    "description": "Creates a new folder in the specified parent.",
+    "name": "appmixer.box.core.CreateComment",
     "author": "Appmixer <info@appmixer.com>",
+    "description": "Creates a new comment on a file.",
     "version": "1.0.0",
-    "label": "Create Folder",
+    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -17,31 +17,56 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "itemType": {
+                        "type": "string",
+                        "default": "file"
+                    },
+                    "itemId": {
                         "type": "string"
                     },
-                    "parentId": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "taggedMessage": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "name",
-                    "parentId"
+                    "itemId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "name": {
-                        "type": "text",
-                        "label": "Name",
-                        "tooltip": "Name of the new folder.",
-                        "index": 1
+                    "itemType": {
+                        "type": "select",
+                        "tooltip": "Type of item to comment on.",
+                        "label": "Item Type",
+                        "index": 1,
+                        "defaultValue": "file",
+                        "options": [
+                            {
+                                "label": "File",
+                                "value": "file"
+                            }
+                        ]
                     },
-                    "parentId": {
+                    "itemId": {
                         "type": "text",
-                        "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
+                        "tooltip": "The ID of the file.",
+                        "label": "Item ID",
                         "index": 2
+                    },
+                    "message": {
+                        "type": "textarea",
+                        "tooltip": "Plain text of the comment. Either message or tagged message is required.",
+                        "label": "Message",
+                        "index": 3
+                    },
+                    "taggedMessage": {
+                        "type": "textarea",
+                        "tooltip": "Alternative to message. Allows @mentions using @[name:#user_id].",
+                        "label": "Tagged Message",
+                        "index": 4
                     }
                 }
             }
@@ -66,29 +91,50 @@
                     }
                 },
                 {
-                    "label": "Name",
-                    "value": "name",
+                    "label": "Message",
+                    "value": "message",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "Parent",
-                    "value": "parent",
+                    "label": "Created By",
+                    "value": "created_by",
                     "schema": {
                         "type": "object",
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Parent.Type"
+                                "title": "Created By.Type"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Parent.Id"
+                                "title": "Created By.Id"
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Parent.Name"
+                                "title": "Created By.Name"
+                            }
+                        }
+                    }
+                },
+                {
+                    "label": "Item",
+                    "value": "item",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "title": "Item.Type"
+                            },
+                            "id": {
+                                "type": "string",
+                                "title": "Item.Id"
+                            },
+                            "name": {
+                                "type": "string",
+                                "title": "Item.Name"
                             }
                         }
                     }
