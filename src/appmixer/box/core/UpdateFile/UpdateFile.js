@@ -42,9 +42,9 @@ module.exports = {
         }
 
         // Build shared_link object if any shared link fields are provided
-        if (sharedLinkAccess || sharedLinkPassword || sharedLinkUnsharedAt || 
+        if (sharedLinkAccess || sharedLinkPassword || sharedLinkUnsharedAt ||
             sharedLinkCanDownload !== undefined || sharedLinkCanPreview !== undefined) {
-            
+
             updateData.shared_link = {};
 
             if (sharedLinkAccess) {
@@ -61,11 +61,11 @@ module.exports = {
 
             if (sharedLinkCanDownload !== undefined || sharedLinkCanPreview !== undefined) {
                 updateData.shared_link.permissions = {};
-                
+
                 if (sharedLinkCanDownload !== undefined) {
                     updateData.shared_link.permissions.can_download = sharedLinkCanDownload;
                 }
-                
+
                 if (sharedLinkCanPreview !== undefined) {
                     updateData.shared_link.permissions.can_preview = sharedLinkCanPreview;
                 }

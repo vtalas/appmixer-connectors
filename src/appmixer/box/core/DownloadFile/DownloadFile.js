@@ -7,6 +7,9 @@ module.exports = {
 
         const { file_id, version } = context.messages.in.content;
 
+
+
+
         // https://developer.box.com/reference/get-files-id-content/
         const { data } = await context.httpRequest({
             method: 'GET',

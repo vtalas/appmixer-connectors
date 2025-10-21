@@ -1,7 +1,7 @@
 {
     "name": "appmixer.box.core.UploadFile",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Uploads a new file using multipart/form-data to the Upload API.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -24,29 +24,34 @@
                         "type": "string"
                     },
                     "file": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "data-url"
                     }
-                }
+                },
+                "required": [
+                    "parentId",
+                    "file"
+                ]
             },
             "inspector": {
                 "inputs": {
                     "parentId": {
                         "type": "text",
+                        "label": "Parent Folder ID",
                         "tooltip": "The parent folder ID where the file will be uploaded.",
-                        "label": "Parent Id",
-                        "index": 0
+                        "index": 1
                     },
                     "name": {
                         "type": "text",
+                        "label": "File Name",
                         "tooltip": "The file name (including extension). If omitted, Box uses the uploaded filename.",
-                        "label": "Name",
-                        "index": 1
+                        "index": 2
                     },
                     "file": {
-                        "type": "text",
-                        "tooltip": "Binary file content. In multipart/form-data, use part name 'file'.",
+                        "type": "filepicker",
                         "label": "File",
-                        "index": 2
+                        "tooltip": "Select the file to upload.",
+                        "index": 3
                     }
                 }
             }
