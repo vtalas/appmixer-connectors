@@ -73,7 +73,7 @@ module.exports = {
 
     async receive(context) {
 
-        const { query, type, ancestor_folder_ids, content_types, limit, offset, fields, outputType } = context.messages.in.content;
+        const { query, type, ancestor_folder_ids, content_types, fields, outputType } = context.messages.in.content;
 
         if (!query) {
             throw new context.CancelError('Query is required!');
@@ -95,12 +95,6 @@ module.exports = {
         }
         if (content_types) {
             params.content_types = content_types;
-        }
-        if (limit) {
-            params.limit = limit;
-        }
-        if (offset) {
-            params.offset = offset;
         }
         if (fields) {
             params.fields = fields;

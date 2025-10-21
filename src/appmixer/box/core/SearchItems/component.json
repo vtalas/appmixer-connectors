@@ -1,7 +1,8 @@
 {
     "name": "appmixer.box.core.SearchItems",
+    "label": "Search Items",
+    "description": "Search for files and folders by name, content, type, owner, etc. This component will return a maximum of 200 records per search.",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Searches for files and folders by name, content, type, owner, etc. Returns a maximum of 200 items per search.",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -29,14 +30,6 @@
                     "content_types": {
                         "type": "string"
                     },
-                    "limit": {
-                        "type": "integer",
-                        "default": 30
-                    },
-                    "offset": {
-                        "type": "integer",
-                        "default": 0
-                    },
                     "fields": {
                         "type": "string"
                     },
@@ -52,50 +45,38 @@
                 "inputs": {
                     "query": {
                         "type": "text",
-                        "tooltip": "The search query string (e.g., file name fragment).",
+                        "index": 1,
                         "label": "Query",
-                        "index": 1
+                        "tooltip": "The search query string (e.g., file name fragment)."
                     },
                     "type": {
                         "type": "text",
-                        "tooltip": "Filter by item type: file or folder.",
+                        "index": 2,
                         "label": "Type",
-                        "index": 2
+                        "tooltip": "Filter by item type: file or folder."
                     },
                     "ancestor_folder_ids": {
                         "type": "text",
-                        "tooltip": "Comma-separated list of ancestor folder IDs to limit scope.",
+                        "index": 3,
                         "label": "Ancestor Folder Ids",
-                        "index": 3
+                        "tooltip": "Comma-separated list of ancestor folder IDs to limit scope."
                     },
                     "content_types": {
                         "type": "text",
-                        "tooltip": "Comma-separated content types: name, description, file_content, comments, tags.",
+                        "index": 4,
                         "label": "Content Types",
-                        "index": 4
-                    },
-                    "limit": {
-                        "type": "number",
-                        "tooltip": "Max results to return (1-200). Defaults to 30.",
-                        "label": "Limit",
-                        "index": 5
-                    },
-                    "offset": {
-                        "type": "number",
-                        "tooltip": "Offset for pagination. Defaults to 0.",
-                        "label": "Offset",
-                        "index": 6
+                        "tooltip": "Comma-separated content types: name, description, file_content, comments, tags."
                     },
                     "fields": {
                         "type": "text",
-                        "tooltip": "Comma-separated list of fields to include.",
+                        "index": 5,
                         "label": "Fields",
-                        "index": 7
+                        "tooltip": "Comma-separated list of fields to include."
                     },
                     "outputType": {
                         "type": "select",
+                        "index": 6,
                         "label": "Output Type",
-                        "index": 8,
                         "defaultValue": "array",
                         "tooltip": "Choose whether you want to receive the result set as one complete list, or first item only or one item at a time or stream the items to a file.",
                         "options": [

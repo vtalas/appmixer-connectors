@@ -1,7 +1,8 @@
 {
     "name": "appmixer.box.core.UpdateFileMetadata",
-    "author": "Appmixer <info@appmixer.com>",
+    "label": "Update File Metadata",
     "description": "Updates fields in a file metadata instance using JSON Patch operations.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -18,25 +19,32 @@
                 "type": "object",
                 "properties": {
                     "file_id": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "File ID"
                     },
                     "scope": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "Scope"
                     },
                     "templateKey": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "Template Key"
                     },
                     "op": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "Operation"
                     },
                     "path": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "Path"
                     },
                     "value": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "Value"
                     },
                     "from": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "From"
                     }
                 },
                 "required": [
@@ -51,14 +59,14 @@
                 "inputs": {
                     "file_id": {
                         "type": "text",
-                        "tooltip": "The ID of the file.",
                         "label": "File ID",
+                        "tooltip": "The ID of the file.",
                         "index": 1
                     },
                     "scope": {
                         "type": "select",
-                        "tooltip": "Metadata scope.",
                         "label": "Scope",
+                        "tooltip": "Metadata scope.",
                         "index": 2,
                         "options": [
                             {
@@ -73,14 +81,14 @@
                     },
                     "templateKey": {
                         "type": "text",
-                        "tooltip": "Metadata template key.",
                         "label": "Template Key",
+                        "tooltip": "Metadata template key.",
                         "index": 3
                     },
                     "op": {
                         "type": "select",
-                        "tooltip": "The JSON Patch operation to perform.",
                         "label": "Operation",
+                        "tooltip": "The JSON Patch operation to perform.",
                         "index": 4,
                         "options": [
                             {
@@ -111,20 +119,20 @@
                     },
                     "path": {
                         "type": "text",
-                        "tooltip": "JSON Pointer path to the field, e.g., /projectCode.",
                         "label": "Path",
+                        "tooltip": "JSON Pointer path to the field, e.g., /projectCode.",
                         "index": 5
                     },
                     "value": {
                         "type": "text",
-                        "tooltip": "Value for add/replace/test operations.",
                         "label": "Value",
+                        "tooltip": "Value for add/replace/test operations.",
                         "index": 6
                     },
                     "from": {
                         "type": "text",
-                        "tooltip": "Source path for move/copy operations.",
                         "label": "From",
+                        "tooltip": "Source path for move/copy operations.",
                         "index": 7
                     }
                 }

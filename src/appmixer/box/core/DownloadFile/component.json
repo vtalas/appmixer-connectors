@@ -1,7 +1,7 @@
 {
     "name": "appmixer.box.core.DownloadFile",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Downloads the contents of a file by ID. Follows 302 redirect to the actual file location.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -23,21 +23,24 @@
                     "version": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "file_id"
+                ]
             },
             "inspector": {
                 "inputs": {
                     "file_id": {
                         "type": "text",
-                        "tooltip": "The ID of the file to download.",
+                        "index": 0,
                         "label": "File Id",
-                        "index": 0
+                        "tooltip": "The ID of the file to download."
                     },
                     "version": {
                         "type": "text",
-                        "tooltip": "Optional file version ID to download a specific version.",
+                        "index": 1,
                         "label": "Version",
-                        "index": 1
+                        "tooltip": "Optional file version ID to download a specific version."
                     }
                 }
             }

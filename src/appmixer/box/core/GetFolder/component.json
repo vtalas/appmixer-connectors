@@ -1,7 +1,8 @@
 {
     "name": "appmixer.box.core.GetFolder",
+    "label": "Get Folder",
+    "description": "Retrieve information about a specific folder, including the first 100 items in item_collection.",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Retrieves information about a folder, including the first 100 items in item_collection.",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -32,15 +33,15 @@
                 "inputs": {
                     "folder_id": {
                         "type": "text",
-                        "tooltip": "The ID of the folder to retrieve.",
-                        "label": "Folder Id",
-                        "index": 1
+                        "index": 1,
+                        "label": "Folder ID",
+                        "tooltip": "The unique identifier of the folder to retrieve"
                     },
                     "fields": {
                         "type": "text",
-                        "tooltip": "Comma-separated list of fields to include.",
+                        "index": 2,
                         "label": "Fields",
-                        "index": 2
+                        "tooltip": "Comma-separated list of fields to include in the response (e.g., id,name,type,created_at,modified_at)"
                     }
                 }
             }
@@ -58,7 +59,7 @@
                     }
                 },
                 {
-                    "label": "Id",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
@@ -67,6 +68,20 @@
                 {
                     "label": "Name",
                     "value": "name",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Created At",
+                    "value": "created_at",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Modified At",
+                    "value": "modified_at",
                     "schema": {
                         "type": "string"
                     }

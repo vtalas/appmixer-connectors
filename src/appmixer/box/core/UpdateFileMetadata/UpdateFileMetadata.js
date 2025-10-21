@@ -7,23 +7,23 @@ module.exports = {
         const { file_id, scope, templateKey, op, path, value, from } = context.messages.in.content;
 
         if (!file_id) {
-            throw new context.CancelError('File ID is required.');
+            throw new context.CancelError('File ID is required!');
         }
 
         if (!scope) {
-            throw new context.CancelError('Scope is required.');
+            throw new context.CancelError('Scope is required!');
         }
 
         if (!templateKey) {
-            throw new context.CancelError('Template Key is required.');
+            throw new context.CancelError('Template Key is required!');
         }
 
         if (!op) {
-            throw new context.CancelError('Operation is required.');
+            throw new context.CancelError('Operation is required!');
         }
 
         if (!path) {
-            throw new context.CancelError('Path is required.');
+            throw new context.CancelError('Path is required!');
         }
 
         // Build the JSON Patch operation
@@ -39,7 +39,7 @@ module.exports = {
 
         if (['move', 'copy'].includes(op)) {
             if (!from) {
-                throw new context.CancelError('From path is required for move/copy operations.');
+                throw new context.CancelError('From path is required for move/copy operations!');
             }
             operation.from = from;
         }

@@ -1,6 +1,6 @@
 {
     "name": "appmixer.box.core.UploadFile",
-    "description": "Uploads a new file using multipart/form-data to the Upload API.",
+    "description": "Creates and uploads a new file to a specified folder using multipart/form-data.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
@@ -44,7 +44,7 @@
                     "name": {
                         "type": "text",
                         "label": "File Name",
-                        "tooltip": "The file name (including extension). If omitted, Box uses the uploaded filename.",
+                        "tooltip": "Optional file name (including extension). If omitted, the original filename from the uploaded file is used.",
                         "index": 2
                     },
                     "file": {

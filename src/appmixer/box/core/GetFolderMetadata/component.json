@@ -1,5 +1,6 @@
 {
     "name": "appmixer.box.core.GetFolderMetadata",
+    "label": "Get Folder Metadata",
     "description": "Retrieves a specific metadata instance on a folder by scope and template key.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
@@ -16,34 +17,37 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "folder_id": {
-                        "type": "string"
+                    "folderId": {
+                        "type": "string",
+                        "title": "Folder ID"
                     },
                     "scope": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "Scope"
                     },
                     "templateKey": {
-                        "type": "string"
+                        "type": "string",
+                        "title": "Template Key"
                     }
                 },
                 "required": [
-                    "folder_id",
+                    "folderId",
                     "scope",
                     "templateKey"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "folder_id": {
+                    "folderId": {
                         "type": "text",
-                        "label": "Folder Id",
+                        "label": "Folder ID",
                         "tooltip": "The ID of the folder.",
                         "index": 1
                     },
                     "scope": {
                         "type": "text",
                         "label": "Scope",
-                        "tooltip": "Metadata scope. Usually enterprise or global.",
+                        "tooltip": "Metadata scope. Usually 'enterprise' or 'global'.",
                         "index": 2
                     },
                     "templateKey": {
@@ -61,28 +65,28 @@
             "name": "out",
             "options": [
                 {
-                    "label": "$Id",
+                    "label": "ID",
                     "value": "$id",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "$Parent",
+                    "label": "Parent",
                     "value": "$parent",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "$Scope",
+                    "label": "Scope",
                     "value": "$scope",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "$Template",
+                    "label": "Template",
                     "value": "$template",
                     "schema": {
                         "type": "string"

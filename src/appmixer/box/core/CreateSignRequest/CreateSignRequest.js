@@ -19,10 +19,10 @@ module.exports = {
 
         // Validate required fields
         if (!sourceFileId) {
-            throw new context.CancelError('Source File ID is required.');
+            throw new context.CancelError('Source File ID is required!');
         }
         if (!signerEmail) {
-            throw new context.CancelError('Signer Email is required.');
+            throw new context.CancelError('Signer Email is required!');
         }
 
         // Build the request body according to Box API specification

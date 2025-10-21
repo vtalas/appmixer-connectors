@@ -7,7 +7,7 @@ module.exports = {
         const { folder_id, fields } = context.messages.in.content;
 
         if (!folder_id) {
-            throw new context.CancelError('Folder Id is required!');
+            throw new context.CancelError('Folder ID is required!');
         }
 
         const params = {};

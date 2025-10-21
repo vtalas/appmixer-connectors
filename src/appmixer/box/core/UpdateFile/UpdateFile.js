@@ -19,7 +19,7 @@ module.exports = {
         } = context.messages.in.content;
 
         if (!fileId) {
-            throw new context.CancelError('File ID is required.');
+            throw new context.CancelError('File ID is required!');
         }
 
         // Build the request body with only provided fields

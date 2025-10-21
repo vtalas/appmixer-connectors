@@ -10,11 +10,11 @@ module.exports = {
 
         // Validate required inputs
         if (!folder_id) {
-            throw new context.CancelError('Folder Id is required.');
+            throw new context.CancelError('Folder Id is required!');
         }
 
         if (!name) {
-            throw new context.CancelError('Name is required.');
+            throw new context.CancelError('Name is required!');
         }
 
         const headers = {

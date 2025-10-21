@@ -1,7 +1,5 @@
 'use strict';
 
-const lib = require('../../lib.generated');
-
 module.exports = {
 
     async receive(context) {
@@ -9,11 +7,11 @@ module.exports = {
         const { name, parentId } = context.messages.in.content;
 
         if (!name) {
-            throw new context.CancelError('Folder name is required.');
+            throw new context.CancelError('Name is required!');
         }
 
         if (!parentId) {
-            throw new context.CancelError('Parent folder ID is required.');
+            throw new context.CancelError('Parent Folder ID is required!');
         }
 
         // https://developer.box.com/reference/post-folders/

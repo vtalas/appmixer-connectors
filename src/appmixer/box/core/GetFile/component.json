@@ -23,7 +23,10 @@
                     "fields": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "file_id"
+                ]
             },
             "inspector": {
                 "inputs": {

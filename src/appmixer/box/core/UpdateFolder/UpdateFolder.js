@@ -16,7 +16,7 @@ module.exports = {
         } = context.messages.in.content;
 
         if (!folder_id) {
-            throw new context.CancelError('Folder ID is required.');
+            throw new context.CancelError('Folder ID is required!');
         }
 
         // Build the request body
@@ -29,7 +29,7 @@ module.exports = {
         // Build shared_link object if any shared link properties are provided
         if (shared_link_access || shared_link_password || shared_link_unshared_at ||
             shared_link_can_download !== undefined || shared_link_can_preview !== undefined) {
-            
+
             body.shared_link = {};
 
             if (shared_link_access) {

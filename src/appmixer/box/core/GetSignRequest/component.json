@@ -4,7 +4,6 @@
     "description": "Retrieves a sign request by its ID.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -31,8 +30,8 @@
                     "sign_request_id": {
                         "type": "text",
                         "label": "Sign Request ID",
-                        "tooltip": "The ID of the sign request.",
-                        "index": 1
+                        "index": 1,
+                        "tooltip": "The ID of the sign request"
                     }
                 }
             }
@@ -57,6 +56,13 @@
                     }
                 },
                 {
+                    "label": "Type",
+                    "value": "type",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
                     "label": "Signers",
                     "value": "signers",
                     "schema": {
@@ -66,18 +72,49 @@
                             "properties": {
                                 "email": {
                                     "type": "string",
-                                    "title": "Signers.Email"
+                                    "title": "Email"
                                 },
                                 "role": {
                                     "type": "string",
-                                    "title": "Signers.Role"
+                                    "title": "Role"
                                 },
                                 "status": {
                                     "type": "string",
-                                    "title": "Signers.Status"
+                                    "title": "Status"
                                 }
                             }
                         }
+                    }
+                },
+                {
+                    "label": "Source Files",
+                    "value": "source_files",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                },
+                {
+                    "label": "Prepare URL",
+                    "value": "prepare_url",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Sign URL",
+                    "value": "sign_url",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Template ID",
+                    "value": "template_id",
+                    "schema": {
+                        "type": "string"
                     }
                 }
             ]

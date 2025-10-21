@@ -9,11 +9,11 @@ module.exports = {
         const { parentId, name, file } = context.messages.in.content;
 
         if (!parentId) {
-            throw new context.CancelError('Parent Folder ID is required.');
+            throw new context.CancelError('Parent Folder ID is required!');
         }
 
         if (!file) {
-            throw new context.CancelError('File is required.');
+            throw new context.CancelError('File is required!');
         }
 
         // Parse the data URL to extract file content and metadata

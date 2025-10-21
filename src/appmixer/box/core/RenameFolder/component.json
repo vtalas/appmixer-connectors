@@ -35,21 +35,21 @@
                 "inputs": {
                     "folder_id": {
                         "type": "text",
-                        "tooltip": "The ID of the folder to rename.",
+                        "index": 1,
                         "label": "Folder Id",
-                        "index": 1
+                        "tooltip": "The ID of the folder to rename."
                     },
                     "name": {
                         "type": "text",
-                        "tooltip": "The new folder name.",
+                        "index": 2,
                         "label": "Name",
-                        "index": 2
+                        "tooltip": "The new folder name."
                     },
                     "ifMatch": {
                         "type": "text",
-                        "tooltip": "Optional ETag to prevent race conditions. Sent as If-Match header.",
+                        "index": 3,
                         "label": "If Match",
-                        "index": 3
+                        "tooltip": "Optional ETag to prevent race conditions. Sent as If-Match header."
                     }
                 }
             }
