@@ -1,15 +1,17 @@
 {
     "name": "appmixer.box.core.CopyFolder",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Creates a copy of an existing folder to a destination parent folder.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
     "quota": {
         "manager": "appmixer:box",
-        "resources": "requests"
+        "resources": "requests",
+        "scope": {
+            "userId": ""
+        }
     },
     "inPorts": [
         {
@@ -36,20 +38,20 @@
                 "inputs": {
                     "folderId": {
                         "type": "text",
-                        "tooltip": "The ID of the folder to copy.",
                         "label": "Folder ID",
+                        "tooltip": "The ID of the folder to copy.",
                         "index": 1
                     },
                     "parentId": {
                         "type": "text",
-                        "tooltip": "Destination parent folder ID.",
                         "label": "Parent Folder ID",
+                        "tooltip": "Destination parent folder ID.",
                         "index": 2
                     },
                     "name": {
                         "type": "text",
-                        "tooltip": "Optional new name for the copied folder.",
                         "label": "Name",
+                        "tooltip": "Optional new name for the copied folder.",
                         "index": 3
                     }
                 }

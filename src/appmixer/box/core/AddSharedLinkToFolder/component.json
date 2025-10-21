@@ -1,6 +1,5 @@
 {
     "name": "appmixer.box.core.AddSharedLinkToFolder",
-    "label": "Add Shared Link to Folder",
     "description": "Adds or updates a shared link on a folder.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",

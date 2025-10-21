@@ -14,7 +14,7 @@ module.exports = {
         } = context.messages.in.content;
 
         if (!fileId) {
-            throw new context.CancelError('File ID is required.');
+            throw new context.CancelError('File ID is required!');
         }
 
         // Build the shared link object
@@ -44,7 +44,7 @@ module.exports = {
         }
 
         // https://developer.box.com/reference/put-files-id--add-shared-link/
-        const { data } = await context.httpRequest({
+        await context.httpRequest({
             method: 'PUT',
             url: `https://api.box.com/2.0/files/${fileId}`,
             headers: {
@@ -56,6 +56,6 @@ module.exports = {
             }
         });
 
-        return context.sendJson(data, 'out');
+        return context.sendJson({}, 'out');
     }
 };
