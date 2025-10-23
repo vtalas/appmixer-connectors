@@ -21,7 +21,7 @@ module.exports = {
             method: 'GET',
             url: `https://api.box.com/2.0/files/${file_id}/content`,
             headers: {
-                'Authorization': `Bearer ${context.auth.apiToken}`
+                'Authorization': `Bearer ${context.auth.accessToken}`
             },
             params: params,
             rawResponse: true

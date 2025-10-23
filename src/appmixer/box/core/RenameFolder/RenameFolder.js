@@ -18,7 +18,7 @@ module.exports = {
         }
 
         const headers = {
-            'Authorization': `Bearer ${context.auth.apiToken}`,
+            'Authorization': `Bearer ${context.auth.accessToken}`,
             'Content-Type': 'application/json'
         };
 

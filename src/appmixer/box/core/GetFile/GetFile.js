@@ -9,7 +9,7 @@ module.exports = {
         const { file_id, fields } = context.messages.in.content;
 
         if (!file_id) {
-            throw new context.CancelError('File Id is required!');
+            throw new context.CancelError('File ID is required!');
         }
 
         const params = {};
@@ -23,7 +23,7 @@ module.exports = {
             method: 'GET',
             url: `https://api.box.com/2.0/files/${file_id}`,
             headers: {
-                'Authorization': `Bearer ${context.auth.apiToken}`
+                'Authorization': `Bearer ${context.auth.accessToken}`
             },
             params
         });

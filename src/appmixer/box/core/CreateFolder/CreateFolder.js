@@ -19,7 +19,7 @@ module.exports = {
             method: 'POST',
             url: 'https://api.box.com/2.0/folders',
             headers: {
-                'Authorization': `Bearer ${context.auth.apiToken}`,
+                'Authorization': `Bearer ${context.auth.accessToken}`,
                 'Content-Type': 'application/json'
             },
             data: {

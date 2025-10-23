@@ -105,7 +105,7 @@ module.exports = {
             method: 'GET',
             url: 'https://api.box.com/2.0/search',
             headers: {
-                'Authorization': `Bearer ${context.auth.apiToken}`
+                'Authorization': `Bearer ${context.auth.accessToken}`
             },
             params
         });

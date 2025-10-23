@@ -1,9 +1,9 @@
 {
     "name": "appmixer.box.core.GetFile",
-    "author": "Appmixer <info@appmixer.com>",
+    "label": "Get File",
     "description": "Retrieves information about a file by its ID.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -32,15 +32,15 @@
                 "inputs": {
                     "file_id": {
                         "type": "text",
-                        "tooltip": "The ID of the file to retrieve.",
-                        "label": "File Id",
-                        "index": 0
+                        "index": 1,
+                        "label": "File ID",
+                        "tooltip": "The ID of the file to retrieve."
                     },
                     "fields": {
                         "type": "text",
-                        "tooltip": "A comma-separated list of fields to include in the response for performance optimization.",
+                        "index": 2,
                         "label": "Fields",
-                        "index": 1
+                        "tooltip": "A comma-separated list of fields to include in the response for performance optimization."
                     }
                 }
             }
@@ -58,7 +58,7 @@
                     }
                 },
                 {
-                    "label": "Id",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
@@ -100,7 +100,7 @@
                     }
                 },
                 {
-                    "label": "Sha1",
+                    "label": "SHA1",
                     "value": "sha1",
                     "schema": {
                         "type": "string"
@@ -127,7 +127,7 @@
                                         },
                                         "id": {
                                             "type": "string",
-                                            "title": "Path Collection.Entries.Id"
+                                            "title": "Path Collection.Entries.ID"
                                         },
                                         "name": {
                                             "type": "string",
@@ -152,7 +152,7 @@
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Parent.Id"
+                                "title": "Parent.ID"
                             },
                             "name": {
                                 "type": "string",
@@ -173,7 +173,7 @@
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Owned By.Id"
+                                "title": "Owned By.ID"
                             },
                             "name": {
                                 "type": "string",
