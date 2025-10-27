@@ -28,36 +28,33 @@ module.exports = {
         requestProfileInfo: async function(context) {
 
             const basicAuth = Buffer.from(context.username + ':' + context.password).toString('base64');
-            const options = {
+
+            const { data } = await context.httpRequest({
                 method: 'GET',
                 url: 'https://' + context.instance + '.service-now.com/api/now/table/problem?sysparm_limit=1',
                 headers: {
-                    'User-Agent': 'Appmixer (info@appmixer.com)',
-                    'Authorization': ('Basic ' + basicAuth)
+                    // 'User-Agent': 'Appmixer (info@appmixer.com)',
+                    // 'Authorization': ('Basic ' + basicAuth)
+                    // 'Authorization': 'x-sn-apikey ' + context.password
+                    'X-SN-APIKEY': context.password
                 }
-            };
+            });
 
-            try {
-                // Simply make a request to the API to see if the credentials are valid.
-                await context.httpRequest(options);
-                // If the request was successful, return the profile info.
-                return { account: context.instance + '-' + context.username };
-            } catch (error) {
-                return error;
-            }
+            return { account: context.instance + '-' + context.username };
         },
 
         validate: async function(context) {
 
-            const basicAuth = Buffer.from(context.username + ':' + context.password).toString('base64');
-            const options = {
-                method: 'GET',
-                url: 'https://' + context.instance + '.service-now.com/api/now/table/problem?sysparm_limit=1',
-                headers: {
-                    'Authorization': ('Basic ' + basicAuth)
-                }
-            };
-            await context.httpRequest(options);
+            console.log('laskjdflkjadskjfladslkfjasdjflkj');
+            // const basicAuth = Buffer.from(context.username + ':' + context.password).toString('base64');
+            // const options = {
+            //     method: 'GET',
+            //     url: 'https://' + context.instance + '.service-now.com/api/now/table/problem?sysparm_limit=1',
+            //     headers: {
+            //         'Authorization': ('Basic ' + basicAuth)
+            //     }
+            // };
+            // await context.httpRequest(options);
 
             return true;
         }
