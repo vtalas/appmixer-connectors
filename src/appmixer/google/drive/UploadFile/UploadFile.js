@@ -44,7 +44,9 @@ module.exports = {
             filename = commons.escapeSpecialCharacters(filename);
             const query = `name='${filename}' and parents in '${folder ? folderId : 'root'}' and trashed=false`;
             const { data } = await drive.files.list({
-                q: query
+                q: query,
+                supportsAllDrives: true,
+                includeItemsFromAllDrives: true
             });
             const { files = [] } = data;
             if (files.length > 0) {
@@ -56,7 +58,8 @@ module.exports = {
                         mimeType: contentType,
                         body: fileStream
                     },
-                    fields: 'id, name, mimeType, webViewLink, createdTime'
+                    fields: 'id, name, mimeType, webViewLink, createdTime',
+                    supportsAllDrives: true
                 });
             } else {
                 // If no file exists, just create new file
@@ -67,7 +70,8 @@ module.exports = {
                         mimeType: contentType,
                         body: fileStream
                     },
-                    fields: 'id, name, mimeType, webViewLink, createdTime'
+                    fields: 'id, name, mimeType, webViewLink, createdTime',
+                    supportsAllDrives: true
                 });
             }
         } else {
@@ -78,7 +82,8 @@ module.exports = {
                     mimeType: contentType,
                     body: fileStream
                 },
-                fields: 'id, name, mimeType, webViewLink, createdTime'
+                fields: 'id, name, mimeType, webViewLink, createdTime',
+                supportsAllDrives: true
             });
         }
 
