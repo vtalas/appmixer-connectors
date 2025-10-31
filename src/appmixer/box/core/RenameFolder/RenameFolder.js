@@ -1,15 +1,15 @@
 'use strict';
 
-const lib = require('../../lib.generated');
+const lib = require('../../lib');
 
 module.exports = {
 
     async receive(context) {
 
-        const { folder_id, name, ifMatch } = context.messages.in.content;
+        const { folder_id: folderId, name, ifMatch } = context.messages.in.content;
 
         // Validate required inputs
-        if (!folder_id) {
+        if (!folderId) {
             throw new context.CancelError('Folder Id is required!');
         }
 
@@ -30,7 +30,7 @@ module.exports = {
         // https://developer.box.com/reference/put-folders-id/
         await context.httpRequest({
             method: 'PUT',
-            url: `https://api.box.com/2.0/folders/${folder_id}`,
+            url: `https://api.box.com/2.0/folders/${folderId}`,
             headers: headers,
             data: {
                 name: name

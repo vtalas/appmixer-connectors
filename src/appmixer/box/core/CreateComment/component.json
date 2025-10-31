@@ -84,7 +84,7 @@
                     }
                 },
                 {
-                    "label": "Id",
+                    "label": "Comment ID",
                     "value": "id",
                     "schema": {
                         "type": "string"

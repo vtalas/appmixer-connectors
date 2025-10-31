@@ -1,14 +1,12 @@
 'use strict';
 
-const lib = require('../../lib.generated');
-
 module.exports = {
 
     async receive(context) {
 
-        const { file_id, ifMatch } = context.messages.in.content;
+        const { file_id: fileId, ifMatch } = context.messages.in.content;
 
-        if (!file_id) {
+        if (!fileId) {
             throw new context.CancelError('File Id is required.');
         }
 
@@ -23,7 +21,7 @@ module.exports = {
         // https://developer.box.com/reference/delete-files-id/
         await context.httpRequest({
             method: 'DELETE',
-            url: `https://api.box.com/2.0/files/${file_id}`,
+            url: `https://api.box.com/2.0/files/${fileId}`,
             headers
         });
 

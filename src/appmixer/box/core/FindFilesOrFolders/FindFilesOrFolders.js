@@ -1,6 +1,6 @@
 'use strict';
 
-const lib = require('../../lib.generated');
+const lib = require('../../lib');
 
 const schema = {
     'type': { 'type': 'string', 'title': 'Type' },
@@ -73,11 +73,14 @@ module.exports = {
 
     async receive(context) {
 
-        const { query, type, ancestor_folder_ids, content_types, fields, outputType } = context.messages.in.content;
-
-        if (!query) {
-            throw new context.CancelError('Query is required!');
-        }
+        const {
+            query,
+            type,
+            ancestor_folder_ids: ancestorFolderIds,
+            content_types: contentTypes,
+            fields,
+            outputType
+        } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
             return lib.getOutputPortOptions(context, outputType, schema, { label: 'Entries', value: 'entries' });
@@ -90,12 +93,15 @@ module.exports = {
         if (type) {
             params.type = type;
         }
-        if (ancestor_folder_ids) {
-            params.ancestor_folder_ids = ancestor_folder_ids;
+
+        if (ancestorFolderIds) {
+            params.ancestor_folder_ids = ancestorFolderIds;
         }
-        if (content_types) {
-            params.content_types = content_types;
+
+        if (contentTypes) {
+            params.content_types = lib.normalizeMultiselectInput(contentTypes,  context, 'Content Types') ;
         }
+
         if (fields) {
             params.fields = fields;
         }
@@ -107,7 +113,10 @@ module.exports = {
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`
             },
-            params
+            params : {
+                ...params,
+                limit: 200
+            }
         });
 
         const records = data.entries || [];

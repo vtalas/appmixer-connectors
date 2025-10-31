@@ -42,7 +42,7 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Id",
+                    "label": "Sign ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
