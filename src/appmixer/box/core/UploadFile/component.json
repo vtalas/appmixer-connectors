@@ -1,6 +1,6 @@
 {
     "name": "appmixer.box.core.UploadFile",
-    "description": "Upload a file to a specified folder in Box.",
+    "description": "Upload a file to a specified folder in Box. Maximum file size is 50MB",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
@@ -28,8 +28,7 @@
                     }
                 },
                 "required": [
-                    "fileId",
-                    "parentId"
+                    "fileId"
                 ]
             },
             "inspector": {
@@ -43,7 +42,7 @@
                     "parentId": {
                         "type": "text",
                         "label": "Parent Folder ID",
-                        "tooltip": "The parent folder ID where the file will be uploaded.",
+                        "tooltip": "The parent folder ID where the file will be uploaded. If not specified, the file will be uploaded to the root directory.",
                         "index": 2
                     },
                     "fileName": {

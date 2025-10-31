@@ -12,16 +12,16 @@ module.exports = {
             throw new context.CancelError('File is required!');
         }
 
-        if (!parentId) {
-            throw new context.CancelError('Parent Folder ID is required!');
-        }
-
         // Get file information from Appmixer storage
         let fileInfo;
         try {
             fileInfo = await context.getFileInfo(fileId);
         } catch (error) {
             throw new context.CancelError('Invalid File ID. Failed to get file information.');
+        }
+
+        if (fileInfo.length > 50 * 1024 * 1024) {
+            throw new context.CancelError('Maximum file size is 50MB.');
         }
 
         // Determine filename
