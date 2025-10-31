@@ -4,14 +4,10 @@ module.exports = {
 
     async receive(context) {
 
-        const { name, parentId } = context.messages.in.content;
+        const { name, parentId = '0' } = context.messages.in.content;
 
         if (!name) {
             throw new context.CancelError('Name is required!');
-        }
-
-        if (!parentId) {
-            throw new context.CancelError('Parent Folder ID is required!');
         }
 
         // https://developer.box.com/reference/post-folders/

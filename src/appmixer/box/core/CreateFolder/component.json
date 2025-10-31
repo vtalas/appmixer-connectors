@@ -25,8 +25,7 @@
                     }
                 },
                 "required": [
-                    "name",
-                    "parentId"
+                    "name"
                 ]
             },
             "inspector": {
@@ -40,7 +39,7 @@
                     "parentId": {
                         "type": "text",
                         "label": "Parent Folder ID",
-                        "tooltip": "ID of the parent folder where the new folder will be created.",
+                        "tooltip": "ID of the parent folder where the new folder will be created. If not specified, the folder will be created in the root directory.",
                         "index": 2
                     }
                 }
@@ -59,7 +58,7 @@
                     }
                 },
                 {
-                    "label": "Id",
+                    "label": "Folder ID",
                     "value": "id",
                     "schema": {
                         "type": "string"

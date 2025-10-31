@@ -42,6 +42,7 @@
                         "type": "toggle",
                         "index": 1,
                         "label": "Recursive",
+                        "defaultValue": true,
                         "tooltip": "If true, deletes the folder and all items within it."
                     },
                     "ifMatch": {

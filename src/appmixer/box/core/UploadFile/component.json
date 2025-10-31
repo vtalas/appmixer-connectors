@@ -1,6 +1,6 @@
 {
     "name": "appmixer.box.core.UploadFile",
-    "description": "Creates and uploads a new file to a specified folder using multipart/form-data.",
+    "description": "Upload a file to a specified folder in Box.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
@@ -17,40 +17,39 @@
             "schema": {
                 "type": "object",
                 "properties": {
+                    "fileId": {
+                        "type": "string"
+                    },
                     "parentId": {
                         "type": "string"
                     },
-                    "name": {
+                    "fileName": {
                         "type": "string"
-                    },
-                    "file": {
-                        "type": "string",
-                        "format": "data-url"
                     }
                 },
                 "required": [
-                    "parentId",
-                    "file"
+                    "fileId",
+                    "parentId"
                 ]
             },
             "inspector": {
                 "inputs": {
+                    "fileId": {
+                        "type": "filepicker",
+                        "label": "File",
+                        "tooltip": "Select an existing file or upload a new file from your computer.",
+                        "index": 1
+                    },
                     "parentId": {
                         "type": "text",
                         "label": "Parent Folder ID",
                         "tooltip": "The parent folder ID where the file will be uploaded.",
-                        "index": 1
-                    },
-                    "name": {
-                        "type": "text",
-                        "label": "File Name",
-                        "tooltip": "Optional file name (including extension). If omitted, the original filename from the uploaded file is used.",
                         "index": 2
                     },
-                    "file": {
-                        "type": "filepicker",
-                        "label": "File",
-                        "tooltip": "Select the file to upload.",
+                    "fileName": {
+                        "type": "text",
+                        "label": "File Name",
+                        "tooltip": "Optional new file name (including extension). Defaults to original filename.",
                         "index": 3
                     }
                 }
@@ -62,56 +61,45 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Total Count",
-                    "value": "total_count",
+                    "label": "File ID",
+                    "value": "entries.0.id",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "File Name",
+                    "value": "entries.0.name",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "File Size",
+                    "value": "entries.0.size",
                     "schema": {
                         "type": "number"
                     }
                 },
                 {
-                    "label": "Entries",
-                    "value": "entries",
+                    "label": "File Type",
+                    "value": "entries.0.type",
                     "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "type": {
-                                    "type": "string",
-                                    "title": "Entries.Type"
-                                },
-                                "id": {
-                                    "type": "string",
-                                    "title": "Entries.Id"
-                                },
-                                "name": {
-                                    "type": "string",
-                                    "title": "Entries.Name"
-                                },
-                                "size": {
-                                    "type": "number",
-                                    "title": "Entries.Size"
-                                },
-                                "parent": {
-                                    "type": "object",
-                                    "properties": {
-                                        "type": {
-                                            "type": "string",
-                                            "title": "Entries.Parent.Type"
-                                        },
-                                        "id": {
-                                            "type": "string",
-                                            "title": "Entries.Parent.Id"
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "title": "Entries.Parent.Name"
-                                        }
-                                    },
-                                    "title": "Entries.Parent"
-                                }
-                            }
-                        }
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Parent Folder ID",
+                    "value": "entries.0.parent.id",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Parent Folder Name",
+                    "value": "entries.0.parent.name",
+                    "schema": {
+                        "type": "string"
                     }
                 }
             ]
