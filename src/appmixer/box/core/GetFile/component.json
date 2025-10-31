@@ -1,7 +1,7 @@
 {
     "name": "appmixer.box.core.GetFile",
     "label": "Get File",
-    "description": "Retrieves information about a file by its ID.",
+    "description": "Retrieves detailed information about a file by its ID from Box.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "auth": {
@@ -17,7 +17,7 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "file_id": {
+                    "fileId": {
                         "type": "string"
                     },
                     "fields": {
@@ -25,12 +25,12 @@
                     }
                 },
                 "required": [
-                    "file_id"
+                    "fileId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "file_id": {
+                    "fileId": {
                         "type": "text",
                         "index": 1,
                         "label": "File ID",
@@ -58,7 +58,7 @@
                     }
                 },
                 {
-                    "label": "ID",
+                    "label": "File ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
