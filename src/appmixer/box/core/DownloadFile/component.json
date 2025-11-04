@@ -1,6 +1,6 @@
 {
     "name": "appmixer.box.core.DownloadFile",
-    "description": "Downloads the contents of a file by ID. Follows 302 redirect to the actual file location.",
+    "description": "Download a file from Box by its file ID. The file is downloaded and stored in Appmixer's file storage.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
@@ -17,7 +17,7 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "file_id": {
+                    "fileId": {
                         "type": "string"
                     },
                     "version": {
@@ -25,20 +25,20 @@
                     }
                 },
                 "required": [
-                    "file_id"
+                    "fileId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "file_id": {
+                    "fileId": {
                         "type": "text",
-                        "index": 0,
-                        "label": "File Id",
+                        "index": 1,
+                        "label": "File ID",
                         "tooltip": "The ID of the file to download."
                     },
                     "version": {
                         "type": "text",
-                        "index": 1,
+                        "index": 2,
                         "label": "Version",
                         "tooltip": "Optional file version ID to download a specific version."
                     }
@@ -51,7 +51,7 @@
             "name": "out",
             "options": [
                 {
-                    "label": "File Id",
+                    "label": "File ID",
                     "value": "fileId",
                     "schema": {
                         "type": "string"
@@ -76,13 +76,6 @@
                     "value": "size",
                     "schema": {
                         "type": "number"
-                    }
-                },
-                {
-                    "label": "Note",
-                    "value": "note",
-                    "schema": {
-                        "type": "string"
                     }
                 }
             ]

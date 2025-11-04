@@ -1,9 +1,9 @@
 {
     "name": "appmixer.box.core.FindFilesOrFolders",
+    "label": "Find Files or Folders",
     "description": "Search for files and folders by name, content, type, owner, etc. This component will return a maximum of 200 records per search.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:box"
     },
@@ -27,7 +27,10 @@
                         "type": "string"
                     },
                     "content_types": {
-                        "type": ["array", "string"]
+                        "type": [
+                            "array",
+                            "string"
+                        ]
                     },
                     "fields": {
                         "type": "string"
@@ -144,8 +147,7 @@
                         "generateOutputPortOptions": true
                     },
                     "messages": {
-                        "in/outputType": "inputs/in/outputType",
-                        "in/query": "any"
+                        "in/outputType": "inputs/in/outputType"
                     }
                 }
             }

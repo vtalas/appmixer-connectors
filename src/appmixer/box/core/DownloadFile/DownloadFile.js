@@ -1,14 +1,13 @@
 'use strict';
 
-const lib = require('../../lib');
-
 module.exports = {
+
     async receive(context) {
 
-        const { file_id, version } = context.messages.in.content;
+        const { fileId, version } = context.messages.in.content;
 
-        if (!file_id) {
-            throw new context.CancelError('File Id is required!');
+        if (!fileId) {
+            throw new context.CancelError('File ID is required!');
         }
 
         // https://developer.box.com/reference/get-files-id-content/
@@ -19,29 +18,47 @@ module.exports = {
 
         const response = await context.httpRequest({
             method: 'GET',
-            url: `https://api.box.com/2.0/files/${file_id}/content`,
+            url: `https://api.box.com/2.0/files/${fileId}/content`,
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`
             },
             params: params,
-            rawResponse: true
+            responseType: 'arraybuffer'
         });
 
         // Get file metadata from response headers
         const contentDisposition = response.headers['content-disposition'] || '';
-        const fileName = contentDisposition.split('filename=')[1]?.replace(/"/g, '') || file_id;
+        
+        // Parse filename from content-disposition header
+        // Handle both "filename=..." and "filename*=UTF-8''..." formats
+        let fileName = fileId;
+        if (contentDisposition) {
+            // Try to extract filename from standard format first
+            const match = contentDisposition.match(/filename="?([^";\n]+)"?/);
+            if (match && match[1]) {
+                fileName = match[1];
+            } else {
+                // Try RFC 5987 format (filename*=UTF-8''...)
+                const match2 = contentDisposition.match(/filename\*=UTF-8''(.+?)(?:;|$)/);
+                if (match2 && match2[1]) {
+                    fileName = decodeURIComponent(match2[1]);
+                }
+            }
+        }
+        
         const contentType = response.headers['content-type'] || 'application/octet-stream';
         const size = parseInt(response.headers['content-length'] || '0', 10);
 
         // Save the file and get fileId
         const savedFile = await context.saveFileStream(fileName, response.data);
 
+        await context.log({ step: 'file', savedFile });
+
         return context.sendJson({
             fileId: savedFile.fileId,
-            fileName: fileName,
-            contentType: contentType,
-            size: size,
-            note: `Downloaded from Box (File ID: ${file_id})`
+            fileName,
+            contentType,
+            size
         }, 'out');
     }
 };

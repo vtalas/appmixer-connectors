@@ -82,6 +82,10 @@ module.exports = {
             outputType
         } = context.messages.in.content;
 
+        if (!query) {
+            throw new context.CancelError('Query is required!');
+        }
+
         if (context.properties.generateOutputPortOptions) {
             return lib.getOutputPortOptions(context, outputType, schema, { label: 'Entries', value: 'entries' });
         }
@@ -99,7 +103,7 @@ module.exports = {
         }
 
         if (contentTypes) {
-            params.content_types = lib.normalizeMultiselectInput(contentTypes,  context, 'Content Types') ;
+            params.content_types = lib.normalizeMultiselectInput(contentTypes, context, 'Content Types');
         }
 
         if (fields) {
@@ -113,7 +117,7 @@ module.exports = {
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`
             },
-            params : {
+            params: {
                 ...params,
                 limit: 200
             }

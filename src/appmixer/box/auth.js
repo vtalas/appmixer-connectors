@@ -81,9 +81,12 @@ module.exports = {
                     }
                 });
 
+
+                console.log(data);
                 return {
                     accessToken: data.access_token,
-                    accessTokenExpDate: new Date(Date.now() + data.expires_in * 1000)
+                    accessTokenExpDate: new Date(Date.now() + data.expires_in * 1000),
+                    refreshToken: data.refresh_token
                 };
             },
 
