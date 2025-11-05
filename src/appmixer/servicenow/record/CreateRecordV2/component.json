@@ -30,7 +30,7 @@
         {
             "name": "in",
             "source": {
-                "url": "/component/appmixer/servicenow/record/CreateRecord?outPort=out",
+                "url": "/component/appmixer/servicenow/record/CreateRecordV2?outPort=out",
                 "data": {
                     "messages": {
                         "in/sysparm_fields": "inputs/in/sysparm_fields"
@@ -58,7 +58,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/servicenow/record/CreateRecord?outPort=out",
+                "url": "/component/appmixer/servicenow/record/CreateRecordV2?outPort=out",
                 "data": {
                     "messages": {
                         "in/sysparm_fields": "inputs/in/sysparm_fields"
