@@ -50,6 +50,7 @@
                         "type": "toggle",
                         "label": "Exclude reference link",
                         "index": 4,
+                        "defaultValue": false,
                         "tooltip": "True to exclude Table API links for reference fields (default: false)"
                     },
                     "sysparm_fields": {
@@ -68,6 +69,7 @@
                         "type": "toggle",
                         "label": "Query no domain",
                         "index": 7,
+                        "defaultValue": false,
                         "tooltip": "True to access data across domains if authorized (default: false)"
                     }
                 }
