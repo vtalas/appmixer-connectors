@@ -90,7 +90,7 @@
                     },
                     "sysparm_fields": {
                         "type": "text",
-                        "label": "Fields",
+                        "label": "Fields to Return",
                         "index": 7,
                         "tooltip": "A comma-separated list of fields to return in the response"
                     },
