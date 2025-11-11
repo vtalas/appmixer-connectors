@@ -1,0 +1,180 @@
+{
+  "name": "appmixer.paypal.core.CaptureAuthorization",
+  "author": "Appmixer <info@appmixer.com>",
+  "description": "Capture funds from a previously authorized payment.",
+  "version": "1.0.0",
+  "private": false,
+  "auth": {
+    "service": "appmixer:paypal"
+  },
+  "quota": {
+    "manager": "appmixer:paypal",
+    "resources": "requests",
+    "scope": {
+      "userId": ""
+    }
+  },
+  "inPorts": [
+    {
+      "name": "in",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "authorizationId": {
+            "type": "string"
+          },
+          "amountCurrencyCode": {
+            "type": "string"
+          },
+          "amountValue": {
+            "type": "string"
+          },
+          "invoiceId": {
+            "type": "string"
+          },
+          "noteToPayer": {
+            "type": "string"
+          },
+          "finalCapture": {
+            "type": "boolean"
+          },
+          "paypalRequestId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authorizationId"
+        ]
+      },
+      "inspector": {
+        "inputs": {
+          "authorizationId": {
+            "type": "text",
+            "tooltip": "The ID of the authorization to capture.",
+            "label": "Authorization ID",
+            "index": 0
+          },
+          "amountCurrencyCode": {
+            "type": "text",
+            "tooltip": "ISO-4217 currency code (e.g., USD, EUR).",
+            "label": "Amount Currency Code",
+            "index": 1
+          },
+          "amountValue": {
+            "type": "text",
+            "tooltip": "Amount value as a string (e.g., '19.99').",
+            "label": "Amount Value",
+            "index": 2
+          },
+          "invoiceId": {
+            "type": "text",
+            "tooltip": "Your internal invoice ID for tracking.",
+            "label": "Invoice ID",
+            "index": 3
+          },
+          "noteToPayer": {
+            "type": "text",
+            "tooltip": "A note to the payer.",
+            "label": "Note To Payer",
+            "index": 4
+          },
+          "finalCapture": {
+            "type": "toggle",
+            "tooltip": "Set to true if this is the final capture for this authorization.",
+            "label": "Final Capture",
+            "index": 5
+          },
+          "paypalRequestId": {
+            "type": "text",
+            "tooltip": "Idempotency key (PayPal-Request-Id header). Use a unique value for each request.",
+            "label": "PayPal Request ID",
+            "index": 6
+          }
+        }
+      }
+    }
+  ],
+  "outPorts": [
+    {
+      "name": "out",
+      "options": [
+        {
+          "label": "Id",
+          "value": "id",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "label": "Status",
+          "value": "status",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "label": "Amount",
+          "value": "amount",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "currency_code": {
+                "type": "string",
+                "title": "Amount.Currency Code"
+              },
+              "value": {
+                "type": "string",
+                "title": "Amount.Value"
+              }
+            }
+          }
+        },
+        {
+          "label": "Final Capture",
+          "value": "final_capture",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "label": "Seller Protection",
+          "value": "seller_protection",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "title": "Seller Protection.Status"
+              }
+            }
+          }
+        },
+        {
+          "label": "Links",
+          "value": "links",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "href": {
+                  "type": "string",
+                  "title": "Links.Href"
+                },
+                "rel": {
+                  "type": "string",
+                  "title": "Links.Rel"
+                },
+                "method": {
+                  "type": "string",
+                  "title": "Links.Method"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "icon": "data:image/svg+xml;base64,PD94"
+}

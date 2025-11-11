@@ -1,0 +1,182 @@
+{
+    "name": "appmixer.paypal.core.CreateBatchPayout",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Create a batch payout with up to 15,000 items. Use sender_batch_id for idempotency and set recipient_type, amount, and receiver per item.",
+    "version": "1.0.0",
+    "private": false,
+    "auth": {
+        "service": "appmixer:paypal"
+    },
+    "quota": {
+        "manager": "appmixer:paypal",
+        "resources": "requests"
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "sender_batch_header|sender_batch_id": {
+                        "type": "string"
+                    },
+                    "sender_batch_header|email_subject": {
+                        "type": "string"
+                    },
+                    "sender_batch_header|email_message": {
+                        "type": "string"
+                    },
+                    "items|recipient_type": {
+                        "type": "string"
+                    },
+                    "items|receiver": {
+                        "type": "string"
+                    },
+                    "items|amount|currency": {
+                        "type": "string"
+                    },
+                    "items|amount|value": {
+                        "type": "string"
+                    },
+                    "items|note": {
+                        "type": "string"
+                    },
+                    "items|sender_item_id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "inspector": {
+                "inputs": {
+                    "sender_batch_header|sender_batch_id": {
+                        "type": "text",
+                        "tooltip": "Unique string to ensure idempotency for the batch.",
+                        "label": "Sender Batch Header|sender Batch Id",
+                        "index": 0
+                    },
+                    "sender_batch_header|email_subject": {
+                        "type": "text",
+                        "tooltip": "Subject line for the receiver notification email.",
+                        "label": "Sender Batch Header|email Subject",
+                        "index": 1
+                    },
+                    "sender_batch_header|email_message": {
+                        "type": "text",
+                        "tooltip": "Custom message for the receiver.",
+                        "label": "Sender Batch Header|email Message",
+                        "index": 2
+                    },
+                    "items|recipient_type": {
+                        "type": "select",
+                        "tooltip": "Type of recipient identifier.",
+                        "label": "Items|recipient Type",
+                        "options": [
+                            {
+                                "label": "EMAIL",
+                                "value": "EMAIL"
+                            },
+                            {
+                                "label": "PHONE",
+                                "value": "PHONE"
+                            },
+                            {
+                                "label": "PAYPAL_ID",
+                                "value": "PAYPAL_ID"
+                            }
+                        ],
+                        "index": 3
+                    },
+                    "items|receiver": {
+                        "type": "text",
+                        "tooltip": "The receiver identifier (email, phone, or PayPal account ID).",
+                        "label": "Items|receiver",
+                        "index": 4
+                    },
+                    "items|amount|currency": {
+                        "type": "text",
+                        "tooltip": "ISO-4217 currency code (e.g., USD).",
+                        "label": "Items|amount|currency",
+                        "index": 5
+                    },
+                    "items|amount|value": {
+                        "type": "text",
+                        "tooltip": "Amount value.",
+                        "label": "Items|amount|value",
+                        "index": 6
+                    },
+                    "items|note": {
+                        "type": "text",
+                        "tooltip": "Optional note to the receiver.",
+                        "label": "Items|note",
+                        "index": 7
+                    },
+                    "items|sender_item_id": {
+                        "type": "text",
+                        "tooltip": "Developer-defined id for correlating payouts.",
+                        "label": "Items|sender Item Id",
+                        "index": 8
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "options": [
+                {
+                    "label": "Batch Header",
+                    "value": "batch_header",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "payout_batch_id": {
+                                "type": "string",
+                                "title": "Batch Header.Payout Batch Id"
+                            },
+                            "batch_status": {
+                                "type": "string",
+                                "title": "Batch Header.Batch Status"
+                            },
+                            "sender_batch_header": {
+                                "type": "object",
+                                "properties": {
+                                    "sender_batch_id": {
+                                        "type": "string",
+                                        "title": "Batch Header.Sender Batch Header.Sender Batch Id"
+                                    }
+                                },
+                                "title": "Batch Header.Sender Batch Header"
+                            }
+                        }
+                    }
+                },
+                {
+                    "label": "Links",
+                    "value": "links",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string",
+                                    "title": "Links.Href"
+                                },
+                                "rel": {
+                                    "type": "string",
+                                    "title": "Links.Rel"
+                                },
+                                "method": {
+                                    "type": "string",
+                                    "title": "Links.Method"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAwIiBoZWlnaHQ9IjEzNzkiIHZpZXdCb3g9IjAgMCA0NDQuODkzIDI0NS40MTQiPjxnIGZpbGw9IiMwMDc1QzkiPjxwYXRoIGQ9Ik0yMzkuMDM4IDcyLjQzYy0zMy4wODEgMC02MS44MDYgMTguNi03Ni4zMjIgNDUuOTA0LTE0LjUxNi0yNy4zMDUtNDMuMjQtNDUuOTAyLTc2LjMyLTQ1LjkwMi0xOS40NDMgMC0zNy4zODUgNi40MjQtNTEuODIxIDE3LjI2NlYxNi45MjVoLS4wMDhDMzQuMzY1IDcuNTQ3IDI2LjcxMyAwIDE3LjI4NiAwIDcuODU4IDAgLjIwOCA3LjU0Ny4wMDggMTYuOTI1SDB2MTQzLjMzM2guMDM2Yy43NjggNDcuMDUxIDM5LjEyNSA4NC45NjcgODYuMzU5IDg0Ljk2NyAzMy4wOCAwIDYxLjgwNS0xOC42MDMgNzYuMzItNDUuOTA4IDE0LjUxNyAyNy4zMDcgNDMuMjQxIDQ1LjkwNiA3Ni4zMjEgNDUuOTA2IDQ3LjcxNSAwIDg2LjM5Ni0zOC42ODQgODYuMzk2LTg2LjM5Ni4wMDEtNDcuNzE4LTM4LjY4Mi04Ni4zOTctODYuMzk0LTg2LjM5N3pNODYuMzk1IDIxMC42NDhjLTI4LjYyMSAwLTUxLjgyMS0yMy4yMDEtNTEuODIxLTUxLjgyIDAtMjguNjIzIDIzLjIwMS01MS44MjMgNTEuODIxLTUxLjgyMyAyOC42MjEgMCA1MS44MjIgMjMuMiA1MS44MjIgNTEuODIzIDAgMjguNjE5LTIzLjIwMSA1MS44Mi01MS44MjIgNTEuODJ6bTE1Mi42NDMgMGMtMjguNjIyIDAtNTEuODIxLTIzLjIwMS01MS44MjEtNTEuODIyIDAtMjguNjIzIDIzLjItNTEuODIxIDUxLjgyMS01MS44MjEgMjguNjE5IDAgNTEuODIyIDIzLjE5OCA1MS44MjIgNTEuODIxLS4wMDEgMjguNjIxLTIzLjIwMyA1MS44MjItNTEuODIyIDUxLjgyMnoiLz48cGF0aCBkPSJNNDQxLjY1MSAyMTguMDMzbC00NC4yNDYtNTkuMTQzIDQ0LjI0Ni01OS4xNDQtLjAwOC0uMDA3YzUuNDczLTcuNjIgMy44ODctMTguMjQ5LTMuNjUyLTIzLjkxMy03LjUzNy01LjY1OC0xOC4xODctNC4yMjEtMjMuOTggMy4xNTdsLS4wMDQtLjAwMi0zOC4xODggNTEuMDQ3LTM4LjE4OC01MS4wNDctLjAwNi4wMDljLTUuNzkzLTcuMzg1LTE2LjQ0MS04LjgyMi0yMy45ODEtMy4xNi03LjUzOSA1LjY2NC05LjEyNSAxNi4yOTMtMy42NDkgMjMuOTExbC0uMDA4LjAwNSA0NC4yNDUgNTkuMTQ0LTQ0LjI0NSA1OS4xNDMuMDA4LjAwNWMtNS40NzcgNy42Mi0zLjg5IDE4LjI0NyAzLjY0OSAyMy45MDkgNy41NCA1LjY2NCAxOC4xODggNC4yMjUgMjMuOTgxLTMuMTU1bC4wMDYuMDA3IDM4LjE4OC01MS4wNDkgMzguMTg4IDUxLjA0OS4wMDQtLjAwMmM1Ljc5NCA3LjM3NyAxNi40NDMgOC44MTQgMjMuOTggMy4xNTQgNy41MzktNS42NjIgOS4xMjUtMTYuMjkxIDMuNjUyLTIzLjkxbC4wMDgtLjAwOHoiLz48L2c+PC9zdmc+"
+}
