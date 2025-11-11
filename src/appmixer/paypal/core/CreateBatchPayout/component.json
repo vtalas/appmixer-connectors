@@ -17,59 +17,66 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "sender_batch_header|sender_batch_id": {
+                    "senderBatchId": {
                         "type": "string"
                     },
-                    "sender_batch_header|email_subject": {
+                    "emailSubject": {
                         "type": "string"
                     },
-                    "sender_batch_header|email_message": {
+                    "emailMessage": {
                         "type": "string"
                     },
-                    "items|recipient_type": {
+                    "recipientType": {
                         "type": "string"
                     },
-                    "items|receiver": {
+                    "receiver": {
                         "type": "string"
                     },
-                    "items|amount|currency": {
+                    "currency": {
                         "type": "string"
                     },
-                    "items|amount|value": {
+                    "value": {
                         "type": "string"
                     },
-                    "items|note": {
+                    "note": {
                         "type": "string"
                     },
-                    "items|sender_item_id": {
+                    "senderItemId": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "senderBatchId",
+                    "recipientType",
+                    "receiver",
+                    "currency",
+                    "value"
+                ]
             },
             "inspector": {
                 "inputs": {
-                    "sender_batch_header|sender_batch_id": {
+                    "senderBatchId": {
                         "type": "text",
-                        "tooltip": "Unique string to ensure idempotency for the batch.",
-                        "label": "Sender Batch Header|sender Batch Id",
+                        "tooltip": "Unique string to ensure idempotency for the batch. Use this to prevent duplicate batch processing.",
+                        "label": "Sender Batch ID",
                         "index": 0
                     },
-                    "sender_batch_header|email_subject": {
+                    "emailSubject": {
                         "type": "text",
                         "tooltip": "Subject line for the receiver notification email.",
-                        "label": "Sender Batch Header|email Subject",
+                        "label": "Email Subject",
                         "index": 1
                     },
-                    "sender_batch_header|email_message": {
+                    "emailMessage": {
                         "type": "text",
                         "tooltip": "Custom message for the receiver.",
-                        "label": "Sender Batch Header|email Message",
+                        "label": "Email Message",
                         "index": 2
                     },
-                    "items|recipient_type": {
+                    "recipientType": {
                         "type": "select",
                         "tooltip": "Type of recipient identifier.",
-                        "label": "Items|recipient Type",
+                        "label": "Recipient Type",
                         "options": [
                             {
                                 "label": "EMAIL",
@@ -86,34 +93,34 @@
                         ],
                         "index": 3
                     },
-                    "items|receiver": {
+                    "receiver": {
                         "type": "text",
                         "tooltip": "The receiver identifier (email, phone, or PayPal account ID).",
-                        "label": "Items|receiver",
+                        "label": "Receiver",
                         "index": 4
                     },
-                    "items|amount|currency": {
+                    "currency": {
                         "type": "text",
                         "tooltip": "ISO-4217 currency code (e.g., USD).",
-                        "label": "Items|amount|currency",
+                        "label": "Currency",
                         "index": 5
                     },
-                    "items|amount|value": {
+                    "value": {
                         "type": "text",
-                        "tooltip": "Amount value.",
-                        "label": "Items|amount|value",
+                        "tooltip": "Amount value. Must be a valid decimal amount.",
+                        "label": "Amount",
                         "index": 6
                     },
-                    "items|note": {
+                    "note": {
                         "type": "text",
                         "tooltip": "Optional note to the receiver.",
-                        "label": "Items|note",
+                        "label": "Note",
                         "index": 7
                     },
-                    "items|sender_item_id": {
+                    "senderItemId": {
                         "type": "text",
-                        "tooltip": "Developer-defined id for correlating payouts.",
-                        "label": "Items|sender Item Id",
+                        "tooltip": "Developer-defined ID for correlating payouts.",
+                        "label": "Sender Item ID",
                         "index": 8
                     }
                 }
@@ -125,55 +132,20 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Batch Header",
-                    "value": "batch_header",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "payout_batch_id": {
-                                "type": "string",
-                                "title": "Batch Header.Payout Batch Id"
-                            },
-                            "batch_status": {
-                                "type": "string",
-                                "title": "Batch Header.Batch Status"
-                            },
-                            "sender_batch_header": {
-                                "type": "object",
-                                "properties": {
-                                    "sender_batch_id": {
-                                        "type": "string",
-                                        "title": "Batch Header.Sender Batch Header.Sender Batch Id"
-                                    }
-                                },
-                                "title": "Batch Header.Sender Batch Header"
-                            }
-                        }
-                    }
+                    "label": "Payout Batch ID",
+                    "value": "payout_batch_id"
+                },
+                {
+                    "label": "Batch Status",
+                    "value": "batch_status"
+                },
+                {
+                    "label": "Sender Batch ID",
+                    "value": "sender_batch_id"
                 },
                 {
                     "label": "Links",
-                    "value": "links",
-                    "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "href": {
-                                    "type": "string",
-                                    "title": "Links.Href"
-                                },
-                                "rel": {
-                                    "type": "string",
-                                    "title": "Links.Rel"
-                                },
-                                "method": {
-                                    "type": "string",
-                                    "title": "Links.Method"
-                                }
-                            }
-                        }
-                    }
+                    "value": "links"
                 }
             ]
         }
