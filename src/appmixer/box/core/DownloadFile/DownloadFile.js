@@ -28,7 +28,7 @@ module.exports = {
 
         // Get file metadata from response headers
         const contentDisposition = response.headers['content-disposition'] || '';
-        
+
         // Parse filename from content-disposition header
         // Handle both "filename=..." and "filename*=UTF-8''..." formats
         let fileName = fileId;
@@ -45,7 +45,7 @@ module.exports = {
                 }
             }
         }
-        
+
         const contentType = response.headers['content-type'] || 'application/octet-stream';
         const size = parseInt(response.headers['content-length'] || '0', 10);
 
