@@ -44,7 +44,7 @@ module.exports = {
         }
 
         // https://developer.box.com/reference/put-files-id--add-shared-link/
-        await context.httpRequest({
+        const { data } = await context.httpRequest({
             method: 'PUT',
             url: `https://api.box.com/2.0/files/${fileId}`,
             headers: {
@@ -56,6 +56,6 @@ module.exports = {
             }
         });
 
-        return context.sendJson({}, 'out');
+        return context.sendJson(data, 'out');
     }
 };
