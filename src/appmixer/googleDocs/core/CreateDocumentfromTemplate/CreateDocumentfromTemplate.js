@@ -3,11 +3,11 @@
 module.exports = {
     async receive(context) {
 
-        const { templateId, newDocumentName, replacements, imageReplacements } = context.messages.in.content;
+        const { templateId, newDocumentName, replacements } = context.messages.in.content;
 
         // First, copy the template document
         const copyData = {
-            name: newDocumentName || `Copy of Template`
+            name: newDocumentName || 'Copy of Template'
         };
 
         // https://developers.google.com/drive/api/v3/reference/files/copy
