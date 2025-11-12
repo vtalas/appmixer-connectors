@@ -16,8 +16,8 @@ module.exports = {
 
         // Use proper location structure for Google Docs API
         // If insertionIndex is provided, use it; otherwise default to index 1 (beginning of document)
-        const location = insertionIndex !== undefined && insertionIndex !== null ? 
-            { index: insertionIndex } : 
+        const location = insertionIndex !== undefined && insertionIndex !== null ?
+            { index: insertionIndex } :
             { index: 1 };
 
         const imageRequest = {
