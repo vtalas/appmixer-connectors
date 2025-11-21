@@ -134,8 +134,9 @@
             QUnit.module('ipToInt Function', function() {
                 QUnit.test('should convert IP to correct integer', function(assert) {
                     var result = ipToInt('192.168.1.1');
-                    var expected = (192 << 24) + (168 << 16) + (1 << 8) + 1;
+                    var expected = (192 * 16777216) + (168 * 65536) + (1 * 256) + 1;
                     assert.strictEqual(result, expected, 'Should convert IP correctly');
+                    assert.strictEqual(result, 3232235777, 'Should equal the correct integer value');
                 });
 
                 QUnit.test('should handle 0.0.0.0', function(assert) {
@@ -145,7 +146,21 @@
 
                 QUnit.test('should handle 255.255.255.255', function(assert) {
                     var result = ipToInt('255.255.255.255');
-                    assert.strictEqual(result, 4294967295, 'Should convert to max value');
+                    assert.strictEqual(result, 4294967295, 'Should convert to max value (not -1)');
+                });
+
+                QUnit.test('should handle 10.0.0.1', function(assert) {
+                    var result = ipToInt('10.0.0.1');
+                    var expected = (10 * 16777216) + 1;
+                    assert.strictEqual(result, expected, 'Should convert correctly');
+                    assert.strictEqual(result, 167772161, 'Should equal the correct integer value');
+                });
+
+                QUnit.test('should handle 127.0.0.1', function(assert) {
+                    var result = ipToInt('127.0.0.1');
+                    var expected = (127 * 16777216) + 1;
+                    assert.strictEqual(result, expected, 'Should convert correctly');
+                    assert.strictEqual(result, 2130706433, 'Should equal the correct integer value');
                 });
             });
 

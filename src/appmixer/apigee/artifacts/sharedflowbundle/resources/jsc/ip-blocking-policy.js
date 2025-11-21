@@ -174,8 +174,9 @@ function isIPInCIDR(ip, cidr) {
 // Helper function to convert IP to integer
 function ipToInt(ip) {
     var parts = ip.split('.');
-    return (parseInt(parts[0], 10) << 24) +
-        (parseInt(parts[1], 10) << 16) +
-        (parseInt(parts[2], 10) << 8) +
-        parseInt(parts[3], 10);
+    // Use multiplication to avoid signed integer overflow issues
+    return (parseInt(parts[0], 10) * 16777216) +  // 256^3
+           (parseInt(parts[1], 10) * 65536) +      // 256^2
+           (parseInt(parts[2], 10) * 256) +        // 256^1
+            parseInt(parts[3], 10);
 }
