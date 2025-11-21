@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>My Web Page</title>
+</head>
+<body>
+
+<script>
+
+    const variables = {
+        'blocked-ips-473': '192.168.1.1;|',
+        'client.ip': '192.168.1.1'
+    };
+
+    // mock context data
+    var context = {
+        getVariable: function(name) {
+            return variables[name];
+        },
+        setVariable: function(name, value) {
+            return variables[name] = value;
+        }
+    };
+
+    window.print = console.log;
+</script>
+<script src="../sharedflowbundle/resources/jsc/ip-blocking-policy.js"></script>
+
+<script>
+    console.log(variables);
+    console.log(getIpGroup('192.168.1.1'));</script>
+</body>
+</html>

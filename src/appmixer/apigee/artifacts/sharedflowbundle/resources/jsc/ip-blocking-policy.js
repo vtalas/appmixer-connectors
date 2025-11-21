@@ -1,50 +1,25 @@
+/**
+ * IP Blocking Policy Script
+ * IMPORTANT: ECMAScript version 5 only!
+ */
+
 /* eslint-disable */
-var blockedIPsEntry = context.getVariable('blocked-ips');
-var blockedIPs = [];
-
-if (blockedIPsEntry) {
-    try {
-        var blockedIPsObject = entryToList(blockedIPsEntry);
-        print('Number of entries: ' + Object.keys(blockedIPsObject).length);
-
-        var currentTime = new Date();
-
-        Object.keys(blockedIPsObject).forEach(function(ip) {
-            var entry = blockedIPsObject[ip];
-
-            if (entry.expiration) {
-                var expirationDate = new Date(entry.expiration);
-                if (expirationDate > currentTime) {
-                    blockedIPs.push(entry.ip);
-                }
-            } else {
-                blockedIPs.push(entry.ip);
-            }
-        });
-
-        context.setVariable('blocked.ips.simple', JSON.stringify(blockedIPs));
-        context.setVariable('blocked.ips.count', blockedIPs.length.toString());
-        context.setVariable('blocked.ips.loaded', 'true');
-
-    } catch (e) {
-        print('Raw value (first 500 chars): ' + (blockedIPsEntry ? blockedIPsEntry.substring(0, 500) : 'null'));
-        context.setVariable('blocked.ips.loaded', false);
-        context.setVariable('blocked.ips.error', e.message);
-    }
-}
+var NUM_OF_IP_GROUPS = 500;
 
 var clientIP = context.getVariable('request.header.X-Forwarded-For') ||
     context.getVariable('request.header.X-Real-IP') ||
     context.getVariable('request.ip') ||
     context.getVariable('client.ip');
 
-print('Raw client IP: ' + clientIP);
-
 if (clientIP?.indexOf(',') > -1) {
     clientIP = clientIP.split(',')[0].trim();
 }
 
 print('Processed client IP: ' + clientIP);
+
+var blockedIPs = getBlockedIps(clientIP);
+
+print('Blocked IPs loaded: ' + JSON.stringify(blockedIPs));
 
 // Separate individual IPs from CIDR ranges
 var individualIPs = [];
@@ -89,6 +64,66 @@ if (isBlocked) {
   Helper functions
 
  */
+
+function getBlockedIps(ip) {
+
+    var ipGroup = getIpGroup(ip);
+
+    print('Client IP group: ' + ipGroup);
+    var blockedIPsEntry = context.getVariable('blocked-ips-' + ipGroup);
+    var blockedIPs = [];
+
+    if (blockedIPsEntry) {
+        try {
+            var blockedIPsObject = entryToList(blockedIPsEntry);
+
+            var currentTime = new Date();
+
+            Object.keys(blockedIPsObject).forEach(function(ip) {
+                var entry = blockedIPsObject[ip];
+
+                if (entry.expiration) {
+                    var expirationDate = new Date(entry.expiration);
+                    if (expirationDate > currentTime) {
+                        blockedIPs.push(entry.ip);
+                    }
+                } else {
+                    blockedIPs.push(entry.ip);
+                }
+            });
+
+            context.setVariable('blocked.ips.simple', JSON.stringify(blockedIPs));
+            context.setVariable('blocked.ips.count', blockedIPs.length.toString());
+            context.setVariable('blocked.ips.loaded', 'true');
+
+        } catch (e) {
+            print('Raw value (first 500 chars): ' + (blockedIPsEntry ? blockedIPsEntry.substring(0, 500) : 'null'));
+            context.setVariable('blocked.ips.loaded', false);
+            context.setVariable('blocked.ips.error', e.message);
+        }
+    }
+    return blockedIPs;
+}
+
+function getIpGroup(ip) {
+
+    // Simple hash function for ES5 compatibility
+    var hash = 0;
+    var i;
+    var chr;
+
+    if (ip.length === 0) {
+        return 0;
+    }
+
+    for (i = 0; i < ip.length; i++) {
+        chr = ip.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash = hash >>> 0; // Convert to 32bit unsigned integer
+    }
+
+    return hash % NUM_OF_IP_GROUPS;
+}
 
 function entryToList(entry) {
     if (!entry) {
