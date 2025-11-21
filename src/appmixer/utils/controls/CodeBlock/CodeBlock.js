@@ -8,25 +8,20 @@ module.exports = {
 
     async receive(context) {
 
+        const { variables } = context.messages.in.content;
+
+        await context.log({ 'step': '', variables });
+
         const code = `
-        
-        function($data) {
-            $data.number + 1000;
-        }
-        // function sum(a, b) 
-        // {
-        //     return a + b;
-        // }
-        //
-        // console.log($data);
-        // sum(parseInt($data.number), 100);
-        
-        `;
+        const fullName = $data.firstName + ' ' + $data.lastName;
+        fullName.toUpperCase();   `;
 
-        // Just checking that we can call evalJavascript multiple times in receive()
-        const result = context.evalJavaScript(code, { number: 11 });
+        const result = context.evalJavaScript(code, {
+            firstName: 'John',
+            lastName: 'Doe'
+        });
 
-        await context.log({ 'step': 'resutl', result });
+        await context.log({ 'step': 'resutl',result });
         return context.sendJson({ result }, 'out');
     }
 };
