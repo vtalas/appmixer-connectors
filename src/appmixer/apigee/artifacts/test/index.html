@@ -26,7 +26,9 @@
 <script src="../sharedflowbundle/resources/jsc/ip-blocking-policy.js"></script>
 
 <script>
+    console.log(getIpGroup('192.168.1.1'));
     console.log(variables);
-    console.log(getIpGroup('192.168.1.1'));</script>
+    console.assert(variables['ip.blocked'] === true, 'is-blocked should be true');
+</script>
 </body>
 </html>

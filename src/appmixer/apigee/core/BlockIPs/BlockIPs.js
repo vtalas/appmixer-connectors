@@ -2,6 +2,24 @@
 
 const lib = require('../../lib.generated');
 
+function getIpGroup(ip) {
+
+    let hash = 0;
+    let chr;
+
+    if (ip.length === 0) {
+        return 0;
+    }
+
+    for (let i = 0; i < ip.length; i++) {
+        chr = ip.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash = hash >>> 0; // Convert to 32bit unsigned integer
+    }
+
+    return hash % NUM_OF_IP_GROUPS;
+}
+
 module.exports = {
     async receive(context) {
 
@@ -9,7 +27,6 @@ module.exports = {
         if (!ips) {
             throw new context.CancelError('IPs is required');
         }
-
 
         const ipsList = lib.parseIPs(ips);
 
