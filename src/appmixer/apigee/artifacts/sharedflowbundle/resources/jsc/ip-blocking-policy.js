@@ -4,7 +4,7 @@
  */
 
 /* eslint-disable */
-var NUM_OF_IP_GROUPS = 100;
+var NUM_OF_IP_GROUPS = 500;
 
 var clientIP = context.getVariable('request.header.X-Forwarded-For') ||
     context.getVariable('request.header.X-Real-IP') ||
@@ -15,27 +15,22 @@ if (clientIP.indexOf(',') > -1) {
     clientIP = clientIP.split(',')[0].trim();
 }
 
-print('Processed client IP: ' + clientIP);
+var blockedIPs = getBlockedIps();
 
-var blockedIpList = context.getVariable("blocked.ip.list");
-print('Blocked IP List from variable: ' + blockedIpList);
-
-var blockedIPs = getBlockedIps(clientIP);
-
-print('Blocked IPs loaded: ' + JSON.stringify(blockedIPs));
-
-// Separate individual IPs from CIDR ranges
 var individualIPs = [];
-var cidrRanges = [];
 
+var cidrRanges = [];
 blockedIPs.forEach(function (entry) {
     if (entry.indexOf('/') > -1) {
+
         cidrRanges.push(entry);
     } else {
         individualIPs.push(entry);
     }
 });
 
+print('Processed client IP: ' + clientIP);
+print('Blocked IPs loaded: ' + JSON.stringify(blockedIPs));
 print('Individual IPs to check: ' + JSON.stringify(individualIPs));
 print('CIDR ranges to check: ' + JSON.stringify(cidrRanges));
 
@@ -62,31 +57,23 @@ if (isBlocked) {
     context.setVariable('blocked.client.ip', clientIP);
 }
 
-
-var value = context.getVariable("private.kvm.apigee-blocked-ips.blocked-ips-35");
-print("XXXXXX" + value)
-
 /*
 
   Helper functions
 
  */
 
-function getBlockedIps(ip) {
+function getBlockedIps() {
 
     var blockedIPsEntry = context.getVariable('blocked.ip.list');
 
     var blockedIPs = [];
-
-    print('Entries in the group ' + ipGroup + ': ' + blockedIPsEntry);
 
     if (blockedIPsEntry) {
         try {
             var blockedIPsObject = entryToList(blockedIPsEntry);
 
             var currentTime = new Date();
-
-            console.log(blockedIPsObject)
 
             Object.keys(blockedIPsObject).forEach(function (ip) {
                 var entry = blockedIPsObject[ip];
@@ -106,32 +93,12 @@ function getBlockedIps(ip) {
             context.setVariable('blocked.ips.loaded', 'true');
 
         } catch (e) {
-            print('Raw value (first 500 chars): ' + (blockedIPsEntry ? blockedIPsEntry.substring(0, 500) : 'null'));
+            print('Raw value (first 500 chars): ' + (blockedIPsEntry ? blockedIPsEntry.substring(0, 500) :   'null'));
             context.setVariable('blocked.ips.loaded', false);
             context.setVariable('blocked.ips.error', e.message);
         }
     }
     return blockedIPs;
-}
-
-function getIpGroup(ip) {
-
-    // Simple hash function for ES5 compatibility
-    var hash = 0;
-    var i;
-    var chr;
-
-    if (ip.length === 0) {
-        return 0;
-    }
-
-    for (i = 0; i < ip.length; i++) {
-        chr = ip.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash = hash >>> 0; // Convert to 32bit unsigned integer
-    }
-
-    return hash % NUM_OF_IP_GROUPS;
 }
 
 function entryToList(entry) {

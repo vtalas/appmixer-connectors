@@ -4,7 +4,7 @@
  */
 
 /* eslint-disable */
-var NUM_OF_IP_GROUPS = 100;
+var NUM_OF_IP_GROUPS = 500;
 
 var clientIP = context.getVariable('request.header.X-Forwarded-For') ||
     context.getVariable('request.header.X-Real-IP') ||
