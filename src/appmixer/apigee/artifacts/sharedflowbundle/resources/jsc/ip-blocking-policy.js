@@ -4,18 +4,21 @@
  */
 
 /* eslint-disable */
-var NUM_OF_IP_GROUPS = 500;
+var NUM_OF_IP_GROUPS = 100;
 
 var clientIP = context.getVariable('request.header.X-Forwarded-For') ||
     context.getVariable('request.header.X-Real-IP') ||
     context.getVariable('request.ip') ||
     context.getVariable('client.ip');
 
-if (clientIP?.indexOf(',') > -1) {
+if (clientIP.indexOf(',') > -1) {
     clientIP = clientIP.split(',')[0].trim();
 }
 
 print('Processed client IP: ' + clientIP);
+
+var blockedIpList = context.getVariable("blocked.ip.list");
+print('Blocked IP List from variable: ' + blockedIpList);
 
 var blockedIPs = getBlockedIps(clientIP);
 
@@ -25,7 +28,7 @@ print('Blocked IPs loaded: ' + JSON.stringify(blockedIPs));
 var individualIPs = [];
 var cidrRanges = [];
 
-blockedIPs.forEach(function(entry) {
+blockedIPs.forEach(function (entry) {
     if (entry.indexOf('/') > -1) {
         cidrRanges.push(entry);
     } else {
@@ -59,6 +62,10 @@ if (isBlocked) {
     context.setVariable('blocked.client.ip', clientIP);
 }
 
+
+var value = context.getVariable("private.kvm.apigee-blocked-ips.blocked-ips-35");
+print("XXXXXX" + value)
+
 /*
 
   Helper functions
@@ -67,11 +74,11 @@ if (isBlocked) {
 
 function getBlockedIps(ip) {
 
-    var ipGroup = getIpGroup(ip);
+    var blockedIPsEntry = context.getVariable('blocked.ip.list');
 
-    print('Client IP group: ' + ipGroup);
-    var blockedIPsEntry = context.getVariable('blocked-ips-' + ipGroup);
     var blockedIPs = [];
+
+    print('Entries in the group ' + ipGroup + ': ' + blockedIPsEntry);
 
     if (blockedIPsEntry) {
         try {
@@ -79,7 +86,9 @@ function getBlockedIps(ip) {
 
             var currentTime = new Date();
 
-            Object.keys(blockedIPsObject).forEach(function(ip) {
+            console.log(blockedIPsObject)
+
+            Object.keys(blockedIPsObject).forEach(function (ip) {
                 var entry = blockedIPsObject[ip];
 
                 if (entry.expiration) {
@@ -176,7 +185,7 @@ function ipToInt(ip) {
     var parts = ip.split('.');
     // Use multiplication to avoid signed integer overflow issues
     return (parseInt(parts[0], 10) * 16777216) +  // 256^3
-           (parseInt(parts[1], 10) * 65536) +      // 256^2
-           (parseInt(parts[2], 10) * 256) +        // 256^1
-            parseInt(parts[3], 10);
+        (parseInt(parts[1], 10) * 65536) +      // 256^2
+        (parseInt(parts[2], 10) * 256) +        // 256^1
+        parseInt(parts[3], 10);
 }
