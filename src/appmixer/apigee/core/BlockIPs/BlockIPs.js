@@ -4,6 +4,33 @@ const lib = require('../../lib.generated');
 
 const NUM_OF_IP_GROUPS = 500;
 
+module.exports = {
+    async receive(context) {
+
+        const { ips, ttl } = context.messages.in.content;
+        if (!ips) {
+            throw new context.CancelError('IPs is required');
+        }
+
+        const expiration = ttl && ttl > 0 ? new Date(Date.now() + ttl * 1000).valueOf() : null;
+
+        const groupsList = getIpGroups(lib.parseIPs(ips));
+
+        for (const { keyName, ips } of groupsList) {
+
+            const entry = await getOrCreateList(context, keyName);
+            const parsedList = removeExpiredIPs(entryToList(entry));
+            ips.forEach(ip => {
+                parsedList[ip] = { ip, expiration };
+            });
+
+            await setList(context, keyName, listToEntry(parsedList));
+        }
+
+        return context.sendJson({}, 'out');
+    }
+};
+
 function getIpGroup(ip) {
 
     let hash = 0;
@@ -37,35 +64,7 @@ function getIpGroups(ipsList) {
     return Object.keys(groups).map(keyName => {
         return { keyName, ips: groups[keyName] };
     });
-
 }
-
-module.exports = {
-    async receive(context) {
-
-        const { ips, ttl } = context.messages.in.content;
-        if (!ips) {
-            throw new context.CancelError('IPs is required');
-        }
-
-        const expiration = ttl && ttl > 0 ? new Date(Date.now() + ttl * 1000).valueOf() : null;
-
-        const groupsList = getIpGroups(lib.parseIPs(ips));
-
-        for (const { keyName, ips } of groupsList) {
-
-            const entry = await getOrCreateList(context, keyName);
-            const parsedList = removeExpiredIPs(entryToList(entry));
-            ips.forEach(ip => {
-                parsedList[ip] = { ip, expiration };
-            });
-
-            await setList(context, keyName, listToEntry(parsedList));
-        }
-
-        return context.sendJson({}, 'out');
-    }
-};
 
 const setList = (context, name, value) => {
 
