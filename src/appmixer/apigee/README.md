@@ -50,4 +50,10 @@ npm install
 npm run bundle
 ```
 
+## Customize KVM name
 
+KVM name is set to `apigee-blocked-ips` by default. To customize it, you need to: 
+ - update the `kvmBlockedIPsName` in the BackOffice 
+ - update the `mapIdentifier` property in the `KVM-Get-Dynamic.xml` policy, located in the `artifacts/sharedflowbundle/policies` directory.
+ - rebuild the bundle
+ - redeploy the bundle to the Apigee environment
