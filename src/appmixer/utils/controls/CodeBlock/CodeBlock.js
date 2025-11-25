@@ -22,41 +22,21 @@ module.exports = {
         });
 
         await context.log({ 'step': 'resutl',result });
+
+        await context.log({ 'step': '111', result: example1_simpleArithmetic(context) });
+        await context.log({ 'step': '22', result: example2_usingFunctions(context) });
+        await context.log({ 'step': '33', result: example3_stringManipulation(context) });
+        await context.log({ 'step': '444', result: example4_arrayOperations(context) });
+        await context.log({ 'step': '555', result: example5_objectManipulation(context) });
+        await context.log({ 'step': '66', result: example6_conditionalLogic(context) });
+        await context.log({ 'step': '77', result: example7_dateManipulation(context) });
+        await context.log({ 'step': '88', result: example8_multipleCalls(context) });
+        await context.log({ 'step': '999', result: example9_jsonManipulation(context) });
+        await context.log({ 'step': '10101010', result: example10_complexTransformation(context) });
+
         return context.sendJson({ result }, 'out');
     }
 };
-
-
-
-
-/**
- * Sample calls demonstrating context.evalJavaScript() usage
- *
- * evalJavaScript runs code in an isolated environment (using isolated-vm)
- * and provides data through the $data object.
- *
- * Signature: context.evalJavaScript(code, jsonData)
- * @param {string} code - JavaScript code to execute
- * @param {Object} jsonData - Data accessible via $data in the code
- * @returns {*} - The result of the evaluated code
- *
- * IMPORTANT: DO NOT USE 'return' AT THE TOP LEVEL!
- * The last expression in your code is automatically returned.
- *
- * CORRECT:
- *   context.evalJavaScript('$data.a + $data.b', { a: 1, b: 2 })  // Returns: 3
- *
- * INCORRECT (will throw "Illegal return statement"):
- *   context.evalJavaScript('return $data.a + $data.b', { a: 1, b: 2 })
- *
- * If you need multiple statements with early returns, use an IIFE:
- *   const code = `
- *     (function() {
- *       if ($data.x > 10) return 'big';
- *       return 'small';
- *     })();
- *   `;
- */
 
 // Example 1: Simple arithmetic operation
 function example1_simpleArithmetic(context) {
