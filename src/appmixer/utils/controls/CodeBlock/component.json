@@ -12,14 +12,12 @@
                     "variables": {
                         "type": "object"
                     }
-                },
-                "required": [
-                ]
+                }
             },
             "inspector": {
                 "inputs": {
                     "variables": {
-                        "type": "expressi   on",
+                        "type": "expression",
                         "label": "Variables",
                         "levels": [
                             "ADD"

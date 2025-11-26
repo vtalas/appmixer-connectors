@@ -1,6 +1,27 @@
 'use strict';
 
 /**
+ * IMPORTANT NOTES:
+ *
+ * 1. **NO TOP-LEVEL RETURN**: You CANNOT use 'return' at the top level of your code!
+ *    The last expression is automatically returned by evalSync().
+ *    - CORRECT: '$data.value * 2'
+ *    - WRONG: 'return $data.value * 2'  // Throws "Illegal return statement"
+ *    - To use return statements, wrap in IIFE: '(function() { return $data.value * 2; })()'
+ *
+ * 2. Security: evalJavaScript runs code in an isolated environment with memory limits
+ * 3. No external modules: You cannot require() modules inside the evaluated code
+ * 4. No async: The evaluated code runs synchronously
+ * 5. No process.exit: Calling process.exit() will throw an error
+ * 6. Memory limit: Default is set by ISOLATE_MAX_MEMORY config
+ * 7. Data must be JSON-serializable: The jsonData parameter must be convertible to JSON
+ * 8. Return value: The last expression value is returned (or undefined if no expression)
+ * 9. Multiple calls: You can call evalJavaScript multiple times in the same receive()
+ * 10. Isolation: Each call creates a new context, so variables don't persist between calls
+ * 11. Performance: Creating isolates has overhead, use judiciously for complex calculations
+ */
+
+/**
  * OnStart component reacts on the 'start' message only. It triggers when the flow starts.
  * @extends {Component}
  */
@@ -27,7 +48,7 @@ module.exports = {
         await context.log({ 'step': '22', result: example2_usingFunctions(context) });
         await context.log({ 'step': '33', result: example3_stringManipulation(context) });
         await context.log({ 'step': '444', result: example4_arrayOperations(context) });
-        await context.log({ 'step': '555', result: example5_objectManipulation(context) });
+        // await context.log({ 'step': '555', result: example5_objectManipulation(context) });
         await context.log({ 'step': '66', result: example6_conditionalLogic(context) });
         await context.log({ 'step': '77', result: example7_dateManipulation(context) });
         await context.log({ 'step': '88', result: example8_multipleCalls(context) });
@@ -97,11 +118,11 @@ function example5_objectManipulation(context) {
 
     const code = `
         const user = $data.user;
-        ({
+        {
             fullName: user.firstName + ' ' + user.lastName,
             isAdult: user.age >= 18,
             email: user.email.toLowerCase()
-        });
+        };
     `;
     const result = context.evalJavaScript(code, {
         user: {
@@ -159,7 +180,7 @@ function example8_multipleCalls(context) {
         function square(n) {
             return n * n;
         }
-        return square($data.number);
+        square($data.number);
     `;
 
     let sum = 0;
@@ -227,137 +248,4 @@ function example10_complexTransformation(context) {
     // Returns: { totalOrders: 4, totalAmount: 725.75, averageAmount: 181.4375, maxAmount: 300, minAmount: 75.25 }
     return result;
 }
-
-// Example 11: Regular expressions
-function example11_regexValidation(context) {
-
-    const code = `
-        const email = $data.email;
-        const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-        emailRegex.test(email);
-    `;
-
-    const result = context.evalJavaScript(code, {
-        email: 'user@example.com'
-    });
-    // Returns: true
-    return result;
-}
-
-// Example 12: Error handling demonstration
-function example12_errorHandling(context) {
-
-    const code = `
-        (function() {
-            try {
-                if (!$data.value) {
-                    throw new Error('Value is required');
-                }
-                return $data.value * 2;
-            } catch (error) {
-                return 'Error: ' + error.message;
-            }
-        })();
-    `;
-
-    const result1 = context.evalJavaScript(code, { value: 10 });
-    // Returns: 20
-
-    const result2 = context.evalJavaScript(code, { value: null });
-    // Returns: "Error: Value is required"
-
-    return { result1, result2 };
-}
-
-// Example 13: Real component usage (like in CodeBlock)
-module.exports = {
-
-    async receive(context) {
-
-        // Example from CodeBlock component
-        const code = `
-            // You can perform any JavaScript operations here
-            const input = $data.number;
-            
-            function calculate(n) {
-                return n * 10 + 500;
-            }
-            
-            calculate(input);
-        `;
-
-        const result = context.evalJavaScript(code, { number: 42 });
-        // result will be: 920 (42 * 10 + 500)
-
-        await context.log({ step: 'Evaluated code', result });
-        return context.sendJson({ result }, 'out');
-    }
-};
-
-// Example 14: Dynamic formula evaluation
-async function example14_dynamicFormula(context) {
-
-    // User provides a formula as a string
-    const userFormula = context.messages.in.content.formula; // e.g., "($data.price * $data.quantity) * (1 + $data.taxRate)"
-    const data = {
-        price: 10.50,
-        quantity: 3,
-        taxRate: 0.08
-    };
-
-    const code = userFormula;  // No need for 'return' - the formula itself will be evaluated
-    const result = context.evalJavaScript(code, data);
-    // Returns: 34.02 ((10.50 * 3) * 1.08)
-
-    return context.sendJson({ calculatedValue: result }, 'out');
-}
-
-// Example 15: Text template processing
-function example15_templateProcessing(context) {
-
-    const code = `
-        const template = $data.template;
-        const vars = $data.variables;
-        
-        let result = template;
-        for (let key in vars) {
-            const placeholder = '{{' + key + '}}';
-            result = result.split(placeholder).join(vars[key]);
-        }
-        
-        result;
-    `;
-
-    const result = context.evalJavaScript(code, {
-        template: 'Hello {{name}}, your order #{{orderId}} has been {{status}}.',
-        variables: {
-            name: 'Alice',
-            orderId: '12345',
-            status: 'shipped'
-        }
-    });
-    // Returns: "Hello Alice, your order #12345 has been shipped."
-    return result;
-};
-
-/**
- * IMPORTANT NOTES:
- *
- * 1. **NO TOP-LEVEL RETURN**: You CANNOT use 'return' at the top level of your code!
- *    The last expression is automatically returned by evalSync().
- *    - CORRECT: '$data.value * 2'
- *    - WRONG: 'return $data.value * 2'  // Throws "Illegal return statement"
- *    - To use return statements, wrap in IIFE: '(function() { return $data.value * 2; })()'
- *
- * 2. Security: evalJavaScript runs code in an isolated environment with memory limits
- * 3. No external modules: You cannot require() modules inside the evaluated code
- * 4. No async: The evaluated code runs synchronously
- * 5. No process.exit: Calling process.exit() will throw an error
- * 6. Memory limit: Default is set by ISOLATE_MAX_MEMORY config
- * 7. Data must be JSON-serializable: The jsonData parameter must be convertible to JSON
- * 8. Return value: The last expression value is returned (or undefined if no expression)
- * 9. Multiple calls: You can call evalJavaScript multiple times in the same receive()
- * 10. Isolation: Each call creates a new context, so variables don't persist between calls
- * 11. Performance: Creating isolates has overhead, use judiciously for complex calculations
- */
 
