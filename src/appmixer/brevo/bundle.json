@@ -1,6 +1,6 @@
 {
     "name": "appmixer.brevo",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "changelog": {
         "1.0.1": [
             "Initial version"
@@ -20,6 +20,9 @@
         ],
         "1.2.2": [
             "Added tooltips for better user guidance in SendEmail component."
+        ],
+        "1.2.3": [
+            "Improved tooltip for template addition to SendEmail component."
         ]
     }
 }
