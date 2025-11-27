@@ -9,41 +9,41 @@
             "schema": {
                 "type": "object",
                 "properties": {
+                    "code": {
+                        "type": "string"
+                    },
                     "variables": {
                         "type": "object"
                     }
-                }
+                },
+                "required": ["code"]
             },
             "inspector": {
                 "inputs": {
+                    "code": {
+                        "type": "textarea",
+                        "label": "Code",
+                        "index": 1,
+                        "tooltip": "Enter the code to execute."
+                    },
                     "variables": {
+
                         "type": "expression",
                         "label": "Variables",
                         "levels": [
                             "ADD"
                         ],
-                        "index": 1,
+                        "index": 2,
                         "tooltip": "Provide the variables.",
                         "fields": {
                             "text": {
-                                "type": "text",
+                                "type": "textarea",
                                 "label": "Value",
                                 "index": 1,
                                 "tooltip": "Enter a text value.",
                                 "when": {
                                     "eq": {
                                         "./type": "text"
-                                    }
-                                }
-                            },
-                            "textarea": {
-                                "type": "textarea",
-                                "label": "Value",
-                                "index": 1,
-                                "tooltip": "Enter a textarea value.",
-                                "when": {
-                                    "eq": {
-                                        "./type": "textarea"
                                     }
                                 }
                             },
@@ -81,17 +81,6 @@
                                     }
                                 }
                             },
-                            "filepicker": {
-                                "type": "filepicker",
-                                "label": "Value",
-                                "index": 1,
-                                "tooltip": "Select a file.",
-                                "when": {
-                                    "eq": {
-                                        "./type": "filepicker"
-                                    }
-                                }
-                            },
                             "name": {
                                 "type": "text",
                                 "label": "Name",
@@ -114,20 +103,12 @@
                                         "value": "text"
                                     },
                                     {
-                                        "label": "Textarea",
-                                        "value": "textarea"
-                                    },
-                                    {
                                         "label": "Date",
                                         "value": "date-time"
                                     },
                                     {
                                         "label": "Boolean",
                                         "value": "toggle"
-                                    },
-                                    {
-                                        "label": "File",
-                                        "value": "filepicker"
                                     }
                                 ]
                             }

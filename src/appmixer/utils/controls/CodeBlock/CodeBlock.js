@@ -29,31 +29,38 @@ module.exports = {
 
     async receive(context) {
 
-        const { variables } = context.messages.in.content;
+        const { variables, code } = context.messages.in.content;
 
-        await context.log({ 'step': '', variables });
+        if (!code) {
+            throw new context.CancelError('Code is required');
+        }
 
-        const code = `
-        const fullName = $data.firstName + ' ' + $data.lastName;
-        fullName.toUpperCase();   `;
+        const variablesArray = variables?.ADD || [];
 
-        const result = context.evalJavaScript(code, {
-            firstName: 'John',
-            lastName: 'Doe'
-        });
+        const args = variablesArray.reduce((res, item) => {
+            const { name, type, ...value } = item;
+            res[name] = value[type];
+            return res;
+        }, {});
 
-        await context.log({ 'step': 'resutl',result });
+
+        await context.log({ 'step': 'variables ', args });
+
+        const result = context.evalJavaScript(code, args);
+
+        await context.log({ 'step': 'resutl', result });
 
         await context.log({ 'step': '111', result: example1_simpleArithmetic(context) });
         await context.log({ 'step': '22', result: example2_usingFunctions(context) });
         await context.log({ 'step': '33', result: example3_stringManipulation(context) });
         await context.log({ 'step': '444', result: example4_arrayOperations(context) });
-        // await context.log({ 'step': '555', result: example5_objectManipulation(context) });
+        await context.log({ 'step': '555', result: example5_objectManipulation(context) });
         await context.log({ 'step': '66', result: example6_conditionalLogic(context) });
         await context.log({ 'step': '77', result: example7_dateManipulation(context) });
         await context.log({ 'step': '88', result: example8_multipleCalls(context) });
         await context.log({ 'step': '999', result: example9_jsonManipulation(context) });
         await context.log({ 'step': '10101010', result: example10_complexTransformation(context) });
+        await context.log({ 'step': '10101010 X', result: JSON.parse(example10_complexTransformation(context)) });
 
         return context.sendJson({ result }, 'out');
     }
@@ -118,11 +125,11 @@ function example5_objectManipulation(context) {
 
     const code = `
         const user = $data.user;
-        {
+        JSON.stringify({
             fullName: user.firstName + ' ' + user.lastName,
             isAdult: user.age >= 18,
             email: user.email.toLowerCase()
-        };
+        });
     `;
     const result = context.evalJavaScript(code, {
         user: {
@@ -159,7 +166,7 @@ function example7_dateManipulation(context) {
 
     const code = `
         const date = new Date($data.timestamp);
-        ({
+        JSON.stringify({
             year: date.getFullYear(),
             month: date.getMonth() + 1,
             day: date.getDate(),
@@ -234,7 +241,7 @@ function example10_complexTransformation(context) {
         
         summary.averageAmount = summary.totalAmount / summary.totalOrders;
         
-        summary;
+        JSON.stringify(summary);
     `;
 
     const result = context.evalJavaScript(code, {
@@ -245,6 +252,7 @@ function example10_complexTransformation(context) {
             { id: 4, amount: 300.00 }
         ]
     });
+
     // Returns: { totalOrders: 4, totalAmount: 725.75, averageAmount: 181.4375, maxAmount: 300, minAmount: 75.25 }
     return result;
 }
