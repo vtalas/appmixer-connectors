@@ -70,6 +70,126 @@ function convertOutputOptionsToSchema(outputPortOptions, outputType) {
 }
 
 /**
+ * Deep validation helper - checks for schema mismatches in nested objects.
+ */
+function validateDeep(data, schema, path = '') {
+    const issues = [];
+
+    if (schema.type === 'object' && schema.properties) {
+        const declaredProps = Object.keys(schema.properties);
+        const actualProps = Object.keys(data || {});
+
+        // Check for properties in data not in schema
+        for (const prop of actualProps) {
+            if (!declaredProps.includes(prop)) {
+                issues.push({
+                    path: path ? `${path}.${prop}` : prop,
+                    issue: 'undeclared',
+                    message: `Property '${prop}' exists in data but not declared in schema`
+                });
+            } else {
+                // Recursively validate nested objects
+                const nestedIssues = validateDeep(data[prop], schema.properties[prop], path ? `${path}.${prop}` : prop);
+                issues.push(...nestedIssues);
+            }
+        }
+
+        // Check for required properties missing in data
+        for (const prop of declaredProps) {
+            if (!(prop in (data || {}))) {
+                const isRequired = schema.required && schema.required.includes(prop);
+                if (isRequired) {
+                    issues.push({
+                        path: path ? `${path}.${prop}` : prop,
+                        issue: 'missing',
+                        message: `Required property '${prop}' missing in data`
+                    });
+                }
+            }
+        }
+    } else if (schema.type === 'array' && schema.items && Array.isArray(data)) {
+        // Validate array items
+        data.forEach((item, index) => {
+            const nestedIssues = validateDeep(item, schema.items, `${path}[${index}]`);
+            issues.push(...nestedIssues);
+        });
+    }
+
+    return issues;
+}
+
+/**
+ * Validates static output (root-level fields against their schemas).
+ * For static outputs, each option has {label, value, schema} where:
+ * - value: root-level key in output JSON
+ * - schema: JSON schema for that field's value
+ *
+ * @param {Object} actualOutput - The actual output from the component
+ * @param {Array} outputPortOptions - Array of {label, value, schema} objects
+ * @returns {Object} Validation result { valid: boolean, errors: Array }
+ */
+function validateStaticOutput(actualOutput, outputPortOptions) {
+    const errors = [];
+    const warnings = [];
+    const expectedFields = new Set();
+
+    // Validate each field against its schema
+    for (const option of outputPortOptions) {
+        const fieldName = option.value;
+        const fieldSchema = option.schema;
+        expectedFields.add(fieldName);
+
+        if (!(fieldName in actualOutput)) {
+            errors.push({
+                field: fieldName,
+                message: `Missing required field: ${fieldName}`
+            });
+            continue;
+        }
+
+        // Standard JSON Schema validation
+        const validate = ajv.compile(fieldSchema);
+        const valid = validate(actualOutput[fieldName]);
+
+        if (!valid) {
+            errors.push({
+                field: fieldName,
+                message: `Validation failed for ${fieldName}`,
+                schemaErrors: validate.errors
+            });
+        }
+
+        // Deep validation for nested structure mismatches
+        const deepIssues = validateDeep(actualOutput[fieldName], fieldSchema, fieldName);
+        if (deepIssues.length > 0) {
+            warnings.push({
+                field: fieldName,
+                message: 'Schema structure mismatches found',
+                issues: deepIssues
+            });
+        }
+    }
+
+    // Check for unexpected fields
+    const actualFields = Object.keys(actualOutput);
+    for (const field of actualFields) {
+        if (!expectedFields.has(field)) {
+            errors.push({
+                field,
+                message: `Unexpected field: ${field}`
+            });
+        }
+    }
+
+    return {
+        valid: errors.length === 0 && warnings.length === 0,
+        errors,
+        warnings,
+        actualOutput
+    };
+}
+
+/**
  * Validates component output against its schema.
  *
  * @param {Object} options
@@ -79,6 +199,12 @@ function convertOutputOptionsToSchema(outputPortOptions, outputType) {
  * @returns {Object} Validation result { valid: boolean, errors: Array }
  */
 function validateOutput({ actualOutput, outputPortOptions, outputType }) {
+    // For static outputs, use direct field validation
+    if (outputType === 'static') {
+        return validateStaticOutput(actualOutput, outputPortOptions);
+    }
+
+    // For dynamic outputs (first/array/object/file), use schema conversion
     const schema = convertOutputOptionsToSchema(outputPortOptions, outputType);
     const validate = ajv.compile(schema);
     const valid = validate(actualOutput);

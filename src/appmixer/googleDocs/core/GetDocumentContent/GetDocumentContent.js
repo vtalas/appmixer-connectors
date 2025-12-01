@@ -21,11 +21,14 @@ module.exports = {
             }
         });
 
-        return context.sendJson({
+        const out = {
             documentId: data.documentId,
             title: data.title,
-            body: data.body,
-            content: data
-        }, 'out');
+            content: data.body.content
+        };
+
+        console.log('component output:', JSON.stringify(out));
+
+        return context.sendJson(out, 'out');
     }
 };
