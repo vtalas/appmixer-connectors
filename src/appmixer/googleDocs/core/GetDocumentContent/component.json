@@ -45,33 +45,795 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Document ID",
-                    "value": "documentId",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Title",
-                    "value": "title",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                {
-                    "label": "Body",
-                    "value": "body",
-                    "schema": {
+                    "documentId": {
+                        "type": "string",
+                        "title": "Document Id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "body": {
                         "type": "object",
-                        "properties": {}
-                    }
-                },
-                {
-                    "label": "Full Content",
-                    "value": "content",
-                    "schema": {
+                        "properties": {
+                            "content": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "endIndex": {
+                                            "type": "number",
+                                            "title": "Body.Content.End Index"
+                                        },
+                                        "sectionBreak": {
+                                            "type": "object",
+                                            "properties": {
+                                                "sectionStyle": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "columnSeparatorStyle": {
+                                                            "type": "string",
+                                                            "title": "Body.Content.Section Break.Section Style.Column Separator Style"
+                                                        },
+                                                        "contentDirection": {
+                                                            "type": "string",
+                                                            "title": "Body.Content.Section Break.Section Style.Content Direction"
+                                                        },
+                                                        "sectionType": {
+                                                            "type": "string",
+                                                            "title": "Body.Content.Section Break.Section Style.Section Type"
+                                                        }
+                                                    },
+                                                    "title": "Body.Content.Section Break.Section Style"
+                                                }
+                                            },
+                                            "title": "Body.Content.Section Break"
+                                        },
+                                        "startIndex": {
+                                            "type": "number",
+                                            "title": "Body.Content.Start Index"
+                                        },
+                                        "paragraph": {
+                                            "type": "object",
+                                            "properties": {
+                                                "elements": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "startIndex": {
+                                                                "type": "number",
+                                                                "title": "Body.Content.Paragraph.Elements.Start Index"
+                                                            },
+                                                            "endIndex": {
+                                                                "type": "number",
+                                                                "title": "Body.Content.Paragraph.Elements.End Index"
+                                                            },
+                                                            "textRun": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "content": {
+                                                                        "type": "string",
+                                                                        "title": "Body.Content.Paragraph.Elements.Text Run.Content"
+                                                                    },
+                                                                    "textStyle": {
+                                                                        "type": "object",
+                                                                        "properties": {},
+                                                                        "title": "Body.Content.Paragraph.Elements.Text Run.Text Style"
+                                                                    }
+                                                                },
+                                                                "title": "Body.Content.Paragraph.Elements.Text Run"
+                                                            }
+                                                        }
+                                                    },
+                                                    "title": "Body.Content.Paragraph.Elements"
+                                                },
+                                                "paragraphStyle": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "namedStyleType": {
+                                                            "type": "string",
+                                                            "title": "Body.Content.Paragraph.Paragraph Style.Named Style Type"
+                                                        },
+                                                        "direction": {
+                                                            "type": "string",
+                                                            "title": "Body.Content.Paragraph.Paragraph Style.Direction"
+                                                        }
+                                                    },
+                                                    "title": "Body.Content.Paragraph.Paragraph Style"
+                                                }
+                                            },
+                                            "title": "Body.Content.Paragraph"
+                                        }
+                                    },
+                                    "required": [
+                                        "endIndex"
+                                    ]
+                                },
+                                "title": "Body.Content"
+                            }
+                        },
+                        "title": "Body"
+                    },
+                    "content": {
                         "type": "object",
-                        "properties": {}
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "title": "Content.Title"
+                            },
+                            "body": {
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "endIndex": {
+                                                    "type": "number",
+                                                    "title": "Content.Body.Content.End Index"
+                                                },
+                                                "sectionBreak": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "sectionStyle": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "columnSeparatorStyle": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Body.Content.Section Break.Section Style.Column Separator Style"
+                                                                },
+                                                                "contentDirection": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Body.Content.Section Break.Section Style.Content Direction"
+                                                                },
+                                                                "sectionType": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Body.Content.Section Break.Section Style.Section Type"
+                                                                }
+                                                            },
+                                                            "title": "Content.Body.Content.Section Break.Section Style"
+                                                        }
+                                                    },
+                                                    "title": "Content.Body.Content.Section Break"
+                                                },
+                                                "startIndex": {
+                                                    "type": "number",
+                                                    "title": "Content.Body.Content.Start Index"
+                                                },
+                                                "paragraph": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "elements": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "startIndex": {
+                                                                        "type": "number",
+                                                                        "title": "Content.Body.Content.Paragraph.Elements.Start Index"
+                                                                    },
+                                                                    "endIndex": {
+                                                                        "type": "number",
+                                                                        "title": "Content.Body.Content.Paragraph.Elements.End Index"
+                                                                    },
+                                                                    "textRun": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "content": {
+                                                                                "type": "string",
+                                                                                "title": "Content.Body.Content.Paragraph.Elements.Text Run.Content"
+                                                                            },
+                                                                            "textStyle": {
+                                                                                "type": "object",
+                                                                                "properties": {},
+                                                                                "title": "Content.Body.Content.Paragraph.Elements.Text Run.Text Style"
+                                                                            }
+                                                                        },
+                                                                        "title": "Content.Body.Content.Paragraph.Elements.Text Run"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "title": "Content.Body.Content.Paragraph.Elements"
+                                                        },
+                                                        "paragraphStyle": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "namedStyleType": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Body.Content.Paragraph.Paragraph Style.Named Style Type"
+                                                                },
+                                                                "direction": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Body.Content.Paragraph.Paragraph Style.Direction"
+                                                                }
+                                                            },
+                                                            "title": "Content.Body.Content.Paragraph.Paragraph Style"
+                                                        }
+                                                    },
+                                                    "title": "Content.Body.Content.Paragraph"
+                                                }
+                                            },
+                                            "required": [
+                                                "endIndex"
+                                            ]
+                                        },
+                                        "title": "Content.Body.Content"
+                                    }
+                                },
+                                "title": "Content.Body"
+                            },
+                            "documentStyle": {
+                                "type": "object",
+                                "properties": {
+                                    "background": {
+                                        "type": "object",
+                                        "properties": {
+                                            "color": {
+                                                "type": "object",
+                                                "properties": {},
+                                                "title": "Content.Document Style.Background.Color"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Background"
+                                    },
+                                    "pageNumberStart": {
+                                        "type": "number",
+                                        "title": "Content.Document Style.Page Number Start"
+                                    },
+                                    "marginTop": {
+                                        "type": "object",
+                                        "properties": {
+                                            "magnitude": {
+                                                "type": "number",
+                                                "title": "Content.Document Style.Margin Top.Magnitude"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "title": "Content.Document Style.Margin Top.Unit"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Margin Top"
+                                    },
+                                    "marginBottom": {
+                                        "type": "object",
+                                        "properties": {
+                                            "magnitude": {
+                                                "type": "number",
+                                                "title": "Content.Document Style.Margin Bottom.Magnitude"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "title": "Content.Document Style.Margin Bottom.Unit"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Margin Bottom"
+                                    },
+                                    "marginRight": {
+                                        "type": "object",
+                                        "properties": {
+                                            "magnitude": {
+                                                "type": "number",
+                                                "title": "Content.Document Style.Margin Right.Magnitude"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "title": "Content.Document Style.Margin Right.Unit"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Margin Right"
+                                    },
+                                    "marginLeft": {
+                                        "type": "object",
+                                        "properties": {
+                                            "magnitude": {
+                                                "type": "number",
+                                                "title": "Content.Document Style.Margin Left.Magnitude"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "title": "Content.Document Style.Margin Left.Unit"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Margin Left"
+                                    },
+                                    "pageSize": {
+                                        "type": "object",
+                                        "properties": {
+                                            "height": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "magnitude": {
+                                                        "type": "number",
+                                                        "title": "Content.Document Style.Page Size.Height.Magnitude"
+                                                    },
+                                                    "unit": {
+                                                        "type": "string",
+                                                        "title": "Content.Document Style.Page Size.Height.Unit"
+                                                    }
+                                                },
+                                                "title": "Content.Document Style.Page Size.Height"
+                                            },
+                                            "width": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "magnitude": {
+                                                        "type": "number",
+                                                        "title": "Content.Document Style.Page Size.Width.Magnitude"
+                                                    },
+                                                    "unit": {
+                                                        "type": "string",
+                                                        "title": "Content.Document Style.Page Size.Width.Unit"
+                                                    }
+                                                },
+                                                "title": "Content.Document Style.Page Size.Width"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Page Size"
+                                    },
+                                    "marginHeader": {
+                                        "type": "object",
+                                        "properties": {
+                                            "magnitude": {
+                                                "type": "number",
+                                                "title": "Content.Document Style.Margin Header.Magnitude"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "title": "Content.Document Style.Margin Header.Unit"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Margin Header"
+                                    },
+                                    "marginFooter": {
+                                        "type": "object",
+                                        "properties": {
+                                            "magnitude": {
+                                                "type": "number",
+                                                "title": "Content.Document Style.Margin Footer.Magnitude"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "title": "Content.Document Style.Margin Footer.Unit"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Margin Footer"
+                                    },
+                                    "useCustomHeaderFooterMargins": {
+                                        "type": "boolean",
+                                        "title": "Content.Document Style.Use Custom Header Footer Margins"
+                                    },
+                                    "documentFormat": {
+                                        "type": "object",
+                                        "properties": {
+                                            "documentMode": {
+                                                "type": "string",
+                                                "title": "Content.Document Style.Document Format.Document Mode"
+                                            }
+                                        },
+                                        "title": "Content.Document Style.Document Format"
+                                    }
+                                },
+                                "title": "Content.Document Style"
+                            },
+                            "namedStyles": {
+                                "type": "object",
+                                "properties": {
+                                    "styles": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "namedStyleType": {
+                                                    "type": "string",
+                                                    "title": "Content.Named Styles.Styles.Named Style Type"
+                                                },
+                                                "textStyle": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "bold": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Text Style.Bold"
+                                                        },
+                                                        "italic": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Text Style.Italic"
+                                                        },
+                                                        "underline": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Text Style.Underline"
+                                                        },
+                                                        "strikethrough": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Text Style.Strikethrough"
+                                                        },
+                                                        "smallCaps": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Text Style.Small Caps"
+                                                        },
+                                                        "backgroundColor": {
+                                                            "type": "object",
+                                                            "properties": {},
+                                                            "title": "Content.Named Styles.Styles.Text Style.Background Color"
+                                                        },
+                                                        "foregroundColor": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "color": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "rgbColor": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "red": {
+                                                                                    "type": "number",
+                                                                                    "title": "Content.Named Styles.Styles.Text Style.Foreground Color.Color.Rgb Color.Red"
+                                                                                },
+                                                                                "green": {
+                                                                                    "type": "number",
+                                                                                    "title": "Content.Named Styles.Styles.Text Style.Foreground Color.Color.Rgb Color.Green"
+                                                                                },
+                                                                                "blue": {
+                                                                                    "type": "number",
+                                                                                    "title": "Content.Named Styles.Styles.Text Style.Foreground Color.Color.Rgb Color.Blue"
+                                                                                }
+                                                                            },
+                                                                            "title": "Content.Named Styles.Styles.Text Style.Foreground Color.Color.Rgb Color"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Text Style.Foreground Color.Color"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Text Style.Foreground Color"
+                                                        },
+                                                        "fontSize": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "magnitude": {
+                                                                    "type": "number",
+                                                                    "title": "Content.Named Styles.Styles.Text Style.Font Size.Magnitude"
+                                                                },
+                                                                "unit": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Text Style.Font Size.Unit"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Text Style.Font Size"
+                                                        },
+                                                        "weightedFontFamily": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "fontFamily": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Text Style.Weighted Font Family.Font Family"
+                                                                },
+                                                                "weight": {
+                                                                    "type": "number",
+                                                                    "title": "Content.Named Styles.Styles.Text Style.Weighted Font Family.Weight"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Text Style.Weighted Font Family"
+                                                        },
+                                                        "baselineOffset": {
+                                                            "type": "string",
+                                                            "title": "Content.Named Styles.Styles.Text Style.Baseline Offset"
+                                                        }
+                                                    },
+                                                    "title": "Content.Named Styles.Styles.Text Style"
+                                                },
+                                                "paragraphStyle": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "namedStyleType": {
+                                                            "type": "string",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Named Style Type"
+                                                        },
+                                                        "alignment": {
+                                                            "type": "string",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Alignment"
+                                                        },
+                                                        "lineSpacing": {
+                                                            "type": "number",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Line Spacing"
+                                                        },
+                                                        "direction": {
+                                                            "type": "string",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Direction"
+                                                        },
+                                                        "spacingMode": {
+                                                            "type": "string",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Spacing Mode"
+                                                        },
+                                                        "spaceAbove": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "unit": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Space Above.Unit"
+                                                                },
+                                                                "magnitude": {
+                                                                    "type": "number",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Space Above.Magnitude"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Space Above"
+                                                        },
+                                                        "spaceBelow": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "unit": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Space Below.Unit"
+                                                                },
+                                                                "magnitude": {
+                                                                    "type": "number",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Space Below.Magnitude"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Space Below"
+                                                        },
+                                                        "borderBetween": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "color": {
+                                                                    "type": "object",
+                                                                    "properties": {},
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Between.Color"
+                                                                },
+                                                                "width": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Between.Width.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Between.Width"
+                                                                },
+                                                                "padding": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Between.Padding.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Between.Padding"
+                                                                },
+                                                                "dashStyle": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Between.Dash Style"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Between"
+                                                        },
+                                                        "borderTop": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "color": {
+                                                                    "type": "object",
+                                                                    "properties": {},
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Top.Color"
+                                                                },
+                                                                "width": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Top.Width.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Top.Width"
+                                                                },
+                                                                "padding": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Top.Padding.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Top.Padding"
+                                                                },
+                                                                "dashStyle": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Top.Dash Style"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Top"
+                                                        },
+                                                        "borderBottom": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "color": {
+                                                                    "type": "object",
+                                                                    "properties": {},
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Bottom.Color"
+                                                                },
+                                                                "width": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Bottom.Width.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Bottom.Width"
+                                                                },
+                                                                "padding": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Bottom.Padding.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Bottom.Padding"
+                                                                },
+                                                                "dashStyle": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Bottom.Dash Style"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Bottom"
+                                                        },
+                                                        "borderLeft": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "color": {
+                                                                    "type": "object",
+                                                                    "properties": {},
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Left.Color"
+                                                                },
+                                                                "width": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Left.Width.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Left.Width"
+                                                                },
+                                                                "padding": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Left.Padding.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Left.Padding"
+                                                                },
+                                                                "dashStyle": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Left.Dash Style"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Left"
+                                                        },
+                                                        "borderRight": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "color": {
+                                                                    "type": "object",
+                                                                    "properties": {},
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Right.Color"
+                                                                },
+                                                                "width": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Right.Width.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Right.Width"
+                                                                },
+                                                                "padding": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "unit": {
+                                                                            "type": "string",
+                                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Right.Padding.Unit"
+                                                                        }
+                                                                    },
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Right.Padding"
+                                                                },
+                                                                "dashStyle": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Border Right.Dash Style"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Border Right"
+                                                        },
+                                                        "indentFirstLine": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "unit": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Indent First Line.Unit"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Indent First Line"
+                                                        },
+                                                        "indentStart": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "unit": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Indent Start.Unit"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Indent Start"
+                                                        },
+                                                        "indentEnd": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "unit": {
+                                                                    "type": "string",
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Indent End.Unit"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Indent End"
+                                                        },
+                                                        "keepLinesTogether": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Keep Lines Together"
+                                                        },
+                                                        "keepWithNext": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Keep With Next"
+                                                        },
+                                                        "avoidWidowAndOrphan": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Avoid Widow And Orphan"
+                                                        },
+                                                        "shading": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "backgroundColor": {
+                                                                    "type": "object",
+                                                                    "properties": {},
+                                                                    "title": "Content.Named Styles.Styles.Paragraph Style.Shading.Background Color"
+                                                                }
+                                                            },
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Shading"
+                                                        },
+                                                        "pageBreakBefore": {
+                                                            "type": "boolean",
+                                                            "title": "Content.Named Styles.Styles.Paragraph Style.Page Break Before"
+                                                        }
+                                                    },
+                                                    "title": "Content.Named Styles.Styles.Paragraph Style"
+                                                }
+                                            },
+                                            "required": [
+                                                "namedStyleType",
+                                                "textStyle",
+                                                "paragraphStyle"
+                                            ]
+                                        },
+                                        "title": "Content.Named Styles.Styles"
+                                    }
+                                },
+                                "title": "Content.Named Styles"
+                            },
+                            "revisionId": {
+                                "type": "string",
+                                "title": "Content.Revision Id"
+                            },
+                            "suggestionsViewMode": {
+                                "type": "string",
+                                "title": "Content.Suggestions View Mode"
+                            },
+                            "documentId": {
+                                "type": "string",
+                                "title": "Content.Document Id"
+                            }
+                        },
+                        "title": "Content"
                     }
                 }
             ]
