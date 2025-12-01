@@ -45,15 +45,23 @@
             "name": "out",
             "options": [
                 {
-                    "documentId": {
-                        "type": "string",
-                        "title": "Document Id"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
-                    "body": {
+                    "label": "Document Id",
+                    "value": "documentId",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Title",
+                    "value": "title",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Body",
+                    "value": "body",
+                    "schema": {
                         "type": "object",
                         "properties": {
                             "content": {
@@ -152,10 +160,13 @@
                                 },
                                 "title": "Body.Content"
                             }
-                        },
-                        "title": "Body"
-                    },
-                    "content": {
+                        }
+                    }
+                },
+                {
+                    "label": "Content",
+                    "value": "content",
+                    "schema": {
                         "type": "object",
                         "properties": {
                             "title": {
@@ -832,8 +843,7 @@
                                 "type": "string",
                                 "title": "Content.Document Id"
                             }
-                        },
-                        "title": "Content"
+                        }
                     }
                 }
             ]
