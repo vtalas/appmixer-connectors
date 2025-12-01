@@ -207,11 +207,38 @@ function validateOutput({ actualOutput, outputPortOptions, outputType }) {
     // For dynamic outputs (first/array/object/file), use schema conversion
     const schema = convertOutputOptionsToSchema(outputPortOptions, outputType);
     const validate = ajv.compile(schema);
-    const valid = validate(actualOutput);
+
+    const errors = validate.errors || [];
+    const warnings = [];
+
+    // Deep validation for dynamic outputs (first/object)
+    if (outputType === 'first' || outputType === 'object') {
+        // Build expected schema from all options
+        const itemSchema = {
+            type: 'object',
+            properties: {}
+        };
+
+        for (const option of outputPortOptions) {
+            itemSchema.properties[option.value] = option.schema;
+        }
+
+        // Validate the full output
+        const deepIssues = validateDeep(actualOutput, itemSchema, '');
+
+        if (deepIssues.length > 0) {
+            warnings.push({
+                field: 'output',
+                message: 'Schema structure mismatches found',
+                issues: deepIssues
+            });
+        }
+    }
 
     return {
-        valid,
-        errors: validate.errors || [],
+        valid: errors.length === 0 && warnings.length === 0,
+        errors,
+        warnings,
         schema,
         actualOutput
     };
