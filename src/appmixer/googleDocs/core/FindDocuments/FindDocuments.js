@@ -1,7 +1,9 @@
 'use strict';
 
-const lib = require('../../lib.generated');
-const schema = {
+const lib = require('../../lib');
+
+// Schema for output validation - exported for testing
+const outputSchema = {
     'id': { 'type': 'string', 'title': 'Document Id' },
     'name': { 'type': 'string', 'title': 'Name' },
     'mimeType': { 'type': 'string', 'title': 'MIME Type' },
@@ -10,13 +12,21 @@ const schema = {
     'webViewLink': { 'type': 'string', 'title': 'Web View Link' }
 };
 
+// Label for array output type
+const outputLabel = 'Documents';
+
 module.exports = {
+
+    // Exported for output schema validation tests
+    outputSchema,
+    outputLabel,
+
     async receive(context) {
 
         const { query, outputType = 'array' } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Documents', value: 'documents' });
+            return lib.getOutputPortOptions(context, outputType, outputSchema, { label: outputLabel });
         }
 
         // Build query parameter for Google Drive API to filter for Google Docs
