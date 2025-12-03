@@ -29,8 +29,9 @@
  *   # Test dynamic schema (Find/List) - no input needed
 node scripts/test-output-schema.js ./src/appmixer/googleDocs/core/FindDocuments
 node scripts/test-output-schema.js ./src/appmixer/googleDocs/core/FindDocuments array
+node scripts/test-output-schema.js ./src/appmixer/googleDocs/core/GetDocumentContent --input '{"documentId":"14rhXLc254rFk-deehyPUI9VU07RGujsfd3iZNhUHzmg"}'
 
-appmixer test component src/appmixer/googleDocs/core/FindDocuments
+ appmixer test component src/appmixer/googleDocs/core/FindDocuments
 appmixer test component ./src/appmixer/googleDocs/core/GetDocumentContent -i '{"in":{"documentId":"14rhXLc254rFk-deehyPUI9VU07RGujsfd3iZNhUHzmg"}}'
 
  *
