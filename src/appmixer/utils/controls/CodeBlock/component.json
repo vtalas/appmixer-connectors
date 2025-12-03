@@ -24,7 +24,7 @@
                         "type": "textarea",
                         "label": "Code",
                         "index": 1,
-                        "tooltip": "Enter the code to execute."
+                        "tooltip": "Write JavaScript code to transform data. Access input data via $data object (e.g., $data.value).<br/><br/>- No top-level return statements - the last expression is automatically returned.<br/>- To use return, wrap in IIFE:<br/> <code>(function() { return $data.value * 2; })()</code><br/>- To return JSON object, use JSON.stringify:<br/><code>JSON.stringify({<br/>&nbsp;&nbsp;name: $data.name,<br/>&nbsp;&nbsp;isAdult: $data.age &gt;= 18,<br/>&nbsp;&nbsp;email: $data.email.toLowerCase()<br/>});</code><br/>- Define your variables in the 'Variables' form below. Variables will be accessible in the code as <code>$data.&lt;variable name&gt;</code>."
                     },
                     "variables": {
 
