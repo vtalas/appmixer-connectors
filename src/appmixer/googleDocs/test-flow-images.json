@@ -1,0 +1,293 @@
+{
+    "name": "E2E Google Docs - images",
+    "description": "End-to-end test for Google Docs image operations - tests InsertImage and ReplaceImage components",
+    "flow": {
+        "start-component": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 100,
+            "y": 200,
+            "source": {},
+            "version": "1.0.0",
+            "config": {
+                "transform": {}
+            }
+        },
+        "create-document": {
+            "type": "appmixer.googleDocs.core.CreateDocument",
+            "x": 300,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "start-component": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "start-component": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "title": {}
+                                },
+                                "lambda": {
+                                    "title": "E2E Test Images Document"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "insert-image": {
+            "type": "appmixer.googleDocs.core.InsertImage",
+            "x": 500,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-document": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-document": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "documentId": {
+                                        "variable-1": {
+                                            "variable": "$.create-document.out.documentId",
+                                            "functions": []
+                                        }
+                                    },
+                                    "imageUrl": {}
+                                },
+                                "lambda": {
+                                    "documentId": "{{{variable-1}}}",
+                                    "imageUrl": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-image-inserted": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 700,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "insert-image": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "insert-image": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "object-id-check": {
+                                            "variable": "$.insert-image.out.objectId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{object-id-check}}}",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "replace-image": {
+            "type": "appmixer.googleDocs.core.ReplaceImage",
+            "x": 900,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-image-inserted": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "assert-image-inserted": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "documentId": {
+                                        "variable-1": {
+                                            "variable": "$.create-document.out.documentId",
+                                            "functions": []
+                                        }
+                                    },
+                                    "targetImageId": {
+                                        "variable-2": {
+                                            "variable": "$.insert-image.out.objectId",
+                                            "functions": []
+                                        }
+                                    },
+                                    "newImageUrl": {}
+                                },
+                                "lambda": {
+                                    "documentId": "{{{variable-1}}}",
+                                    "targetImageId": "{{{variable-2}}}",
+                                    "newImageUrl": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-image-replaced": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1100,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "replace-image": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "replace-image": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "replies-check": {
+                                            "variable": "$.replace-image.out.replies",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{replies-check}}}",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1300,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-image-replaced": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-document": {
+            "type": "appmixer.googleDocs.core.DeleteDocument",
+            "x": 1500,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "documentId": {
+                                        "variable-1": {
+                                            "variable": "$.create-document.out.documentId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "documentId": "{{{variable-1}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1700,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-document": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "delete-document": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "testCase": "E2E Google Docs - images",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
