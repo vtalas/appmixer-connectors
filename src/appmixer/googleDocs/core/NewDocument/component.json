@@ -17,8 +17,8 @@
     "properties": {
         "schema": {
             "properties": {
-                "folderId": {
-                    "type": "string"
+                "folder": {
+                    "type": "object"
                 },
                 "recursive": {
                     "type": "boolean"
@@ -27,17 +27,13 @@
         },
         "inspector": {
             "inputs": {
-                "folderId": {
-                    "type": "select",
+                "folder": {
+                    "type": "googlepicker",
                     "label": "Folder",
                     "index": 1,
                     "tooltip": "Select a specific folder to monitor for new documents. If not selected, new documents in the entire Google Drive will be monitored.",
-                    "source": {
-                        "url": "/component/appmixer/googleDocs/core/ListFolders?outPort=out",
-                        "data": {
-                            "transform": "./transformers#foldersToSelectArray"
-                        }
-                    }
+                    "view": "FOLDERS",
+                    "placeholder": "Choose a folder..."
                 },
                 "recursive": {
                     "type": "toggle",

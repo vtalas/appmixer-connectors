@@ -37,7 +37,10 @@ module.exports = {
 
     async tick(context) {
 
-        const { folderId, recursive } = context.properties;
+        const { folder = {}, recursive } = context.properties;
+
+        // Extract folder ID from googlepicker object or string
+        const folderId = typeof folder === 'string' ? folder : folder.id;
 
         // Load state
         const state = await context.loadState();

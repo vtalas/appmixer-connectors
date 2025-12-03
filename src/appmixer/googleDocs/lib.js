@@ -5,11 +5,11 @@ const DEFAULT_PREFIX = 'everart-objects-export';
 module.exports = {
 
     async sendArrayOutput({
-        context,
-        outputPortName = 'out',
-        outputType = 'array',
-        records = []
-    }) {
+                              context,
+                              outputPortName = 'out',
+                              outputType = 'array',
+                              records = []
+                          }) {
 
         if (outputType === 'first') {
             if (records.length === 0) {
@@ -53,7 +53,7 @@ module.exports = {
         return path.split('.').reduce((acc, part) => acc?.[part], obj);
     },
 
-    getOutputPortOptions(context, outputType, itemSchema, { label, value }) {
+    getOutputPortOptions(context, outputType, itemSchema, { label }) {
 
         if (outputType === 'object' || outputType === 'first') {
             const options = Object.keys(itemSchema)
@@ -80,13 +80,16 @@ module.exports = {
 
         if (outputType === 'array') {
             return context.sendJson([{
-                label,
-                value,
+                label: "alksjhdflkdsajf",
+                value: 'lsdkjklsdjf',
                 schema: {
                     type: 'array',
-                    items: { type: 'object', properties: itemSchema }
+                    items: {
+                        type: 'object',
+                        properties: itemSchema
+                    }
                 }
-            }], 'out');
+            }, { label: 'Items Count', value: 'count', schema: { type: 'integer' } }], 'out');
         }
 
         if (outputType === 'file') {
