@@ -69,7 +69,7 @@ module.exports = {
             return res;
         }, {});
 
-        await context.log({ 'step': 'variables ', args });
+        await context.log({ 'step': 'variables', args });
 
         let result = context.evalJavaScript(code, args);
 
