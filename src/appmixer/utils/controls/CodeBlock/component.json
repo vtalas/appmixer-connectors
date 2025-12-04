@@ -1,6 +1,6 @@
 {
     "name": "appmixer.utils.controls.CodeBlock",
-    "author": "Appmmixer <info@appmixer.ai>",
+    "author": "Appmixer <info@appmixer.ai>",
     "description": "This trigger fires once and only once the flow starts.",
     "private": false,
     "inPorts": [
