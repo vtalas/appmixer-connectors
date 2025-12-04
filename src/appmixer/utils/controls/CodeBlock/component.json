@@ -1,7 +1,7 @@
 {
     "name": "appmixer.utils.controls.CodeBlock",
     "author": "Appmixer <info@appmixer.ai>",
-    "description": "This trigger fires once and only once the flow starts.",
+    "description": "Allows you to write JavaScript code to transform data. Executes the provided code when the component receives input.",
     "private": false,
     "inPorts": [
         {
