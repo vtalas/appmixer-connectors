@@ -1,5 +1,5 @@
 {
-    "name": "Google Docs Images E2E Test",
+    "name": "E2E Google Docs - images",
     "description": "E2E test flow - auto generated, do not modify!",
     "flow": {
         "start-component": {
