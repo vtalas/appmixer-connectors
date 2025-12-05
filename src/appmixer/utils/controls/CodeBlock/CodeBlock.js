@@ -75,7 +75,7 @@ module.exports = {
 
         try {
             result = JSON.parse(result);
-        } catch (e) {
+        } catch {
             // not JSON, return as is
         }
 
