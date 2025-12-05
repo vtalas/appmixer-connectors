@@ -79,6 +79,6 @@ module.exports = {
             // not JSON, return as is
         }
 
-        return context.sendJson(result, 'out');
+        return context.sendJson({ result }, 'out');
     }
 };
