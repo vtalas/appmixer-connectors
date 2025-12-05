@@ -14,12 +14,26 @@
         "manager": "appmixer:googleDocs",
         "resources": "requests"
     },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {}
+            },
+            "inspector": {
+                "inputs": {}
+            }
+        }
+    ],
     "outPorts": [
         {
             "name": "out",
             "options": [
-                { "label": "Folder ID", "value": "id" },
-                { "label": "Name", "value": "name" }
+                {
+                    "label": "Folders",
+                    "value": "folders"
+                }
             ]
         }
     ]

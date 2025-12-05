@@ -49,14 +49,64 @@
         {
             "name": "out",
             "options": [
-                { "label": "Document ID", "value": "id", "schema": { "type": "string" } },
-                { "label": "Name", "value": "name", "schema": { "type": "string" } },
-                { "label": "MIME Type", "value": "mimeType", "schema": { "type": "string" } },
-                { "label": "Created Time", "value": "createdTime", "schema": { "type": "string", "format": "date-time" } },
-                { "label": "Modified Time", "value": "modifiedTime", "schema": { "type": "string", "format": "date-time" } },
-                { "label": "Web View Link", "value": "webViewLink", "schema": { "type": "string" } },
-                { "label": "Owners", "value": "owners", "schema": { "type": "array" } },
-                { "label": "Last Modifying User", "value": "lastModifyingUser", "schema": { "type": "object" } }
+                {
+                    "label": "Document ID",
+                    "value": "id",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Name",
+                    "value": "name",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "MIME Type",
+                    "value": "mimeType",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Created Time",
+                    "value": "createdTime",
+                    "schema": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                {
+                    "label": "Modified Time",
+                    "value": "modifiedTime",
+                    "schema": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                {
+                    "label": "Web View Link",
+                    "value": "webViewLink",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "label": "Owners",
+                    "value": "owners",
+                    "schema": {
+                        "type": "array"
+                    }
+                },
+                {
+                    "label": "Last Modifying User",
+                    "value": "lastModifyingUser",
+                    "schema": {
+                        "type": "object"
+                    }
+                }
             ]
         }
     ],

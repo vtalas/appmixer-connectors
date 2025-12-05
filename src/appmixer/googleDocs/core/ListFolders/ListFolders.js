@@ -18,6 +18,7 @@ module.exports = {
             }
         });
 
-        return context.sendJson(data.files || [], 'out');
+        const folders = data.files || [];
+        await context.sendJson({ folders }, 'out');
     }
 };
