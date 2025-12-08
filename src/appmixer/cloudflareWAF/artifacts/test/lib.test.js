@@ -1,5 +1,5 @@
 const assert = require('assert');
-const lib = require('../../src/appmixer/cloudflareWAF/waf/lib');
+const lib = require('../../lib');
 
 describe('CloudFlare WAF', function() {
 
@@ -17,3 +17,4 @@ describe('CloudFlare WAF', function() {
         assert.deepEqual(ips, ['4.4.4.4', '5.5.5.5']);
     });
 });
+

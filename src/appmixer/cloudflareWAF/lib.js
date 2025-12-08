@@ -1,5 +1,6 @@
 const CloudflareAPI = require('./CloudflareAPI');
 const { Address4, Address6 } = require('ip-address');
+const config = require('./config');
 
 const getModel = (context) => require('./RulesIPsModel')(context);
 
@@ -162,6 +163,19 @@ function removeInterfaceIdentifierAndAddCidr(ip) {
     return `${networkPrefix}::/64`;
 }
 
+function initializeBlockRule(context, index, ips) {
+
+    const { generatedRuleRefPrefix, generatedRuleNamePrefix } = config(context);
+
+    return {
+        action: 'block',
+        description: `${generatedRuleNamePrefix}#${index}`,
+        enabled: true,
+        expression: getBlockExpression(ips),
+        ref: `${generatedRuleRefPrefix}#${index}`
+    };
+}
+
 /**
  * remove sensitive info from objects
  * @param items
@@ -176,9 +190,129 @@ function sanitizeItems(items = []) {
     });
 }
 
+const RULE_MAX_CAPACITY = 4096;
+
+const parseIPs = (input) => {
+
+    let ips = [];
+
+    if (typeof input === 'string') {
+        // Check if the string is a JSON array
+        try {
+            const parsed = JSON.parse(input);
+            if (Array.isArray(parsed)) {
+                ips = parsed;
+            } else {
+                ips = input.split(/\s+|,/)
+                    .filter(item => item)
+                    .map(ip => ip.trim());
+            }
+        } catch (e) {
+            ips = input.split(/\s+|,/)
+                .filter(item => item)
+                .map(ip => ip.trim());
+        }
+    } else if (Array.isArray(input)) {
+        ips = input;
+    }
+
+    return ips;
+};
+
+function getIpsFromRules(rules) {
+
+    const ips = {};
+    rules.forEach(rule => {
+
+        const data = extractIPs(rule.expression);
+        data.forEach(ip => {
+            ips[ip] = { id: rule.id };
+        });
+    });
+
+    return ips;
+}
+
+function findIpsInRules(rules, refIps = []) {
+
+    const ips = {};
+    rules.forEach(rule => {
+
+        const ipsFromRule = extractIPs(rule.expression);
+        ipsFromRule.forEach(ip => {
+            if (refIps.includes(ip)) {
+                ips[ip] = { id: rule.id };
+            }
+        });
+    });
+
+    return ips;
+}
+
+function prepareRulesForCreateOrUpdate(context, ips, rules, ruleCapacity) {
+    const ipsList = assignIpsToRules(ips, rules, ruleCapacity);
+
+    const ipsGroupedByRules = Object.keys(ipsList).reduce((acc, ip) => {
+        const ruleId = ipsList[ip].id;
+        if (!acc[ruleId]) acc[ruleId] = [];
+        acc[ruleId].push(ip);
+        return acc;
+    }, {});
+
+    const res = [];
+    const groups = Object.entries(ipsGroupedByRules);
+    groups.forEach(entry => {
+        const ruleId = entry[0];
+        const existingRule = rules.find(rule => rule.id === ruleId);
+        const expression = getBlockExpression(entry[1]);
+
+        if (existingRule) {
+            if (existingRule.expression !== expression) {
+                res.push({ ...existingRule, expression });
+            }
+        } else {
+            res.push(initializeBlockRule(context, groups.length, entry[1]));
+        }
+    });
+    return res;
+}
+
+function assignIpsToRules(ips, rules, ruleCapacity) {
+    const ipsList = getIpsFromRules(rules);
+    const rulesMetadata = rules.map(rule => {
+        return {
+            id: rule.id,
+            usedCapacity: rule.expression.length
+        };
+    });
+
+    ips.forEach(ip => {
+
+        const availableRule = getAvailableRule(rulesMetadata, ip.length + 1, ruleCapacity);
+
+        if (availableRule) {
+            availableRule.usedCapacity += ip.length + 1;
+            ipsList[ip] = { id: availableRule.id };
+        } else {
+            ipsList[ip] = { id: 'NULL', expression: '' };
+        }
+    });
+
+    return ipsList;
+}
+
+function getAvailableRule(rules, requiredCapacity, ruleCapacity = RULE_MAX_CAPACITY) {
+
+    return rules.find(rule => rule.usedCapacity + requiredCapacity < ruleCapacity);
+}
+
 module.exports = {
+    prepareRulesForCreateOrUpdate,
+    findIpsInRules,
+    parseIPs,
     deleteExpireIps,
-    getBlockExpression,
     extractIPs,
-    removeIpsFromRule
+    removeIpsFromRule,
+    initializeBlockRule,
+    getIpsFromRules
 };
