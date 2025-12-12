@@ -1,18 +1,22 @@
 {
-    "name": "appmixer.zoho.core.CreateCustomModule",
+    "name": "appmixer.zoho.crm.CreateCustomModule",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Create a custom module in Zoho CRM. Custom modules allow you to extend Zoho CRM with your own data structures tailored to your business needs.",
+    "description": "Create a custom module in Zoho CRM. Custom modules allow you to extend Zoho CRM with your own data structures tailored to your business needs. Note: Custom module creation is available only in paid Zoho CRM subscriptions.",
     "version": "1.0.0",
     "private": false,
     "auth": {
         "service": "appmixer:zoho",
         "scope": [
+            "ZohoCRM.modules.ALL",
             "ZohoCRM.settings.modules.ALL"
         ]
     },
     "quota": {
         "manager": "appmixer:zoho",
-        "resources": "requests"
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
     },
     "inPorts": [
         {
@@ -104,7 +108,10 @@
                     "label": "Module ID",
                     "value": "moduleId",
                     "schema": {
-                        "type": "string"
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     }
                 },
                 {
@@ -132,7 +139,10 @@
                     "label": "Description",
                     "value": "description",
                     "schema": {
-                        "type": "string"
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     }
                 },
                 {

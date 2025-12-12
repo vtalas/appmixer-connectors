@@ -15,18 +15,20 @@ class ZohoClient {
         // context.auth.accessToken for component calls
         // context.accessToken for calls from auth.js
         const accessToken = context.auth?.accessToken || context.accessToken;
-        const region = context.profileInfo?.region || regionAuth;
+        const region = regionAuth || context.profileInfo?.region;
 
         check.assert.string(accessToken, `Missing accessToken: ${accessToken}.`);
         check.assert.string(region, `Missing region: ${region}.`);
 
         const apiUrl = apiEndpoint(region);
+
+        // console.log(context.profileInfo);
+        // console.log('>>>>>>>>>>>>', apiUrl, regionAuth, region );
         this.client = context.httpRequest.create({
             baseURL: apiUrl,
             timeout: 6 * 1000,
             headers: {
-                'Authorization': `Zoho-oauthtoken ${accessToken}`,
-                'User-Agent': 'AppMixer'
+                'Authorization': `Zoho-oauthtoken ${accessToken}`
             }
         });
     }
@@ -189,6 +191,8 @@ class ZohoClient {
             data,
             params
         };
+
+        console.log(url)
 
         return this.client(request)
             .then(response => response.data)

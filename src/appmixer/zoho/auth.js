@@ -11,6 +11,7 @@ const { accountsEndpoint } = require('./endpoints');
  */
 const validateUser = async (context) => {
 
+    // https://www.zoho.com/crm/developer/docs/api/v8/get-users.html
     const zc = new ZohoClient(context, region);
     const { users } = await zc.request('GET', '/crm/v2/users', {
         params: { type: 'CurrentUser' }
@@ -36,6 +37,7 @@ module.exports = {
             'ZohoCRM.modules.ALL',
             'ZohoCRM.users.ALL',
             'ZohoCRM.settings.fields.READ',
+            'ZohoCRM.settings.profiles.READ',
             'ZohoCRM.notifications.ALL'
         ],
 
