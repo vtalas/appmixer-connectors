@@ -15,7 +15,12 @@ class ZohoClient {
         // context.auth.accessToken for component calls
         // context.accessToken for calls from auth.js
         const accessToken = context.auth?.accessToken || context.accessToken;
-        const region = regionAuth || context.profileInfo?.region;
+        let region = regionAuth || context.profileInfo?.region;
+
+        // Default to 'us' region if not provided
+        if (!region) {
+            region = 'us';
+        }
 
         check.assert.string(accessToken, `Missing accessToken: ${accessToken}.`);
         check.assert.string(region, `Missing region: ${region}.`);

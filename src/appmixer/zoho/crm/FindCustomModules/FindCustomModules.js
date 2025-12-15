@@ -36,6 +36,7 @@ const schema = {
 };
 
 module.exports = {
+
     async receive(context) {
 
         const { searchQuery, sortBy, sortOrder, outputType } = context.messages.in.content;
@@ -44,16 +45,18 @@ module.exports = {
             return lib.getOutputPortOptions(context, outputType, schema, { label: 'CustomModules', value: 'custom_modules' });
         }
 
-        const zc = new ZohoClient(context);
+        const zc = new ZohoClient(context, context.profileInfo?.region);
 
         // https://www.zoho.com/crm/developer/docs/api/v3/custom-modules.html
-        const { data } = await zc.request('GET', '/crm/v3/settings/custom_modules', {
-            params: {
-                fields: Object.keys(schema).join(',')
-            }
+        const response = await zc.request('GET', '/crm/v8/settings/modules', {
+            // params: {
+            //     fields: Object.keys(schema).join(',')
+            // }
         });
 
-        let records = data.custom_modules || [];
+
+        let records = response.modules || [];
+
 
         // Filter by search query if provided
         if (searchQuery) {
