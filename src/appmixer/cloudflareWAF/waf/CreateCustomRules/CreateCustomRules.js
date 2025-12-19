@@ -62,7 +62,7 @@ module.exports = {
                 });
 
                 (await Promise.allSettled(promises)).forEach(result => {
-                    updatedOrCreatedRules = result?.value?.result?.rules || [];
+                    const updatedOrCreatedRules = result?.value?.result?.rules || [];
                     updatedOrCreatedRules.forEach(rule => {
                         const index = resultRules.findIndex(r => r.id === rule.id);
                         if (index !== -1) {
@@ -77,7 +77,7 @@ module.exports = {
             const updatedIps = lib.findIpsInRules(resultRules, parsedIps);
             const updatedIpsArray = Object.entries(updatedIps).map(([ip, { id }]) => ({ ip, ruleId: id }));
 
-            if (ttl && updatedIpsArray.length) {
+            if (updatedIpsArray.length) {
 
                 const removeAfter = new Date().getTime() + ttl * 1000;
                 const dbItems = updatedIpsArray.map(item => {
