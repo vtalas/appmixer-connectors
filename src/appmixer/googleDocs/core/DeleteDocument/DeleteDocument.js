@@ -20,6 +20,6 @@ module.exports = {
             }
         });
 
-        return context.sendJson({}, 'out');
+        return context.sendJson({ success: true }, 'out');
     }
 };
