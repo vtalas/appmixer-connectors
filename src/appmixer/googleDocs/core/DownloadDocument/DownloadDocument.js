@@ -25,8 +25,11 @@ module.exports = {
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`
             },
-            responseType: 'text'
+            responseType: 'arraybuffer'
         });
+
+        // Convert buffer to base64 for output
+        const fileDataBase64 = Buffer.from(data).toString('base64');
 
         // Generate filename based on document title and format
         const extensionMap = {
@@ -60,7 +63,7 @@ module.exports = {
         }
 
         return context.sendJson({
-            fileData: data,
+            fileData: fileDataBase64,
             fileName: fileName,
             mimeType: mimeType
         }, 'out');
