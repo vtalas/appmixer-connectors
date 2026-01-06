@@ -23,10 +23,10 @@
                     "type": {
                         "type": "string"
                     },
-                    "ancestor_folder_ids": {
+                    "ancestorFolderIds": {
                         "type": "string"
                     },
-                    "content_types": {
+                    "contentTypes": {
                         "type": [
                             "array",
                             "string"
@@ -68,13 +68,13 @@
                             }
                         ]
                     },
-                    "ancestor_folder_ids": {
+                    "ancestorFolderIds": {
                         "type": "text",
                         "index": 3,
-                        "label": "Ancestor Folder Ids",
+                        "label": "Ancestor Folder IDs",
                         "tooltip": "Comma-separated list of ancestor folder IDs to limit scope."
                     },
-                    "content_types": {
+                    "contentTypes": {
                         "type": "multiselect",
                         "index": 4,
                         "label": "Content Types",

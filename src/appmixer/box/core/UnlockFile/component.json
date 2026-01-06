@@ -5,10 +5,7 @@
     "version": "1.0.0",
     "private": false,
     "auth": {
-        "service": "appmixer:box",
-        "scope": [
-            "root_readwrite"
-        ]
+        "service": "appmixer:box"
     },
     "quota": {
         "manager": "appmixer:box",

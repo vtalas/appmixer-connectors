@@ -19,7 +19,7 @@ module.exports = {
                 'Content-Type': 'application/json'
             },
             data: {
-                name: name,
+                name,
                 parent: {
                     id: parentId
                 }

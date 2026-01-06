@@ -32,12 +32,14 @@ module.exports = {
 
         // Create form data for multipart/form-data upload
         const form = new FormData();
-        form.append('attributes', JSON.stringify({
+        const attributes = {
             name: fileName,
             parent: {
-                id: parentId
+                id: parentId || '0'
             }
-        }));
+        };
+
+        form.append('attributes', JSON.stringify(attributes));
         form.append('file', fileStream, {
             filename: fileName,
             contentType: fileInfo.contentType || 'application/octet-stream'

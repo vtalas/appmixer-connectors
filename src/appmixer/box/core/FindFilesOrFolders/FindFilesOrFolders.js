@@ -76,8 +76,8 @@ module.exports = {
         const {
             query,
             type,
-            ancestor_folder_ids: ancestorFolderIds,
-            content_types: contentTypes,
+            ancestorFolderIds,
+            contentTypes,
             fields,
             outputType
         } = context.messages.in.content;
@@ -87,7 +87,7 @@ module.exports = {
         }
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Entries', value: 'entries' });
+            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Entries' });
         }
 
         const params = {

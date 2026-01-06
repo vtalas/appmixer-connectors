@@ -52,7 +52,7 @@ module.exports = {
         // Save the file and get fileId
         const savedFile = await context.saveFileStream(fileName, response.data);
 
-        await context.log({ step: 'file', savedFile });
+        await context.log('info', 'File downloaded and saved', { fileName, size });
 
         return context.sendJson({
             fileId: savedFile.fileId,

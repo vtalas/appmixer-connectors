@@ -27,8 +27,8 @@ module.exports = {
         await context.httpRequest({
             method: 'DELETE',
             url: `https://api.box.com/2.0/folders/${folderId}`,
-            headers: headers,
-            params: params
+            headers,
+            params
         });
 
         return context.sendJson({}, 'out');
