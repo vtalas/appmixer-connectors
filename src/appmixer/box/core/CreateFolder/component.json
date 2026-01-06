@@ -88,6 +88,20 @@
                             "name": {
                                 "type": "string",
                                 "title": "Parent.Name"
+                            },
+                            "sequence_id": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Parent.Sequence Id"
+                            },
+                            "etag": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Parent.Etag"
                             }
                         }
                     }

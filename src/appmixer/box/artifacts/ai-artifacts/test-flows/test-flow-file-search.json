@@ -1,0 +1,329 @@
+{
+    "name": "E2E Box - file-search",
+    "description": "End-to-end test for Box connector - tests file upload, search, and deletion",
+    "flow": {
+        "start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 100,
+            "y": 200,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 250,
+            "y": 200,
+            "source": {
+                "in": {
+                    "start": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "testFileName",
+                                                "text": "E2E_Test_File"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "before-all": {
+            "type": "appmixer.utils.test.BeforeAll",
+            "x": 400,
+            "y": 200,
+            "source": {
+                "in": {
+                    "set-variables": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {}
+        },
+        "upload-file": {
+            "type": "appmixer.box.core.UploadFile",
+            "x": 550,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "before-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "before-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "fileId": {
+                                        "file-var": {
+                                            "variable": "$.set-variables.out.testFileName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "fileName": {
+                                        "name-var": {
+                                            "variable": "$.set-variables.out.testFileName",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "fileId": "",
+                                    "fileName": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-upload": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 700,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "upload-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "upload-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "file-id-check": {
+                                            "variable": "$.upload-file.out.entries.0.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "find-files": {
+            "type": "appmixer.box.core.FindFilesOrFolders",
+            "x": 700,
+            "y": 300,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "upload-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "upload-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "query": {
+                                        "search-var": {
+                                            "variable": "$.set-variables.out.testFileName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "type": {},
+                                    "outputType": {}
+                                },
+                                "lambda": {
+                                    "query": "",
+                                    "type": "file",
+                                    "outputType": "first"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-find": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 850,
+            "y": 300,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "find-files": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "find-files": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "found-check": {
+                                            "variable": "$.find-files.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete-file": {
+            "type": "appmixer.box.core.DeleteFile",
+            "x": 1000,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-upload": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "assert-upload": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "file_id": {
+                                        "id-var": {
+                                            "variable": "$.upload-file.out.entries.0.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "file_id": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1150,
+            "y": 250,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-find": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1300,
+            "y": 250,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "testCase": "E2E Box - file-search",
+                                    "result": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

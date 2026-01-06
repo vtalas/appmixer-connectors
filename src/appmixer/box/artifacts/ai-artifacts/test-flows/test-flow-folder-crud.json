@@ -1,0 +1,233 @@
+{
+    "name": "E2E Box - folder-crud",
+    "description": "End-to-end test for Box connector - tests folder CRUD operations and file retrieval",
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 100,
+            "y": 200,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "create-folder": {
+            "type": "appmixer.box.core.CreateFolder",
+            "x": 300,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "name": {}
+                                },
+                                "lambda": {
+                                    "name": "E2E Test Folder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "get-file": {
+            "type": "appmixer.box.core.GetFile",
+            "x": 500,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-folder": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-folder": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "fileId": {
+                                        "var-1": {
+                                            "variable": "$.create-folder.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "fileId": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-folder-created": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 700,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "folder-check": {
+                                            "variable": "$.get-file.out.type",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "equal",
+                                                "expected": "folder"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "before-all": {
+            "type": "appmixer.utils.test.BeforeAll",
+            "x": 900,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-folder-created": [
+                        "out"
+                    ]
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1100,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "before-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-folder": {
+            "type": "appmixer.box.core.DeleteFolder",
+            "x": 1300,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "folder_id": {
+                                        "var-1": {
+                                            "variable": "$.create-folder.out.id",
+                                            "functions": []
+                                        }
+                                    },
+                                    "recursive": {}
+                                },
+                                "lambda": {
+                                    "folder_id": "",
+                                    "recursive": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1500,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-folder": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "delete-folder": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "testCase": "E2E Box - folder-crud",
+                                    "result": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

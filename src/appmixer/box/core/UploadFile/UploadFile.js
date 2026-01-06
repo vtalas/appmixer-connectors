@@ -20,7 +20,7 @@ module.exports = {
             throw new context.CancelError('Invalid File ID. Failed to get file information.');
         }
 
-        if (fileInfo.length > 50 * 1024 * 1024) {
+        if (fileInfo.size > 50 * 1024 * 1024) {
             throw new context.CancelError('Maximum file size is 50MB.');
         }
 

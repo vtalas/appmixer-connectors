@@ -1,0 +1,355 @@
+{
+    "name": "E2E Box - file-locking",
+    "description": "End-to-end test for Box connector - tests file locking functionality",
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 100,
+            "y": 200,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "before-all": {
+            "type": "appmixer.utils.test.BeforeAll",
+            "x": 300,
+            "y": 200,
+            "source": {
+                "in": {
+                    "on-start": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {}
+        },
+        "upload-file": {
+            "type": "appmixer.box.core.UploadFile",
+            "x": 500,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "before-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "before-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "fileId": {},
+                                    "fileName": {}
+                                },
+                                "lambda": {
+                                    "fileId": "data:text/plain;base64,VGhpcyBpcyBhIHRlc3QgZmlsZSBmb3IgQm94IGZpbGUgbG9ja2luZyB0ZXN0cy4=",
+                                    "fileName": "test-file-locking.txt"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-upload": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 700,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "upload-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "upload-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "file-id-check": {
+                                            "variable": "$.upload-file.out.entries.0.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "lock-file": {
+            "type": "appmixer.box.core.LockFile",
+            "x": 700,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "upload-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "upload-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "file_id": {
+                                        "file-id-var": {
+                                            "variable": "$.upload-file.out.entries.0.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "file_id": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-lock": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 900,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "lock-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "lock-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "lock-check": {
+                                            "variable": "$.lock-file.out.lock.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "unlock-file": {
+            "type": "appmixer.box.core.UnlockFile",
+            "x": 900,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "lock-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "lock-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "fileId": {
+                                        "file-id-var": {
+                                            "variable": "$.lock-file.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "fileId": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-unlock": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1100,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "unlock-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "unlock-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "lock-null-check": {
+                                            "variable": "$.unlock-file.out.lock",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "equal",
+                                                "expected": "null"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1300,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-unlock": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-file": {
+            "type": "appmixer.box.core.DeleteFile",
+            "x": 1500,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "file_id": {
+                                        "file-id-var": {
+                                            "variable": "$.upload-file.out.entries.0.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "file_id": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1700,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-file": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "delete-file": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "test@appmixer.com",
+                                    "testCase": "E2E Box - file-locking",
+                                    "result": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
