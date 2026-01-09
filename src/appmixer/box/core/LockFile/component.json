@@ -17,28 +17,28 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "file_id": {
+                    "fileId": {
                         "type": "string"
                     },
-                    "lock_expires_at": {
+                    "lockExpiresAt": {
                         "type": "string",
                         "format": "date-time"
                     }
                 },
                 "required": [
-                    "file_id"
+                    "fileId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "file_id": {
+                    "fileId": {
                         "type": "text",
                         "tooltip": "The unique identifier of the file to lock. This is a required parameter that identifies which file should be locked.",
                         "label": "File ID",
                         "index": 0
                     },
-                    "lock_expires_at": {
-                        "type": "text",
+                    "lockExpiresAt": {
+                        "type": "date-time",
                         "tooltip": "The ISO 8601 formatted date and time when the lock will automatically expire. Optional parameter. If not provided, the lock will remain until manually released.",
                         "label": "Lock Expires At",
                         "index": 1

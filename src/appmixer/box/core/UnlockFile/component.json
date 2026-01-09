@@ -30,7 +30,7 @@
                     "fileId": {
                         "type": "text",
                         "tooltip": "The unique identifier of the file to unlock",
-                        "label": "File Id",
+                        "label": "File ID",
                         "index": 0
                     }
                 }
@@ -42,7 +42,7 @@
             "name": "out",
             "options": [
                 {
-                    "label": "Id",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"

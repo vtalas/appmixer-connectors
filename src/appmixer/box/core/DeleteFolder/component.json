@@ -16,7 +16,7 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "folder_id": {
+                    "folderId": {
                         "type": "string"
                     },
                     "recursive": {
@@ -27,15 +27,15 @@
                     }
                 },
                 "required": [
-                    "folder_id"
+                    "folderId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "folder_id": {
+                    "folderId": {
                         "type": "text",
                         "index": 0,
-                        "label": "Folder Id",
+                        "label": "Folder ID",
                         "tooltip": "The ID of the folder to delete."
                     },
                     "recursive": {

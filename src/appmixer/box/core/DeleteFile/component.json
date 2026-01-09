@@ -17,7 +17,7 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "file_id": {
+                    "fileId": {
                         "type": "string"
                     },
                     "ifMatch": {
@@ -25,15 +25,15 @@
                     }
                 },
                 "required": [
-                    "file_id"
+                    "fileId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "file_id": {
+                    "fileId": {
                         "type": "text",
                         "tooltip": "The ID of the file to delete.",
-                        "label": "File Id",
+                        "label": "File ID",
                         "index": 0
                     },
                     "ifMatch": {

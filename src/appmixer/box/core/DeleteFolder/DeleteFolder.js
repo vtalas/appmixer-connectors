@@ -4,7 +4,7 @@ module.exports = {
 
     async receive(context) {
 
-        const { folder_id: folderId, recursive, ifMatch } = context.messages.in.content;
+        const { folderId, recursive, ifMatch } = context.messages.in.content;
 
         if (!folderId) {
             throw new context.CancelError('Folder Id is required!');

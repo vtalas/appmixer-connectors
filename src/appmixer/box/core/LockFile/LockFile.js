@@ -2,10 +2,7 @@
 
 module.exports = {
     async receive(context) {
-        const {
-            file_id: fileId,
-            lock_expires_at: lockExpiresAt
-        } = context.messages.in.content;
+        const { fileId, lockExpiresAt } = context.messages.in.content;
 
         if (!fileId) {
             throw new context.CancelError('File ID is required!');
