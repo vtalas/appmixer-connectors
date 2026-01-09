@@ -42,7 +42,7 @@
             "name": "out",
             "options": [
                 {
-                    "label": "ID",
+                    "label": "File ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
@@ -301,7 +301,7 @@
                     }
                 },
                 {
-                    "label": "Sha1",
+                    "label": "SHA1",
                     "value": "sha1",
                     "schema": {
                         "type": "string"

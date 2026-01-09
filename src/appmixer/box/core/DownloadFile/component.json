@@ -58,7 +58,7 @@
                     }
                 },
                 {
-                    "label": "File Name",
+                    "label": "Name",
                     "value": "fileName",
                     "schema": {
                         "type": "string"

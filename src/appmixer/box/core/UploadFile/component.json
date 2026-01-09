@@ -60,28 +60,28 @@
             "name": "out",
             "options": [
                 {
-                    "label": "ID",
+                    "label": "File ID",
                     "value": "entries.0.id",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "File Name",
+                    "label": "Name",
                     "value": "entries.0.name",
                     "schema": {
                         "type": "string"
                     }
                 },
                 {
-                    "label": "File Size",
+                    "label": "Size",
                     "value": "entries.0.size",
                     "schema": {
                         "type": "number"
                     }
                 },
                 {
-                    "label": "File Type",
+                    "label": "Type",
                     "value": "entries.0.type",
                     "schema": {
                         "type": "string"

@@ -2,16 +2,16 @@
     "flow": {
         "start": {
             "type": "appmixer.utils.controls.OnStart",
-            "x": 100,
-            "y": 200,
+            "x": -16,
+            "y": 192,
             "source": {},
             "version": "1.0.0",
             "config": {}
         },
         "set-variables": {
             "type": "appmixer.utils.controls.SetVariable",
-            "x": 250,
-            "y": 200,
+            "x": 192,
+            "y": 192,
             "source": {
                 "in": {
                     "start": [
@@ -35,7 +35,7 @@
                                             {
                                                 "type": "text",
                                                 "name": "testFileName",
-                                                "text": "E2E_Test_File"
+                                                "text": "E2E_Test_File0.7770956115582887"
                                             }
                                         ]
                                     }
@@ -48,146 +48,68 @@
         },
         "before-all": {
             "type": "appmixer.utils.test.BeforeAll",
-            "x": 400,
-            "y": 200,
+            "x": 384,
+            "y": 192,
+            "version": "1.0.0",
+            "config": {},
             "source": {
                 "in": {
                     "set-variables": [
                         "out"
                     ]
                 }
-            },
-            "version": "1.0.0",
-            "config": {}
+            }
         },
-        "upload-file": {
-            "type": "appmixer.box.core.UploadFile",
-            "x": 550,
-            "y": 200,
+        "find-files": {
+            "type": "appmixer.box.core.FindFilesOrFolders",
+            "x": 592,
+            "y": 192,
             "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "upload-file": {},
+                        "before-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "query": {
+                                        "ae83f4f8-8477-4316-9dc2-16fa31de2c46": {
+                                            "variable": "$.set-variables.out.testFileName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "type": {},
+                                    "outputType": {},
+                                    "exactMatch": {},
+                                    "contentTypes": {}
+                                },
+                                "lambda": {
+                                    "query": "{{{ae83f4f8-8477-4316-9dc2-16fa31de2c46}}}",
+                                    "type": "file",
+                                    "outputType": "first",
+                                    "exactMatch": true,
+                                    "contentTypes": [
+                                        "name"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "source": {
                 "in": {
                     "before-all": [
                         "out"
                     ]
                 }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "before-all": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "fileId": {
-                                        "file-var": {
-                                            "variable": "$.set-variables.out.testFileName",
-                                            "functions": []
-                                        }
-                                    },
-                                    "fileName": {
-                                        "name-var": {
-                                            "variable": "$.set-variables.out.testFileName",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "fileId": "",
-                                    "fileName": ""
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "assert-upload": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 700,
-            "y": 100,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "upload-file": [
-                        "out"
-                    ]
-                }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "upload-file": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "expression": {
-                                        "file-id-check": {
-                                            "variable": "$.upload-file.out.entries.0.id",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "expression": {
-                                        "AND": [
-                                            {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "find-files": {
-            "type": "appmixer.box.core.FindFilesOrFolders",
-            "x": 700,
-            "y": 300,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "upload-file": [
-                        "out"
-                    ]
-                }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "upload-file": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "query": {
-                                        "search-var": {
-                                            "variable": "$.set-variables.out.testFileName",
-                                            "functions": []
-                                        }
-                                    },
-                                    "type": {},
-                                    "outputType": {}
-                                },
-                                "lambda": {
-                                    "query": "",
-                                    "type": "file",
-                                    "outputType": "first"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "assert-find": {
             "type": "appmixer.utils.test.Assert",
-            "x": 850,
-            "y": 300,
+            "x": 864,
+            "y": 176,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -207,6 +129,14 @@
                                         "found-check": {
                                             "variable": "$.find-files.out.id",
                                             "functions": []
+                                        },
+                                        "b324c741-7451-4ed4-b883-ce27ca5b394f": {
+                                            "variable": "$.set-variables.out.testFileName",
+                                            "functions": []
+                                        },
+                                        "f03be577-c336-401e-a018-aa51291a683f": {
+                                            "variable": "$.find-files.out.name",
+                                            "functions": []
                                         }
                                     }
                                 },
@@ -214,9 +144,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "assertion": "equal",
+                                                "field": "{{{b324c741-7451-4ed4-b883-ce27ca5b394f}}}",
+                                                "expected": "{{{f03be577-c336-401e-a018-aa51291a683f}}}"
                                             }
                                         ]
                                     }
@@ -227,45 +157,10 @@
                 }
             }
         },
-        "delete-file": {
-            "type": "appmixer.box.core.DeleteFile",
-            "x": 1000,
-            "y": 200,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "assert-upload": [
-                        "out"
-                    ]
-                }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "assert-upload": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "file_id": {
-                                        "id-var": {
-                                            "variable": "$.upload-file.out.entries.0.id",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "file_id": ""
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1150,
-            "y": 250,
+            "x": 1152,
+            "y": 160,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -282,41 +177,41 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1300,
-            "y": 250,
+            "x": 1456,
+            "y": 160,
             "version": "1.0.1",
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "delete-file": {},
+                        "after-all": {
+                            "out": {
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E Box - file-search",
+                                    "result": "{{{75524253-8eab-49ee-9da3-9351c14bc95c}}}"
+                                },
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "75524253-8eab-49ee-9da3-9351c14bc95c": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "source": {
                 "in": {
                     "after-all": [
                         "out"
                     ]
-                }
-            },
-            "config": {
-                "properties": {},
-                "transform": {
-                    "in": {
-                        "after-all": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "recipients": {},
-                                    "testCase": {},
-                                    "result": {
-                                        "result-var": {
-                                            "variable": "$.after-all.out",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "recipients": "test@appmixer.ai",
-                                    "testCase": "E2E Box - file-search",
-                                    "result": ""
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }

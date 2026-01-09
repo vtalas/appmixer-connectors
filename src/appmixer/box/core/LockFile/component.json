@@ -52,7 +52,7 @@
             "name": "out",
             "options": [
                 {
-                    "label": "ID",
+                    "label": "File ID",
                     "value": "id",
                     "schema": {
                         "type": "string"
