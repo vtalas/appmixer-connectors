@@ -291,6 +291,46 @@ module.exports = {
 
 For services using OAuth 2.0 flow.
 
+#### Simplified URL-Based Format
+
+For services with standard OAuth 2.0 endpoints, you can use a simplified URL-based format where URLs are provided as strings instead of functions:
+
+**Example (ClickUp)**:
+```javascript
+module.exports = {
+    type: 'oauth2',
+
+    definition: () => {
+        return {
+            scope: [],
+
+            authUrl: 'https://app.clickup.com/api',
+
+            requestAccessToken: 'https://api.clickup.com/api/v2/oauth/token',
+
+            requestProfileInfo: 'https://api.clickup.com/api/v2/user',
+
+            accountNameFromProfileInfo: 'user.username',
+
+            validateAccessToken: 'https://api.clickup.com/api/v2/user'
+        };
+    }
+};
+```
+
+**Key Differences from Function-Based Format**:
+- `authUrl`: String URL instead of function - Appmixer handles OAuth parameters automatically
+- `requestAccessToken`: String URL instead of async function - Appmixer handles the token exchange
+- `requestProfileInfo`: String URL instead of async function - Appmixer makes GET request with Bearer token
+- `accountNameFromProfileInfo`: Dot-notation path to extract account name from profile response (e.g., `'user.username'`)
+- `validateAccessToken`: String URL instead of async function - Appmixer makes GET request to validate token
+
+This format is simpler and works when the service follows standard OAuth 2.0 conventions. Use the function-based format (below) when you need custom logic for token handling or non-standard endpoints.
+
+#### Function-Based Format
+
+For services that require custom OAuth logic or have non-standard endpoints:
+
 **Generic Example**:
 ```javascript
 module.exports = {
@@ -1759,6 +1799,38 @@ async receive(context) {
 ```
 
 #### Dynamic Output Port Schema
+
+When using `source` to dynamically populate field options or output port schemas, the `data` object can contain either `messages` or `properties` depending on the target component's input type:
+
+- **Use `messages`**: When the target component has `inPorts` (action components)
+- **Use `properties`**: When the target component uses `properties` instead of `inPorts` (trigger components)
+
+**IMPORTANT**: All **required** fields of the target component MUST be defined. You can use dummy data for fields that aren't needed for the specific call, but every required field must have a value.
+
+**Example with `messages`** (target component has `inPorts`):
+```json
+{
+    "inspector": {
+        "inputs": {
+            "folderId": {
+                "type": "text",
+                "label": "Folder ID",
+                "source": {
+                    "url": "/component/appmixer/clickup/core/ListFolders?outPort=out",
+                    "data": {
+                        "messages": {
+                            "in/spaceId": "inputs/in/spaceId"
+                        },
+                        "transform": "./ListFolders#toSelectArray"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+**Example with `properties`** (target component uses `properties`):
 ```json
 {
     "outPorts": [
@@ -1776,6 +1848,63 @@ async receive(context) {
         }
     ]
 }
+```
+
+**Using `variableFetch` for Error Handling in Dynamic Sources**
+
+When a component is used as a dynamic data source (via `source` URL), it may fail due to permissions, invalid configuration, or API errors. In the UI context (populating dropdown options), these errors should be gracefully handled by returning an empty response rather than throwing an exception that would break the UI.
+
+The `variableFetch` property signals to the component that it's being called as a dynamic data source, not as a regular flow component. When `variableFetch: true`:
+- **Ignore errors** and return an empty response (e.g., `{ items: [] }`)
+- This prevents UI breakage when the dynamic source call fails
+
+When the same component is used directly in a flow (without `variableFetch`):
+- **Throw errors** normally so the user is aware of failures
+
+**component.json example** (setting `variableFetch` in source):
+```json
+{
+    "driveId": {
+        "type": "text",
+        "label": "Drive ID",
+        "source": {
+            "url": "/component/appmixer/microsoft/onedrive/ListDrives?outPort=out",
+            "data": {
+                "properties": {
+                    "variableFetch": true
+                },
+                "transform": "./ListDrives#sitesToSelectArray"
+            }
+        }
+    }
+}
+```
+
+**JavaScript implementation example** (handling `variableFetch`):
+```javascript
+module.exports = {
+    async receive(context) {
+        try {
+            const drives = await listItems(context, 'me/drives?');
+            return context.sendJson({ drives }, 'out');
+        } catch (err) {
+            // When used as dynamic source, return empty response instead of error
+            if (context.properties.variableFetch) {
+                return context.sendJson({ drives: [] }, 'out');
+            }
+            // When used in flow, throw error normally
+            context.log({ stage: 'Error', err });
+            throw new Error(err);
+        }
+    },
+
+    sitesToSelectArray({ drives }) {
+        return drives.map((drive) => ({
+            label: `${drive.name || drive.driveType} / ${drive.webUrl || drive.id}`,
+            value: drive.id
+        }));
+    }
+};
 ```
 
 ---
