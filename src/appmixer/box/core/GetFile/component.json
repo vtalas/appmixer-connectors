@@ -58,7 +58,7 @@
                     }
                 },
                 {
-                    "label": "File ID",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"

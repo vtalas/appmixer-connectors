@@ -58,7 +58,7 @@
                     }
                 },
                 {
-                    "label": "Folder ID",
+                    "label": "ID",
                     "value": "id",
                     "schema": {
                         "type": "string"

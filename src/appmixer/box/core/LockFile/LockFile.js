@@ -25,6 +25,9 @@ module.exports = {
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`
             },
+            params: {
+                fields: 'id,type,name,lock,file_version,created_at,modified_at,modified_by'
+            },
             data: lockData
         });
 
