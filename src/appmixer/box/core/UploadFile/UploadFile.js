@@ -46,16 +46,23 @@ module.exports = {
         });
 
         // https://developer.box.com/reference/post-files-content/
-        const { data } = await context.httpRequest({
-            method: 'POST',
-            url: 'https://upload.box.com/api/2.0/files/content',
-            headers: {
-                'Authorization': `Bearer ${context.auth.accessToken}`,
-                ...form.getHeaders()
-            },
-            data: form
-        });
+        try {
+            const { data } = await context.httpRequest({
+                method: 'POST',
+                url: 'https://upload.box.com/api/2.0/files/content',
+                headers: {
+                    'Authorization': `Bearer ${context.auth.accessToken}`,
+                    ...form.getHeaders()
+                },
+                data: form
+            });
 
-        return context.sendJson(data, 'out');
+            return context.sendJson(data, 'out');
+        } catch (error) {
+            if (error.statusCode === 409) {
+                throw new context.CancelError(`A file named "${fileName}" already exists in the target folder.`);
+            }
+            throw error;
+        }
     }
 };

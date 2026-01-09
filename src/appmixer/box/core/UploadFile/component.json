@@ -1,6 +1,6 @@
 {
     "name": "appmixer.box.core.UploadFile",
-    "description": "Upload a file to a specified folder in Box. Maximum file size is 50MB",
+    "description": "Upload a file to a specified folder in Box. Maximum file size is 50MB. If a file with the same name already exists in the target folder, a 409 Conflict error will be thrown.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
