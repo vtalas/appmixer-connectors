@@ -55,7 +55,7 @@ module.exports = {
             fileId: savedFile.fileId,
             fileName,
             contentType,
-            size: savedFile.size
+            size: savedFile.length
         }, 'out');
     }
 };
