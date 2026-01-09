@@ -1,6 +1,4 @@
 {
-    "name": "E2E Box - folder-crud",
-    "description": "End-to-end test for Box connector - tests folder CRUD operations and file retrieval",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -12,8 +10,8 @@
         },
         "create-folder": {
             "type": "appmixer.box.core.CreateFolder",
-            "x": 300,
-            "y": 200,
+            "x": 304,
+            "y": 208,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -40,9 +38,9 @@
                 }
             }
         },
-        "get-file": {
-            "type": "appmixer.box.core.GetFile",
-            "x": 500,
+        "assert-folder-created": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 700,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -59,44 +57,13 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "fileId": {
-                                        "var-1": {
-                                            "variable": "$.create-folder.out.id",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "fileId": ""
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "assert-folder-created": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 700,
-            "y": 200,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "get-file": [
-                        "out"
-                    ]
-                }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "get-file": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
                                     "expression": {
-                                        "folder-check": {
-                                            "variable": "$.get-file.out.type",
+                                        "type-check": {
+                                            "variable": "$.create-folder.out.type",
+                                            "functions": []
+                                        },
+                                        "name-check": {
+                                            "variable": "$.create-folder.out.name",
                                             "functions": []
                                         }
                                     }
@@ -105,9 +72,14 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "type-check",
                                                 "assertion": "equal",
                                                 "expected": "folder"
+                                            },
+                                            {
+                                                "field": "name-check",
+                                                "assertion": "equal",
+                                                "expected": "E2E Test Folder"
                                             }
                                         ]
                                     }
@@ -118,27 +90,14 @@
                 }
             }
         },
-        "before-all": {
-            "type": "appmixer.utils.test.BeforeAll",
-            "x": 900,
-            "y": 200,
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1104,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
                     "assert-folder-created": [
-                        "out"
-                    ]
-                }
-            }
-        },
-        "after-all": {
-            "type": "appmixer.utils.test.AfterAll",
-            "x": 1100,
-            "y": 200,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "before-all": [
                         "out"
                     ]
                 }
@@ -151,8 +110,8 @@
         },
         "delete-folder": {
             "type": "appmixer.box.core.DeleteFolder",
-            "x": 1300,
-            "y": 200,
+            "x": 1312,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -168,7 +127,7 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "folder_id": {
+                                    "folderId": {
                                         "var-1": {
                                             "variable": "$.create-folder.out.id",
                                             "functions": []
@@ -177,7 +136,7 @@
                                     "recursive": {}
                                 },
                                 "lambda": {
-                                    "folder_id": "",
+                                    "folderId": "",
                                     "recursive": true
                                 }
                             }
@@ -188,9 +147,9 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1500,
-            "y": 200,
-            "version": "1.0.0",
+            "x": 1520,
+            "y": 192,
+            "version": "1.0.1",
             "source": {
                 "in": {
                     "delete-folder": [
@@ -199,10 +158,7 @@
                 }
             },
             "config": {
-                "properties": {
-                    "successStoreId": "64f6f1f9193228000754082f",
-                    "failedStoreId": "64f6f1f0193228000754082e"
-                },
+                "properties": {},
                 "transform": {
                     "in": {
                         "delete-folder": {
@@ -219,7 +175,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "jirka@client.io",
+                                    "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Box - folder-crud",
                                     "result": ""
                                 }
@@ -229,5 +185,7 @@
                 }
             }
         }
-    }
+    },
+    "name": "E2E Box - folder-crud",
+    "type": "automation"
 }

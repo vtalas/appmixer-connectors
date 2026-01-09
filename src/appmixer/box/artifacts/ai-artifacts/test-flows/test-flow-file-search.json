@@ -1,6 +1,4 @@
 {
-    "name": "E2E Box - file-search",
-    "description": "End-to-end test for Box connector - tests file upload, search, and deletion",
     "flow": {
         "start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -286,7 +284,7 @@
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 1300,
             "y": 250,
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "in": {
                     "after-all": [
@@ -295,10 +293,7 @@
                 }
             },
             "config": {
-                "properties": {
-                    "successStoreId": "64f6f1f9193228000754082f",
-                    "failedStoreId": "64f6f1f0193228000754082e"
-                },
+                "properties": {},
                 "transform": {
                     "in": {
                         "after-all": {
@@ -315,7 +310,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "jirka@client.io",
+                                    "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Box - file-search",
                                     "result": ""
                                 }
@@ -325,5 +320,7 @@
                 }
             }
         }
-    }
+    },
+    "name": "E2E Box - file-search",
+    "type": "automation"
 }

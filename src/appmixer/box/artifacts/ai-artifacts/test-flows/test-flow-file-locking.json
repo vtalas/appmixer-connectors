@@ -1,6 +1,4 @@
 {
-    "name": "E2E Box - file-locking",
-    "description": "End-to-end test for Box connector - tests file locking functionality",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -312,7 +310,7 @@
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 1700,
             "y": 200,
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "in": {
                     "delete-file": [
@@ -321,10 +319,7 @@
                 }
             },
             "config": {
-                "properties": {
-                    "successStoreId": "64f6f1f9193228000754082f",
-                    "failedStoreId": "64f6f1f0193228000754082e"
-                },
+                "properties": {},
                 "transform": {
                     "in": {
                         "delete-file": {
@@ -341,7 +336,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "test@appmixer.com",
+                                    "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Box - file-locking",
                                     "result": ""
                                 }
@@ -351,5 +346,7 @@
                 }
             }
         }
-    }
+    },
+    "name": "E2E Box - file-locking",
+    "type": "automation"
 }
