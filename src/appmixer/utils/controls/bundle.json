@@ -1,7 +1,7 @@
 {
     "name": "appmixer.utils.controls",
     "engine": ">=6.0",
-    "version": "1.12.0",
+    "version": "1.12.1",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -98,6 +98,9 @@
         ],
         "1.12.0": [
             "Each: Added delay option to control timing between items."
+        ],
+        "1.12.1": [
+            "Set Variable: do not provide 'undefined' variable to the output."
         ]
     }
 }
