@@ -49,7 +49,7 @@
         "create-reminder": {
             "type": "appmixer.todoist.core.CreateReminder",
             "x": 400,
-            "y": 200,
+            "y": 208,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -74,7 +74,7 @@
                                     "type": {}
                                 },
                                 "lambda": {
-                                    "taskId": "",
+                                    "taskId": "iajsdlkfjsajdf",
                                     "type": "relative"
                                 }
                             }
@@ -85,8 +85,8 @@
         },
         "assert-create": {
             "type": "appmixer.utils.test.Assert",
-            "x": 550,
-            "y": 100,
+            "x": 496,
+            "y": 48,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -158,8 +158,8 @@
         },
         "assert-list": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
-            "y": 100,
+            "x": 672,
+            "y": 0,
             "version": "1.0.0",
             "source": {
                 "in": {
