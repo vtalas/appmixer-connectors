@@ -142,12 +142,12 @@
         },
         "get-comment": {
             "type": "appmixer.todoist.core.GetComment",
-            "x": 544,
+            "x": 720,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "before-all": [
+                    "create-comment": [
                         "out"
                     ]
                 }
@@ -155,7 +155,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-comment": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -177,7 +177,7 @@
         },
         "assert-get": {
             "type": "appmixer.utils.test.Assert",
-            "x": 720,
+            "x": 912,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -220,12 +220,12 @@
         },
         "list-comments": {
             "type": "appmixer.todoist.core.ListComments",
-            "x": 544,
+            "x": 720,
             "y": 464,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "before-all": [
+                    "create-comment": [
                         "out"
                     ]
                 }
@@ -233,7 +233,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-comment": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -252,7 +252,7 @@
         },
         "assert-list": {
             "type": "appmixer.utils.test.Assert",
-            "x": 736,
+            "x": 912,
             "y": 464,
             "version": "1.0.0",
             "source": {
@@ -295,12 +295,12 @@
         },
         "update-comment": {
             "type": "appmixer.todoist.core.UpdateComment",
-            "x": 544,
+            "x": 720,
             "y": 656,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "before-all": [
+                    "create-comment": [
                         "out"
                     ]
                 }
@@ -308,7 +308,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-comment": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -332,7 +332,7 @@
         },
         "assert-update": {
             "type": "appmixer.utils.test.Assert",
-            "x": 704,
+            "x": 912,
             "y": 656,
             "version": "1.0.0",
             "source": {

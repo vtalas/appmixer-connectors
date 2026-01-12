@@ -20,20 +20,16 @@
                 "type": "object",
                 "properties": {
                     "name": {
-                        "type": "string",
-                        "title": "Name"
+                        "type": "string"
                     },
                     "order": {
-                        "type": "integer",
-                        "title": "Order"
+                        "type": "integer"
                     },
                     "color": {
-                        "type": "string",
-                        "title": "Color"
+                        "type": "string"
                     },
                     "isFavorite": {
-                        "type": "boolean",
-                        "title": "Is Favorite"
+                        "type": "boolean"
                     }
                 },
                 "required": [
