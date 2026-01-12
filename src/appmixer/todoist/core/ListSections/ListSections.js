@@ -21,7 +21,7 @@ module.exports = {
 
         if (context.properties.generateOutputPortOptions) {
             return context.sendJson(
-                lib.getOutputPortSchema(schema, outputType || 'array'),
+                lib.getOutputPortSchema(schema, outputType || 'array', 'Sections'),
                 'out'
             );
         }

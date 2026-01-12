@@ -35,7 +35,7 @@ module.exports = {
         const { projectId, sectionId, labelId, filter, lang, ids, outputType } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return context.sendJson(lib.getOutputPortSchema(taskSchema, outputType || 'array'), 'out');
+            return context.sendJson(lib.getOutputPortSchema(taskSchema, outputType || 'array', 'Tasks'), 'out');
         }
 
         const params = {};
