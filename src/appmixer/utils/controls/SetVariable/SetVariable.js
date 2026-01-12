@@ -46,7 +46,7 @@ module.exports = {
             if (name) {
                 options.push({
                     label: name,
-                    value: variable[type],
+                    value: name,
                     type
                 });
             }
