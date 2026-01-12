@@ -19,7 +19,7 @@ module.exports = {
         // Handle dynamic output port options generation
         if (context.properties.generateOutputPortOptions) {
             return context.sendJson(
-                lib.getOutputPortSchema(labelSchema, outputType || 'array'),
+                lib.getOutputPortSchema(labelSchema, outputType || 'array', 'Labels'),
                 'out'
             );
         }

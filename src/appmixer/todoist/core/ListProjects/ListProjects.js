@@ -26,7 +26,7 @@ module.exports = {
 
         // Handle dynamic output port generation
         if (context.properties.generateOutputPortOptions) {
-            const options = lib.getOutputPortSchema(schema, outputType);
+            const options = lib.getOutputPortSchema(schema, outputType, 'Projects');
             return context.sendJson(options, 'out');
         }
 

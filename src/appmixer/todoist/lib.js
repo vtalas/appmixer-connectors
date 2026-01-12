@@ -89,7 +89,7 @@ module.exports = {
         return ports.filter(port => !portsToSkip.includes(port.value));
     },
 
-    async sendArrayOutput({ context, outputType = 'first', records = [], filesInfo }) {
+    async sendArrayOutput({ context, outputType = 'first', records = [], filesInfo, label }) {
 
         if (outputType === 'first') {
             if (records.length > 0) {
@@ -111,7 +111,7 @@ module.exports = {
         }
     },
 
-    getOutputPortSchema(schema, outputType) {
+    getOutputPortSchema(schema, outputType, label) {
 
         if (outputType === 'first' || outputType === 'object') {
             const options = Object.keys(schema)
@@ -134,7 +134,7 @@ module.exports = {
 
         if (outputType === 'array') {
             return [{
-                label: 'Projects',
+                label: label || 'Records',
                 value: 'records',
                 schema: {
                     type: 'array',

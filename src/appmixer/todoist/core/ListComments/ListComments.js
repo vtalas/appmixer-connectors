@@ -23,7 +23,7 @@ module.exports = {
         const { taskId, projectId, outputType } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return context.sendJson(lib.getOutputPortSchema(commentSchema, outputType || 'array'), 'out');
+            return context.sendJson(lib.getOutputPortSchema(commentSchema, outputType || 'array', 'Comments'), 'out');
         }
 
         if (!taskId && !projectId) {
