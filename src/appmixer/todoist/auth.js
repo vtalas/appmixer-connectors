@@ -12,7 +12,7 @@ module.exports = {
 
             authUrl: 'https://todoist.com/oauth/authorize',
 
-            tokenUrl: 'https://todoist.com/oauth/access_token',
+            requestAccessToken: 'https://todoist.com/oauth/access_token',
 
             requestProfileInfo: {
                 method: 'GET',
@@ -28,7 +28,7 @@ module.exports = {
 
             accountNameFromProfileInfo: 'user.full_name',
 
-            validate: {
+            validateAccessToken: {
                 method: 'GET',
                 url: 'https://api.todoist.com/rest/v2/projects',
                 headers: {
