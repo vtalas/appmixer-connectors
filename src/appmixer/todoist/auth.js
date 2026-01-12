@@ -19,15 +19,17 @@ module.exports = {
             requestProfileInfo: async (context) => {
 
                 const response = await context.httpRequest({
-                    method: 'GET',
-                    url: 'https://api.todoist.com/rest/v2/user',
+                    method: 'POST',
+                    url: 'https://api.todoist.com/sync/v9/sync',
                     headers: {
-                        'Authorization': `Bearer ${context.accessToken}`,
-                        'Content-Type': 'application/json'
+                        'Authorization': `Bearer ${context.accessToken}`
+                    },
+                    data:  {
+                        resource_types: ['user']
                     }
                 });
 
-                return response.data;
+                return response?.data.user;
             },
 
             validateAccessToken: async (context) => {
