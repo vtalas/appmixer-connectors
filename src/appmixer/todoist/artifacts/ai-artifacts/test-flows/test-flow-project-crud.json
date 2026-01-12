@@ -1,6 +1,4 @@
 {
-    "name": "E2E Todoist - project-crud",
-    "description": "End-to-end test for Todoist connector - tests project CRUD operations (Create, Get, List, Update, Delete)",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -388,7 +386,7 @@
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 1500,
             "y": 200,
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "in": {
                     "delete-project": [
@@ -397,10 +395,7 @@
                 }
             },
             "config": {
-                "properties": {
-                    "successStoreId": "64f6f1f9193228000754082f",
-                    "failedStoreId": "64f6f1f0193228000754082e"
-                },
+                "properties": {},
                 "transform": {
                     "in": {
                         "delete-project": {
@@ -417,7 +412,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "test@appmixer.com",
+                                    "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Todoist - project-crud",
                                     "result": ""
                                 }
@@ -427,5 +422,7 @@
                 }
             }
         }
-    }
+    },
+    "name": "E2E Todoist - project-crud",
+    "type": "automation"
 }
