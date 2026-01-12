@@ -1,0 +1,68 @@
+{
+    "name": "appmixer.todoist.core.GetTask",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Get a task by ID.",
+    "auth": {
+        "service": "appmixer:todoist"
+    },
+    "quota": {
+        "manager": "appmixer:todoist",
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "taskId": { "type": "string" }
+                },
+                "required": ["taskId"]
+            },
+            "inspector": {
+                "inputs": {
+                    "taskId": {
+                        "type": "text",
+                        "label": "Task ID",
+                        "tooltip": "The ID of the task to retrieve.",
+                        "index": 1
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "options": [
+                { "label": "ID", "value": "id" },
+                { "label": "Assigner ID", "value": "assigner_id" },
+                { "label": "Assignee ID", "value": "assignee_id" },
+                { "label": "Project ID", "value": "project_id" },
+                { "label": "Section ID", "value": "section_id" },
+                { "label": "Parent ID", "value": "parent_id" },
+                { "label": "Order", "value": "order" },
+                { "label": "Content", "value": "content" },
+                { "label": "Description", "value": "description" },
+                { "label": "Is Completed", "value": "is_completed" },
+                { "label": "Labels", "value": "labels" },
+                { "label": "Priority", "value": "priority" },
+                { "label": "Comment Count", "value": "comment_count" },
+                { "label": "Creator ID", "value": "creator_id" },
+                { "label": "Created At", "value": "created_at" },
+                { "label": "Due Date", "value": "due.date" },
+                { "label": "Due String", "value": "due.string" },
+                { "label": "Due Is Recurring", "value": "due.is_recurring" },
+                { "label": "Due Datetime", "value": "due.datetime" },
+                { "label": "Due Timezone", "value": "due.timezone" },
+                { "label": "Duration Amount", "value": "duration.amount" },
+                { "label": "Duration Unit", "value": "duration.unit" },
+                { "label": "URL", "value": "url" }
+            ]
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PGcgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI0U0NDMzMiIgZD0iTTUyLjUgMGgtNDVBNy41MiA3LjUyIDAgMCAwIDAgNy41djQ1QzAgNTYuNjI1IDMuMzc0IDYwIDcuNSA2MGg0NWM0LjEyNiAwIDcuNS0zLjM3NSA3LjUtNy41di00NUM2MCAzLjM3NSA1Ni42MjYgMCA1Mi41IDAiLz48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMTIuMTIxIDI5LjU4MmMxLS42NzMgMjIuNDY5LTE1LjA1NSAyMi45Ni0xNS4zODguNDktLjMyOS41MTgtMS4zNDEtLjAzNi0xLjcwNy0uNTUtLjM2NS0xLjU5My0xLjA1Ni0xLjk4LTEuMzIxYTEuNTkgMS41OSAwIDAgMC0xLjc3MS4wMjVBMjYzOTEgMjYzOTEgMCAwIDEgMTIuMDYyIDI0LjA2Yy0uNzM3LjQ4Ni0xLjY0Mi40OTQtMi4zNzMgMEwwIDE3LjUwN3Y1LjU3YzIuMzU2IDEuNjAxIDguMjIyIDUuNTc2IDkuNjQyIDYuNTEyLjg0OC41NTUgMS42Ni41NDMgMi40ODEtLjAwNyIvPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMi4xMjEgMzkuMTI4YzEtLjY3MyAyMi40NjktMTUuMDU1IDIyLjk2LTE1LjM4OS40OS0uMzI5LjUxOC0xLjM0LS4wMzYtMS43MDdhMjM0IDIzNCAwIDAgMS0xLjk4LTEuMzIgMS41OSAxLjU5IDAgMCAwLTEuNzcxLjAyNGMtLjI3NS4xODUtMTguNjIgMTIuNDY3LTE5LjIzMiAxMi44Ny0uNzM3LjQ4Ni0xLjY0Mi40OTQtMi4zNzMgMEwwIDI3LjA1MnY1LjU3YzIuMzU2IDEuNjAyIDguMjIyIDUuNTc2IDkuNjQyIDYuNTEyLjg0OC41NTYgMS42Ni41NDMgMi40ODEtLjAwNiIvPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMi4xMjEgNDguNjc0YzEtLjY3MyAyMi40NjktMTUuMDU2IDIyLjk2LTE1LjM5LjQ5LS4zMjguNTE4LTEuMzQtLjAzNi0xLjcwNy0uNTUtLjM2My0xLjU5My0xLjA1NS0xLjk4LTEuMzJhMS41OSAxLjU5IDAgMCAwLTEuNzcxLjAyNGMtLjI3NS4xODUtMTguNjIgMTIuNDY3LTE5LjIzMiAxMi44Ny0uNzM3LjQ4Ni0xLjY0Mi40OTUtMi4zNzMgMEwwIDM2LjU5OHY1LjU3MWMyLjM1NiAxLjYwMSA4LjIyMiA1LjU3NiA5LjY0MiA2LjUxMi44NDguNTU1IDEuNjYuNTQzIDIuNDgxLS4wMDYiLz48L2c+PC9zdmc+"
+}
