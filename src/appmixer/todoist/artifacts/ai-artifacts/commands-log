@@ -24,6 +24,7 @@ appmixer test component src/appmixer/todoist/core/CreateComment/ -i '{"in":{"con
 appmixer test component src/appmixer/todoist/core/CreateComment/ -i '{"in":{"content":"This is a test comment on a project","projectId":"2365436060"}}'
 appmixer test component src/appmixer/todoist/core/UpdateTask/ -i '{"in":{"taskId":"9907454175","content":"Updated Task Content - Test","description":"Updated description for the task","priority":3,"labels":"work, important"}}'
 appmixer test component src/appmixer/todoist/core/UpdateLabel/ -i '{"in":{"labelId":"2182738508","name":"Updated Test Label","order":5,"color":"green","isFavorite":false}}'
+appmixer test component src/appmixer/todoist/core/UpdateLabel/ -i '{"in":{"labelId":"2182743872","name":"Updated Test Label","order":5,"color":"green","isFavorite":false}}'
 appmixer test component src/appmixer/todoist/core/UpdateLabel/ -i '{"in":{"labelId":"2182738508","name":"Updated Test Label v2","order":6,"color":"orange","isFavorite":true}}'
 appmixer test component src/appmixer/todoist/core/UpdateLabel/ -i '{"in":{"labelId":"2182738508","name":"Final Test Label","order":7,"color":"blue","isFavorite":false}}'
 appmixer test component src/appmixer/todoist/core/UpdateLabel/ -i '{"in":{"labelId":"2182738508","name":"Schema Test Label","order":8,"color":"violet","isFavorite":true}}'

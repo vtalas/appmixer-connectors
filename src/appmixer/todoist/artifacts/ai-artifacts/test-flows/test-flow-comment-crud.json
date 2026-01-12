@@ -2,16 +2,16 @@
     "flow": {
         "start": {
             "type": "appmixer.utils.controls.OnStart",
-            "x": -48,
-            "y": 336,
+            "x": -352,
+            "y": 128,
             "source": {},
             "version": "1.0.0",
             "config": {}
         },
         "set-variables": {
             "type": "appmixer.utils.controls.SetVariable",
-            "x": 144,
-            "y": 336,
+            "x": -160,
+            "y": 128,
             "source": {
                 "in": {
                     "start": [
@@ -53,8 +53,8 @@
         },
         "before-all": {
             "type": "appmixer.utils.test.BeforeAll",
-            "x": 320,
-            "y": 336,
+            "x": 16,
+            "y": 128,
             "source": {
                 "in": {
                     "set-variables": [
@@ -84,12 +84,17 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "content": {},
-                                    "projectId": {}
+                                    "projectId": {},
+                                    "content": {
+                                        "ef10b03f-0a85-4d7d-853d-e3274d9a8293": {
+                                            "variable": "$.set-variables.out.E2E Test Comment",
+                                            "functions": []
+                                        }
+                                    }
                                 },
                                 "lambda": {
-                                    "content": "E2E Test Comment",
-                                    "projectId": "2203306141"
+                                    "projectId": "2365437921",
+                                    "content": "{{{ef10b03f-0a85-4d7d-853d-e3274d9a8293}}}"
                                 }
                             }
                         }
@@ -99,7 +104,7 @@
         },
         "assert-create": {
             "type": "appmixer.utils.test.Assert",
-            "x": 720,
+            "x": 896,
             "y": 128,
             "version": "1.0.0",
             "source": {
@@ -160,14 +165,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "commentId": {
-                                        "var-1": {
+                                        "bff7238c-64d0-4938-996e-2e2fc8707eec": {
                                             "variable": "$.create-comment.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "commentId": ""
+                                    "commentId": "{{{bff7238c-64d0-4938-996e-2e2fc8707eec}}}"
                                 }
                             }
                         }
@@ -177,7 +182,7 @@
         },
         "assert-get": {
             "type": "appmixer.utils.test.Assert",
-            "x": 912,
+            "x": 896,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -237,12 +242,12 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "projectId": {},
-                                    "outputType": {}
+                                    "outputType": {},
+                                    "projectId": {}
                                 },
                                 "lambda": {
-                                    "projectId": "2203306141",
-                                    "outputType": "array"
+                                    "outputType": "array",
+                                    "projectId": "2365436060"
                                 }
                             }
                         }
@@ -252,8 +257,8 @@
         },
         "assert-list": {
             "type": "appmixer.utils.test.Assert",
-            "x": 912,
-            "y": 464,
+            "x": 896,
+            "y": 480,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -313,7 +318,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "commentId": {
-                                        "var-1": {
+                                        "cf7d86ea-a170-4a4b-92f4-bcb851a1cb5d": {
                                             "variable": "$.create-comment.out.id",
                                             "functions": []
                                         }
@@ -321,7 +326,7 @@
                                     "content": {}
                                 },
                                 "lambda": {
-                                    "commentId": "",
+                                    "commentId": "{{{cf7d86ea-a170-4a4b-92f4-bcb851a1cb5d}}}",
                                     "content": "E2E Test Comment Updated"
                                 }
                             }
@@ -332,7 +337,7 @@
         },
         "assert-update": {
             "type": "appmixer.utils.test.Assert",
-            "x": 912,
+            "x": 896,
             "y": 656,
             "version": "1.0.0",
             "source": {
@@ -375,7 +380,7 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1098,
+            "x": 1216,
             "y": 368,
             "version": "1.0.0",
             "source": {
@@ -402,7 +407,7 @@
         },
         "delete-comment": {
             "type": "appmixer.todoist.core.DeleteComment",
-            "x": 1248,
+            "x": 1418,
             "y": 368,
             "version": "1.0.0",
             "source": {
@@ -437,7 +442,7 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1398,
+            "x": 1568,
             "y": 368,
             "version": "1.0.1",
             "source": {

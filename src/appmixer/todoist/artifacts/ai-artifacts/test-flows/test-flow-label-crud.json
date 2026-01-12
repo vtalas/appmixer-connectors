@@ -2,67 +2,19 @@
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
-            "x": 100,
-            "y": 300,
+            "x": -80,
+            "y": 304,
             "source": {},
             "version": "1.0.0",
             "config": {}
         },
-        "set-variable": {
-            "type": "appmixer.utils.controls.SetVariable",
-            "x": 250,
-            "y": 300,
-            "source": {
-                "in": {
-                    "on-start": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "config": {
-                "transform": {
-                    "in": {
-                        "on-start": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "variables": {}
-                                },
-                                "lambda": {
-                                    "variables": {
-                                        "ADD": [
-                                            {
-                                                "type": "text",
-                                                "name": "labelName",
-                                                "text": "E2E Test Label"
-                                            },
-                                            {
-                                                "type": "text",
-                                                "name": "labelColor",
-                                                "text": "blue"
-                                            },
-                                            {
-                                                "type": "text",
-                                                "name": "updatedLabelName",
-                                                "text": "E2E Test Label Updated"
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "before-all": {
             "type": "appmixer.utils.test.BeforeAll",
-            "x": 400,
-            "y": 300,
+            "x": 320,
+            "y": 304,
             "source": {
                 "in": {
-                    "set-variable": [
+                    "fe2ff4ae-9b09-4c6c-bf93-484bc307a942": [
                         "out"
                     ]
                 }
@@ -70,98 +22,13 @@
             "version": "1.0.0",
             "config": {}
         },
-        "create-label": {
-            "type": "appmixer.todoist.core.CreateLabel",
-            "x": 550,
-            "y": 300,
-            "source": {
-                "in": {
-                    "before-all": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "config": {
-                "transform": {
-                    "in": {
-                        "before-all": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "name": {
-                                        "var-name": {
-                                            "variable": "$.variables.labelName",
-                                            "functions": []
-                                        }
-                                    },
-                                    "color": {
-                                        "var-color": {
-                                            "variable": "$.variables.labelColor",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "name": "",
-                                    "color": ""
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "assert-create": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 700,
-            "y": 150,
-            "source": {
-                "in": {
-                    "create-label": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "config": {
-                "transform": {
-                    "in": {
-                        "create-label": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "expression": {
-                                        "check-id": {
-                                            "variable": "$.create-label.out.id",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "expression": {
-                                        "AND": [
-                                            {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "get-label": {
             "type": "appmixer.todoist.core.GetLabel",
-            "x": 700,
-            "y": 300,
+            "x": 800,
+            "y": 304,
             "source": {
                 "in": {
-                    "create-label": [
+                    "6600c34d-bc14-467a-a99b-f7b087bb5431": [
                         "out"
                     ]
                 }
@@ -170,19 +37,20 @@
             "config": {
                 "transform": {
                     "in": {
-                        "create-label": {
+                        "create-label": {},
+                        "6600c34d-bc14-467a-a99b-f7b087bb5431": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "labelId": {
-                                        "var-id": {
-                                            "variable": "$.create-label.out.id",
+                                        "50d4c4fc-dea5-4b55-b49f-8b76eb81d0fe": {
+                                            "variable": "$.6600c34d-bc14-467a-a99b-f7b087bb5431.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "labelId": ""
+                                    "labelId": "{{{50d4c4fc-dea5-4b55-b49f-8b76eb81d0fe}}}"
                                 }
                             }
                         }
@@ -192,8 +60,8 @@
         },
         "assert-get": {
             "type": "appmixer.utils.test.Assert",
-            "x": 850,
-            "y": 150,
+            "x": 992,
+            "y": 80,
             "source": {
                 "in": {
                     "get-label": [
@@ -213,6 +81,14 @@
                                         "check-name": {
                                             "variable": "$.get-label.out.name",
                                             "functions": []
+                                        },
+                                        "9d1b8cfb-1e3e-4c17-a082-42c0ea9066ad": {
+                                            "variable": "$.get-label.out.name",
+                                            "functions": []
+                                        },
+                                        "a84e8123-cc97-4bde-9ea1-c888a7ed5a27": {
+                                            "variable": "$.fe2ff4ae-9b09-4c6c-bf93-484bc307a942.out.labelName",
+                                            "functions": []
                                         }
                                     }
                                 },
@@ -220,9 +96,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Label"
+                                                "field": "{{{9d1b8cfb-1e3e-4c17-a082-42c0ea9066ad}}}",
+                                                "expected": "{{{a84e8123-cc97-4bde-9ea1-c888a7ed5a27}}}"
                                             }
                                         ]
                                     }
@@ -235,11 +111,11 @@
         },
         "list-labels": {
             "type": "appmixer.todoist.core.ListLabels",
-            "x": 700,
-            "y": 450,
+            "x": 752,
+            "y": 560,
             "source": {
                 "in": {
-                    "create-label": [
+                    "before-all": [
                         "out"
                     ]
                 }
@@ -248,7 +124,8 @@
             "config": {
                 "transform": {
                     "in": {
-                        "create-label": {
+                        "create-label": {},
+                        "before-all": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -263,53 +140,10 @@
                 }
             }
         },
-        "assert-list": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 850,
-            "y": 450,
-            "source": {
-                "in": {
-                    "list-labels": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "config": {
-                "transform": {
-                    "in": {
-                        "list-labels": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "expression": {
-                                        "check-result": {
-                                            "variable": "$.list-labels.out.result",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "expression": {
-                                        "AND": [
-                                            {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "update-label": {
             "type": "appmixer.todoist.core.UpdateLabel",
-            "x": 1000,
-            "y": 300,
+            "x": 1008,
+            "y": 304,
             "source": {
                 "in": {
                     "get-label": [
@@ -325,29 +159,24 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
+                                    "color": {},
                                     "labelId": {
-                                        "var-id": {
-                                            "variable": "$.create-label.out.id",
+                                        "c34987db-b483-4af4-9e14-ea2443bbc4ca": {
+                                            "variable": "$.6600c34d-bc14-467a-a99b-f7b087bb5431.out.id",
                                             "functions": []
                                         }
                                     },
                                     "name": {
-                                        "var-updated-name": {
-                                            "variable": "$.variables.updatedLabelName",
-                                            "functions": []
-                                        }
-                                    },
-                                    "color": {
-                                        "var-color": {
-                                            "variable": "$.variables.labelColor",
+                                        "f2866cd9-4df1-46c8-804a-45c518d451d0": {
+                                            "variable": "$.fe2ff4ae-9b09-4c6c-bf93-484bc307a942.out.testLabelUpdated",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "labelId": "",
-                                    "name": "",
-                                    "color": ""
+                                    "color": "green",
+                                    "labelId": "{{{c34987db-b483-4af4-9e14-ea2443bbc4ca}}}",
+                                    "name": "{{{f2866cd9-4df1-46c8-804a-45c518d451d0}}}"
                                 }
                             }
                         }
@@ -357,11 +186,212 @@
         },
         "assert-update": {
             "type": "appmixer.utils.test.Assert",
-            "x": 1150,
-            "y": 300,
+            "x": 1376,
+            "y": 304,
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "delete-label": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "check-name": {
+                                            "variable": "$.update-label.out.name",
+                                            "functions": []
+                                        },
+                                        "b01f21bd-9b47-467b-8920-22f93e6f004e": {
+                                            "variable": "$.update-label.out.color",
+                                            "functions": []
+                                        },
+                                        "da293654-8864-4c9b-9d8a-e9f11bdcc250": {
+                                            "variable": "$.fe2ff4ae-9b09-4c6c-bf93-484bc307a942.out.testLabelUpdated",
+                                            "functions": []
+                                        },
+                                        "7cbf6dc3-3192-436f-8202-e0a6f2fc06e1": {
+                                            "variable": "$.update-label.out.name",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "expected": "{{{da293654-8864-4c9b-9d8a-e9f11bdcc250}}}",
+                                                "assertion": "equal",
+                                                "field": "{{{7cbf6dc3-3192-436f-8202-e0a6f2fc06e1}}}"
+                                            },
+                                            {
+                                                "expected": "green",
+                                                "assertion": "equal",
+                                                "field": "{{{b01f21bd-9b47-467b-8920-22f93e6f004e}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "source": {
+                "in": {
+                    "delete-label": [
+                        "out"
+                    ]
+                }
+            }
+        },
+        "delete-label": {
+            "type": "appmixer.todoist.core.GetLabel",
+            "x": 1184,
+            "y": 304,
+            "version": "1.0.0",
             "source": {
                 "in": {
                     "update-label": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "update-label": {
+                            "out": {
+                                "lambda": {
+                                    "labelId": "{{{0659a3dd-2e2e-4aad-9025-512281eb86bd}}}"
+                                },
+                                "modifiers": {
+                                    "labelId": {
+                                        "0659a3dd-2e2e-4aad-9025-512281eb86bd": {
+                                            "variable": "$.6600c34d-bc14-467a-a99b-f7b087bb5431.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 2080,
+            "y": 304,
+            "source": {
+                "in": {
+                    "assert-get": [
+                        "out"
+                    ],
+                    "assert-update": [
+                        "out"
+                    ],
+                    "836074f2-54ce-4444-84ac-7479fac2ce36": [
+                        "out"
+                    ],
+                    "853c53c6-e040-465e-8a4f-847798f60662": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 2480,
+            "y": 304,
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.1",
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "910c6174-cabd-47a8-a515-12888f07a838": {},
+                        "e7117bcd-77de-4efe-a737-9087bc57b424": {},
+                        "after-all": {
+                            "out": {
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E Todoist - label-crud",
+                                    "result": "{{{72e65091-ea9e-41d8-b606-0e2d55ea09e0}}}"
+                                },
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "72e65091-ea9e-41d8-b606-0e2d55ea09e0": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "6600c34d-bc14-467a-a99b-f7b087bb5431": {
+            "type": "appmixer.todoist.core.CreateLabel",
+            "x": 624,
+            "y": 304,
+            "source": {
+                "in": {
+                    "before-all": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "before-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "color": {},
+                                    "isFavorite": {},
+                                    "name": {
+                                        "6f8030f3-ac11-4d73-ba83-688ce5dc5698": {
+                                            "variable": "$.fe2ff4ae-9b09-4c6c-bf93-484bc307a942.out.labelName",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "color": "red",
+                                    "isFavorite": false,
+                                    "name": "{{{6f8030f3-ac11-4d73-ba83-688ce5dc5698}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "836074f2-54ce-4444-84ac-7479fac2ce36": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1040,
+            "y": 560,
+            "source": {
+                "in": {
+                    "list-labels": [
                         "out"
                     ]
                 }
@@ -393,39 +423,27 @@
                                     }
                                 }
                             }
-                        }
-                    }
-                }
-            }
-        },
-        "delete-label": {
-            "type": "appmixer.todoist.core.DeleteLabel",
-            "x": 1300,
-            "y": 300,
-            "source": {
-                "in": {
-                    "assert-update": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "config": {
-                "transform": {
-                    "in": {
-                        "assert-update": {
+                        },
+                        "list-labels": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "labelId": {
-                                        "var-id": {
-                                            "variable": "$.create-label.out.id",
+                                    "expression": {
+                                        "d60e8705-d45d-4147-989b-1ac5a7a1d74b": {
+                                            "variable": "$.list-labels.out.records",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "labelId": ""
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{d60e8705-d45d-4147-989b-1ac5a7a1d74b}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -433,57 +451,112 @@
                 }
             }
         },
-        "after-all": {
-            "type": "appmixer.utils.test.AfterAll",
-            "x": 1450,
-            "y": 300,
+        "853c53c6-e040-465e-8a4f-847798f60662": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 848,
+            "y": 0,
             "source": {
                 "in": {
-                    "delete-label": [
+                    "6600c34d-bc14-467a-a99b-f7b087bb5431": [
                         "out"
                     ]
                 }
             },
             "version": "1.0.0",
             "config": {
-                "properties": {
-                    "timeout": 30
-                }
-            }
-        },
-        "process-results": {
-            "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1600,
-            "y": 300,
-            "source": {
-                "in": {
-                    "after-all": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.1",
-            "config": {
-                "properties": {},
                 "transform": {
                     "in": {
-                        "after-all": {
+                        "6600c34d-bc14-467a-a99b-f7b087bb5431": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "recipients": {},
-                                    "testCase": {},
-                                    "result": {
-                                        "result-var": {
-                                            "variable": "$.after-all.out",
+                                    "expression": {
+                                        "65bdf268-30a1-49fa-972b-f14f917c46be": {
+                                            "variable": "$.6600c34d-bc14-467a-a99b-f7b087bb5431.out.name",
+                                            "functions": []
+                                        },
+                                        "116df5d0-69d8-496a-98c1-21091e93136a": {
+                                            "variable": "$.fe2ff4ae-9b09-4c6c-bf93-484bc307a942.out.labelName",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "test@appmixer.ai",
-                                    "testCase": "E2E Todoist - label-crud",
-                                    "result": "{{{result-var}}}"
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "equal",
+                                                "field": "{{{65bdf268-30a1-49fa-972b-f14f917c46be}}}",
+                                                "expected": "{{{116df5d0-69d8-496a-98c1-21091e93136a}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "fe2ff4ae-9b09-4c6c-bf93-484bc307a942": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 80,
+            "y": 304,
+            "source": {
+                "in": {
+                    "on-start": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {
+                                        "00dd189d-0036-496b-8990-073c39be1017": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_now"
+                                                }
+                                            ]
+                                        },
+                                        "2469fa9f-d914-466c-8d65-0455c69b43c4": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_timestamp"
+                                                }
+                                            ]
+                                        },
+                                        "8c1f42e7-d567-4636-97ef-01638faa297b": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_timestamp"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "labelName",
+                                                "toggle": false,
+                                                "text": "E2E Test Label{{{2469fa9f-d914-466c-8d65-0455c69b43c4}}}"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "testLabelUpdated",
+                                                "text": "E2E Test Label updated{{{8c1f42e7-d567-4636-97ef-01638faa297b}}}"
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         }
