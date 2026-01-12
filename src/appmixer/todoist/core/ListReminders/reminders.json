@@ -1,0 +1,20 @@
+[
+  {
+    "due": {
+      "date": "2026-01-13T10:00:00",
+      "is_recurring": false,
+      "lang": "en",
+      "string": "2026-01-13 10:00",
+      "timezone": null
+    },
+    "id": "2718367750",
+    "is_deleted": false,
+    "item_id": "9907602558",
+    "minute_offset": 0,
+    "notify_uid": "57023438",
+    "sync_id": null,
+    "type": "relative",
+    "v2_id": "6fjhVmVwjfcjc8PF",
+    "v2_item_id": "6fjhVmRccPPh5wvF"
+  }
+]

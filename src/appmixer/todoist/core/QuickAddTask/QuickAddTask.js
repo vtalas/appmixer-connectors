@@ -11,15 +11,15 @@ module.exports = {
         }
 
         const params = {
-            text: text
+            content: text
         };
 
         if (note) {
-            params.note = note;
+            params.description = note;
         }
 
         if (reminder) {
-            params.reminder = reminder;
+            params.due_string = reminder;
         }
 
         if (autoReminder !== undefined) {

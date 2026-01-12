@@ -16,8 +16,8 @@ module.exports = {
                 return context.sendJson([], 'out');
             }
             // When used in flow, throw error normally
-            context.log({ stage: 'Error', err });
-            throw new Error(err);
+            context.log({ stage: 'Error', message: err.message, code: err.code });
+            throw err;
         }
     }
 };

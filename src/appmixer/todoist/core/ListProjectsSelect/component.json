@@ -13,6 +13,15 @@
             "userId": "{{userId}}"
         }
     },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {}
+            }
+        }
+    ],
     "outPorts": [
         {
             "name": "out"

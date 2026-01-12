@@ -14,16 +14,19 @@
             "userId": "{{userId}}"
         }
     },
-    "properties": {
-        "schema": {
-            "type": "object",
-            "properties": {
-                "projectId": {
-                    "type": "string"
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "projectId": {
+                        "type": "string"
+                    }
                 }
             }
         }
-    },
+    ],
     "outPorts": [
         {
             "name": "out"

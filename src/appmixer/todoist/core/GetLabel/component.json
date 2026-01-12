@@ -41,6 +41,31 @@
     "outPorts": [
         {
             "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "ID"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "color": {
+                        "type": "string",
+                        "title": "Color"
+                    },
+                    "order": {
+                        "type": "integer",
+                        "title": "Order"
+                    },
+                    "is_favorite": {
+                        "type": "boolean",
+                        "title": "Is Favorite"
+                    }
+                }
+            },
             "options": [
                 {
                     "label": "ID",

@@ -18,9 +18,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "projectId": { "type": "string" }
+                    "projectId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["projectId"]
+                "required": [
+                    "projectId"
+                ]
             },
             "inspector": {
                 "inputs": {

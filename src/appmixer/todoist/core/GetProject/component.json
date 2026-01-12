@@ -47,6 +47,62 @@
     "outPorts": [
         {
             "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "ID"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "color": {
+                        "type": "string",
+                        "title": "Color"
+                    },
+                    "parent_id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Parent ID"
+                    },
+                    "order": {
+                        "type": "integer",
+                        "title": "Order"
+                    },
+                    "comment_count": {
+                        "type": "integer",
+                        "title": "Comment Count"
+                    },
+                    "is_shared": {
+                        "type": "boolean",
+                        "title": "Is Shared"
+                    },
+                    "is_favorite": {
+                        "type": "boolean",
+                        "title": "Is Favorite"
+                    },
+                    "is_inbox_project": {
+                        "type": "boolean",
+                        "title": "Is Inbox Project"
+                    },
+                    "is_team_inbox": {
+                        "type": "boolean",
+                        "title": "Is Team Inbox"
+                    },
+                    "view_style": {
+                        "type": "string",
+                        "title": "View Style"
+                    },
+                    "url": {
+                        "type": "string",
+                        "title": "URL"
+                    }
+                }
+            },
             "options": [
                 {
                     "label": "ID",

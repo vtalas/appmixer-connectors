@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.ListLabelsSelect",
     "author": "Appmixer <info@appmixer.com>",
     "description": "List all labels for select dropdown.",
+    "version": "1.0.0",
     "private": true,
     "auth": {
         "service": "appmixer:todoist"
@@ -13,6 +14,15 @@
             "userId": "{{userId}}"
         }
     },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {}
+            }
+        }
+    ],
     "outPorts": [
         {
             "name": "out"

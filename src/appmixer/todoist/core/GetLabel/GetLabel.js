@@ -14,6 +14,7 @@ module.exports = {
 
         const label = await lib.apiRequest(context, `/labels/${labelId}`);
 
+        // The API returns lowercase field names, so we can return it directly
         return context.sendJson(label, 'out');
     }
 };
