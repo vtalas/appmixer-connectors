@@ -1,0 +1,363 @@
+{
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 100,
+            "y": 200,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 250,
+            "y": 200,
+            "source": {
+                "in": {
+                    "on-start": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "taskContent",
+                                                "text": "E2E Test Task"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "quickAddText",
+                                                "text": "E2E Quick Add Task tomorrow p1"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "before-all": {
+            "type": "appmixer.utils.test.BeforeAll",
+            "x": 400,
+            "y": 200,
+            "source": {
+                "in": {
+                    "set-variables": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {}
+        },
+        "create-task": {
+            "type": "appmixer.todoist.core.CreateTask",
+            "x": 550,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "before-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "before-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "content": {
+                                        "var-content": {
+                                            "variable": "$.set-variables.out.taskContent",
+                                            "functions": []
+                                        }
+                                    },
+                                    "priority": {}
+                                },
+                                "lambda": {
+                                    "content": "",
+                                    "priority": 2
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "quick-add-task": {
+            "type": "appmixer.todoist.core.QuickAddTask",
+            "x": 550,
+            "y": 300,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "before-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "before-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "text": {
+                                        "var-text": {
+                                            "variable": "$.set-variables.out.quickAddText",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "text": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-create-task": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 750,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-task": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-task": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "check-id": {
+                                            "variable": "$.create-task.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-quick-add-task": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 750,
+            "y": 300,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "quick-add-task": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "quick-add-task": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "check-content": {
+                                            "variable": "$.quick-add-task.out.content",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "move-task": {
+            "type": "appmixer.todoist.core.MoveTask",
+            "x": 900,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-create-task": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "assert-create-task": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "taskId": {
+                                        "var-id": {
+                                            "variable": "$.create-task.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "taskId": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-move-task": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1050,
+            "y": 100,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "move-task": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "move-task": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {}
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "",
+                                                "assertion": "notEmpty",
+                                                "expected": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1200,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-move-task": [
+                        "out"
+                    ],
+                    "assert-quick-add-task": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1350,
+            "y": 200,
+            "version": "1.0.1",
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E Todoist - task-advanced",
+                                    "result": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "name": "E2E Todoist - task-advanced",
+    "type": "automation"
+}
