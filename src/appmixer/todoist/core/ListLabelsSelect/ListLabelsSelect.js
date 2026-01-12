@@ -8,6 +8,12 @@ module.exports = {
 
         const labels = await lib.apiRequest(context, '/labels');
 
-        return context.sendJson(labels, 'out');
+        // Transform labels into select dropdown format
+        const options = labels.map(label => ({
+            label: label.name,
+            value: label.id
+        }));
+
+        return context.sendJson(options, 'out');
     }
 };

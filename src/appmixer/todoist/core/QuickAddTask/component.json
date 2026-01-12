@@ -1,7 +1,8 @@
 {
     "name": "appmixer.todoist.core.QuickAddTask",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Add a task using Todoist Quick Add syntax.",
+    "author": "Appmixer <info@appmixer.com>",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,12 +19,26 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "text": { "type": "string" },
-                    "note": { "type": "string" },
-                    "reminder": { "type": "string" },
-                    "autoReminder": { "type": "boolean" }
+                    "text": {
+                        "type": "string",
+                        "title": "Quick Add Text"
+                    },
+                    "note": {
+                        "type": "string",
+                        "title": "Note"
+                    },
+                    "reminder": {
+                        "type": "string",
+                        "title": "Reminder"
+                    },
+                    "autoReminder": {
+                        "type": "boolean",
+                        "title": "Auto Reminder"
+                    }
                 },
-                "required": ["text"]
+                "required": [
+                    "text"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -59,29 +74,98 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Assigner ID", "value": "assigner_id" },
-                { "label": "Assignee ID", "value": "assignee_id" },
-                { "label": "Project ID", "value": "project_id" },
-                { "label": "Section ID", "value": "section_id" },
-                { "label": "Parent ID", "value": "parent_id" },
-                { "label": "Order", "value": "order" },
-                { "label": "Content", "value": "content" },
-                { "label": "Description", "value": "description" },
-                { "label": "Is Completed", "value": "is_completed" },
-                { "label": "Labels", "value": "labels" },
-                { "label": "Priority", "value": "priority" },
-                { "label": "Comment Count", "value": "comment_count" },
-                { "label": "Creator ID", "value": "creator_id" },
-                { "label": "Created At", "value": "created_at" },
-                { "label": "Due Date", "value": "due.date" },
-                { "label": "Due String", "value": "due.string" },
-                { "label": "Due Is Recurring", "value": "due.is_recurring" },
-                { "label": "Due Datetime", "value": "due.datetime" },
-                { "label": "Due Timezone", "value": "due.timezone" },
-                { "label": "Duration Amount", "value": "duration.amount" },
-                { "label": "Duration Unit", "value": "duration.unit" },
-                { "label": "URL", "value": "url" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Assigner ID",
+                    "value": "assigner_id"
+                },
+                {
+                    "label": "Assignee ID",
+                    "value": "assignee_id"
+                },
+                {
+                    "label": "Project ID",
+                    "value": "project_id"
+                },
+                {
+                    "label": "Section ID",
+                    "value": "section_id"
+                },
+                {
+                    "label": "Parent ID",
+                    "value": "parent_id"
+                },
+                {
+                    "label": "Order",
+                    "value": "order"
+                },
+                {
+                    "label": "Content",
+                    "value": "content"
+                },
+                {
+                    "label": "Description",
+                    "value": "description"
+                },
+                {
+                    "label": "Is Completed",
+                    "value": "is_completed"
+                },
+                {
+                    "label": "Labels",
+                    "value": "labels"
+                },
+                {
+                    "label": "Priority",
+                    "value": "priority"
+                },
+                {
+                    "label": "Comment Count",
+                    "value": "comment_count"
+                },
+                {
+                    "label": "Creator ID",
+                    "value": "creator_id"
+                },
+                {
+                    "label": "Created At",
+                    "value": "created_at"
+                },
+                {
+                    "label": "Due Date",
+                    "value": "due.date"
+                },
+                {
+                    "label": "Due String",
+                    "value": "due.string"
+                },
+                {
+                    "label": "Due Is Recurring",
+                    "value": "due.is_recurring"
+                },
+                {
+                    "label": "Due Datetime",
+                    "value": "due.datetime"
+                },
+                {
+                    "label": "Due Timezone",
+                    "value": "due.timezone"
+                },
+                {
+                    "label": "Duration Amount",
+                    "value": "duration.amount"
+                },
+                {
+                    "label": "Duration Unit",
+                    "value": "duration.unit"
+                },
+                {
+                    "label": "URL",
+                    "value": "url"
+                }
             ]
         }
     ],

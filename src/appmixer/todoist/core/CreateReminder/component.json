@@ -18,13 +18,27 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "taskId": { "type": "string" },
-                    "type": { "type": "string" },
-                    "dueString": { "type": "string" },
-                    "dueDatetime": { "type": "string", "format": "date-time" },
-                    "minuteOffset": { "type": "number" }
+                    "taskId": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "dueString": {
+                        "type": "string"
+                    },
+                    "dueDatetime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "minuteOffset": {
+                        "type": "number"
+                    }
                 },
-                "required": ["taskId", "type"]
+                "required": [
+                    "taskId",
+                    "type"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -40,8 +54,14 @@
                         "tooltip": "The type of the reminder.",
                         "index": 2,
                         "options": [
-                            { "label": "Relative", "value": "relative" },
-                            { "label": "Absolute", "value": "absolute" }
+                            {
+                                "label": "Relative",
+                                "value": "relative"
+                            },
+                            {
+                                "label": "Absolute",
+                                "value": "absolute"
+                            }
                         ]
                     },
                     "dueString": {
@@ -70,14 +90,38 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Task ID", "value": "item_id" },
-                { "label": "Type", "value": "type" },
-                { "label": "Due String", "value": "due.string" },
-                { "label": "Due Date", "value": "due.date" },
-                { "label": "Due Datetime", "value": "due.datetime" },
-                { "label": "Due Timezone", "value": "due.timezone" },
-                { "label": "Minute Offset", "value": "minute_offset" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Task ID",
+                    "value": "item_id"
+                },
+                {
+                    "label": "Type",
+                    "value": "type"
+                },
+                {
+                    "label": "Due String",
+                    "value": "due.string"
+                },
+                {
+                    "label": "Due Date",
+                    "value": "due.date"
+                },
+                {
+                    "label": "Due Datetime",
+                    "value": "due.datetime"
+                },
+                {
+                    "label": "Due Timezone",
+                    "value": "due.timezone"
+                },
+                {
+                    "label": "Minute Offset",
+                    "value": "minute_offset"
+                }
             ]
         }
     ],

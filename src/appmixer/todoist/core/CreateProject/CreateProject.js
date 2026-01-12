@@ -8,6 +8,10 @@ module.exports = {
 
         const { name, parentId, color, isFavorite, viewStyle } = context.messages.in.content;
 
+        if (!name) {
+            throw new context.CancelError('Name is required!');
+        }
+
         const body = { name };
 
         if (parentId) body.parent_id = parentId;

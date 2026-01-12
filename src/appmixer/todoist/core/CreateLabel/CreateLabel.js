@@ -8,6 +8,10 @@ module.exports = {
 
         const { name, order, color, isFavorite } = context.messages.in.content;
 
+        if (!name) {
+            throw new context.CancelError('Name is required!');
+        }
+
         const body = { name };
 
         if (order !== undefined) body.order = order;

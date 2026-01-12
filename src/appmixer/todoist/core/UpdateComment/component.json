@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.UpdateComment",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Update an existing comment.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,10 +19,17 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "commentId": { "type": "string" },
-                    "content": { "type": "string" }
+                    "commentId": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
                 },
-                "required": ["commentId", "content"]
+                "required": [
+                    "commentId",
+                    "content"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -44,16 +52,102 @@
     "outPorts": [
         {
             "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "ID"
+                    },
+                    "task_id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Task ID"
+                    },
+                    "project_id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Project ID"
+                    },
+                    "posted_at": {
+                        "type": "string",
+                        "title": "Posted At"
+                    },
+                    "content": {
+                        "type": "string",
+                        "title": "Content"
+                    },
+                    "attachment.file_name": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Attachment File Name"
+                    },
+                    "attachment.file_type": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Attachment File Type"
+                    },
+                    "attachment.file_url": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Attachment File URL"
+                    },
+                    "attachment.resource_type": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Attachment Resource Type"
+                    }
+                }
+            },
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Task ID", "value": "task_id" },
-                { "label": "Project ID", "value": "project_id" },
-                { "label": "Posted At", "value": "posted_at" },
-                { "label": "Content", "value": "content" },
-                { "label": "Attachment File Name", "value": "attachment.file_name" },
-                { "label": "Attachment File Type", "value": "attachment.file_type" },
-                { "label": "Attachment File URL", "value": "attachment.file_url" },
-                { "label": "Attachment Resource Type", "value": "attachment.resource_type" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Task ID",
+                    "value": "task_id"
+                },
+                {
+                    "label": "Project ID",
+                    "value": "project_id"
+                },
+                {
+                    "label": "Posted At",
+                    "value": "posted_at"
+                },
+                {
+                    "label": "Content",
+                    "value": "content"
+                },
+                {
+                    "label": "Attachment File Name",
+                    "value": "attachment.file_name"
+                },
+                {
+                    "label": "Attachment File Type",
+                    "value": "attachment.file_type"
+                },
+                {
+                    "label": "Attachment File URL",
+                    "value": "attachment.file_url"
+                },
+                {
+                    "label": "Attachment Resource Type",
+                    "value": "attachment.resource_type"
+                }
             ]
         }
     ],

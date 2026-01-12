@@ -18,9 +18,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "sectionId": { "type": "string" }
+                    "sectionId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["sectionId"]
+                "required": [
+                    "sectionId"
+                ]
             },
             "inspector": {
                 "inputs": {

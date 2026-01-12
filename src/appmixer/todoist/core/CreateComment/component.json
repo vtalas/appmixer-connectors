@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.CreateComment",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Create a new comment on a task or project.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,11 +19,19 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "content": { "type": "string" },
-                    "taskId": { "type": "string" },
-                    "projectId": { "type": "string" }
+                    "content": {
+                        "type": "string"
+                    },
+                    "taskId": {
+                        "type": "string"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["content"]
+                "required": [
+                    "content"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -58,15 +67,42 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Task ID", "value": "task_id" },
-                { "label": "Project ID", "value": "project_id" },
-                { "label": "Posted At", "value": "posted_at" },
-                { "label": "Content", "value": "content" },
-                { "label": "Attachment File Name", "value": "attachment.file_name" },
-                { "label": "Attachment File Type", "value": "attachment.file_type" },
-                { "label": "Attachment File URL", "value": "attachment.file_url" },
-                { "label": "Attachment Resource Type", "value": "attachment.resource_type" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Task ID",
+                    "value": "task_id"
+                },
+                {
+                    "label": "Project ID",
+                    "value": "project_id"
+                },
+                {
+                    "label": "Posted At",
+                    "value": "posted_at"
+                },
+                {
+                    "label": "Content",
+                    "value": "content"
+                },
+                {
+                    "label": "Attachment File Name",
+                    "value": "attachment.file_name"
+                },
+                {
+                    "label": "Attachment File Type",
+                    "value": "attachment.file_type"
+                },
+                {
+                    "label": "Attachment File URL",
+                    "value": "attachment.file_url"
+                },
+                {
+                    "label": "Attachment Resource Type",
+                    "value": "attachment.resource_type"
+                }
             ]
         }
     ],

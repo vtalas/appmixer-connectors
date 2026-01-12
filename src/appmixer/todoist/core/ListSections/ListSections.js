@@ -2,16 +2,31 @@
 
 const lib = require('../../lib');
 
+const schema = {
+    'id': { 'type': 'string', 'title': 'Section ID' },
+    'name': { 'type': 'string', 'title': 'Name' },
+    'project_id': { 'type': 'string', 'title': 'Project ID' },
+    'order': { 'type': 'integer', 'title': 'Order' }
+};
+
 module.exports = {
 
     async receive(context) {
 
         const { projectId, outputType } = context.messages.in.content;
 
-        const params = {};
-        if (projectId) params.project_id = projectId;
+        if (!projectId) {
+            throw new context.CancelError('Project ID is required!');
+        }
 
-        const sections = await lib.apiRequest(context, '/sections', { params });
+        if (context.properties.generateOutputPortOptions) {
+            return context.sendJson(
+                lib.getOutputPortSchema(schema, outputType || 'array'),
+                'out'
+            );
+        }
+
+        const sections = await lib.apiRequest(context, `/sections?project_id=${projectId}`);
 
         return lib.sendArrayOutput({
             context,

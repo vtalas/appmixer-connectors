@@ -18,9 +18,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "labelId": { "type": "string" }
+                    "labelId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["labelId"]
+                "required": [
+                    "labelId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -38,11 +42,26 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Name", "value": "name" },
-                { "label": "Color", "value": "color" },
-                { "label": "Order", "value": "order" },
-                { "label": "Is Favorite", "value": "is_favorite" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Name",
+                    "value": "name"
+                },
+                {
+                    "label": "Color",
+                    "value": "color"
+                },
+                {
+                    "label": "Order",
+                    "value": "order"
+                },
+                {
+                    "label": "Is Favorite",
+                    "value": "is_favorite"
+                }
             ]
         }
     ],

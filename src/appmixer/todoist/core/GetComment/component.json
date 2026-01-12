@@ -18,9 +18,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "commentId": { "type": "string" }
+                    "commentId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["commentId"]
+                "required": [
+                    "commentId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -38,15 +42,42 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Task ID", "value": "task_id" },
-                { "label": "Project ID", "value": "project_id" },
-                { "label": "Posted At", "value": "posted_at" },
-                { "label": "Content", "value": "content" },
-                { "label": "Attachment File Name", "value": "attachment.file_name" },
-                { "label": "Attachment File Type", "value": "attachment.file_type" },
-                { "label": "Attachment File URL", "value": "attachment.file_url" },
-                { "label": "Attachment Resource Type", "value": "attachment.resource_type" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Task ID",
+                    "value": "task_id"
+                },
+                {
+                    "label": "Project ID",
+                    "value": "project_id"
+                },
+                {
+                    "label": "Posted At",
+                    "value": "posted_at"
+                },
+                {
+                    "label": "Content",
+                    "value": "content"
+                },
+                {
+                    "label": "Attachment File Name",
+                    "value": "attachment.file_name"
+                },
+                {
+                    "label": "Attachment File Type",
+                    "value": "attachment.file_type"
+                },
+                {
+                    "label": "Attachment File URL",
+                    "value": "attachment.file_url"
+                },
+                {
+                    "label": "Attachment Resource Type",
+                    "value": "attachment.resource_type"
+                }
             ]
         }
     ],

@@ -14,26 +14,34 @@ module.exports = {
 
             requestAccessToken: 'https://todoist.com/oauth/access_token',
 
-            requestProfileInfo: {
-                method: 'GET',
-                url: 'https://api.todoist.com/sync/v9/sync',
-                headers: {
-                    'Authorization': 'Bearer {{accessToken}}'
-                },
-                body: {
-                    sync_token: '*',
-                    resource_types: '["user"]'
-                }
+            accountNameFromProfileInfo: 'full_name',
+
+            requestProfileInfo: async (context) => {
+
+                const response = await context.httpRequest({
+                    method: 'GET',
+                    url: 'https://api.todoist.com/rest/v2/user',
+                    headers: {
+                        'Authorization': `Bearer ${context.accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                return response.data;
             },
 
-            accountNameFromProfileInfo: 'user.full_name',
+            validateAccessToken: async (context) => {
 
-            validateAccessToken: {
-                method: 'GET',
-                url: 'https://api.todoist.com/rest/v2/projects',
-                headers: {
-                    'Authorization': 'Bearer {{accessToken}}'
-                }
+                const response = await context.httpRequest({
+                    method: 'GET',
+                    url: 'https://api.todoist.com/rest/v2/projects',
+                    headers: {
+                        'Authorization': `Bearer ${context.accessToken}`
+                    }
+                });
+
+                // If the request succeeds, the token is valid
+                return !!response.data;
             }
         };
     }

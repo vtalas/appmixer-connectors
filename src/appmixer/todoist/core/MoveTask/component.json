@@ -1,7 +1,8 @@
 {
     "name": "appmixer.todoist.core.MoveTask",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Move a task to a different project or section.",
+    "author": "Appmixer <info@appmixer.com>",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,12 +19,22 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "taskId": { "type": "string" },
-                    "projectId": { "type": "string" },
-                    "sectionId": { "type": "string" },
-                    "parentId": { "type": "string" }
+                    "taskId": {
+                        "type": "string"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "sectionId": {
+                        "type": "string"
+                    },
+                    "parentId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["taskId"]
+                "required": [
+                    "taskId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -53,7 +64,9 @@
                         "source": {
                             "url": "/component/appmixer/todoist/core/ListSectionsSelect?outPort=out",
                             "data": {
-                                "properties": { "projectId": "properties/projectId" },
+                                "properties": {
+                                    "projectId": "properties/projectId"
+                                },
                                 "transform": "./transformers#sectionsToSelectArray"
                             }
                         }

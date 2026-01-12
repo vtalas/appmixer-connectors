@@ -13,8 +13,12 @@ module.exports = {
         }
 
         const params = {};
-        if (taskId) params.task_id = taskId;
-        if (projectId) params.project_id = projectId;
+        if (taskId) {
+            params.task_id = taskId;
+        }
+        if (projectId) {
+            params.project_id = projectId;
+        }
 
         const comments = await lib.apiRequest(context, '/comments', { params });
 

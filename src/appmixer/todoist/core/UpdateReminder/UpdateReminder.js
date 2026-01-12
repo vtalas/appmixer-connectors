@@ -12,33 +12,33 @@ module.exports = {
             throw new context.CancelError('Reminder ID is required.');
         }
 
-        const uuid = context.componentId + '-' + Date.now();
+        const data = {};
 
-        const args = { id: reminderId };
+        if (type) {
+            data.type = type;
+        }
 
-        if (type) args.type = type;
-
+        // Handle absolute reminders with due date
         if (type === 'absolute' || (!type && (dueString || dueDatetime))) {
+            data.due = {};
             if (dueString) {
-                args.due = { string: dueString };
+                data.due.string = dueString;
             } else if (dueDatetime) {
-                args.due = { datetime: dueDatetime };
+                data.due.datetime = dueDatetime;
             }
         }
 
+        // Handle relative reminders with minute offset
         if (type === 'relative' || (!type && minuteOffset !== undefined)) {
             if (minuteOffset !== undefined) {
-                args.minute_offset = minuteOffset;
+                data.minute_offset = minuteOffset;
             }
         }
 
-        await lib.syncApiRequest(context, [
-            {
-                type: 'reminder_update',
-                uuid,
-                args
-            }
-        ]);
+        await lib.apiRequest(context, `/reminders/${reminderId}`, {
+            method: 'POST',
+            data
+        });
 
         return context.sendJson({}, 'out');
     }

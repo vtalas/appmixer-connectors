@@ -18,9 +18,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "reminderId": { "type": "string" }
+                    "reminderId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["reminderId"]
+                "required": [
+                    "reminderId"
+                ]
             },
             "inspector": {
                 "inputs": {

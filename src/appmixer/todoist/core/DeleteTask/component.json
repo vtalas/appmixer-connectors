@@ -18,9 +18,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "taskId": { "type": "string" }
+                    "taskId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["taskId"]
+                "required": [
+                    "taskId"
+                ]
             },
             "inspector": {
                 "inputs": {

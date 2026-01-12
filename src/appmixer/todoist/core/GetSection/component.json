@@ -1,7 +1,9 @@
 {
     "name": "appmixer.todoist.core.GetSection",
-    "author": "Appmixer <info@appmixer.com>",
+    "label": "Get Section",
     "description": "Get a section by ID.",
+    "author": "Appmixer <info@appmixer.com>",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,9 +20,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "sectionId": { "type": "string" }
+                    "sectionId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["sectionId"]
+                "required": [
+                    "sectionId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -38,10 +44,22 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Project ID", "value": "project_id" },
-                { "label": "Order", "value": "order" },
-                { "label": "Name", "value": "name" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Project ID",
+                    "value": "project_id"
+                },
+                {
+                    "label": "Order",
+                    "value": "order"
+                },
+                {
+                    "label": "Name",
+                    "value": "name"
+                }
             ]
         }
     ],

@@ -9,7 +9,11 @@ module.exports = {
         const { sectionId, name } = context.messages.in.content;
 
         if (!sectionId) {
-            throw new context.CancelError('Section ID is required.');
+            throw new context.CancelError('Section ID is required!');
+        }
+
+        if (!name) {
+            throw new context.CancelError('Name is required!');
         }
 
         const section = await lib.apiRequest(context, `/sections/${sectionId}`, {

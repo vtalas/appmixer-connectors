@@ -18,9 +18,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "projectId": { "type": "string" }
+                    "projectId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["projectId"]
+                "required": [
+                    "projectId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -44,18 +48,54 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Name", "value": "name" },
-                { "label": "Color", "value": "color" },
-                { "label": "Parent ID", "value": "parent_id" },
-                { "label": "Order", "value": "order" },
-                { "label": "Comment Count", "value": "comment_count" },
-                { "label": "Is Shared", "value": "is_shared" },
-                { "label": "Is Favorite", "value": "is_favorite" },
-                { "label": "Is Inbox Project", "value": "is_inbox_project" },
-                { "label": "Is Team Inbox", "value": "is_team_inbox" },
-                { "label": "View Style", "value": "view_style" },
-                { "label": "URL", "value": "url" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Name",
+                    "value": "name"
+                },
+                {
+                    "label": "Color",
+                    "value": "color"
+                },
+                {
+                    "label": "Parent ID",
+                    "value": "parent_id"
+                },
+                {
+                    "label": "Order",
+                    "value": "order"
+                },
+                {
+                    "label": "Comment Count",
+                    "value": "comment_count"
+                },
+                {
+                    "label": "Is Shared",
+                    "value": "is_shared"
+                },
+                {
+                    "label": "Is Favorite",
+                    "value": "is_favorite"
+                },
+                {
+                    "label": "Is Inbox Project",
+                    "value": "is_inbox_project"
+                },
+                {
+                    "label": "Is Team Inbox",
+                    "value": "is_team_inbox"
+                },
+                {
+                    "label": "View Style",
+                    "value": "view_style"
+                },
+                {
+                    "label": "URL",
+                    "value": "url"
+                }
             ]
         }
     ],

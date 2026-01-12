@@ -23,7 +23,7 @@ module.exports = {
         if (labels) body.labels = labels.split(',').map(l => l.trim());
         if (priority) body.priority = priority;
         if (dueString) body.due_string = dueString;
-        if (dueDate) body.due_date = dueDate.split('T')[0];
+        if (dueDate) body.due_date = dueDate;
         if (dueDatetime) body.due_datetime = dueDatetime;
         if (dueLang) body.due_lang = dueLang;
         if (assigneeId) body.assignee_id = assigneeId;

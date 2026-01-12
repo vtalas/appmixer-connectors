@@ -6,8 +6,18 @@ module.exports = {
 
     async receive(context) {
 
-        const projects = await lib.apiRequest(context, '/projects');
+        try {
+            const projects = await lib.apiRequest(context, '/projects');
 
-        return context.sendJson(projects, 'out');
+            return context.sendJson(projects, 'out');
+        } catch (err) {
+            // When used as dynamic source, return empty response instead of error
+            if (context.properties.variableFetch) {
+                return context.sendJson([], 'out');
+            }
+            // When used in flow, throw error normally
+            context.log({ stage: 'Error', err });
+            throw new Error(err);
+        }
     }
 };

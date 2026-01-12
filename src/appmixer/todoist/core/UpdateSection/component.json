@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.UpdateSection",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Update an existing section.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,10 +19,17 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "sectionId": { "type": "string" },
-                    "name": { "type": "string" }
+                    "sectionId": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
                 },
-                "required": ["sectionId", "name"]
+                "required": [
+                    "sectionId",
+                    "name"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -44,11 +52,44 @@
     "outPorts": [
         {
             "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "ID"
+                    },
+                    "project_id": {
+                        "type": "string",
+                        "title": "Project ID"
+                    },
+                    "order": {
+                        "type": "number",
+                        "title": "Order"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    }
+                }
+            },
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Project ID", "value": "project_id" },
-                { "label": "Order", "value": "order" },
-                { "label": "Name", "value": "name" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Project ID",
+                    "value": "project_id"
+                },
+                {
+                    "label": "Order",
+                    "value": "order"
+                },
+                {
+                    "label": "Name",
+                    "value": "name"
+                }
             ]
         }
     ],

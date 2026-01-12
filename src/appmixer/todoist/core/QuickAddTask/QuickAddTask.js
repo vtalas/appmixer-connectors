@@ -6,20 +6,34 @@ module.exports = {
 
         const { text, note, reminder, autoReminder } = context.messages.in.content;
 
-        const body = { text };
+        if (!text) {
+            throw new context.CancelError('Quick Add Text is required!');
+        }
 
-        if (note) body.note = note;
-        if (reminder) body.reminder = reminder;
-        if (autoReminder !== undefined) body.auto_reminder = autoReminder;
+        const params = {
+            text: text
+        };
+
+        if (note) {
+            params.note = note;
+        }
+
+        if (reminder) {
+            params.reminder = reminder;
+        }
+
+        if (autoReminder !== undefined) {
+            params.auto_reminder = autoReminder;
+        }
 
         const response = await context.httpRequest({
             method: 'POST',
-            url: 'https://api.todoist.com/sync/v9/quick/add',
+            url: 'https://api.todoist.com/rest/v2/tasks',
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`,
                 'Content-Type': 'application/json'
             },
-            data: body
+            data: params
         });
 
         return context.sendJson(response.data, 'out');

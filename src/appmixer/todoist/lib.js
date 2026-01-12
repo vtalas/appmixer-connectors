@@ -109,5 +109,42 @@ module.exports = {
             );
             return context.sendJson({ fileId: savedFile.fileId }, 'out');
         }
+    },
+
+    getOutputPortSchema(schema, outputType) {
+
+        if (outputType === 'first' || outputType === 'object') {
+            const options = Object.keys(schema)
+                .reduce((res, field) => {
+                    const fieldSchema = schema[field];
+                    const { title: label, ...schemaWithoutTitle } = fieldSchema;
+                    res.push({ label, value: field, schema: schemaWithoutTitle });
+                    return res;
+                }, [{
+                    label: 'Current Item Index',
+                    value: 'index',
+                    schema: { type: 'integer' }
+                }, {
+                    label: 'Items Count',
+                    value: 'count',
+                    schema: { type: 'integer' }
+                }]);
+            return options;
+        }
+
+        if (outputType === 'array') {
+            return [{
+                label: 'Projects',
+                value: 'records',
+                schema: {
+                    type: 'array',
+                    items: { type: 'object', properties: schema }
+                }
+            }];
+        }
+
+        if (outputType === 'file') {
+            return [{ label: 'File ID', value: 'fileId' }];
+        }
     }
 };

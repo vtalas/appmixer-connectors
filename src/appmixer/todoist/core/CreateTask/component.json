@@ -18,23 +18,57 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "content": { "type": "string" },
-                    "description": { "type": "string" },
-                    "projectId": { "type": "string" },
-                    "sectionId": { "type": "string" },
-                    "parentId": { "type": "string" },
-                    "order": { "type": "number" },
-                    "labels": { "type": "string" },
-                    "priority": { "type": "number" },
-                    "dueString": { "type": "string" },
-                    "dueDate": { "type": "string", "format": "date-time" },
-                    "dueDatetime": { "type": "string", "format": "date-time" },
-                    "dueLang": { "type": "string" },
-                    "assigneeId": { "type": "string" },
-                    "duration": { "type": "number" },
-                    "durationUnit": { "type": "string" }
+                    "content": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "sectionId": {
+                        "type": "string"
+                    },
+                    "parentId": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "type": "number"
+                    },
+                    "labels": {
+                        "type": "string"
+                    },
+                    "priority": {
+                        "type": "number"
+                    },
+                    "dueString": {
+                        "type": "string"
+                    },
+                    "dueDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "dueDatetime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "dueLang": {
+                        "type": "string"
+                    },
+                    "assigneeId": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "durationUnit": {
+                        "type": "string"
+                    }
                 },
-                "required": ["content"]
+                "required": [
+                    "content"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -70,7 +104,9 @@
                         "source": {
                             "url": "/component/appmixer/todoist/core/ListSectionsSelect?outPort=out",
                             "data": {
-                                "properties": { "projectId": "properties/projectId" },
+                                "properties": {
+                                    "projectId": "properties/projectId"
+                                },
                                 "transform": "./transformers#sectionsToSelectArray"
                             }
                         }
@@ -99,10 +135,22 @@
                         "tooltip": "The priority of the task.",
                         "index": 8,
                         "options": [
-                            { "label": "Priority 1 (Highest)", "value": 4 },
-                            { "label": "Priority 2", "value": 3 },
-                            { "label": "Priority 3", "value": 2 },
-                            { "label": "Priority 4 (Lowest)", "value": 1 }
+                            {
+                                "label": "Priority 1 (Highest)",
+                                "value": 4
+                            },
+                            {
+                                "label": "Priority 2",
+                                "value": 3
+                            },
+                            {
+                                "label": "Priority 3",
+                                "value": 2
+                            },
+                            {
+                                "label": "Priority 4 (Lowest)",
+                                "value": 1
+                            }
                         ]
                     },
                     "dueString": {
@@ -116,7 +164,9 @@
                         "label": "Due Date",
                         "tooltip": "Specific date for the task in YYYY-MM-DD format.",
                         "index": 10,
-                        "config": { "enableTime": false }
+                        "config": {
+                            "enableTime": false
+                        }
                     },
                     "dueDatetime": {
                         "type": "date-time",
@@ -130,21 +180,66 @@
                         "tooltip": "2-letter code specifying language for parsing due_string.",
                         "index": 12,
                         "options": [
-                            { "label": "English", "value": "en" },
-                            { "label": "Danish", "value": "da" },
-                            { "label": "German", "value": "de" },
-                            { "label": "Spanish", "value": "es" },
-                            { "label": "French", "value": "fr" },
-                            { "label": "Italian", "value": "it" },
-                            { "label": "Japanese", "value": "ja" },
-                            { "label": "Korean", "value": "ko" },
-                            { "label": "Dutch", "value": "nl" },
-                            { "label": "Polish", "value": "pl" },
-                            { "label": "Portuguese", "value": "pt" },
-                            { "label": "Russian", "value": "ru" },
-                            { "label": "Swedish", "value": "sv" },
-                            { "label": "Turkish", "value": "tr" },
-                            { "label": "Chinese", "value": "zh" }
+                            {
+                                "label": "English",
+                                "value": "en"
+                            },
+                            {
+                                "label": "Danish",
+                                "value": "da"
+                            },
+                            {
+                                "label": "German",
+                                "value": "de"
+                            },
+                            {
+                                "label": "Spanish",
+                                "value": "es"
+                            },
+                            {
+                                "label": "French",
+                                "value": "fr"
+                            },
+                            {
+                                "label": "Italian",
+                                "value": "it"
+                            },
+                            {
+                                "label": "Japanese",
+                                "value": "ja"
+                            },
+                            {
+                                "label": "Korean",
+                                "value": "ko"
+                            },
+                            {
+                                "label": "Dutch",
+                                "value": "nl"
+                            },
+                            {
+                                "label": "Polish",
+                                "value": "pl"
+                            },
+                            {
+                                "label": "Portuguese",
+                                "value": "pt"
+                            },
+                            {
+                                "label": "Russian",
+                                "value": "ru"
+                            },
+                            {
+                                "label": "Swedish",
+                                "value": "sv"
+                            },
+                            {
+                                "label": "Turkish",
+                                "value": "tr"
+                            },
+                            {
+                                "label": "Chinese",
+                                "value": "zh"
+                            }
                         ]
                     },
                     "assigneeId": {
@@ -165,8 +260,14 @@
                         "tooltip": "The unit of time for the duration.",
                         "index": 15,
                         "options": [
-                            { "label": "Minutes", "value": "minute" },
-                            { "label": "Days", "value": "day" }
+                            {
+                                "label": "Minutes",
+                                "value": "minute"
+                            },
+                            {
+                                "label": "Days",
+                                "value": "day"
+                            }
                         ]
                     }
                 }
@@ -177,29 +278,98 @@
         {
             "name": "out",
             "options": [
-                { "label": "ID", "value": "id" },
-                { "label": "Assigner ID", "value": "assigner_id" },
-                { "label": "Assignee ID", "value": "assignee_id" },
-                { "label": "Project ID", "value": "project_id" },
-                { "label": "Section ID", "value": "section_id" },
-                { "label": "Parent ID", "value": "parent_id" },
-                { "label": "Order", "value": "order" },
-                { "label": "Content", "value": "content" },
-                { "label": "Description", "value": "description" },
-                { "label": "Is Completed", "value": "is_completed" },
-                { "label": "Labels", "value": "labels" },
-                { "label": "Priority", "value": "priority" },
-                { "label": "Comment Count", "value": "comment_count" },
-                { "label": "Creator ID", "value": "creator_id" },
-                { "label": "Created At", "value": "created_at" },
-                { "label": "Due Date", "value": "due.date" },
-                { "label": "Due String", "value": "due.string" },
-                { "label": "Due Is Recurring", "value": "due.is_recurring" },
-                { "label": "Due Datetime", "value": "due.datetime" },
-                { "label": "Due Timezone", "value": "due.timezone" },
-                { "label": "Duration Amount", "value": "duration.amount" },
-                { "label": "Duration Unit", "value": "duration.unit" },
-                { "label": "URL", "value": "url" }
+                {
+                    "label": "ID",
+                    "value": "id"
+                },
+                {
+                    "label": "Assigner ID",
+                    "value": "assigner_id"
+                },
+                {
+                    "label": "Assignee ID",
+                    "value": "assignee_id"
+                },
+                {
+                    "label": "Project ID",
+                    "value": "project_id"
+                },
+                {
+                    "label": "Section ID",
+                    "value": "section_id"
+                },
+                {
+                    "label": "Parent ID",
+                    "value": "parent_id"
+                },
+                {
+                    "label": "Order",
+                    "value": "order"
+                },
+                {
+                    "label": "Content",
+                    "value": "content"
+                },
+                {
+                    "label": "Description",
+                    "value": "description"
+                },
+                {
+                    "label": "Is Completed",
+                    "value": "is_completed"
+                },
+                {
+                    "label": "Labels",
+                    "value": "labels"
+                },
+                {
+                    "label": "Priority",
+                    "value": "priority"
+                },
+                {
+                    "label": "Comment Count",
+                    "value": "comment_count"
+                },
+                {
+                    "label": "Creator ID",
+                    "value": "creator_id"
+                },
+                {
+                    "label": "Created At",
+                    "value": "created_at"
+                },
+                {
+                    "label": "Due Date",
+                    "value": "due.date"
+                },
+                {
+                    "label": "Due String",
+                    "value": "due.string"
+                },
+                {
+                    "label": "Due Is Recurring",
+                    "value": "due.is_recurring"
+                },
+                {
+                    "label": "Due Datetime",
+                    "value": "due.datetime"
+                },
+                {
+                    "label": "Due Timezone",
+                    "value": "due.timezone"
+                },
+                {
+                    "label": "Duration Amount",
+                    "value": "duration.amount"
+                },
+                {
+                    "label": "Duration Unit",
+                    "value": "duration.unit"
+                },
+                {
+                    "label": "URL",
+                    "value": "url"
+                }
             ]
         }
     ],

@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.ListSectionsSelect",
     "author": "Appmixer <info@appmixer.com>",
     "description": "List all sections for select dropdown.",
+    "version": "1.0.0",
     "private": true,
     "auth": {
         "service": "appmixer:todoist"
@@ -17,7 +18,9 @@
         "schema": {
             "type": "object",
             "properties": {
-                "projectId": { "type": "string" }
+                "projectId": {
+                    "type": "string"
+                }
             }
         }
     },

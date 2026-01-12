@@ -1,7 +1,8 @@
 {
     "name": "appmixer.todoist.core.DeleteComment",
+    "description": "Delete a comment from a task.",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Delete a comment.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,9 +19,14 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "commentId": { "type": "string" }
+                    "commentId": {
+                        "type": "string",
+                        "title": "Comment ID"
+                    }
                 },
-                "required": ["commentId"]
+                "required": [
+                    "commentId"
+                ]
             },
             "inspector": {
                 "inputs": {

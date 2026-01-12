@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.ArchiveProject",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Archive a project.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },
@@ -18,9 +19,13 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "projectId": { "type": "string" }
+                    "projectId": {
+                        "type": "string"
+                    }
                 },
-                "required": ["projectId"]
+                "required": [
+                    "projectId"
+                ]
             },
             "inspector": {
                 "inputs": {
