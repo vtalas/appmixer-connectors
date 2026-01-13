@@ -8,11 +8,10 @@
             "version": "1.0.0",
             "config": {}
         },
-        "create-project": {
-            "type": "appmixer.todoist.core.CreateProject",
-            "x": 300,
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 200,
             "y": 200,
-            "version": "1.0.0",
             "source": {
                 "in": {
                     "on-start": [
@@ -20,6 +19,7 @@
                     ]
                 }
             },
+            "version": "1.0.0",
             "config": {
                 "transform": {
                     "in": {
@@ -27,13 +27,61 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "name": {},
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "projectName",
+                                                "text": "E2E Test Project"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedProjectName",
+                                                "text": "E2E Test Project Updated"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create-project": {
+            "type": "appmixer.todoist.core.CreateProject",
+            "x": 400,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "name": {
+                                        "var-name": {
+                                            "variable": "$.set-variables.out.projectName",
+                                            "functions": []
+                                        }
+                                    },
                                     "color": {},
                                     "isFavorite": {},
                                     "viewStyle": {}
                                 },
                                 "lambda": {
-                                    "name": "E2E Test Project",
+                                    "name": "{{{var-name}}}",
                                     "color": "blue",
                                     "isFavorite": false,
                                     "viewStyle": "list"
@@ -46,7 +94,7 @@
         },
         "assert-create": {
             "type": "appmixer.utils.test.Assert",
-            "x": 500,
+            "x": 600,
             "y": 100,
             "version": "1.0.0",
             "source": {
@@ -64,8 +112,12 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-name": {
+                                        "field-name": {
                                             "variable": "$.create-project.out.name",
+                                            "functions": []
+                                        },
+                                        "expected-name": {
+                                            "variable": "$.set-variables.out.projectName",
                                             "functions": []
                                         }
                                     }
@@ -74,9 +126,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Project"
+                                                "expected": "{{{expected-name}}}"
                                             }
                                         ]
                                     }
@@ -89,7 +141,7 @@
         },
         "get-project": {
             "type": "appmixer.todoist.core.GetProject",
-            "x": 500,
+            "x": 600,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -107,14 +159,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "projectId": {
-                                        "var-1": {
+                                        "var-project-id": {
                                             "variable": "$.create-project.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "projectId": ""
+                                    "projectId": "{{{var-project-id}}}"
                                 }
                             }
                         }
@@ -124,7 +176,7 @@
         },
         "assert-get": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
+            "x": 800,
             "y": 100,
             "version": "1.0.0",
             "source": {
@@ -142,7 +194,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-id": {
+                                        "field-id": {
                                             "variable": "$.get-project.out.id",
                                             "functions": []
                                         }
@@ -152,7 +204,7 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-id}}}",
                                                 "assertion": "notEmpty"
                                             }
                                         ]
@@ -166,7 +218,7 @@
         },
         "list-projects": {
             "type": "appmixer.todoist.core.ListProjects",
-            "x": 500,
+            "x": 600,
             "y": 300,
             "version": "1.0.0",
             "source": {
@@ -196,7 +248,7 @@
         },
         "assert-list": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
+            "x": 800,
             "y": 300,
             "version": "1.0.0",
             "source": {
@@ -214,7 +266,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-records": {
+                                        "field-result": {
                                             "variable": "$.list-projects.out.result",
                                             "functions": []
                                         }
@@ -224,7 +276,7 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-result}}}",
                                                 "assertion": "notEmpty"
                                             }
                                         ]
@@ -238,7 +290,7 @@
         },
         "update-project": {
             "type": "appmixer.todoist.core.UpdateProject",
-            "x": 700,
+            "x": 800,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -256,18 +308,23 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "projectId": {
-                                        "var-1": {
+                                        "var-project-id": {
                                             "variable": "$.create-project.out.id",
                                             "functions": []
                                         }
                                     },
-                                    "name": {},
+                                    "name": {
+                                        "var-updated-name": {
+                                            "variable": "$.set-variables.out.updatedProjectName",
+                                            "functions": []
+                                        }
+                                    },
                                     "color": {},
                                     "isFavorite": {}
                                 },
                                 "lambda": {
-                                    "projectId": "",
-                                    "name": "E2E Test Project Updated",
+                                    "projectId": "{{{var-project-id}}}",
+                                    "name": "{{{var-updated-name}}}",
                                     "color": "red",
                                     "isFavorite": true
                                 }
@@ -279,7 +336,7 @@
         },
         "assert-update": {
             "type": "appmixer.utils.test.Assert",
-            "x": 900,
+            "x": 1000,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -297,8 +354,12 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-update": {
+                                        "field-update-name": {
                                             "variable": "$.update-project.out.name",
+                                            "functions": []
+                                        },
+                                        "expected-update-name": {
+                                            "variable": "$.set-variables.out.updatedProjectName",
                                             "functions": []
                                         }
                                     }
@@ -307,9 +368,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-update-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Project Updated"
+                                                "expected": "{{{expected-update-name}}}"
                                             }
                                         ]
                                     }
@@ -322,7 +383,7 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1100,
+            "x": 1200,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -349,7 +410,7 @@
         },
         "delete-project": {
             "type": "appmixer.todoist.core.DeleteProject",
-            "x": 1300,
+            "x": 1400,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -367,14 +428,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "projectId": {
-                                        "var-1": {
+                                        "var-project-id": {
                                             "variable": "$.create-project.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "projectId": ""
+                                    "projectId": "{{{var-project-id}}}"
                                 }
                             }
                         }
@@ -384,7 +445,7 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1500,
+            "x": 1600,
             "y": 200,
             "version": "1.0.1",
             "source": {
@@ -414,7 +475,7 @@
                                 "lambda": {
                                     "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Todoist - project-crud",
-                                    "result": ""
+                                    "result": "{{{result-var}}}"
                                 }
                             }
                         }

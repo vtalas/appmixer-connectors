@@ -93,7 +93,7 @@
                                     "priority": {}
                                 },
                                 "lambda": {
-                                    "content": "",
+                                    "content": "{{{var-content}}}",
                                     "priority": 2
                                 }
                             }
@@ -129,7 +129,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "text": ""
+                                    "text": "{{{var-text}}}"
                                 }
                             }
                         }
@@ -140,7 +140,7 @@
         "assert-create-task": {
             "type": "appmixer.utils.test.Assert",
             "x": 750,
-            "y": 100,
+            "y": 0,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -157,7 +157,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-id": {
+                                        "field-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
@@ -167,9 +167,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-id}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -200,7 +199,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-content": {
+                                        "field-content": {
                                             "variable": "$.quick-add-task.out.content",
                                             "functions": []
                                         }
@@ -210,9 +209,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-content}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -243,14 +241,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "taskId": {
-                                        "var-id": {
+                                        "var-task-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "taskId": ""
+                                    "taskId": "{{{var-task-id}}}"
                                 }
                             }
                         }
@@ -260,7 +258,7 @@
         },
         "assert-move-task": {
             "type": "appmixer.utils.test.Assert",
-            "x": 1050,
+            "x": 1100,
             "y": 100,
             "version": "1.0.0",
             "source": {
@@ -277,15 +275,19 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "expression": {}
+                                    "expression": {
+                                        "field-move": {
+                                            "variable": "$.move-task.out",
+                                            "functions": []
+                                        }
+                                    }
                                 },
                                 "lambda": {
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-move}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -298,11 +300,14 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1200,
+            "x": 1300,
             "y": 200,
             "version": "1.0.0",
             "source": {
                 "in": {
+                    "assert-create-task": [
+                        "out"
+                    ],
                     "assert-move-task": [
                         "out"
                     ],
@@ -317,11 +322,11 @@
                 }
             }
         },
-        "process-results": {
-            "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1350,
-            "y": 200,
-            "version": "1.0.1",
+        "delete-task": {
+            "type": "appmixer.todoist.core.DeleteTask",
+            "x": 1500,
+            "y": 100,
+            "version": "1.0.0",
             "source": {
                 "in": {
                     "after-all": [
@@ -330,10 +335,97 @@
                 }
             },
             "config": {
-                "properties": {},
                 "transform": {
                     "in": {
                         "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "taskId": {
+                                        "var-task-id": {
+                                            "variable": "$.create-task.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "taskId": "{{{var-task-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete-quick-task": {
+            "type": "appmixer.todoist.core.DeleteTask",
+            "x": 1500,
+            "y": 300,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "taskId": {
+                                        "var-quick-task-id": {
+                                            "variable": "$.quick-add-task.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "taskId": "{{{var-quick-task-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "cleanup-merge": {
+            "type": "appmixer.utils.controls.Pass",
+            "x": 1700,
+            "y": 200,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-task": [
+                        "out"
+                    ],
+                    "delete-quick-task": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {}
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1900,
+            "y": 200,
+            "version": "1.0.1",
+            "source": {
+                "in": {
+                    "cleanup-merge": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "cleanup-merge": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -349,7 +441,7 @@
                                 "lambda": {
                                     "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Todoist - task-advanced",
-                                    "result": ""
+                                    "result": "{{{result-var}}}"
                                 }
                             }
                         }

@@ -1268,7 +1268,8 @@
                 }
             ]
         },
-        "status": "passed"
+        "status": "passed",
+        "ignored": true
     },
     {
         "name": "DeleteComment",

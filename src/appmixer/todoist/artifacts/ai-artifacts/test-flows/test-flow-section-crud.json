@@ -10,7 +10,7 @@
         },
         "set-variables": {
             "type": "appmixer.utils.controls.SetVariable",
-            "x": 250,
+            "x": 200,
             "y": 200,
             "source": {
                 "in": {
@@ -53,7 +53,7 @@
         },
         "before-all": {
             "type": "appmixer.utils.test.BeforeAll",
-            "x": 400,
+            "x": 350,
             "y": 200,
             "source": {
                 "in": {
@@ -65,13 +65,45 @@
             "version": "1.0.0",
             "config": {}
         },
-        "create-section": {
-            "type": "appmixer.todoist.core.CreateSection",
-            "x": 550,
-            "y": 100,
+        "create-project": {
+            "type": "appmixer.todoist.core.CreateProject",
+            "x": 500,
+            "y": 200,
+            "version": "1.0.0",
             "source": {
                 "in": {
                     "before-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "before-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "name": {},
+                                    "color": {}
+                                },
+                                "lambda": {
+                                    "name": "E2E Section Test Project",
+                                    "color": "blue"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create-section": {
+            "type": "appmixer.todoist.core.CreateSection",
+            "x": 700,
+            "y": 100,
+            "source": {
+                "in": {
+                    "create-project": [
                         "out"
                     ]
                 }
@@ -80,7 +112,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-project": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -91,15 +123,15 @@
                                         }
                                     },
                                     "projectId": {
-                                        "var-project": {
-                                            "variable": "$.set-variables.out.projectId",
+                                        "var-project-id": {
+                                            "variable": "$.create-project.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "name": "",
-                                    "projectId": ""
+                                    "name": "{{{var-name}}}",
+                                    "projectId": "{{{var-project-id}}}"
                                 }
                             }
                         }
@@ -109,8 +141,8 @@
         },
         "assert-create": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
-            "y": 100,
+            "x": 900,
+            "y": 0,
             "source": {
                 "in": {
                     "create-section": [
@@ -127,7 +159,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-id": {
+                                        "field-id": {
                                             "variable": "$.create-section.out.id",
                                             "functions": []
                                         }
@@ -137,9 +169,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-id}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -152,11 +183,11 @@
         },
         "get-section": {
             "type": "appmixer.todoist.core.GetSection",
-            "x": 550,
+            "x": 700,
             "y": 200,
             "source": {
                 "in": {
-                    "before-all": [
+                    "create-section": [
                         "out"
                     ]
                 }
@@ -165,19 +196,19 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-section": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "sectionId": {
-                                        "var-id": {
+                                        "var-section-id": {
                                             "variable": "$.create-section.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "sectionId": ""
+                                    "sectionId": "{{{var-section-id}}}"
                                 }
                             }
                         }
@@ -187,7 +218,7 @@
         },
         "assert-get": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
+            "x": 900,
             "y": 200,
             "source": {
                 "in": {
@@ -205,8 +236,12 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-name": {
+                                        "field-name": {
                                             "variable": "$.get-section.out.name",
+                                            "functions": []
+                                        },
+                                        "expected-name": {
+                                            "variable": "$.set-variables.out.sectionName",
                                             "functions": []
                                         }
                                     }
@@ -215,9 +250,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Section"
+                                                "expected": "{{{expected-name}}}"
                                             }
                                         ]
                                     }
@@ -230,11 +265,11 @@
         },
         "list-sections": {
             "type": "appmixer.todoist.core.ListSections",
-            "x": 550,
+            "x": 700,
             "y": 300,
             "source": {
                 "in": {
-                    "before-all": [
+                    "create-section": [
                         "out"
                     ]
                 }
@@ -243,20 +278,20 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-section": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "projectId": {
-                                        "var-project": {
-                                            "variable": "$.set-variables.out.projectId",
+                                        "var-project-id": {
+                                            "variable": "$.create-project.out.id",
                                             "functions": []
                                         }
                                     },
                                     "outputType": {}
                                 },
                                 "lambda": {
-                                    "projectId": "",
+                                    "projectId": "{{{var-project-id}}}",
                                     "outputType": "array"
                                 }
                             }
@@ -267,7 +302,7 @@
         },
         "assert-list": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
+            "x": 900,
             "y": 300,
             "source": {
                 "in": {
@@ -285,7 +320,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-result": {
+                                        "field-result": {
                                             "variable": "$.list-sections.out.result",
                                             "functions": []
                                         }
@@ -295,9 +330,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-result}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -310,11 +344,11 @@
         },
         "update-section": {
             "type": "appmixer.todoist.core.UpdateSection",
-            "x": 550,
+            "x": 700,
             "y": 400,
             "source": {
                 "in": {
-                    "before-all": [
+                    "create-section": [
                         "out"
                     ]
                 }
@@ -323,26 +357,26 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-section": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "sectionId": {
-                                        "var-id": {
+                                        "var-section-id": {
                                             "variable": "$.create-section.out.id",
                                             "functions": []
                                         }
                                     },
                                     "name": {
-                                        "var-name": {
+                                        "var-updated-name": {
                                             "variable": "$.set-variables.out.updatedSectionName",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "sectionId": "",
-                                    "name": ""
+                                    "sectionId": "{{{var-section-id}}}",
+                                    "name": "{{{var-updated-name}}}"
                                 }
                             }
                         }
@@ -352,7 +386,7 @@
         },
         "assert-update": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
+            "x": 900,
             "y": 400,
             "source": {
                 "in": {
@@ -370,8 +404,12 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-name": {
+                                        "field-updated-name": {
                                             "variable": "$.update-section.out.name",
+                                            "functions": []
+                                        },
+                                        "expected-updated-name": {
+                                            "variable": "$.set-variables.out.updatedSectionName",
                                             "functions": []
                                         }
                                     }
@@ -380,9 +418,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-updated-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Section Updated"
+                                                "expected": "{{{expected-updated-name}}}"
                                             }
                                         ]
                                     }
@@ -395,11 +433,11 @@
         },
         "list-sections-select": {
             "type": "appmixer.todoist.core.ListSectionsSelect",
-            "x": 550,
+            "x": 700,
             "y": 500,
             "source": {
                 "in": {
-                    "before-all": [
+                    "create-section": [
                         "out"
                     ]
                 }
@@ -408,19 +446,19 @@
             "config": {
                 "transform": {
                     "in": {
-                        "before-all": {
+                        "create-section": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "projectId": {
-                                        "var-project": {
-                                            "variable": "$.set-variables.out.projectId",
+                                        "var-project-id": {
+                                            "variable": "$.create-project.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "projectId": ""
+                                    "projectId": "{{{var-project-id}}}"
                                 }
                             }
                         }
@@ -430,7 +468,7 @@
         },
         "assert-list-select": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
+            "x": 900,
             "y": 500,
             "source": {
                 "in": {
@@ -448,7 +486,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-array": {
+                                        "field-array": {
                                             "variable": "$.list-sections-select.out",
                                             "functions": []
                                         }
@@ -458,9 +496,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-array}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -473,7 +510,7 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 850,
+            "x": 1100,
             "y": 300,
             "source": {
                 "in": {
@@ -503,7 +540,7 @@
         },
         "delete-section": {
             "type": "appmixer.todoist.core.DeleteSection",
-            "x": 1000,
+            "x": 1300,
             "y": 300,
             "source": {
                 "in": {
@@ -521,14 +558,49 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "sectionId": {
-                                        "var-id": {
+                                        "var-section-id": {
                                             "variable": "$.create-section.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "sectionId": ""
+                                    "sectionId": "{{{var-section-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete-project": {
+            "type": "appmixer.todoist.core.DeleteProject",
+            "x": 1500,
+            "y": 300,
+            "source": {
+                "in": {
+                    "delete-section": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "delete-section": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "projectId": {
+                                        "var-project-id": {
+                                            "variable": "$.create-project.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "projectId": "{{{var-project-id}}}"
                                 }
                             }
                         }
@@ -538,11 +610,11 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1150,
+            "x": 1700,
             "y": 300,
             "source": {
                 "in": {
-                    "delete-section": [
+                    "delete-project": [
                         "out"
                     ]
                 }
@@ -552,7 +624,7 @@
                 "properties": {},
                 "transform": {
                     "in": {
-                        "delete-section": {
+                        "delete-project": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -568,7 +640,7 @@
                                 "lambda": {
                                     "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Todoist - section-crud",
-                                    "result": ""
+                                    "result": "{{{result-var}}}"
                                 }
                             }
                         }

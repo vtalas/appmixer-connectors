@@ -66,7 +66,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "taskId": {
-                                        "var-1": {
+                                        "var-task-id": {
                                             "variable": "$.set-variables.out.taskId",
                                             "functions": []
                                         }
@@ -74,7 +74,7 @@
                                     "type": {}
                                 },
                                 "lambda": {
-                                    "taskId": "iajsdlkfjsajdf",
+                                    "taskId": "{{{var-task-id}}}",
                                     "type": "relative"
                                 }
                             }
@@ -103,7 +103,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-id": {
+                                        "field-id": {
                                             "variable": "$.create-reminder.out.id",
                                             "functions": []
                                         }
@@ -113,9 +113,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-id}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -176,7 +175,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-records": {
+                                        "field-result": {
                                             "variable": "$.list-reminders.out.result",
                                             "functions": []
                                         }
@@ -186,9 +185,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-result}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -219,7 +217,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "reminderId": {
-                                        "var-1": {
+                                        "var-reminder-id": {
                                             "variable": "$.create-reminder.out.id",
                                             "functions": []
                                         }
@@ -228,7 +226,7 @@
                                     "minuteOffset": {}
                                 },
                                 "lambda": {
-                                    "reminderId": "",
+                                    "reminderId": "{{{var-reminder-id}}}",
                                     "type": "relative",
                                     "minuteOffset": 30
                                 }
@@ -258,7 +256,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-update": {
+                                        "field-update": {
                                             "variable": "$.update-reminder.out",
                                             "functions": []
                                         }
@@ -268,9 +266,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-update}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -301,14 +298,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "reminderId": {
-                                        "var-1": {
+                                        "var-reminder-id": {
                                             "variable": "$.create-reminder.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "reminderId": ""
+                                    "reminderId": "{{{var-reminder-id}}}"
                                 }
                             }
                         }

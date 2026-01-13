@@ -8,11 +8,10 @@
             "version": "1.0.0",
             "config": {}
         },
-        "create-task": {
-            "type": "appmixer.todoist.core.CreateTask",
-            "x": 300,
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 200,
             "y": 320,
-            "version": "1.0.0",
             "source": {
                 "in": {
                     "start": [
@@ -20,6 +19,7 @@
                     ]
                 }
             },
+            "version": "1.0.0",
             "config": {
                 "transform": {
                     "in": {
@@ -27,10 +27,58 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "content": {}
+                                    "variables": {}
                                 },
                                 "lambda": {
-                                    "content": "E2E Test Task - CRUD"
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "taskContent",
+                                                "text": "E2E Test Task - CRUD"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedTaskContent",
+                                                "text": "E2E Test Task - Updated"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create-task": {
+            "type": "appmixer.todoist.core.CreateTask",
+            "x": 400,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "content": {
+                                        "var-content": {
+                                            "variable": "$.set-variables.out.taskContent",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "content": "{{{var-content}}}"
                                 }
                             }
                         }
@@ -40,7 +88,7 @@
         },
         "get-task": {
             "type": "appmixer.todoist.core.GetTask",
-            "x": 500,
+            "x": 600,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -58,14 +106,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "taskId": {
-                                        "var-1": {
+                                        "var-task-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "taskId": ""
+                                    "taskId": "{{{var-task-id}}}"
                                 }
                             }
                         }
@@ -75,7 +123,7 @@
         },
         "assert-get-task": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
+            "x": 800,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -93,8 +141,12 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-content": {
+                                        "field-content": {
                                             "variable": "$.get-task.out.content",
+                                            "functions": []
+                                        },
+                                        "expected-content": {
+                                            "variable": "$.set-variables.out.taskContent",
                                             "functions": []
                                         }
                                     }
@@ -103,9 +155,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-content}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Task - CRUD"
+                                                "expected": "{{{expected-content}}}"
                                             }
                                         ]
                                     }
@@ -118,7 +170,7 @@
         },
         "list-tasks": {
             "type": "appmixer.todoist.core.ListTasks",
-            "x": 700,
+            "x": 800,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -148,8 +200,8 @@
         },
         "assert-list-tasks": {
             "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 320,
+            "x": 1000,
+            "y": 440,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -166,7 +218,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-result": {
+                                        "field-result": {
                                             "variable": "$.list-tasks.out.result",
                                             "functions": []
                                         }
@@ -176,9 +228,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
-                                                "assertion": "notEmpty",
-                                                "expected": ""
+                                                "field": "{{{field-result}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -191,7 +242,7 @@
         },
         "update-task": {
             "type": "appmixer.todoist.core.UpdateTask",
-            "x": 1100,
+            "x": 1200,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -209,16 +260,21 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "taskId": {
-                                        "var-1": {
+                                        "var-task-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
                                     },
-                                    "content": {}
+                                    "content": {
+                                        "var-updated-content": {
+                                            "variable": "$.set-variables.out.updatedTaskContent",
+                                            "functions": []
+                                        }
+                                    }
                                 },
                                 "lambda": {
-                                    "taskId": "",
-                                    "content": "E2E Test Task - Updated"
+                                    "taskId": "{{{var-task-id}}}",
+                                    "content": "{{{var-updated-content}}}"
                                 }
                             }
                         }
@@ -228,7 +284,7 @@
         },
         "assert-update-task": {
             "type": "appmixer.utils.test.Assert",
-            "x": 1300,
+            "x": 1400,
             "y": 200,
             "version": "1.0.0",
             "source": {
@@ -246,8 +302,12 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "check-updated": {
+                                        "field-updated-content": {
                                             "variable": "$.update-task.out.content",
+                                            "functions": []
+                                        },
+                                        "expected-updated-content": {
+                                            "variable": "$.set-variables.out.updatedTaskContent",
                                             "functions": []
                                         }
                                     }
@@ -256,9 +316,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "",
+                                                "field": "{{{field-updated-content}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Task - Updated"
+                                                "expected": "{{{expected-updated-content}}}"
                                             }
                                         ]
                                     }
@@ -271,7 +331,7 @@
         },
         "close-task": {
             "type": "appmixer.todoist.core.CloseTask",
-            "x": 1300,
+            "x": 1400,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -289,14 +349,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "taskId": {
-                                        "var-1": {
+                                        "var-task-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "taskId": ""
+                                    "taskId": "{{{var-task-id}}}"
                                 }
                             }
                         }
@@ -306,7 +366,7 @@
         },
         "reopen-task": {
             "type": "appmixer.todoist.core.ReopenTask",
-            "x": 1500,
+            "x": 1600,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -324,14 +384,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "taskId": {
-                                        "var-1": {
+                                        "var-task-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "taskId": ""
+                                    "taskId": "{{{var-task-id}}}"
                                 }
                             }
                         }
@@ -341,11 +401,17 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1700,
+            "x": 1800,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
+                    "assert-get-task": [
+                        "out"
+                    ],
+                    "assert-list-tasks": [
+                        "out"
+                    ],
                     "assert-update-task": [
                         "out"
                     ],
@@ -362,7 +428,7 @@
         },
         "delete-task": {
             "type": "appmixer.todoist.core.DeleteTask",
-            "x": 1900,
+            "x": 2000,
             "y": 320,
             "version": "1.0.0",
             "source": {
@@ -380,14 +446,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "taskId": {
-                                        "var-1": {
+                                        "var-task-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "taskId": ""
+                                    "taskId": "{{{var-task-id}}}"
                                 }
                             }
                         }
@@ -397,7 +463,7 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 2100,
+            "x": 2200,
             "y": 320,
             "version": "1.0.1",
             "source": {
@@ -427,7 +493,7 @@
                                 "lambda": {
                                     "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Todoist - task-crud",
-                                    "result": ""
+                                    "result": "{{{result-var}}}"
                                 }
                             }
                         }
