@@ -89,8 +89,8 @@
         },
         "assert-project-created": {
             "type": "appmixer.utils.test.Assert",
-            "x": 600,
-            "y": 100,
+            "x": 608,
+            "y": -16,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -167,7 +167,7 @@
         "assert-project-archived": {
             "type": "appmixer.utils.test.Assert",
             "x": 800,
-            "y": 200,
+            "y": 208,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -208,8 +208,8 @@
         },
         "unarchive-project": {
             "type": "appmixer.todoist.core.UnarchiveProject",
-            "x": 1000,
-            "y": 200,
+            "x": 1008,
+            "y": 336,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -243,8 +243,8 @@
         },
         "assert-project-unarchived": {
             "type": "appmixer.utils.test.Assert",
-            "x": 1200,
-            "y": 200,
+            "x": 1248,
+            "y": 336,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -285,8 +285,8 @@
         },
         "get-collaborators": {
             "type": "appmixer.todoist.core.GetProjectCollaborators",
-            "x": 1000,
-            "y": 300,
+            "x": 1008,
+            "y": 528,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -322,8 +322,8 @@
         },
         "assert-collaborators": {
             "type": "appmixer.utils.test.Assert",
-            "x": 1200,
-            "y": 300,
+            "x": 1248,
+            "y": 528,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -340,8 +340,8 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-result": {
-                                            "variable": "$.get-collaborators.out.result",
+                                        "1b8b9dfa-0b48-4b2b-ba83-7f433243ccb8": {
+                                            "variable": "$.get-collaborators.out",
                                             "functions": []
                                         }
                                     }
@@ -350,8 +350,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-result}}}",
-                                                "assertion": "notEmpty"
+                                                "assertion": "notEmpty",
+                                                "field": "{{{1b8b9dfa-0b48-4b2b-ba83-7f433243ccb8}}}"
                                             }
                                         ]
                                     }
@@ -364,8 +364,8 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1400,
-            "y": 200,
+            "x": 1600,
+            "y": 208,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -391,8 +391,8 @@
         },
         "delete-project": {
             "type": "appmixer.todoist.core.DeleteProject",
-            "x": 1600,
-            "y": 200,
+            "x": 1888,
+            "y": 208,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -426,8 +426,8 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1800,
-            "y": 200,
+            "x": 2088,
+            "y": 208,
             "version": "1.0.1",
             "source": {
                 "in": {
