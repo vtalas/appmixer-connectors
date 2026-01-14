@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.ReopenTask",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Reopen a closed task.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

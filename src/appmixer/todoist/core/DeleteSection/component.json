@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.DeleteSection",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Delete a section.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

@@ -34,6 +34,25 @@ const PRIORITY_OPTIONS = [
 
 const DEFAULT_PREFIX = 'todoist';
 
+const toCsv = (array) => {
+    if (!array || array.length === 0) {
+        return '';
+    }
+    const headers = Object.keys(array[0]);
+
+    return [
+        headers.join(','),
+        ...array.map(item => {
+            return Object.values(item).map(property => {
+                if (typeof property === 'object') {
+                    return JSON.stringify(property);
+                }
+                return property;
+            }).join(',');
+        })
+    ].join('\n');
+};
+
 module.exports = {
 
     TODOIST_COLORS,

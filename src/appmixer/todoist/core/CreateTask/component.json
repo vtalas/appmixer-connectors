@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.CreateTask",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Create a new task in Todoist.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

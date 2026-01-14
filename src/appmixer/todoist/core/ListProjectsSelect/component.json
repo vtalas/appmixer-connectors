@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.ListProjectsSelect",
     "author": "Appmixer <info@appmixer.com>",
     "description": "List all projects for select dropdown.",
+    "version": "1.0.0",
     "private": true,
     "auth": {
         "service": "appmixer:todoist"

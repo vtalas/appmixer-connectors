@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.CreateProject",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Create a new project in Todoist.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

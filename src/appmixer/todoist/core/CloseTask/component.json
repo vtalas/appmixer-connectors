@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.CloseTask",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Close a task (mark it as complete).",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

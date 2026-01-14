@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.DeleteReminder",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Delete a reminder.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist",
         "scope": [
