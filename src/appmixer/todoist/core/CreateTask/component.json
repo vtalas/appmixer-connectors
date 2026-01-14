@@ -97,7 +97,7 @@
                         }
                     },
                     "sectionId": {
-                        "type": "select",
+                        "type": "text",
                         "label": "Section",
                         "tooltip": "The section to add the task to.",
                         "index": 4,

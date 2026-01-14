@@ -1,5 +1,6 @@
 'use strict';
 
+const pathModule = require("path");
 const TODOIST_COLORS = [
     { label: 'Berry Red', value: 'berry_red' },
     { label: 'Red', value: 'red' },
@@ -77,44 +78,54 @@ module.exports = {
         return response.data;
     },
 
-    getOutputPortOptions(portsToSkip = []) {
-
-        const ports = [
-            { label: 'First', value: 'first' },
-            { label: 'Array', value: 'array' },
-            { label: 'Object', value: 'object' },
-            { label: 'File', value: 'file' }
-        ];
-
-        return ports.filter(port => !portsToSkip.includes(port.value));
-    },
-
-    async sendArrayOutput({ context, outputType = 'first', records = [], filesInfo, label }) {
+    async sendArrayOutput({
+        context,
+        outputPortName = 'out',
+        outputType = 'array',
+        records = []
+    }) {
 
         if (outputType === 'first') {
-            if (records.length > 0) {
-                return context.sendJson(records[0], 'out');
+            if (records.length === 0) {
+                throw new context.CancelError('No records available for first output type');
             }
+            // One by one.
+            await context.sendJson(
+                { ...records[0], index: 0, count: records.length },
+                outputPortName
+            );
         } else if (outputType === 'object') {
-            for (const record of records) {
-                await context.sendJson(record, 'out');
+            // One by one.
+            for (let index = 0; index < records.length; index++) {
+                await context.sendJson(
+                    { ...records[index], index, count: records.length },
+                    outputPortName
+                );
             }
         } else if (outputType === 'array') {
-            return context.sendJson({ records }, 'out');
+            // All at once.
+            await context.sendJson({ result: records, count: records.length }, outputPortName);
         } else if (outputType === 'file') {
-            const content = JSON.stringify(records, null, 2);
-            const savedFile = await context.saveFileStream(
-                filesInfo?.filename || 'records.json',
-                Buffer.from(content)
-            );
-            return context.sendJson({ fileId: savedFile.fileId }, 'out');
+
+            // Into CSV file.
+            const csvString = toCsv(records);
+
+            let buffer = Buffer.from(csvString, 'utf8');
+            const componentName = context.flowDescriptor[context.componentId].label || context.componentId;
+            const fileName = `${context.config.outputFilePrefix || DEFAULT_PREFIX}-${componentName}.csv`;
+            const savedFile = await context.saveFileStream(pathModule.normalize(fileName), buffer);
+
+            await context.log({ step: 'File was saved', fileName, fileId: savedFile.fileId });
+            await context.sendJson({ fileId: savedFile.fileId }, outputPortName);
+        } else {
+            throw new context.CancelError('Unsupported outputType ' + outputType);
         }
     },
 
     getOutputPortSchema(schema, outputType, label) {
 
         if (outputType === 'first' || outputType === 'object') {
-            const options = Object.keys(schema)
+            return Object.keys(schema)
                 .reduce((res, field) => {
                     const fieldSchema = schema[field];
                     const { title: label, ...schemaWithoutTitle } = fieldSchema;
@@ -129,7 +140,6 @@ module.exports = {
                     value: 'count',
                     schema: { type: 'integer' }
                 }]);
-            return options;
         }
 
         if (outputType === 'array') {

@@ -538,6 +538,206 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
+```
+appmixer test component src/appmixer/todoist/core/CreateReminder/ -i '{"in":{"taskId":"9907454175","type":"relative","minuteOffset":30}}'
+```
+<details><summary>❌ output</summary>
+Testing /Users/vladimir/Projects/appmixer-connectors/src/appmixer/todoist/core/CreateReminder
+https://api.appmixer.com
+
+Validating properties.
+{ path: '/Users/vladimir/.config/configstore/appmixer.json' }
+program.url undefined
+Using client ID (from local storage): 30d04a08e7434f8b8f3a454c806b4489
+Using client secret (from local storage): df827dbc1ec8405ab292a3cbf0823f21
+Using access token (from local storage): 34ac806ec2c61ced6d1d4caf5c3b02ef7ca0531a
+
+Creating authentication module.
+
+Setting access token.
+
+Test server is listening on 2300
+
+Starting component.
+
+Calling receive method with input message:
+in: 
+  - 
+    properties: 
+      correlationId:     null
+      gridInstanceId:    null
+      contentType:       application/json
+      contentEncoding:   utf8
+      sender:            null
+      destination:       null
+      correlationInPort: null
+      componentHeaders: 
+      signal:            false
+      flowId:            null
+    content: 
+      taskId:       9907454175
+      type:         relative
+      minuteOffset: 30
+    scope: 
+
+[ERROR]: Item not found
+ContextCancelError: Item not found
+    at Object.receive (/Users/vladimir/Projects/appmixer-connectors/src/appmixer/todoist/core/CreateReminder/CreateReminder.js:62:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  error: undefined,
+  data: undefined,
+  code: 500
+}
+</details>
+
+```
+appmixer test component src/appmixer/todoist/core/CreateTask/ -i '{"in":{"content":"Test Task for Reminder - CreateReminder Validation"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  ID: '9916526119',
+  'Assigner ID': null,
+  'Assignee ID': null,
+  'Project ID': '2365436060',
+  'Section ID': null,
+  'Parent ID': null,
+  Order: 4,
+  Content: 'Test Task for Reminder - CreateReminder Validation',
+  Description: '',
+  'Is Completed': false,
+  Labels: [],
+  Priority: 1,
+  'Comment Count': 0,
+  'Creator ID': '57023438',
+  'Created At': '2026-01-14T12:53:30.310198Z',
+  'Due Date': undefined,
+  'Due String': undefined,
+  'Due Is Recurring': undefined,
+  'Due Datetime': undefined,
+  'Due Timezone': undefined,
+  'Duration Amount': undefined,
+  'Duration Unit': undefined,
+  URL: 'https://app.todoist.com/app/task/9916526119'
+}
+
+Component's receive method finished in: 1099 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/CreateReminder/ -i '{"in":{"taskId":"9916526119","type":"relative","minuteOffset":30}}'
+```
+<details><summary>❌ output</summary>
+Testing /Users/vladimir/Projects/appmixer-connectors/src/appmixer/todoist/core/CreateReminder
+https://api.appmixer.com
+
+Validating properties.
+{ path: '/Users/vladimir/.config/configstore/appmixer.json' }
+program.url undefined
+Using client ID (from local storage): 30d04a08e7434f8b8f3a454c806b4489
+Using client secret (from local storage): df827dbc1ec8405ab292a3cbf0823f21
+Using access token (from local storage): 34ac806ec2c61ced6d1d4caf5c3b02ef7ca0531a
+
+Creating authentication module.
+
+Setting access token.
+
+Test server is listening on 2300
+
+Starting component.
+
+Calling receive method with input message:
+in: 
+  - 
+    properties: 
+      correlationId:     null
+      gridInstanceId:    null
+      contentType:       application/json
+      contentEncoding:   utf8
+      sender:            null
+      destination:       null
+      correlationInPort: null
+      componentHeaders: 
+      signal:            false
+      flowId:            null
+    content: 
+      taskId:       9916526119
+      type:         relative
+      minuteOffset: 30
+    scope: 
+
+[ERROR]: Bad Request
+ContextCancelError: Bad Request
+    at Object.receive (/Users/vladimir/Projects/appmixer-connectors/src/appmixer/todoist/core/CreateReminder/CreateReminder.js:62:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  error: undefined,
+  data: undefined,
+  code: 500
+}
+</details>
+
+```
+appmixer test component src/appmixer/todoist/core/CreateTask/ -i '{"in":{"content":"Test Task with Due Date for Reminder","dueString":"tomorrow at 10am"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  ID: '9916527204',
+  'Assigner ID': null,
+  'Assignee ID': null,
+  'Project ID': '2365436060',
+  'Section ID': null,
+  'Parent ID': null,
+  Order: 5,
+  Content: 'Test Task with Due Date for Reminder',
+  Description: '',
+  'Is Completed': false,
+  Labels: [],
+  Priority: 1,
+  'Comment Count': 0,
+  'Creator ID': '57023438',
+  'Created At': '2026-01-14T12:53:50.604428Z',
+  'Due Date': '2026-01-15',
+  'Due String': 'tomorrow at 10am',
+  'Due Is Recurring': false,
+  'Due Datetime': '2026-01-15T10:00:00',
+  'Due Timezone': undefined,
+  'Duration Amount': undefined,
+  'Duration Unit': undefined,
+  URL: 'https://app.todoist.com/app/task/9916527204'
+}
+
+Component's receive method finished in: 978 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/CreateReminder/ -i '{"in":{"taskId":"9916527204","type":"relative","minuteOffset":30}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  ID: '2719296753',
+  'Task ID': '9916527204',
+  Type: 'relative',
+  'Due String': '2026-01-15 09:30',
+  'Due Date': '2026-01-15T09:30:00',
+  'Due Datetime': undefined,
+  'Due Timezone': null,
+  'Minute Offset': 30
+}
+
+Component's receive method finished in: 1211 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
 ## 6. CreateComment
 ```
 appmixer test component src/appmixer/todoist/core/CreateComment/ -i '{"in":{"content":"This is a test comment for validation","taskId":"9907454175"}}'
@@ -3507,6 +3707,452 @@ appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"out
 }
 
 Component's receive method finished in: 406 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"array"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  Records: [
+    {
+      due: [Object],
+      id: '2719292513',
+      is_deleted: false,
+      item_id: '9907602558',
+      minute_offset: null,
+      notify_uid: '57023438',
+      sync_id: null,
+      type: 'absolute',
+      v2_id: '6fm9jMQX5HQ2P2PF',
+      v2_item_id: '6fjhVmRccPPh5wvF'
+    },
+    {
+      due: [Object],
+      id: '2719292925',
+      is_deleted: false,
+      item_id: '9907602558',
+      minute_offset: null,
+      notify_uid: '57023438',
+      sync_id: null,
+      type: 'absolute',
+      v2_id: '6fm9jgGW4Px6cXJF',
+      v2_item_id: '6fjhVmRccPPh5wvF'
+    },
+    {
+      due: [Object],
+      id: '2719285968',
+      is_deleted: false,
+      item_id: '9916417347',
+      minute_offset: 0,
+      notify_uid: '57023438',
+      sync_id: null,
+      type: 'relative',
+      v2_id: '6fm9cfw8QMVwW4XF',
+      v2_item_id: '6fm9cfrMHCmVWhwF'
+    }
+  ],
+  ID: undefined,
+  'Task ID': undefined,
+  Type: undefined,
+  'Due String': undefined,
+  'Due Date': undefined,
+  'Due Datetime': undefined,
+  'Due Timezone': undefined,
+  'Minute Offset': undefined,
+  'File ID': undefined
+}
+
+Component's receive method finished in: 525 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"first"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  Records: undefined,
+  ID: '2719292513',
+  'Task ID': '9907602558',
+  Type: 'absolute',
+  'Due String': 'tomorrow at 3pm',
+  'Due Date': '2026-01-15T15:00:00',
+  'Due Datetime': undefined,
+  'Due Timezone': null,
+  'Minute Offset': null,
+  'File ID': undefined
+}
+
+Component's receive method finished in: 1146 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"object"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  Records: undefined,
+  ID: '2719292513',
+  'Task ID': '9907602558',
+  Type: 'absolute',
+  'Due String': 'tomorrow at 3pm',
+  'Due Date': '2026-01-15T15:00:00',
+  'Due Datetime': undefined,
+  'Due Timezone': null,
+  'Minute Offset': null,
+  'File ID': undefined
+}
+
+In/Out Message logged: 
+severity:      info
+msg:           {"due":{"date":"2026-01-20T14:00:00","is_recurring":false,"lang":"en","string":"2026-01-20 14:00","timezone":null},"id":"2719292925","is_deleted":false,"item_id":"9907602558","minute_offset":null,"notify_uid":"57023438","sync_id":null,"type":"absolute","v2_id":"6fm9jgGW4Px6cXJF","v2_item_id":"6fjhVmRccPPh5wvF"}
+gridTimestamp: 2026-01-14T12:42:58.271Z
+id:            component
+type:          data
+portType:      out
+port:          out
+senderId:      ce8b48d3-f36d-42aa-9c14-dd20e8bd2530
+senderType:    appmixer.todoist.core.ListReminders
+userId:        69678f51443e45078db63471
+componentType: appmixer.todoist.core.ListReminders
+componentId:   ce8b48d3-f36d-42aa-9c14-dd20e8bd2530
+flowId:        d5914b2b-ceeb-4f3d-88ad-d6f140534db2
+flowName:      
+correlationId: e5cdf797-bcb8-4ea3-a0af-9f73ab79b5d0
+inputMessages: {"in":[{"properties":{"correlationId":null,"gridInstanceId":null,"contentType":"application/json","contentEncoding":"utf8","sender":null,"destination":null,"correlationInPort":null,"componentHeaders":{},"signal":false,"flowId":null,"quotaId":"qs-67aa03d2-3271-4884-a1f5-d06a74661f35"},"content":{"outputType":"object"},"scope":{}}]}
+annotatedMsg: 
+  number-id:            2719292925
+  number-item_id:       9907602558
+  string-type:          absolute
+  due: 
+    date-string:     2026-01-20T13:00:00.000Z
+    date-date:       2026-01-20T13:00:00.000Z
+    string-timezone: null
+  string-minute_offset: null
+
+Component has send a message to output port: out
+{
+  Records: undefined,
+  ID: '2719292925',
+  'Task ID': '9907602558',
+  Type: 'absolute',
+  'Due String': '2026-01-20 14:00',
+  'Due Date': '2026-01-20T14:00:00',
+  'Due Datetime': undefined,
+  'Due Timezone': null,
+  'Minute Offset': null,
+  'File ID': undefined
+}
+
+In/Out Message logged: 
+severity:      info
+msg:           {"due":{"date":"2026-01-15T14:00:00","is_recurring":false,"lang":"en","string":"2026-01-15 14:00","timezone":null},"id":"2719285968","is_deleted":false,"item_id":"9916417347","minute_offset":0,"notify_uid":"57023438","sync_id":null,"type":"relative","v2_id":"6fm9cfw8QMVwW4XF","v2_item_id":"6fm9cfrMHCmVWhwF"}
+gridTimestamp: 2026-01-14T12:42:58.272Z
+id:            component
+type:          data
+portType:      out
+port:          out
+senderId:      ce8b48d3-f36d-42aa-9c14-dd20e8bd2530
+senderType:    appmixer.todoist.core.ListReminders
+userId:        69678f51443e45078db63471
+componentType: appmixer.todoist.core.ListReminders
+componentId:   ce8b48d3-f36d-42aa-9c14-dd20e8bd2530
+flowId:        d5914b2b-ceeb-4f3d-88ad-d6f140534db2
+flowName:      
+correlationId: 6574c96a-20bf-4052-98dd-a45a0c3a6f8d
+inputMessages: {"in":[{"properties":{"correlationId":null,"gridInstanceId":null,"contentType":"application/json","contentEncoding":"utf8","sender":null,"destination":null,"correlationInPort":null,"componentHeaders":{},"signal":false,"flowId":null,"quotaId":"qs-67aa03d2-3271-4884-a1f5-d06a74661f35"},"content":{"outputType":"object"},"scope":{}}]}
+annotatedMsg: 
+  number-id:            2719285968
+  number-item_id:       9916417347
+  string-type:          relative
+  due: 
+    date-string:     2026-01-15T13:00:00.000Z
+    date-date:       2026-01-15T13:00:00.000Z
+    string-timezone: null
+  number-minute_offset: 0
+
+Component has send a message to output port: out
+{
+  Records: undefined,
+  ID: '2719285968',
+  'Task ID': '9916417347',
+  Type: 'relative',
+  'Due String': '2026-01-15 14:00',
+  'Due Date': '2026-01-15T14:00:00',
+  'Due Datetime': undefined,
+  'Due Timezone': null,
+  'Minute Offset': 0,
+  'File ID': undefined
+}
+
+Component's receive method finished in: 614 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"file"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  Records: undefined,
+  ID: undefined,
+  'Task ID': undefined,
+  Type: undefined,
+  'Due String': undefined,
+  'Due Date': undefined,
+  'Due Datetime': undefined,
+  'Due Timezone': undefined,
+  'Minute Offset': undefined,
+  'File ID': '69678f581ae4b407963b055f'
+}
+
+Component's receive method finished in: 1122 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"array"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  records: [
+    {
+      due: {
+        date: '2026-01-15T15:00:00',
+        is_recurring: false,
+        lang: 'en',
+        string: 'tomorrow at 3pm',
+        timezone: null
+      },
+      id: '2719292513',
+      is_deleted: false,
+      item_id: '9907602558',
+      minute_offset: null,
+      notify_uid: '57023438',
+      sync_id: null,
+      type: 'absolute',
+      v2_id: '6fm9jMQX5HQ2P2PF',
+      v2_item_id: '6fjhVmRccPPh5wvF'
+    },
+    {
+      due: {
+        date: '2026-01-20T14:00:00',
+        is_recurring: false,
+        lang: 'en',
+        string: '2026-01-20 14:00',
+        timezone: null
+      },
+      id: '2719292925',
+      is_deleted: false,
+      item_id: '9907602558',
+      minute_offset: null,
+      notify_uid: '57023438',
+      sync_id: null,
+      type: 'absolute',
+      v2_id: '6fm9jgGW4Px6cXJF',
+      v2_item_id: '6fjhVmRccPPh5wvF'
+    },
+    {
+      due: {
+        date: '2026-01-15T14:00:00',
+        is_recurring: false,
+        lang: 'en',
+        string: '2026-01-15 14:00',
+        timezone: null
+      },
+      id: '2719285968',
+      is_deleted: false,
+      item_id: '9916417347',
+      minute_offset: 0,
+      notify_uid: '57023438',
+      sync_id: null,
+      type: 'relative',
+      v2_id: '6fm9cfw8QMVwW4XF',
+      v2_item_id: '6fm9cfrMHCmVWhwF'
+    }
+  ]
+}
+
+
+
+Component's receive method finished in: 1025 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"first"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  due: {
+    date: '2026-01-15T15:00:00',
+    is_recurring: false,
+    lang: 'en',
+    string: 'tomorrow at 3pm',
+    timezone: null
+  },
+  id: '2719292513',
+  is_deleted: false,
+  item_id: '9907602558',
+  minute_offset: null,
+  notify_uid: '57023438',
+  sync_id: null,
+  type: 'absolute',
+  v2_id: '6fm9jMQX5HQ2P2PF',
+  v2_item_id: '6fjhVmRccPPh5wvF'
+}
+
+
+
+Component's receive method finished in: 968 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"object"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  due: {
+    date: '2026-01-15T15:00:00',
+    is_recurring: false,
+    lang: 'en',
+    string: 'tomorrow at 3pm',
+    timezone: null
+  },
+  id: '2719292513',
+  is_deleted: false,
+  item_id: '9907602558',
+  minute_offset: null,
+  notify_uid: '57023438',
+  sync_id: null,
+  type: 'absolute',
+  v2_id: '6fm9jMQX5HQ2P2PF',
+  v2_item_id: '6fjhVmRccPPh5wvF'
+}
+
+
+
+In/Out Message logged: 
+severity:      info
+msg:           {"due":{"date":"2026-01-20T14:00:00","is_recurring":false,"lang":"en","string":"2026-01-20 14:00","timezone":null},"id":"2719292925","is_deleted":false,"item_id":"9907602558","minute_offset":null,"notify_uid":"57023438","sync_id":null,"type":"absolute","v2_id":"6fm9jgGW4Px6cXJF","v2_item_id":"6fjhVmRccPPh5wvF"}
+gridTimestamp: 2026-01-14T12:46:34.545Z
+id:            component
+type:          data
+portType:      out
+port:          out
+senderId:      09e67cee-77db-415a-ba71-48a7942fb1db
+senderType:    appmixer.todoist.core.ListReminders
+userId:        69679029c5d09109346f5e9e
+componentType: appmixer.todoist.core.ListReminders
+componentId:   09e67cee-77db-415a-ba71-48a7942fb1db
+flowId:        3cc6eb7f-2708-49aa-a446-01eb3eab66fa
+flowName:      
+correlationId: dfe96d92-94e7-4a0b-b6d6-cf955d46e203
+inputMessages: {"in":[{"properties":{"correlationId":null,"gridInstanceId":null,"contentType":"application/json","contentEncoding":"utf8","sender":null,"destination":null,"correlationInPort":null,"componentHeaders":{},"signal":false,"flowId":null,"quotaId":"qs-20001203-e02f-43aa-bc36-4c4b1f41ba3a"},"content":{"outputType":"object"},"scope":{}}]}
+
+Component has send a message to output port: out
+{
+  due: {
+    date: '2026-01-20T14:00:00',
+    is_recurring: false,
+    lang: 'en',
+    string: '2026-01-20 14:00',
+    timezone: null
+  },
+  id: '2719292925',
+  is_deleted: false,
+  item_id: '9907602558',
+  minute_offset: null,
+  notify_uid: '57023438',
+  sync_id: null,
+  type: 'absolute',
+  v2_id: '6fm9jgGW4Px6cXJF',
+  v2_item_id: '6fjhVmRccPPh5wvF'
+}
+
+
+
+In/Out Message logged: 
+severity:      info
+msg:           {"due":{"date":"2026-01-15T14:00:00","is_recurring":false,"lang":"en","string":"2026-01-15 14:00","timezone":null},"id":"2719285968","is_deleted":false,"item_id":"9916417347","minute_offset":0,"notify_uid":"57023438","sync_id":null,"type":"relative","v2_id":"6fm9cfw8QMVwW4XF","v2_item_id":"6fm9cfrMHCmVWhwF"}
+gridTimestamp: 2026-01-14T12:46:34.545Z
+id:            component
+type:          data
+portType:      out
+port:          out
+senderId:      09e67cee-77db-415a-ba71-48a7942fb1db
+senderType:    appmixer.todoist.core.ListReminders
+userId:        69679029c5d09109346f5e9e
+componentType: appmixer.todoist.core.ListReminders
+componentId:   09e67cee-77db-415a-ba71-48a7942fb1db
+flowId:        3cc6eb7f-2708-49aa-a446-01eb3eab66fa
+flowName:      
+correlationId: 3458639b-8121-42a2-8514-e0f6f9f16666
+inputMessages: {"in":[{"properties":{"correlationId":null,"gridInstanceId":null,"contentType":"application/json","contentEncoding":"utf8","sender":null,"destination":null,"correlationInPort":null,"componentHeaders":{},"signal":false,"flowId":null,"quotaId":"qs-20001203-e02f-43aa-bc36-4c4b1f41ba3a"},"content":{"outputType":"object"},"scope":{}}]}
+
+Component has send a message to output port: out
+{
+  due: {
+    date: '2026-01-15T14:00:00',
+    is_recurring: false,
+    lang: 'en',
+    string: '2026-01-15 14:00',
+    timezone: null
+  },
+  id: '2719285968',
+  is_deleted: false,
+  item_id: '9916417347',
+  minute_offset: 0,
+  notify_uid: '57023438',
+  sync_id: null,
+  type: 'relative',
+  v2_id: '6fm9cfw8QMVwW4XF',
+  v2_item_id: '6fm9cfrMHCmVWhwF'
+}
+
+
+
+Component's receive method finished in: 1062 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
+```
+appmixer test component src/appmixer/todoist/core/ListReminders/ -i '{"in":{"outputType":"file"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{ fileId: '6967902ee4d89d093b348f9a' }
+
+
+
+Component's receive method finished in: 724 ms.
 
 Component's state at the end:
 State is empty, component did not store anything into state.

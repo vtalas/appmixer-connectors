@@ -3,7 +3,10 @@
     "author": "Appmixer <info@appmixer.com>",
     "description": "Delete a reminder.",
     "auth": {
-        "service": "appmixer:todoist"
+        "service": "appmixer:todoist",
+        "scope": [
+            "data:delete"
+        ]
     },
     "quota": {
         "manager": "appmixer:todoist",

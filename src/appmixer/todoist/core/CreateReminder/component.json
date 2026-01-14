@@ -45,7 +45,7 @@
                     "taskId": {
                         "type": "text",
                         "label": "Task ID",
-                        "tooltip": "The ID of the task to add a reminder for.",
+                        "tooltip": "The ID of the task to add a reminder for. For relative reminders, the task must have a due date set.",
                         "index": 1
                     },
                     "type": {

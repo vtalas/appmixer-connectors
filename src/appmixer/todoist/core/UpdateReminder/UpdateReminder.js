@@ -12,33 +12,46 @@ module.exports = {
             throw new context.CancelError('Reminder ID is required.');
         }
 
-        const data = {};
+        const uuid = require('uuid').v4();
+
+        const args = {
+            id: reminderId
+        };
 
         if (type) {
-            data.type = type;
+            args.type = type;
         }
 
         // Handle absolute reminders with due date
         if (type === 'absolute' || (!type && (dueString || dueDatetime))) {
-            data.due = {};
+            args.due = {};
             if (dueString) {
-                data.due.string = dueString;
+                args.due.string = dueString;
             } else if (dueDatetime) {
-                data.due.datetime = dueDatetime;
+                args.due.date = dueDatetime;
             }
         }
 
         // Handle relative reminders with minute offset
         if (type === 'relative' || (!type && minuteOffset !== undefined)) {
             if (minuteOffset !== undefined) {
-                data.minute_offset = minuteOffset;
+                args.minute_offset = minuteOffset;
             }
         }
 
-        await lib.apiRequest(context, `/reminders/${reminderId}`, {
-            method: 'POST',
-            data
-        });
+        const response = await lib.syncApiRequest(context, [
+            {
+                type: 'reminder_update',
+                uuid,
+                args
+            }
+        ]);
+
+        // Check for sync errors
+        const syncStatus = response.sync_status?.[uuid];
+        if (syncStatus && syncStatus.error) {
+            throw new context.CancelError(syncStatus.error);
+        }
 
         return context.sendJson({}, 'out');
     }

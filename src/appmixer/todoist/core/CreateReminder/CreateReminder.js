@@ -24,11 +24,16 @@ module.exports = {
             if (minuteOffset === undefined || minuteOffset === null) {
                 throw new context.CancelError('For relative reminders, Minute Offset is required!');
             }
+            // Validate that task has a due date for relative reminders
+            const task = await lib.apiRequest(context, `/tasks/${taskId}`);
+            if (!task.due) {
+                throw new context.CancelError('For relative reminders, the task must have a due date set!');
+            }
         } else {
             throw new context.CancelError('Type must be either "relative" or "absolute"!');
         }
 
-        const uuid = context.componentId + '-' + Date.now();
+        const uuid = require('uuid').v4();
         const tempId = 'temp_' + Date.now();
 
         const args = {
@@ -40,10 +45,12 @@ module.exports = {
             if (dueString) {
                 args.due = { string: dueString };
             } else if (dueDatetime) {
-                args.due = { datetime: dueDatetime };
+                // Todoist API expects 'date' field for datetime values, not 'datetime'
+                args.due = { date: dueDatetime };
             }
         } else if (type === 'relative') {
             args.minute_offset = minuteOffset;
+
         }
 
         const response = await lib.syncApiRequest(context, [
@@ -54,6 +61,12 @@ module.exports = {
                 args
             }
         ]);
+
+        // Check for sync errors first
+        const syncStatus = response.sync_status?.[uuid];
+        if (syncStatus && syncStatus.error) {
+            throw new context.CancelError(syncStatus.error);
+        }
 
         // The Sync API returns the created reminder in the reminders array
         let reminder = response.reminders?.find(r => r.item_id === taskId);
