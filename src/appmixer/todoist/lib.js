@@ -1,6 +1,7 @@
 'use strict';
 
-const pathModule = require("path");
+const pathModule = require('path');
+
 const TODOIST_COLORS = [
     { label: 'Berry Red', value: 'berry_red' },
     { label: 'Red', value: 'red' },
