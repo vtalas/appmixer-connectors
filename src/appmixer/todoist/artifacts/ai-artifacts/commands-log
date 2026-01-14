@@ -137,3 +137,5 @@ appmixer test component src/appmixer/todoist/core/ArchiveProject/ -i '{"in":{"pr
 appmixer test component src/appmixer/todoist/core/UnarchiveProject/ -i '{"in":{"projectId":"2365437969"}}'
 appmixer test component src/appmixer/todoist/core/UnarchiveProject/ -i '{"in":{"projectId":"2365437969"}}'
 appmixer test component src/appmixer/todoist/core/DeleteProject/ -i '{"in":{"projectId":"2365437969"}}'
+appmixer test component src/appmixer/todoist/core/GetProject/ -i '{"in":{"projectId":"2365437969"}}'
+appmixer test component src/appmixer/todoist/core/GetProject/ -i '{"in":{"projectId":"2365437940"}}'

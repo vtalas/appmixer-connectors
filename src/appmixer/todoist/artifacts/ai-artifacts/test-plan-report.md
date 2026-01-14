@@ -1592,6 +1592,79 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
+```
+appmixer test component src/appmixer/todoist/core/GetProject/ -i '{"in":{"projectId":"2365437969"}}'
+```
+<details><summary>❌ output</summary>
+Testing /Users/vladimir/Projects/appmixer-connectors/src/appmixer/todoist/core/GetProject
+https://api.appmixer.com
+
+Validating properties.
+{ path: '/Users/vladimir/.config/configstore/appmixer.json' }
+program.url undefined
+Using client ID (from local storage): 30d04a08e7434f8b8f3a454c806b4489
+Using client secret (from local storage): df827dbc1ec8405ab292a3cbf0823f21
+Using access token (from local storage): 34ac806ec2c61ced6d1d4caf5c3b02ef7ca0531a
+
+Creating authentication module.
+
+Setting access token.
+
+Test server is listening on 2300
+
+Starting component.
+
+Calling receive method with input message:
+in: 
+  - 
+    properties: 
+      correlationId:     null
+      gridInstanceId:    null
+      contentType:       application/json
+      contentEncoding:   utf8
+      sender:            null
+      destination:       null
+      correlationInPort: null
+      componentHeaders: 
+      signal:            false
+      flowId:            null
+    content: 
+      projectId: 2365437969
+    scope: 
+
+[ERROR]: Request failed with status code 404
+Project not found
+</details>
+
+```
+appmixer test component src/appmixer/todoist/core/GetProject/ -i '{"in":{"projectId":"2365437940"}}'
+```
+<details><summary>✅ output</summary>Component has send a message to output port: out
+{
+  id: '2365437940',
+  parent_id: null,
+  order: 3,
+  color: 'green',
+  name: 'E2E Test Project 3',
+  is_shared: false,
+  is_favorite: true,
+  is_inbox_project: false,
+  is_team_inbox: false,
+  url: 'https://app.todoist.com/app/project/6fjhFPFjQM2HPcP3',
+  view_style: 'list',
+  description: '',
+  comment_count: 0
+}
+
+
+
+Component's receive method finished in: 489 ms.
+
+Component's state at the end:
+State is empty, component did not store anything into state.
+
+Stopping component.</details>
+
 ## 18. GetSection
 ```
 appmixer test component src/appmixer/todoist/core/GetSection/ -i '{"in":{"sectionId":"212068467"}}'
@@ -3848,129 +3921,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 31. ListLabelsSelect
-```
-appmixer test component src/appmixer/todoist/core/ListLabelsSelect/
-```
-<details><summary>✅ output</summary>
-Testing /Users/vladimir/Projects/appmixer-connectors/src/appmixer/todoist/core/ListLabelsSelect
-https://api.appmixer.com
-
-Validating properties.
-{ path: '/Users/vladimir/.config/configstore/appmixer.json' }
-program.url undefined
-Using client ID (from local storage): 30d04a08e7434f8b8f3a454c806b4489
-Using client secret (from local storage): df827dbc1ec8405ab292a3cbf0823f21
-Using access token (from local storage): 34ac806ec2c61ced6d1d4caf5c3b02ef7ca0531a
-
-Creating authentication module.
-
-Setting access token.
-
-Test server is listening on 2300
-
-Starting component.
-
-Component's state at the end:
-State is empty, component did not store anything into state.
-
-Stopping component.
-Your component didn't send anything to it's output port(s). Make sure you don't call 'context.sendJson' method after promise from component's method has been resolved.
-</details>
-
-```
-appmixer test component src/appmixer/todoist/core/ListLabelsSelect/
-```
-<details><summary>✅ output</summary>
-Testing /Users/vladimir/Projects/appmixer-connectors/src/appmixer/todoist/core/ListLabelsSelect
-https://api.appmixer.com
-
-Validating properties.
-{ path: '/Users/vladimir/.config/configstore/appmixer.json' }
-program.url undefined
-Using client ID (from local storage): 30d04a08e7434f8b8f3a454c806b4489
-Using client secret (from local storage): df827dbc1ec8405ab292a3cbf0823f21
-Using access token (from local storage): 34ac806ec2c61ced6d1d4caf5c3b02ef7ca0531a
-
-Creating authentication module.
-
-Setting access token.
-
-Test server is listening on 2300
-
-Starting component.
-
-Component's state at the end:
-State is empty, component did not store anything into state.
-
-Stopping component.
-Your component didn't send anything to it's output port(s). Make sure you don't call 'context.sendJson' method after promise from component's method has been resolved.
-</details>
-
-```
-appmixer test component src/appmixer/todoist/core/ListLabelsSelect/
-```
-<details><summary>✅ output</summary>Component has send a message to output port: out
-[
-  { label: 'E2E Test Label 2', value: '2182738509' },
-  { label: 'E2E Test Label 3', value: '2182738510' },
-  { label: 'E2E Test Label 4', value: '2182738514' },
-  { label: 'E2E Test Label 5', value: '2182738516' },
-  { label: 'Final Validation Test', value: '2182738508' }
-]
-
-
-
-Component's receive method finished in: 295 ms.
-
-Component's state at the end:
-State is empty, component did not store anything into state.
-
-Stopping component.</details>
-
-```
-appmixer test component src/appmixer/todoist/core/ListLabelsSelect/
-```
-<details><summary>✅ output</summary>Component has send a message to output port: out
-[
-  { label: 'E2E Test Label 2', value: '2182738509' },
-  { label: 'E2E Test Label 3', value: '2182738510' },
-  { label: 'E2E Test Label 4', value: '2182738514' },
-  { label: 'E2E Test Label 5', value: '2182738516' },
-  { label: 'Final Validation Test', value: '2182738508' }
-]
-
-
-
-Component's receive method finished in: 188 ms.
-
-Component's state at the end:
-State is empty, component did not store anything into state.
-
-Stopping component.</details>
-
-```
-appmixer test component src/appmixer/todoist/core/ListLabelsSelect/
-```
-<details><summary>✅ output</summary>Component has send a message to output port: out
-[
-  { label: 'E2E Test Label 2', value: '2182738509' },
-  { label: 'E2E Test Label 3', value: '2182738510' },
-  { label: 'E2E Test Label 4', value: '2182738514' },
-  { label: 'E2E Test Label 5', value: '2182738516' },
-  { label: 'Final Validation Test', value: '2182738508' }
-]
-
-
-
-Component's receive method finished in: 193 ms.
-
-Component's state at the end:
-State is empty, component did not store anything into state.
-
-Stopping component.</details>
-
-## 32. DeleteComment
+## 31. DeleteComment
 ```
 appmixer test component src/appmixer/todoist/core/DeleteComment/ -i '{"in":{"commentId":"3947969952"}}'
 ```
@@ -4001,7 +3952,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 33. DeleteReminder
+## 32. DeleteReminder
 ```
 appmixer test component src/appmixer/todoist/core/CreateReminder/ -i '{"in":{"taskId":"9907454175","type":"relative","minuteOffset":30}}'
 ```
@@ -4111,7 +4062,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 34. DeleteTask
+## 33. DeleteTask
 ```
 appmixer test component src/appmixer/todoist/core/DeleteTask/ -i '{"in":{"taskId":"9907454175"}}'
 ```
@@ -4127,7 +4078,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 35. DeleteSection
+## 34. DeleteSection
 ```
 appmixer test component src/appmixer/todoist/core/DeleteSection/ -i '{"in":{"sectionId":"212068467"}}'
 ```
@@ -4143,7 +4094,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 36. DeleteLabel
+## 35. DeleteLabel
 ```
 appmixer test component src/appmixer/todoist/core/DeleteLabel/ -i '{"in":{"labelId":"2182738508"}}'
 ```
@@ -4159,7 +4110,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 37. ArchiveProject
+## 36. ArchiveProject
 ```
 appmixer test component src/appmixer/todoist/core/ArchiveProject/ -i '{"in":{"projectId":"2365437969"}}'
 ```
@@ -4175,7 +4126,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 38. UnarchiveProject
+## 37. UnarchiveProject
 ```
 appmixer test component src/appmixer/todoist/core/UnarchiveProject/ -i '{"in":{"projectId":"2365437969"}}'
 ```
@@ -4235,7 +4186,7 @@ State is empty, component did not store anything into state.
 
 Stopping component.</details>
 
-## 39. DeleteProject
+## 38. DeleteProject
 ```
 appmixer test component src/appmixer/todoist/core/DeleteProject/ -i '{"in":{"projectId":"2365437969"}}'
 ```
