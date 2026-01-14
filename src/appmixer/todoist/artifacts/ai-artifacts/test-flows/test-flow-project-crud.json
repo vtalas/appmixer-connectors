@@ -94,8 +94,8 @@
         },
         "assert-create": {
             "type": "appmixer.utils.test.Assert",
-            "x": 608,
-            "y": -192,
+            "x": 592,
+            "y": -80,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -177,7 +177,7 @@
         "assert-get": {
             "type": "appmixer.utils.test.Assert",
             "x": 1088,
-            "y": 32,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {

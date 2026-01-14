@@ -132,7 +132,7 @@
                                     "outputType": {}
                                 },
                                 "lambda": {
-                                    "outputType": "array"
+                                    "outputType": "first"
                                 }
                             }
                         }
@@ -429,8 +429,8 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "d60e8705-d45d-4147-989b-1ac5a7a1d74b": {
-                                            "variable": "$.list-labels.out.records",
+                                        "aeac9406-1dbd-4c63-a7eb-fad696f5165b": {
+                                            "variable": "$.list-labels.out.name",
                                             "functions": []
                                         }
                                     }
@@ -439,8 +439,8 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{d60e8705-d45d-4147-989b-1ac5a7a1d74b}}}",
-                                                "assertion": "notEmpty"
+                                                "assertion": "notEmpty",
+                                                "field": "{{{aeac9406-1dbd-4c63-a7eb-fad696f5165b}}}"
                                             }
                                         ]
                                     }
