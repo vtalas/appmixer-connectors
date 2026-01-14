@@ -1126,6 +1126,40 @@ const toCsv = (array) => {
 };
 ```
 
+### outputType Helper Functions (REQUIRED)
+
+Components with `outputType` (Find/List) **MUST** use standardized lib.js helpers.
+
+**Required functions in connector's lib.js:**
+- `sendArrayOutput({ context, outputType, records })` - handles all output types
+- `getOutputPortOptions(context, outputType, schema, { label })` - dynamic output schema
+
+**Canonical implementation:** Copy from `appmixer-cli/src/ai/src/templates/libs/lib.js`
+
+**Required behavior pattern:**
+```javascript
+const lib = require('../../lib');
+
+module.exports = {
+    async receive(context) {
+        const { outputType } = context.messages.in.content;
+
+        if (context.properties.generateOutputPortOptions) {
+            return lib.getOutputPortOptions(context, outputType, SCHEMA, { label: 'Items' });
+        }
+
+        const records = await fetchData();
+        return lib.sendArrayOutput({ context, outputType, records });
+    }
+};
+```
+
+**Critical rules:**
+- Always use `result` for array output field name: `{ result: records, count }`
+- Never use `records` or custom field names for consistency
+- lib.js MUST exist in connector root if component has outputType
+- Run `npm run validate-outputtype` to check compliance
+
 ### List (Items) Components
 
 **Purpose**: Retrieve all items of a specific type. Use when the service doesn't provide filter/search options.
