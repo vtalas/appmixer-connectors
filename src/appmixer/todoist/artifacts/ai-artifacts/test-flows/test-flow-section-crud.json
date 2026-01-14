@@ -99,8 +99,8 @@
         },
         "create-section": {
             "type": "appmixer.todoist.core.CreateSection",
-            "x": 700,
-            "y": 100,
+            "x": 688,
+            "y": -48,
             "source": {
                 "in": {
                     "create-project": [
@@ -141,8 +141,8 @@
         },
         "assert-create": {
             "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 0,
+            "x": 1152,
+            "y": -48,
             "source": {
                 "in": {
                     "create-section": [
@@ -183,8 +183,8 @@
         },
         "get-section": {
             "type": "appmixer.todoist.core.GetSection",
-            "x": 700,
-            "y": 200,
+            "x": 944,
+            "y": 240,
             "source": {
                 "in": {
                     "create-section": [
@@ -218,8 +218,8 @@
         },
         "assert-get": {
             "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 200,
+            "x": 1152,
+            "y": 240,
             "source": {
                 "in": {
                     "get-section": [
@@ -265,8 +265,8 @@
         },
         "list-sections": {
             "type": "appmixer.todoist.core.ListSections",
-            "x": 700,
-            "y": 300,
+            "x": 944,
+            "y": 96,
             "source": {
                 "in": {
                     "create-section": [
@@ -282,17 +282,17 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
+                                    "outputType": {},
                                     "projectId": {
-                                        "var-project-id": {
+                                        "be76a0ad-6b4d-4a23-8540-64a2d4259fcf": {
                                             "variable": "$.create-project.out.id",
                                             "functions": []
                                         }
-                                    },
-                                    "outputType": {}
+                                    }
                                 },
                                 "lambda": {
-                                    "projectId": "{{{var-project-id}}}",
-                                    "outputType": "array"
+                                    "outputType": "first",
+                                    "projectId": "{{{be76a0ad-6b4d-4a23-8540-64a2d4259fcf}}}"
                                 }
                             }
                         }
@@ -302,8 +302,8 @@
         },
         "assert-list": {
             "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 300,
+            "x": 1152,
+            "y": 96,
             "source": {
                 "in": {
                     "list-sections": [
@@ -320,8 +320,16 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-result": {
-                                            "variable": "$.list-sections.out.result",
+                                        "c485308f-b741-462f-b21a-e5334cf95206": {
+                                            "variable": "$.list-sections.out.index",
+                                            "functions": []
+                                        },
+                                        "738a6e93-c623-449b-b259-1b7ef6cd2dd0": {
+                                            "variable": "$.list-sections.out.count",
+                                            "functions": []
+                                        },
+                                        "ea2765bb-6eb7-4949-ab46-22c88dff889b": {
+                                            "variable": "$.list-sections.out.name",
                                             "functions": []
                                         }
                                     }
@@ -330,8 +338,19 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-result}}}",
-                                                "assertion": "notEmpty"
+                                                "type": "number",
+                                                "assertion": "notEmpty",
+                                                "field": "{{{c485308f-b741-462f-b21a-e5334cf95206}}}"
+                                            },
+                                            {
+                                                "type": "number",
+                                                "assertion": "notEmpty",
+                                                "field": "{{{738a6e93-c623-449b-b259-1b7ef6cd2dd0}}}"
+                                            },
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{ea2765bb-6eb7-4949-ab46-22c88dff889b}}}",
+                                                "type": "string"
                                             }
                                         ]
                                     }
@@ -344,22 +363,18 @@
         },
         "update-section": {
             "type": "appmixer.todoist.core.UpdateSection",
-            "x": 700,
-            "y": 400,
-            "source": {
-                "in": {
-                    "create-section": [
-                        "out"
-                    ]
-                }
-            },
+            "x": 1152,
+            "y": 384,
             "version": "1.0.0",
             "config": {
                 "transform": {
                     "in": {
-                        "create-section": {
+                        "get-section": {
                             "out": {
-                                "type": "json2new",
+                                "lambda": {
+                                    "sectionId": "{{{var-section-id}}}",
+                                    "name": "{{{var-updated-name}}}"
+                                },
                                 "modifiers": {
                                     "sectionId": {
                                         "var-section-id": {
@@ -373,21 +388,24 @@
                                             "functions": []
                                         }
                                     }
-                                },
-                                "lambda": {
-                                    "sectionId": "{{{var-section-id}}}",
-                                    "name": "{{{var-updated-name}}}"
                                 }
                             }
                         }
                     }
                 }
+            },
+            "source": {
+                "in": {
+                    "get-section": [
+                        "out"
+                    ]
+                }
             }
         },
         "assert-update": {
             "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 400,
+            "x": 1344,
+            "y": 384,
             "source": {
                 "in": {
                     "update-section": [
@@ -408,7 +426,7 @@
                                             "variable": "$.update-section.out.name",
                                             "functions": []
                                         },
-                                        "expected-updated-name": {
+                                        "6a0fd600-c564-47e2-9ea9-779af6b20a72": {
                                             "variable": "$.set-variables.out.updatedSectionName",
                                             "functions": []
                                         }
@@ -418,86 +436,9 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-updated-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "{{{expected-updated-name}}}"
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "list-sections-select": {
-            "type": "appmixer.todoist.core.ListSectionsSelect",
-            "x": 700,
-            "y": 500,
-            "source": {
-                "in": {
-                    "create-section": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "config": {
-                "transform": {
-                    "in": {
-                        "create-section": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "projectId": {
-                                        "var-project-id": {
-                                            "variable": "$.create-project.out.id",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "projectId": "{{{var-project-id}}}"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "assert-list-select": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 500,
-            "source": {
-                "in": {
-                    "list-sections-select": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "config": {
-                "transform": {
-                    "in": {
-                        "list-sections-select": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "expression": {
-                                        "field-array": {
-                                            "variable": "$.list-sections-select.out",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "expression": {
-                                        "AND": [
-                                            {
-                                                "field": "{{{field-array}}}",
-                                                "assertion": "notEmpty"
+                                                "field": "{{{field-updated-name}}}",
+                                                "expected": "{{{6a0fd600-c564-47e2-9ea9-779af6b20a72}}}"
                                             }
                                         ]
                                     }
@@ -510,8 +451,8 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1100,
-            "y": 300,
+            "x": 1584,
+            "y": -48,
             "source": {
                 "in": {
                     "assert-create": [
@@ -525,9 +466,6 @@
                     ],
                     "assert-update": [
                         "out"
-                    ],
-                    "assert-list-select": [
-                        "out"
                     ]
                 }
             },
@@ -540,8 +478,8 @@
         },
         "delete-section": {
             "type": "appmixer.todoist.core.DeleteSection",
-            "x": 1300,
-            "y": 300,
+            "x": 1952,
+            "y": -48,
             "source": {
                 "in": {
                     "after-all": [
@@ -575,8 +513,8 @@
         },
         "delete-project": {
             "type": "appmixer.todoist.core.DeleteProject",
-            "x": 1500,
-            "y": 300,
+            "x": 1968,
+            "y": 160,
             "source": {
                 "in": {
                     "delete-section": [
@@ -610,8 +548,8 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1700,
-            "y": 300,
+            "x": 1984,
+            "y": 336,
             "source": {
                 "in": {
                     "delete-project": [

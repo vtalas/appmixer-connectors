@@ -84,7 +84,7 @@
                         "generateOutputPortOptions": true
                     },
                     "messages": {
-                        "in/projectId": "inputs/in/projectId",
+                        "in/projectId": "any",
                         "in/outputType": "inputs/in/outputType"
                     }
                 }
