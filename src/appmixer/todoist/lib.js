@@ -31,6 +31,8 @@ const PRIORITY_OPTIONS = [
     { label: 'Priority 4 (Lowest)', value: 1 }
 ];
 
+const DEFAULT_PREFIX = 'todoist';
+
 module.exports = {
 
     TODOIST_COLORS,

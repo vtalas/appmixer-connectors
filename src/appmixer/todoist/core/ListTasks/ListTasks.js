@@ -52,8 +52,7 @@ module.exports = {
         return lib.sendArrayOutput({
             context,
             outputType: outputType || 'array',
-            records: tasks,
-            filesInfo: { filename: 'tasks.json' }
+            records: tasks
         });
     }
 };
