@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.GetProject",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Get a project by ID.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

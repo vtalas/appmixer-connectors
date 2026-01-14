@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.UpdateLabel",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Update an existing label.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

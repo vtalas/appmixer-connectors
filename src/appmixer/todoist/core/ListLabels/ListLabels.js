@@ -29,8 +29,7 @@ module.exports = {
         return lib.sendArrayOutput({
             context,
             outputType: outputType || 'array',
-            records: labels,
-            filesInfo: { filename: 'labels.json' }
+            records: labels
         });
     }
 };

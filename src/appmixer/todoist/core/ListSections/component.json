@@ -2,6 +2,7 @@
     "name": "appmixer.todoist.core.ListSections",
     "author": "Appmixer <info@appmixer.com>",
     "description": "List all sections in a project. Returns a maximum of 300 sections per request.",
+    "version": "1.0.0",
     "auth": {
         "service": "appmixer:todoist"
     },

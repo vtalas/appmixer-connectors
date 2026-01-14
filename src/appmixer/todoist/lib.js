@@ -148,7 +148,7 @@ module.exports = {
         if (outputType === 'array') {
             return [{
                 label: label || 'Records',
-                value: 'records',
+                value: 'result',
                 schema: {
                     type: 'array',
                     items: { type: 'object', properties: schema }

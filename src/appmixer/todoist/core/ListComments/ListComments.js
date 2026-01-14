@@ -43,8 +43,7 @@ module.exports = {
         return lib.sendArrayOutput({
             context,
             outputType: outputType || 'array',
-            records: comments,
-            filesInfo: { filename: 'comments.json' }
+            records: comments
         });
     }
 };
