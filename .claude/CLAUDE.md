@@ -152,6 +152,12 @@ module.exports = {
 - MUST return empty object: `return context.sendJson({}, 'out');`
 - MUST have at least one required input (the ID of entity being updated)
 
+**Output Port Schema Definition**:
+- Each output port can use **either** `schema` or `options`, but **NOT both**
+- `schema`: JSON Schema for structured output definition
+- `options`: Array of label/value pairs for simpler output definition
+- Having both `schema` and `options` at the root level of an output port is invalid
+
 ### Find/List Components with outputType
 
 Find and List components support `outputType` (first/array/object/file) via `lib.js` helpers:

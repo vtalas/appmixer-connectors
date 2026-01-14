@@ -763,6 +763,51 @@ Ensure `inPorts[0].schema.properties.<input_name>.type` and `inPorts[0].inspecto
 - `integer` → `number`
 - `boolean` → `toggle`
 
+### Output Port Schema Definition
+
+Each output port can define its output structure using **either** `schema` or `options`, but **not both**:
+
+- **`schema`**: Use JSON Schema to define the structure of output data. Provides type information and validation.
+- **`options`**: Use an array of label/value pairs to define available output fields. Simpler but less structured.
+
+**IMPORTANT**: You cannot have both `schema` and `options` at the root level of an output port. Choose one approach:
+
+```json
+// CORRECT - using schema only
+"outPorts": [
+    {
+        "name": "out",
+        "schema": {
+            "type": "object",
+            "properties": {
+                "id": { "type": "string", "title": "ID" },
+                "name": { "type": "string", "title": "Name" }
+            }
+        }
+    }
+]
+
+// CORRECT - using options only
+"outPorts": [
+    {
+        "name": "out",
+        "options": [
+            { "label": "ID", "value": "id" },
+            { "label": "Name", "value": "name" }
+        ]
+    }
+]
+
+// INCORRECT - both schema and options
+"outPorts": [
+    {
+        "name": "out",
+        "schema": { ... },
+        "options": [ ... ]  // ERROR: Cannot have both
+    }
+]
+```
+
 ---
 
 # Part 6: Component Behavior (JavaScript)
