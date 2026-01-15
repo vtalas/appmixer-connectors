@@ -236,17 +236,17 @@ context.log(level, message, [data]);
 - **Remove unused variables/imports** - every declared variable must be used
 - **No single-option selects** - hardcode constants instead of making them user inputs
 - **Date/Time fields**: Use inspector type `date-time`, NOT `text`
-    - Schema: `"type": "string", "format": "date-time"`
-    - Inspector: `"type": "date-time"`
-    - For date-only: Add `{ "enableTime": false }` config
+  - Schema: `"type": "string", "format": "date-time"`
+  - Inspector: `"type": "date-time"`
+  - For date-only: Add `{ "enableTime": false }` config
 
 ## Documentation Reference
 
 Full connector development guide: https://docs.appmixer.com/getting-started/custom-connectors
 
-### Testing compoenents
+### Testing compoenents 
 
-it's possible to test components locally using the Appmixer CLI.
+it's possible to test components locally using the Appmixer CLI. 
 
 #### setup
 

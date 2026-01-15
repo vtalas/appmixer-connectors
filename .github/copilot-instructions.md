@@ -2154,7 +2154,7 @@ async function getSubfolders(context, rootFolderId) {
 ```
 
 **Why batching is important**: Deep recursive folder structures with hundreds of subfolders can take minutes to traverse sequentially. Batched concurrent requests significantly reduce total execution time and are less likely to timeout.
-
+    
 ### Common Patterns
 
 #### When Adding New Field to component.json
