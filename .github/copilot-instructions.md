@@ -2355,15 +2355,15 @@ Test flows are JSON files that define a workflow using the Appmixer flow format.
         "component-id-1": {
             "type": "appmixer.utils.controls.OnStart",
             "x": 100,
-            "y": 200,
+            "y": 192,
             "source": {},
             "version": "1.0.0",
             "config": {}
         },
         "component-id-2": {
             "type": "appmixer.connector.core.ComponentName",
-            "x": 300,
-            "y": 200,
+            "x": 250,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -2838,16 +2838,16 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
 4. **Multiple Assert Components - Separate Branches**
     - **CRITICAL**: If a flow has more than one Assert component, they MUST be in separate branches
     - Each Assert should test a different aspect or operation
-    - Branches should have different y-coordinates for visual separation
+    - Branches should have different y-coordinates for visual separation (increments of ~160: 192, 352, 512, etc.)
     - All Assert components feed into the AfterAll component to merge results
     - Example structure:
       ```
-      Component A (y=100)
-        ├─> Assert 1 (y=100) ─┐
-        └─> Component B (y=300) ─> Assert 2 (y=300) ─┘
-                                                      └─> AfterAll
+      Component A (y=192)
+        ├─> Assert 1 (y=192) ─┐
+        └─> Component B (y=352) ─> Assert 2 (y=352) ─┘
+                                                      └─> AfterAll (y=192)
       ```
-    - See `test-flow-images.json` for reference implementation
+    - See `test-flow-campaign-crud.json` and `test-flow-contact-crud.json` for reference implementations
 
 5. **Field Name Accuracy**
     - Use EXACT field names from component.json
@@ -2864,10 +2864,21 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
     - Use AfterAll to ensure cleanup runs after all assertions
     - Connect cleanup components properly
 
-8. **Component Coordinates**
-    - Use x/y coordinates for visual layout
-    - Space components horizontally (200-300px apart)
-    - Arrange vertically for parallel branches (especially for multiple Assert components)
+8. **Component Layout and Coordinates**
+    - **Main flow baseline**: Use `y: 192` as the main horizontal line for the primary flow path
+    - **X-axis spacing**: Space components approximately 150 units apart horizontally
+    - **Parallel branches**: When operations branch from a single component:
+      - The main branch stays at `y: 192`
+      - Each parallel branch increments Y by approximately 160 units (e.g., `y: 352`, `y: 512`, etc.)
+    - **Assert alignment**: Each Assert component should have the **same Y coordinate** as the component it validates
+    - **Convergence**: AfterAll, cleanup components, and ProcessE2EResults return to the main line at `y: 192`
+    - **Example layout for parallel branches**:
+      ```
+      CreateItem (x:400, y:192) ─────────> Assert-create (x:976, y:192) ──┐
+         ├─> GetItem (x:608, y:352) ─────> Assert-get (x:976, y:352) ─────┤─> AfterAll (y:192)
+         └─> UpdateItem (x:800, y:512) ──> Assert-update (x:976, y:512) ──┘
+      ```
+    - **Typical X coordinates progression**: `~100` (OnStart) → `~250` (SetVariable) → `~400` (Create) → `~600-800` (operations) → `~976` (Asserts) → `~1184+` (AfterAll, cleanup, results)
 
 9. **Naming Conventions**
     - Use descriptive component IDs: `create-document`, `assert-content-exists`
@@ -2884,15 +2895,15 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
         "start": {
             "type": "appmixer.utils.controls.OnStart",
             "x": 100,
-            "y": 200,
+            "y": 192,
             "source": {},
             "version": "1.0.0",
             "config": {}
         },
         "create-item": {
             "type": "appmixer.service.core.CreateItem",
-            "x": 300,
-            "y": 200,
+            "x": 250,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -2919,8 +2930,8 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
         },
         "get-item": {
             "type": "appmixer.service.core.GetItem",
-            "x": 500,
-            "y": 200,
+            "x": 400,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -2952,8 +2963,8 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
         },
         "assert-item": {
             "type": "appmixer.utils.test.Assert",
-            "x": 700,
-            "y": 200,
+            "x": 550,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -2993,8 +3004,8 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 900,
-            "y": 200,
+            "x": 700,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -3009,8 +3020,8 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
         },
         "delete-item": {
             "type": "appmixer.service.core.DeleteItem",
-            "x": 1100,
-            "y": 200,
+            "x": 850,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -3042,8 +3053,8 @@ The `result` property MUST use `{{{uuid}}}` pattern referencing `$.after-all.out
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1300,
-            "y": 200,
+            "x": 1000,
+            "y": 192,
             "version": "1.0.0",
             "source": {
                 "in": {
