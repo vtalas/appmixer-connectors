@@ -7,8 +7,6 @@ module.exports = {
 
         return {
 
-            // scope: ['root_readwrite'],
-
             accountNameFromProfileInfo: function(context) {
                 return context.profileInfo.login;
             },
