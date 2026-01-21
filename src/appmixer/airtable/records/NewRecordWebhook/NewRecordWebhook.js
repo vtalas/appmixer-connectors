@@ -26,6 +26,7 @@ const registerWebhook = async (context) => {
         data: body
     });
 
+    await context.log({ 'step': 'reg', data });
     return data;
 };
 
@@ -42,6 +43,8 @@ module.exports = {
         state.expirationTime = Date.parse(expirationTime);
         state.macSecretBase64 = macSecretBase64;
         state.cursor = 1;
+
+        await context.log({ 'step': 'state - start', state });
 
         return context.saveState(state);
     },
@@ -70,6 +73,8 @@ module.exports = {
                     cursor: state.cursor
                 }
             });
+
+            await context.log({ 'step': 'payload data ', data });
 
             const { payloads } = data;
             if (Array.isArray(payloads) && payloads.length > 0) {
@@ -147,10 +152,17 @@ module.exports = {
             }
 
             // subtract 3 days
-            const renewDate = expirationTime - 259200000;
+            const renewDate = expirationTime - 5 * 24 * 60 * 60 * 1000; // + 60 * 54 * 1000;
             const now = Date.now();
 
             if (now >= renewDate) {
+
+                await context.log({
+                    'step': 'going to refresh ' + accessToken.substr(accessToken.length - 10),
+                    renewDate: new Date(renewDate),
+                    a: context.auth
+                });
+
                 try {
 
                     const { data } = await context.httpRequest({
@@ -162,8 +174,17 @@ module.exports = {
                     });
 
                     state.expirationTime = Date.parse(data.expirationTime);
+
+                    await context.log({ 'step': 'refresh data ', data });
                 } catch (err) {
-                    if (err?.statusCode === 404) {
+                    if (err?.statusCode === 404 || err?.statusCode === 401) {
+
+                        await context.log({
+                            'step': 'ERR registring... status: ' + err?.statusCode + '  ' + accessToken.substr(accessToken.length - 10),
+                            renewDate: new Date(renewDate),
+                            a: context.auth
+                        });
+
                         const { id, expirationTime } = await registerWebhook(context);
                         state.webhookId = id;
                         state.expirationTime = Date.parse(expirationTime);
