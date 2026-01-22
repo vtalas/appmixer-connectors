@@ -152,7 +152,7 @@ module.exports = {
             }
 
             // subtract 3 days
-            const renewDate = expirationTime - 5 * 24 * 60 * 60 * 1000; // + 60 * 54 * 1000;
+            const renewDate = expirationTime - 7 * 24 * 60 * 60 * 1000 + 60 * 54 * 1000;
             const now = Date.now();
 
             if (now >= renewDate) {
