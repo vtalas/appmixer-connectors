@@ -1,0 +1,404 @@
+{
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": -64,
+            "y": 208,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 144,
+            "y": 208,
+            "source": {
+                "in": {
+                    "on-start": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "taskId",
+                                                "text": "2995104339"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-create": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1088,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "f9be0e06-314a-4300-8727-238464932ea5": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-reminder": {},
+                        "f9be0e06-314a-4300-8727-238464932ea5": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "ff68c732-1f52-4280-bf8d-a70976348606": {
+                                            "variable": "$.f9be0e06-314a-4300-8727-238464932ea5.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{ff68c732-1f52-4280-bf8d-a70976348606}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "list-reminders": {
+            "type": "appmixer.todoist.core.ListReminders",
+            "x": 672,
+            "y": 368,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "f9be0e06-314a-4300-8727-238464932ea5": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-reminder": {},
+                        "f9be0e06-314a-4300-8727-238464932ea5": {
+                            "out": {
+                                "lambda": {
+                                    "outputType": "first"
+                                },
+                                "modifiers": {
+                                    "outputType": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-list": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1088,
+            "y": 368,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-reminders": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-reminders": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "f5f8e745-fb79-4ee5-bce1-cef205b86829": {
+                                            "variable": "$.list-reminders.out.count",
+                                            "functions": []
+                                        },
+                                        "dc42122a-2d68-4a80-9d9a-cb99fd02ea6d": {
+                                            "variable": "$.list-reminders.out.id",
+                                            "functions": []
+                                        },
+                                        "21a3646f-83ca-4a56-8a38-79616f60a505": {
+                                            "variable": "$.list-reminders.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "type": "number",
+                                                "assertion": "notEmpty",
+                                                "field": "{{{f5f8e745-fb79-4ee5-bce1-cef205b86829}}}"
+                                            },
+                                            {
+                                                "field": "{{{21a3646f-83ca-4a56-8a38-79616f60a505}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update-reminder": {
+            "type": "appmixer.todoist.core.UpdateReminder",
+            "x": 864,
+            "y": 512,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-reminders": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-reminders": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "type": {},
+                                    "minuteOffset": {},
+                                    "reminderId": {
+                                        "dfe43213-a94e-4a76-915d-2514ece37981": {
+                                            "variable": "$.f9be0e06-314a-4300-8727-238464932ea5.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "type": "relative",
+                                    "minuteOffset": 33,
+                                    "reminderId": "{{{dfe43213-a94e-4a76-915d-2514ece37981}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete-reminder": {
+            "type": "appmixer.todoist.core.DeleteReminder",
+            "x": 1088,
+            "y": 512,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "update-reminder": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "update-reminder": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "reminderId": {
+                                        "83c46acf-e236-4807-a7c7-9a9319380940": {
+                                            "variable": "$.f9be0e06-314a-4300-8727-238464932ea5.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "reminderId": "{{{83c46acf-e236-4807-a7c7-9a9319380940}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1344,
+            "y": 368,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-reminder": [
+                        "out"
+                    ],
+                    "assert-list": [
+                        "out"
+                    ],
+                    "assert-create": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1520,
+            "y": 368,
+            "version": "1.0.1",
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E Todoist - reminder-crud",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "25a8e198-c52f-4054-bb4b-fba04c048d5f": {
+            "type": "appmixer.todoist.core.CreateTask",
+            "x": 304,
+            "y": 208,
+            "source": {
+                "in": {
+                    "set-variables": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "content": {
+                                        "3a06d527-23e0-4bca-8f8e-8f8cbd091607": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_timestamp"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "description": {},
+                                    "projectId": {},
+                                    "labels": {},
+                                    "priority": {}
+                                },
+                                "lambda": {
+                                    "content": "E2E tasks {{{3a06d527-23e0-4bca-8f8e-8f8cbd091607}}}",
+                                    "description": "abcd",
+                                    "projectId": "2365437921",
+                                    "labels": "xxxx",
+                                    "priority": 4
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "f9be0e06-314a-4300-8727-238464932ea5": {
+            "type": "appmixer.todoist.core.CreateReminder",
+            "x": 464,
+            "y": 208,
+            "source": {
+                "in": {
+                    "25a8e198-c52f-4054-bb4b-fba04c048d5f": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "config": {
+                "transform": {
+                    "in": {
+                        "25a8e198-c52f-4054-bb4b-fba04c048d5f": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "type": {},
+                                    "taskId": {
+                                        "120f9218-2f27-4677-95c2-6571cba0f363": {
+                                            "variable": "$.25a8e198-c52f-4054-bb4b-fba04c048d5f.out.id",
+                                            "functions": []
+                                        }
+                                    },
+                                    "dueDatetime": {}
+                                },
+                                "lambda": {
+                                    "type": "absolute",
+                                    "taskId": "{{{120f9218-2f27-4677-95c2-6571cba0f363}}}",
+                                    "dueDatetime": "2026-01-16T23:00:00.000Z"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "name": "E2E Todoist - reminder-crud",
+    "type": "automation",
+    "notes": {}
+}
