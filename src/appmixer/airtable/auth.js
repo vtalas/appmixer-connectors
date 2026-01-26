@@ -153,7 +153,7 @@ module.exports = {
                     await context.log('info', '[Airtable refreshAccessToken error]');
                     await context.log('info', '[Airtable refreshAccessToken error message] ]' + error.message);
                     throw error;
-                }ß
+                }
 
             },
 
