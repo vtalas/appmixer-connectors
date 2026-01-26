@@ -87,12 +87,18 @@ module.exports = {
                 refreshTokenExpDate
                     .setTime(refreshTokenExpDate.getTime() + (data['refresh_expires_in'] * 1000));
 
+
                 const result = {
                     accessToken: data['access_token'],
                     refreshToken: data['refresh_token'],
                     accessTokenExpDate,
                     refreshTokenExpDate
                 };
+                await context.log('info', '[Airtable requestAccessToken token]' + JSON.stringify(result) );
+
+
+                // await context.log({ 'step': 'requestAccessToken', result });
+                // console.log('requestAccessToken-x', result );
 
                 return result;
             },
@@ -109,11 +115,15 @@ module.exports = {
             refreshAccessToken: async context => {
 
                 const tokenUrl = `${airtableUrl}/oauth2/v1/token`;
+
                 const headers = {
                     'Authorization':
                         'Basic ' + Buffer.from(context.clientId + ':' + context.clientSecret).toString('base64'),
                     'Content-Type': 'application/x-www-form-urlencoded'
                 };
+
+                const { refreshToken, clientId } = context;
+                await context.log('info', '[Airtable refreshAccessToken token]' + JSON.stringify({ refreshToken, clientId, tokenUrl }) );
 
                 const { data } = await context.httpRequest.post(tokenUrl, {
                     grant_type: 'refresh_token',
@@ -122,11 +132,15 @@ module.exports = {
 
                 const newDate = new Date();
                 newDate.setTime(newDate.getTime() + (data.expires_in * 1000));
-                return {
+
+                let newVar = {
                     accessToken: data.access_token,
                     accessTokenExpDate: newDate,
                     refreshToken: data.refresh_token
                 };
+                await context.log('info', '[Airtable refreshAccessToken-rs]' + JSON.stringify(newVar) );
+
+                return newVar;
             },
 
             validateAccessToken: {
