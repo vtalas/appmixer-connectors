@@ -94,8 +94,7 @@ module.exports = {
                     accessTokenExpDate,
                     refreshTokenExpDate
                 };
-                await context.log('info', '[Airtable requestAccessToken token]' + JSON.stringify(result) );
-
+                await context.log('info', '[Airtable requestAccessToken token]' + JSON.stringify(result));
 
                 // await context.log({ 'step': 'requestAccessToken', result });
                 // console.log('requestAccessToken-x', result );
@@ -113,34 +112,49 @@ module.exports = {
             },
 
             refreshAccessToken: async context => {
+                try {
 
-                const tokenUrl = `${airtableUrl}/oauth2/v1/token`;
+                    const tokenUrl = `${airtableUrl}/oauth2/v1/token`;
 
-                const headers = {
-                    'Authorization':
-                        'Basic ' + Buffer.from(context.clientId + ':' + context.clientSecret).toString('base64'),
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                };
+                    const headers = {
+                        'Authorization':
+                            'Basic ' + Buffer.from(context.clientId + ':' + context.clientSecret).toString('base64'),
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    };
 
-                const { refreshToken, clientId } = context;
-                await context.log('info', '[Airtable refreshAccessToken token]' + JSON.stringify({ refreshToken, clientId, tokenUrl }) );
+                    const { refreshToken, clientId } = context;
+                    await context.log('info', '[Airtable refreshAccessToken token]' + JSON.stringify({
+                        refreshToken,
+                        clientId,
+                        tokenUrl
+                    }));
 
-                const { data } = await context.httpRequest.post(tokenUrl, {
-                    grant_type: 'refresh_token',
-                    refresh_token: context.refreshToken
-                }, { headers });
+                    const { data } = await context.httpRequest.post(tokenUrl, {
+                        grant_type: 'refresh_token',
+                        refresh_token: context.refreshToken
+                    }, { headers });
 
-                const newDate = new Date();
-                newDate.setTime(newDate.getTime() + (data.expires_in * 1000));
+                    const newDate = new Date();
+                    newDate.setTime(newDate.getTime() + (data.expires_in * 1000));
+                    let refreshTokenExpDate = new Date();
+                    refreshTokenExpDate
+                        .setTime(refreshTokenExpDate.getTime() + (data['refresh_expires_in'] * 1000));
 
-                let newVar = {
-                    accessToken: data.access_token,
-                    accessTokenExpDate: newDate,
-                    refreshToken: data.refresh_token
-                };
-                await context.log('info', '[Airtable refreshAccessToken-rs]' + JSON.stringify(newVar) );
+                    let newVar = {
+                        accessToken: data.access_token,
+                        accessTokenExpDate: newDate,
+                        refreshToken: data.refresh_token,
+                        refreshTokenExpDate
+                    };
+                    await context.log('info', '[Airtable refreshAccessToken-rs]' + JSON.stringify(newVar));
 
-                return newVar;
+                    return newVar;
+                } catch (error) {
+                    await context.log('info', '[Airtable refreshAccessToken error]');
+                    await context.log('info', '[Airtable refreshAccessToken error message] ]' + error.message);
+                    throw error;
+                }ß
+
             },
 
             validateAccessToken: {
