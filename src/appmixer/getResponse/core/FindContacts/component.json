@@ -1,0 +1,171 @@
+{
+    "name": "appmixer.getResponse.core.FindContacts",
+    "author": "Appmixer <info@appmixer.com>",
+    "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAn1BMVEUAr+z////9//8Ap+sAqusArewnsewjsewgsewZsOwVsOwdsOwMsOwIr+z3/P4rsu3a7/t4xvEbsOz5/f/y+v6d0vQQsOwAruzn9fzf8fvQ6fm64Pel1/WSz/OHy/LT6/rF5Pi03fax3Par2fWYz/ONzPJnwfBLuu5Btu42tu3J5vnA4veAyPFdv/BRvO/t+P3h8vx8yPFpwfARs+1wxPDO5iEAAAACCklEQVRIx+2VZ7eiMBCGmcykUAUEsffebtv//9tWEpDdq17x6z28yjnTnjCBJFiNGjX6LXJKw5Wy8yJr89IgRP4aLSkqGqBoMF2T/QIb812iDUUjAJijqM/6Dg/BWFYX2hByx68NCxwAyw2PbwNg0D7V77uFwwuhzY71DozpvuuyKyhhSf0cfrMzvyYbMbj8DIwLyL0Finrsn7au155LEeS3DjYU17qvYbtmzpnV1e6E5DPUEzg2LFubiMTBxdONt56sSRtTMLVDLEL0yUDHRj/TgvigYCfkFkFFExNiYxTeI9SRuA2B6cK3Fjeronxk+p+iL++jgtMoAdMi+yR1zSjaF2E4WCjVPRQ3fYB703P4JjAJBt0jkS3jaof6tpIcd/NLRVEyRPH/Sl9qWI87iThSpqQQ+SU7F+88S3RKs7OSrRqfVjT0FmuLsBDfjPqBpgw7oNj/9vb9LCxo03+3P0+X41U6nPYCDZWpGbne7Zn09W7oqhSubjXsECu2ksu/wopi/6oaMhij0D3f0tZUD35XOtM7P9x5dkZp8AhnDNgsI/F4zyg892+mXAbCNXrxz0ufjmEx5Sto0DGR8J58RBRRtE++PeVk/8ExrnFUKJdwtzr0AgO2k95htUOyVb0TzpUckW9Px2W6/Dhtc0e6Vm05SjqcCBGJuC2VY70oz1FCSNfxrEaNGtXXX1PgG5nLt9OQAAAAAElFTkSuQmCC",
+    "description": "Find contacts in GetResponse with filtering options.",
+    "private": false,
+    "auth": {
+        "service": "appmixer:getResponse"
+    },
+    "quota": {
+        "manager": "appmixer:getResponse",
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "properties": {
+        "schema": {
+            "properties": {
+                "generateOutputPortOptions": { "type": "boolean" }
+            }
+        }
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "query": { "type": "string" },
+                    "campaignId": { "type": "string" },
+                    "email": { "type": "string" },
+                    "name": { "type": "string" },
+                    "origin": { "type": "string" },
+                    "createdOnFrom": { "type": "string" },
+                    "createdOnTo": { "type": "string" },
+                    "sortBy": { "type": "string" },
+                    "sortOrder": { "type": "string" },
+                    "outputType": { "type": "string" }
+                }
+            },
+            "inspector": {
+                "inputs": {
+                    "query": {
+                        "type": "text",
+                        "label": "Search Query",
+                        "tooltip": "Full-text search query to filter contacts.",
+                        "index": 1
+                    },
+                    "campaignId": {
+                        "type": "select",
+                        "label": "Campaign",
+                        "tooltip": "Filter contacts by campaign.",
+                        "index": 2,
+                        "source": {
+                            "url": "/component/appmixer/getResponse/core/ListCampaigns?outPort=out",
+                            "data": {
+                                "transform": "./transformers#campaignsToSelectArray"
+                            }
+                        }
+                    },
+                    "email": {
+                        "type": "text",
+                        "label": "Email",
+                        "tooltip": "Filter contacts by email (exact match).",
+                        "index": 3
+                    },
+                    "name": {
+                        "type": "text",
+                        "label": "Name",
+                        "tooltip": "Filter contacts by name.",
+                        "index": 4
+                    },
+                    "origin": {
+                        "type": "select",
+                        "label": "Origin",
+                        "tooltip": "Filter contacts by origin.",
+                        "index": 5,
+                        "options": [
+                            { "label": "All", "value": "" },
+                            { "label": "Import", "value": "import" },
+                            { "label": "Email", "value": "email" },
+                            { "label": "WWW", "value": "www" },
+                            { "label": "Panel", "value": "panel" },
+                            { "label": "Leads", "value": "leads" },
+                            { "label": "Sale", "value": "sale" },
+                            { "label": "API", "value": "api" },
+                            { "label": "Forward", "value": "forward" },
+                            { "label": "Survey", "value": "survey" },
+                            { "label": "iContact", "value": "iContact" },
+                            { "label": "Webinar", "value": "webinar" },
+                            { "label": "Landing Page", "value": "landing_page" }
+                        ]
+                    },
+                    "createdOnFrom": {
+                        "type": "date-time",
+                        "label": "Created On From",
+                        "tooltip": "Filter contacts created on or after this date.",
+                        "index": 6
+                    },
+                    "createdOnTo": {
+                        "type": "date-time",
+                        "label": "Created On To",
+                        "tooltip": "Filter contacts created on or before this date.",
+                        "index": 7
+                    },
+                    "sortBy": {
+                        "type": "select",
+                        "label": "Sort By",
+                        "tooltip": "Field to sort results by.",
+                        "index": 8,
+                        "defaultValue": "createdOn",
+                        "options": [
+                            { "label": "Created On", "value": "createdOn" },
+                            { "label": "Email", "value": "email" },
+                            { "label": "Campaign ID", "value": "campaignId" },
+                            { "label": "Name", "value": "name" }
+                        ]
+                    },
+                    "sortOrder": {
+                        "type": "select",
+                        "label": "Sort Order",
+                        "tooltip": "Sort order.",
+                        "index": 9,
+                        "defaultValue": "desc",
+                        "options": [
+                            { "label": "Ascending", "value": "asc" },
+                            { "label": "Descending", "value": "desc" }
+                        ]
+                    },
+                    "outputType": {
+                        "type": "select",
+                        "label": "Output Type",
+                        "index": 10,
+                        "defaultValue": "array",
+                        "tooltip": "Choose whether you want to receive the result set as one complete list, or one item at a time or stream the items to a file.",
+                        "options": [
+                            { "label": "First item", "value": "first" },
+                            { "label": "All at once", "value": "array" },
+                            { "label": "One at a time", "value": "object" },
+                            { "label": "File", "value": "file" }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "source": {
+                "url": "/component/appmixer/getResponse/core/FindContacts?outPort=out",
+                "data": {
+                    "properties": {
+                        "generateOutputPortOptions": true
+                    },
+                    "messages": {
+                        "in/outputType": "inputs/in/outputType"
+                    }
+                }
+            }
+        },
+        {
+            "name": "notFound",
+            "options": [
+                { "label": "Query", "value": "query" }
+            ]
+        }
+    ],
+    "version": "1.0.0"
+}
