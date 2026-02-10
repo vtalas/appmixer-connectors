@@ -20,15 +20,32 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "email": { "type": "string" },
-                    "campaignId": { "type": "string" },
-                    "name": { "type": "string" },
-                    "dayOfCycle": { "type": "number" },
-                    "scoring": { "type": "number" },
-                    "ipAddress": { "type": "string" },
-                    "tags": { "type": "string" }
+                    "email": {
+                        "type": "string"
+                    },
+                    "campaignId": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "dayOfCycle": {
+                        "type": "number"
+                    },
+                    "scoring": {
+                        "type": "number"
+                    },
+                    "ipAddress": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "string"
+                    }
                 },
-                "required": ["email", "campaignId"]
+                "required": [
+                    "email",
+                    "campaignId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -87,15 +104,45 @@
     "outPorts": [
         {
             "name": "out",
-            "options": [
-                { "label": "Contact ID", "value": "contactId" },
-                { "label": "Email", "value": "email" },
-                { "label": "Name", "value": "name" },
-                { "label": "Campaign ID", "value": "campaign.campaignId" },
-                { "label": "Campaign Name", "value": "campaign.name" },
-                { "label": "Created On", "value": "createdOn" },
-                { "label": "Scoring", "value": "scoring" }
-            ]
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "contactId": {
+                        "type": "string",
+                        "title": "Contact ID"
+                    },
+                    "email": {
+                        "type": "string",
+                        "title": "Email"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "campaign": {
+                        "type": "object",
+                        "title": "Campaign",
+                        "properties": {
+                            "campaignId": {
+                                "type": "string",
+                                "title": "Campaign ID"
+                            },
+                            "name": {
+                                "type": "string",
+                                "title": "Campaign Name"
+                            }
+                        }
+                    },
+                    "createdOn": {
+                        "type": "string",
+                        "title": "Created On"
+                    },
+                    "scoring": {
+                        "type": "number",
+                        "title": "Scoring"
+                    }
+                }
+            }
         }
     ],
     "version": "1.0.0"

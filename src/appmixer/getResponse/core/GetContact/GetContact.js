@@ -24,7 +24,14 @@ module.exports = {
                 params
             });
 
-            return context.sendJson(data, 'out');
+            // Flatten the contact object to match the expected output schema
+            const flattenedContact = {
+                ...data,
+                'campaign.campaignId': data.campaign?.campaignId,
+                'campaign.name': data.campaign?.name
+            };
+
+            return context.sendJson(flattenedContact, 'out');
         } catch (error) {
             if (error.response?.status === 404) {
                 return context.sendJson({ contactId }, 'notFound');

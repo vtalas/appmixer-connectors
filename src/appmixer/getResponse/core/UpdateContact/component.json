@@ -20,14 +20,28 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "contactId": { "type": "string" },
-                    "name": { "type": "string" },
-                    "campaignId": { "type": "string" },
-                    "dayOfCycle": { "type": "number" },
-                    "scoring": { "type": "number" },
-                    "tags": { "type": "string" }
+                    "contactId": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "campaignId": {
+                        "type": "string"
+                    },
+                    "dayOfCycle": {
+                        "type": "number"
+                    },
+                    "scoring": {
+                        "type": "number"
+                    },
+                    "tags": {
+                        "type": "string"
+                    }
                 },
-                "required": ["contactId"]
+                "required": [
+                    "contactId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -80,9 +94,10 @@
     "outPorts": [
         {
             "name": "out",
-            "options": [
-                { "label": "Contact ID", "value": "contactId" }
-            ]
+            "schema": {
+                "type": "object",
+                "properties": {}
+            }
         }
     ],
     "version": "1.0.0"

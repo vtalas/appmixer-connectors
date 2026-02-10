@@ -17,7 +17,9 @@
     "properties": {
         "schema": {
             "properties": {
-                "generateOutputPortOptions": { "type": "boolean" }
+                "generateOutputPortOptions": {
+                    "type": "boolean"
+                }
             }
         }
     },
@@ -27,16 +29,36 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "query": { "type": "string" },
-                    "campaignId": { "type": "string" },
-                    "email": { "type": "string" },
-                    "name": { "type": "string" },
-                    "origin": { "type": "string" },
-                    "createdOnFrom": { "type": "string" },
-                    "createdOnTo": { "type": "string" },
-                    "sortBy": { "type": "string" },
-                    "sortOrder": { "type": "string" },
-                    "outputType": { "type": "string" }
+                    "query": {
+                        "type": "string"
+                    },
+                    "campaignId": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "origin": {
+                        "type": "string"
+                    },
+                    "createdOnFrom": {
+                        "type": "string"
+                    },
+                    "createdOnTo": {
+                        "type": "string"
+                    },
+                    "sortBy": {
+                        "type": "string"
+                    },
+                    "sortOrder": {
+                        "type": "string"
+                    },
+                    "outputType": {
+                        "type": "string"
+                    }
                 }
             },
             "inspector": {
@@ -77,19 +99,58 @@
                         "tooltip": "Filter contacts by origin.",
                         "index": 5,
                         "options": [
-                            { "label": "All", "value": "" },
-                            { "label": "Import", "value": "import" },
-                            { "label": "Email", "value": "email" },
-                            { "label": "WWW", "value": "www" },
-                            { "label": "Panel", "value": "panel" },
-                            { "label": "Leads", "value": "leads" },
-                            { "label": "Sale", "value": "sale" },
-                            { "label": "API", "value": "api" },
-                            { "label": "Forward", "value": "forward" },
-                            { "label": "Survey", "value": "survey" },
-                            { "label": "iContact", "value": "iContact" },
-                            { "label": "Webinar", "value": "webinar" },
-                            { "label": "Landing Page", "value": "landing_page" }
+                            {
+                                "label": "All",
+                                "value": ""
+                            },
+                            {
+                                "label": "Import",
+                                "value": "import"
+                            },
+                            {
+                                "label": "Email",
+                                "value": "email"
+                            },
+                            {
+                                "label": "WWW",
+                                "value": "www"
+                            },
+                            {
+                                "label": "Panel",
+                                "value": "panel"
+                            },
+                            {
+                                "label": "Leads",
+                                "value": "leads"
+                            },
+                            {
+                                "label": "Sale",
+                                "value": "sale"
+                            },
+                            {
+                                "label": "API",
+                                "value": "api"
+                            },
+                            {
+                                "label": "Forward",
+                                "value": "forward"
+                            },
+                            {
+                                "label": "Survey",
+                                "value": "survey"
+                            },
+                            {
+                                "label": "iContact",
+                                "value": "iContact"
+                            },
+                            {
+                                "label": "Webinar",
+                                "value": "webinar"
+                            },
+                            {
+                                "label": "Landing Page",
+                                "value": "landing_page"
+                            }
                         ]
                     },
                     "createdOnFrom": {
@@ -111,10 +172,22 @@
                         "index": 8,
                         "defaultValue": "createdOn",
                         "options": [
-                            { "label": "Created On", "value": "createdOn" },
-                            { "label": "Email", "value": "email" },
-                            { "label": "Campaign ID", "value": "campaignId" },
-                            { "label": "Name", "value": "name" }
+                            {
+                                "label": "Created On",
+                                "value": "createdOn"
+                            },
+                            {
+                                "label": "Email",
+                                "value": "email"
+                            },
+                            {
+                                "label": "Campaign ID",
+                                "value": "campaignId"
+                            },
+                            {
+                                "label": "Name",
+                                "value": "name"
+                            }
                         ]
                     },
                     "sortOrder": {
@@ -124,8 +197,14 @@
                         "index": 9,
                         "defaultValue": "desc",
                         "options": [
-                            { "label": "Ascending", "value": "asc" },
-                            { "label": "Descending", "value": "desc" }
+                            {
+                                "label": "Ascending",
+                                "value": "asc"
+                            },
+                            {
+                                "label": "Descending",
+                                "value": "desc"
+                            }
                         ]
                     },
                     "outputType": {
@@ -135,10 +214,22 @@
                         "defaultValue": "array",
                         "tooltip": "Choose whether you want to receive the result set as one complete list, or one item at a time or stream the items to a file.",
                         "options": [
-                            { "label": "First item", "value": "first" },
-                            { "label": "All at once", "value": "array" },
-                            { "label": "One at a time", "value": "object" },
-                            { "label": "File", "value": "file" }
+                            {
+                                "label": "First item",
+                                "value": "first"
+                            },
+                            {
+                                "label": "All at once",
+                                "value": "array"
+                            },
+                            {
+                                "label": "One at a time",
+                                "value": "object"
+                            },
+                            {
+                                "label": "File",
+                                "value": "file"
+                            }
                         ]
                     }
                 }
@@ -163,7 +254,10 @@
         {
             "name": "notFound",
             "options": [
-                { "label": "Query", "value": "query" }
+                {
+                    "label": "Query",
+                    "value": "query"
+                }
             ]
         }
     ],

@@ -21,8 +21,10 @@ module.exports = {
     async receive(context) {
 
         const { generateOutputPortOptions } = context.properties;
+
         if (generateOutputPortOptions) {
-            return this.getOutputPortOptions(context);
+            const { outputType } = context.messages.in.content;
+            return lib.getOutputPortOptions(context, outputType, CONTACT_SCHEMA, { label: 'Contacts' });
         }
 
         const {
@@ -92,11 +94,5 @@ module.exports = {
             outputType: outputType || 'array',
             records: flattenedContacts
         });
-    },
-
-    getOutputPortOptions(context) {
-
-        const { outputType } = context.messages.in.content;
-        return lib.getOutputPortOptions(context, outputType, CONTACT_SCHEMA, { label: 'Contacts' });
     }
 };

@@ -54,12 +54,56 @@ module.exports = {
             }
         }
 
-        const { data } = await lib.request(context, {
+        const { data, headers } = await lib.request(context, {
             method: 'POST',
             path: '/contacts',
             data: body
         });
 
-        return context.sendJson(data, 'out');
+        // The GetResponse API returns the contact ID in the Location header
+        // Extract the contact ID from the Location header (e.g., /contacts/abc123)
+        let contactId = null;
+        const locationHeader = headers.location || headers.Location;
+        if (locationHeader) {
+            const match = locationHeader.match(/\/contacts\/([^/]+)$/);
+            if (match) {
+                contactId = match[1];
+            }
+        }
+
+        // Build the response object
+        const response = {
+            email,
+            ...data
+        };
+
+        if (contactId) {
+            response.contactId = contactId;
+        }
+
+        if (name) {
+            response.name = name;
+        }
+
+        if (scoring !== undefined && scoring !== null && scoring !== '') {
+            response.scoring = parseInt(scoring, 10);
+        }
+
+        // If we have a contact ID, fetch the full contact details
+        if (contactId) {
+            try {
+                const { data: contactData } = await lib.request(context, {
+                    method: 'GET',
+                    path: `/contacts/${contactId}`
+                });
+                return context.sendJson(contactData, 'out');
+            } catch (error) {
+                // If GET fails, return the constructed response
+                return context.sendJson(response, 'out');
+            }
+        }
+
+        // If no contact ID found, return the constructed response
+        return context.sendJson(response, 'out');
     }
 };

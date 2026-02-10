@@ -20,11 +20,19 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "contactId": { "type": "string" },
-                    "messageId": { "type": "string" },
-                    "ipAddress": { "type": "string" }
+                    "contactId": {
+                        "type": "string"
+                    },
+                    "messageId": {
+                        "type": "string"
+                    },
+                    "ipAddress": {
+                        "type": "string"
+                    }
                 },
-                "required": ["contactId"]
+                "required": [
+                    "contactId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -52,10 +60,7 @@
     ],
     "outPorts": [
         {
-            "name": "out",
-            "options": [
-                { "label": "Contact ID", "value": "contactId" }
-            ]
+            "name": "out"
         }
     ],
     "version": "1.0.0"

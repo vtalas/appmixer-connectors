@@ -20,10 +20,16 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "contactId": { "type": "string" },
-                    "fields": { "type": "string" }
+                    "contactId": {
+                        "type": "string"
+                    },
+                    "fields": {
+                        "type": "string"
+                    }
                 },
-                "required": ["contactId"]
+                "required": [
+                    "contactId"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -47,26 +53,71 @@
         {
             "name": "out",
             "options": [
-                { "label": "Contact ID", "value": "contactId" },
-                { "label": "Email", "value": "email" },
-                { "label": "Name", "value": "name" },
-                { "label": "Campaign ID", "value": "campaign.campaignId" },
-                { "label": "Campaign Name", "value": "campaign.name" },
-                { "label": "Created On", "value": "createdOn" },
-                { "label": "Changed On", "value": "changedOn" },
-                { "label": "Scoring", "value": "scoring" },
-                { "label": "Origin", "value": "origin" },
-                { "label": "Time Zone", "value": "timeZone" },
-                { "label": "IP Address", "value": "ipAddress" },
-                { "label": "Activities", "value": "activities" },
-                { "label": "Tags", "value": "tags" },
-                { "label": "Custom Fields", "value": "customFieldValues" }
+                {
+                    "label": "Contact ID",
+                    "value": "contactId"
+                },
+                {
+                    "label": "Email",
+                    "value": "email"
+                },
+                {
+                    "label": "Name",
+                    "value": "name"
+                },
+                {
+                    "label": "Campaign ID",
+                    "value": "campaign.campaignId"
+                },
+                {
+                    "label": "Campaign Name",
+                    "value": "campaign.name"
+                },
+                {
+                    "label": "Created On",
+                    "value": "createdOn"
+                },
+                {
+                    "label": "Changed On",
+                    "value": "changedOn"
+                },
+                {
+                    "label": "Scoring",
+                    "value": "scoring"
+                },
+                {
+                    "label": "Origin",
+                    "value": "origin"
+                },
+                {
+                    "label": "Time Zone",
+                    "value": "timeZone"
+                },
+                {
+                    "label": "IP Address",
+                    "value": "ipAddress"
+                },
+                {
+                    "label": "Activities",
+                    "value": "activities"
+                },
+                {
+                    "label": "Tags",
+                    "value": "tags"
+                },
+                {
+                    "label": "Custom Fields",
+                    "value": "customFieldValues"
+                }
             ]
         },
         {
             "name": "notFound",
             "options": [
-                { "label": "Contact ID", "value": "contactId" }
+                {
+                    "label": "Contact ID",
+                    "value": "contactId"
+                }
             ]
         }
     ],
