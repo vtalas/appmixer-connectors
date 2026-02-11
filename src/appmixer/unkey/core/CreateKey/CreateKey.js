@@ -14,7 +14,8 @@ module.exports = {
             expires,
             ratelimits,
             enabled,
-            recoverable
+            recoverable,
+            credits
         } = context.messages.in.content;
 
         if (!apiId) {
@@ -65,7 +66,7 @@ module.exports = {
             }
         }
 
-        if (expires) body.expires = expires;
+        if (expires) body.expires = new Date(expires).getTime();
 
         // Parse and validate ratelimits array
         if (ratelimits) {
@@ -82,6 +83,19 @@ module.exports = {
 
         if (typeof enabled === 'boolean') body.enabled = enabled;
         if (typeof recoverable === 'boolean') body.recoverable = recoverable;
+
+        // Parse and validate credits object
+        if (credits) {
+            try {
+                const parsedCredits = JSON.parse(credits);
+                if (typeof parsedCredits !== 'object' || parsedCredits === null) {
+                    throw new context.CancelError('Credits must be a JSON object');
+                }
+                body.credits = parsedCredits;
+            } catch (e) {
+                throw new context.CancelError('Invalid JSON in credits field: ' + e.message);
+            }
+        }
 
         const response = await context.httpRequest({
             method: 'POST',

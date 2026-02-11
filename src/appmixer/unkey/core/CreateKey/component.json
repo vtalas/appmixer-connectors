@@ -44,7 +44,8 @@
                         "type": "string"
                     },
                     "expires": {
-                        "type": "integer"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "ratelimits": {
                         "type": "string"
@@ -54,6 +55,9 @@
                     },
                     "recoverable": {
                         "type": "boolean"
+                    },
+                    "credits": {
+                        "type": "string"
                     }
                 },
                 "required": ["apiId"]
@@ -109,10 +113,10 @@
                         "tooltip": "JSON array of permissions (e.g., [\"documents.read\", \"documents.write\"]). Supports wildcards."
                     },
                     "expires": {
-                        "type": "number",
-                        "label": "Expires (Unix timestamp ms)",
+                        "type": "date-time",
+                        "label": "Expires",
                         "index": 9,
-                        "tooltip": "Unix timestamp in milliseconds when key expires. Omit for permanent keys."
+                        "tooltip": "Date and time when the key will expire. Omit for permanent keys."
                     },
                     "ratelimits": {
                         "type": "textarea",
@@ -120,17 +124,23 @@
                         "index": 10,
                         "tooltip": "JSON array of rate limit objects with name, limit, duration (ms), and autoApply fields."
                     },
+                    "credits": {
+                        "type": "textarea",
+                        "label": "Credits (JSON)",
+                        "index": 11,
+                        "tooltip": "JSON object for usage-based limits with 'remaining' (required) and 'refill' (optional) fields. Controls total usage with global consistency."
+                    },
                     "enabled": {
                         "type": "toggle",
                         "label": "Enabled",
-                        "index": 11,
+                        "index": 12,
                         "defaultValue": true,
                         "tooltip": "Whether the key is active immediately upon creation"
                     },
                     "recoverable": {
                         "type": "toggle",
                         "label": "Recoverable",
-                        "index": 12,
+                        "index": 13,
                         "defaultValue": false,
                         "tooltip": "Store plaintext key in encrypted vault for later retrieval. Only enable if absolutely necessary."
                     }
