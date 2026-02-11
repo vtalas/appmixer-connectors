@@ -14,7 +14,10 @@ module.exports = {
             expires,
             ratelimits,
             enabled,
-            recoverable
+            creditsRemaining,
+            refillInterval,
+            refillAmount,
+            refillDay
         } = context.messages.in.content;
 
         if (!apiId) {
@@ -81,7 +84,22 @@ module.exports = {
         }
 
         if (typeof enabled === 'boolean') body.enabled = enabled;
-        if (typeof recoverable === 'boolean') body.recoverable = recoverable;
+
+        // Build credits object if remaining credits are specified
+        if (creditsRemaining != null) {
+            body.credits = {
+                remaining: creditsRemaining
+            };
+            if (refillInterval) {
+                body.credits.refill = {
+                    interval: refillInterval,
+                    amount: refillAmount
+                };
+                if (refillDay) {
+                    body.credits.refill.refillDay = refillDay;
+                }
+            }
+        }
 
         const response = await context.httpRequest({
             method: 'POST',

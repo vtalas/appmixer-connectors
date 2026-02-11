@@ -1,7 +1,11 @@
 {
     "name": "appmixer.unkey",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "changelog": {
+        "1.0.1": [
+            "CreateKey: Added credits support (remaining, refill interval, refill amount, refill day). Removed recoverable parameter.",
+            "UpdateKeyCredits: Fixed response mapping to return remaining credits and refill configuration."
+        ],
         "1.0.0": [
             "Initial release with key management components: CreateKey, GetKey, UpdateKey, DeleteKey, VerifyKey, ListKeys, GetAPI, and UpdateKeyRemaining."
         ]

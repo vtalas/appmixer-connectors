@@ -1,8 +1,8 @@
 {
     "name": "appmixer.unkey.core.CreateKey",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Create a new API key in Unkey. You can specify properties like prefix, metadata, rate limits, and expiration.",
-    "version": "1.0.0",
+    "description": "Create a new API key in Unkey. You can specify properties like prefix, metadata, rate limits, credits, and expiration.",
+    "version": "1.0.1",
     "auth": {
         "service": "appmixer:unkey"
     },
@@ -52,8 +52,17 @@
                     "enabled": {
                         "type": "boolean"
                     },
-                    "recoverable": {
-                        "type": "boolean"
+                    "creditsRemaining": {
+                        "type": "integer"
+                    },
+                    "refillInterval": {
+                        "type": "string"
+                    },
+                    "refillAmount": {
+                        "type": "integer"
+                    },
+                    "refillDay": {
+                        "type": "integer"
                     }
                 },
                 "required": ["apiId"]
@@ -127,12 +136,33 @@
                         "defaultValue": true,
                         "tooltip": "Whether the key is active immediately upon creation"
                     },
-                    "recoverable": {
-                        "type": "toggle",
-                        "label": "Recoverable",
+                    "creditsRemaining": {
+                        "type": "number",
+                        "label": "Credits Remaining",
                         "index": 12,
-                        "defaultValue": false,
-                        "tooltip": "Store plaintext key in encrypted vault for later retrieval. Only enable if absolutely necessary."
+                        "tooltip": "Number of credits for this key. Omit for unlimited usage. Credits are consumed during key verification."
+                    },
+                    "refillInterval": {
+                        "type": "select",
+                        "label": "Refill Interval",
+                        "index": 13,
+                        "options": [
+                            { "label": "Daily", "value": "daily" },
+                            { "label": "Monthly", "value": "monthly" }
+                        ],
+                        "tooltip": "How often credits are automatically refilled. Requires Credits Remaining to be set."
+                    },
+                    "refillAmount": {
+                        "type": "number",
+                        "label": "Refill Amount",
+                        "index": 14,
+                        "tooltip": "Number of credits to add during each refill cycle."
+                    },
+                    "refillDay": {
+                        "type": "number",
+                        "label": "Refill Day",
+                        "index": 15,
+                        "tooltip": "Day of the month for monthly refills (1-31). Only used when Refill Interval is 'monthly'."
                     }
                 }
             }

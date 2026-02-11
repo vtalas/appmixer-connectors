@@ -2,7 +2,7 @@
     "name": "appmixer.unkey.core.UpdateKeyCredits",
     "author": "Appmixer <info@appmixer.com>",
     "description": "Update the credits for a key. Use this to set, increment, or decrement the number of credits available for a key.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "auth": {
         "service": "appmixer:unkey"
     },
@@ -64,7 +64,10 @@
         {
             "name": "out",
             "options": [
-                { "label": "Credits", "value": "credits" }
+                { "label": "Remaining Credits", "value": "remaining" },
+                { "label": "Refill Interval", "value": "refillInterval" },
+                { "label": "Refill Amount", "value": "refillAmount" },
+                { "label": "Refill Day", "value": "refillDay" }
             ]
         }
     ],

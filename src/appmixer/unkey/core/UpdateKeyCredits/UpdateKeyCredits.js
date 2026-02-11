@@ -31,7 +31,10 @@ module.exports = {
         });
 
         return context.sendJson({
-            credits: data.data?.credits
+            remaining: data.data?.remaining,
+            refillInterval: data.data?.refill?.interval || null,
+            refillAmount: data.data?.refill?.amount || null,
+            refillDay: data.data?.refill?.refillDay || null
         }, 'out');
     }
 };

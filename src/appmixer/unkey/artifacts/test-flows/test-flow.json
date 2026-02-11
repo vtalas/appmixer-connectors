@@ -219,7 +219,7 @@
                     ]
                 }
             },
-            "version": "1.0.0",
+            "version": "1.0.1",
             "config": {
                 "transform": {
                     "in": {
@@ -228,12 +228,17 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "enabled": {},
-                                    "recoverable": {},
                                     "prefix": {},
                                     "name": {},
                                     "byteLength": {},
                                     "externalId": {},
                                     "meta": {},
+                                    "creditsRemaining": {
+                                        "a1b2c3d4-e5f6-7890-abcd-ef1234567890": {
+                                            "variable": "$.06e7bdd6-17b4-4101-8733-6b4776a6bdfc.out.keycredit",
+                                            "functions": []
+                                        }
+                                    },
                                     "apiId": {
                                         "e23f4b2b-494e-4aae-9f23-4bc17793758f": {
                                             "variable": "$.06e7bdd6-17b4-4101-8733-6b4776a6bdfc.out.API_ID",
@@ -243,12 +248,12 @@
                                 },
                                 "lambda": {
                                     "enabled": true,
-                                    "recoverable": false,
                                     "prefix": "e2e",
                                     "name": "foo",
                                     "byteLength": 32,
                                     "externalId": "appmixer",
                                     "meta": "{\"foo\":1}",
+                                    "creditsRemaining": "{{{a1b2c3d4-e5f6-7890-abcd-ef1234567890}}}",
                                     "apiId": "{{{e23f4b2b-494e-4aae-9f23-4bc17793758f}}}"
                                 }
                             }
@@ -268,7 +273,7 @@
                     ]
                 }
             },
-            "version": "1.0.0",
+            "version": "1.0.1",
             "config": {
                 "transform": {
                     "in": {
@@ -657,7 +662,7 @@
                                 "modifiers": {
                                     "expression": {
                                         "8a22ea60-2b0b-4365-b981-addb7f117767": {
-                                            "variable": "$.503d318b-ccca-483e-845b-d1f70af05e3d.out.credits",
+                                            "variable": "$.503d318b-ccca-483e-845b-d1f70af05e3d.out.remaining",
                                             "functions": []
                                         },
                                         "57b05dc0-9bb4-4bd7-b580-15af6f57afc1": {
