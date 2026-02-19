@@ -87,7 +87,7 @@ module.exports = {
         // Make the API request with correct authentication and domain
         const { data } = await context.httpRequest({
             method: 'POST',
-            url: `https://${context.domain}/api/deals`,
+            url: `https://${context.auth.domain}/api/deals`,
             headers: {
                 'Authorization': `Token token=${context.auth.apiKey}`,
                 'Content-Type': 'application/json',

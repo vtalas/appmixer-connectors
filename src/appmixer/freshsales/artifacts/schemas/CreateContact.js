@@ -64,7 +64,7 @@ module.exports = {
             url: `https://${context.auth.domain}/api/contacts`,
             data: { contact: contactData },
             headers: {
-                'Authorization': `Bearer ${context.auth.accessToken}`,
+                'Authorization': `Token token=${context.auth.apiKey}`,
                 'Content-Type': 'application/json'
             }
         });
