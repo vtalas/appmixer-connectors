@@ -46,7 +46,7 @@ module.exports = {
             identifier.emails = identifierEmails;
         }
 
-        const url = `https://${context.auth.domain}.freshsales.io/api/leads/bulk_upsert`;
+        const url = `https://${context.auth.domain}/api/leads/bulk_upsert`;
         const headers = {
             'Authorization': `Token token=${context.auth.apiKey}`,
             'Content-Type': 'application/json',

@@ -124,56 +124,87 @@
     "outPorts": [
         {
             "name": "out",
-            "options": [
-                {
-                    "label": "Appointment ID",
-                    "value": "appointment.id"
-                },
-                {
-                    "label": "Title",
-                    "value": "appointment.title"
-                },
-                {
-                    "label": "From Date",
-                    "value": "appointment.from_date"
-                },
-                {
-                    "label": "End Date",
-                    "value": "appointment.end_date"
-                },
-                {
-                    "label": "Time Zone",
-                    "value": "appointment.time_zone"
-                },
-                {
-                    "label": "Location",
-                    "value": "appointment.location"
-                },
-                {
-                    "label": "Description",
-                    "value": "appointment.description"
-                },
-                {
-                    "label": "Targetable Type",
-                    "value": "appointment.targetable_type"
-                },
-                {
-                    "label": "Targetable ID",
-                    "value": "appointment.targetable_id"
-                },
-                {
-                    "label": "Attendees",
-                    "value": "appointment.appointment_attendees"
-                },
-                {
-                    "label": "Created At",
-                    "value": "appointment.created_at"
-                },
-                {
-                    "label": "Updated At",
-                    "value": "appointment.updated_at"
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "appointment": {
+                        "type": "object",
+                        "title": "Appointment",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "title": "Appointment ID"
+                            },
+                            "title": {
+                                "type": "string",
+                                "title": "Title"
+                            },
+                            "from_date": {
+                                "type": "string",
+                                "title": "From Date",
+                                "format": "date-time"
+                            },
+                            "end_date": {
+                                "type": "string",
+                                "title": "End Date",
+                                "format": "date-time"
+                            },
+                            "time_zone": {
+                                "type": "string",
+                                "title": "Time Zone"
+                            },
+                            "location": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Location"
+                            },
+                            "description": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Description"
+                            },
+                            "targetable_type": {
+                                "type": "string",
+                                "title": "Targetable Type"
+                            },
+                            "targetable_id": {
+                                "type": "integer",
+                                "title": "Targetable ID"
+                            },
+                            "appointment_attendees": {
+                                "type": "array",
+                                "title": "Attendees"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "title": "Created At",
+                                "format": "date-time"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "title": "Updated At",
+                                "format": "date-time"
+                            }
+                        }
+                    },
+                    "appointment_attendees": {
+                        "type": "array",
+                        "title": "Appointment Attendees"
+                    },
+                    "users": {
+                        "type": "array",
+                        "title": "Users"
+                    },
+                    "leads": {
+                        "type": "array",
+                        "title": "Leads"
+                    }
                 }
-            ]
+            }
         }
     ],
     "icon": "data:image/svg+xml;base64,PD94"

@@ -12,7 +12,7 @@ module.exports = {
             throw new context.CancelError('View ID is required!');
         }
 
-        const result = await api.ListContactsbyView.execute(context, {
+        const result = await api.ListContactsByView.execute(context, {
             view_id,
             sort,
             sort_type

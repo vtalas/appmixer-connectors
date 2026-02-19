@@ -66,7 +66,7 @@ module.exports = {
         // Make API request
         const { data } = await context.httpRequest({
             method: 'POST',
-            url: `https://${context.auth.domain}.myfreshworks.com/crm/sales/api/appointments`,
+            url: `https://${context.auth.domain}/api/appointments`,
             headers: {
                 'Authorization': `Token token=${context.auth.apiKey}`,
                 'Content-Type': 'application/json'

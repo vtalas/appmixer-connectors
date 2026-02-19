@@ -9,7 +9,7 @@ module.exports = {
             throw new context.CancelError('Search query (q) is required!');
         }
 
-        const url = `https://${context.auth.domain}.freshsales.io/api/search/global`;
+        const url = `https://${context.domain}/api/search/global`;
         const params = {
             q
         };

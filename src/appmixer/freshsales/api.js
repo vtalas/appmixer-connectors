@@ -440,20 +440,29 @@ const GetContact = {
     }
 };
 
+const rq = (context, { action, url, method = 'GET', data }) => {
+
+    return context.httpRequest({
+        method,
+        url: `https://${context.domain}${action}`,
+        data: { contact, ...rest },
+        headers: {
+            Authorization: `Bearer ${context.auth.accessToken}`
+        }
+    });
+};
+
 const UpdateContact = {
     method: "PUT",
     path: "/api/contacts/{id}",
     docsUrl: "https://developer.freshsales.io/api/#contacts",
     async execute(context, { id, contact, ...rest }) {
-        const response = await context.httpRequest({
+        const { data } = await rq(context, {
+            action: `/api/contacts/${id}`,
             method: 'PUT',
-            url: `https://developer.freshsales.io/api/contacts/${id}`,
-            data: { contact, ...rest },
-            headers: {
-                Authorization: `Bearer ${context.auth.accessToken}`
-            }
+            data: { contact, ...rest }
         });
-        return response.data;
+        return data;
     }
 };
 

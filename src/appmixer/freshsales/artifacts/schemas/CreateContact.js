@@ -1,7 +1,5 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
     async receive(context) {
 
@@ -60,10 +58,17 @@ module.exports = {
             contactData.tags = tags;
         }
 
-        const { data } = await api.CreateContact.execute(context, {
-            contact: contactData
+        // Make the API call directly
+        const response = await context.httpRequest({
+            method: 'POST',
+            url: `https://${context.auth.domain}/api/contacts`,
+            data: { contact: contactData },
+            headers: {
+                'Authorization': `Bearer ${context.auth.accessToken}`,
+                'Content-Type': 'application/json'
+            }
         });
 
-        return context.sendJson(data.contact, 'out');
+        return context.sendJson(response.data.contact, 'out');
     }
 };

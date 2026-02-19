@@ -12,7 +12,7 @@ module.exports = {
 
         const { data } = await context.httpRequest({
             method: 'GET',
-            url: `https://${context.auth.domain}.myfreshworks.com/crm/sales/api/job_statuses/${id}`,
+            url: `https://${context.domain}/api/job_statuses/${id}`,
             headers: {
                 'Authorization': `Token token=${context.auth.apiKey}`,
                 'Content-Type': 'application/json',
@@ -20,6 +20,14 @@ module.exports = {
             }
         });
 
-        return context.sendJson(data, 'out');
+        // Check if response is valid JSON object
+        if (typeof data !== 'object' || data === null) {
+            throw new context.CancelError('Invalid response from API. Expected JSON object.');
+        }
+
+        // Extract job_status from response if it exists, otherwise use data directly
+        const jobStatus = data.job_status || data;
+
+        return context.sendJson(jobStatus, 'out');
     }
 };

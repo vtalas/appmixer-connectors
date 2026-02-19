@@ -1,7 +1,5 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
     async receive(context) {
 
@@ -37,8 +35,16 @@ module.exports = {
             ...(typeof is_notification_set !== 'undefined' && { is_notification_set })
         };
 
-        const result = await api.CreateTask.execute(context, { task });
+        const response = await context.httpRequest({
+            method: 'POST',
+            url: `https://${context.domain}/api/tasks`,
+            headers: {
+                'Authorization': `Bearer ${context.auth.accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            data: { task }
+        });
 
-        return context.sendJson(result, 'out');
+        return context.sendJson(response.data, 'out');
     }
 };
