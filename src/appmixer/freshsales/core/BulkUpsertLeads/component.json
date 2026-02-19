@@ -1,0 +1,116 @@
+{
+    "name": "appmixer.freshsales.core.BulkUpsertLeads",
+    "description": "Create or update up to 100 leads in a single request. Returns a job reference for async processing.",
+    "author": "Appmixer <info@appmixer.com>",
+    "version": "1.0.0",
+    "auth": {
+        "service": "appmixer:freshsales"
+    },
+    "quota": {
+        "manager": "appmixer:freshsales",
+        "resources": "requests"
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "identifierType": {
+                        "type": "string",
+                        "enum": [
+                            "id",
+                            "email"
+                        ],
+                        "title": "Identifier Type"
+                    },
+                    "identifierId": {
+                        "type": "string",
+                        "title": "Identifier ID"
+                    },
+                    "identifierEmails": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "title": "Identifier Emails"
+                    },
+                    "leadsData": {
+                        "type": "string",
+                        "title": "Leads Data"
+                    }
+                },
+                "required": [
+                    "leadsData"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "identifierType": {
+                        "type": "select",
+                        "label": "Identifier Type",
+                        "tooltip": "Choose how to identify leads for upserting: by ID or by email address.",
+                        "index": 0,
+                        "options": [
+                            {
+                                "label": "By ID",
+                                "value": "id"
+                            },
+                            {
+                                "label": "By Email",
+                                "value": "email"
+                            }
+                        ]
+                    },
+                    "identifierId": {
+                        "type": "text",
+                        "label": "Lead ID",
+                        "tooltip": "The ID of an existing lead to update. Use when Identifier Type is 'By ID'.",
+                        "index": 1
+                    },
+                    "identifierEmails": {
+                        "type": "expression",
+                        "label": "Lead Emails",
+                        "tooltip": "Array of email addresses to identify leads. Use when Identifier Type is 'By Email'.",
+                        "index": 2,
+                        "levels": [
+                            "AND"
+                        ],
+                        "fields": {
+                            "email": {
+                                "type": "text",
+                                "label": "Email"
+                            }
+                        }
+                    },
+                    "leadsData": {
+                        "type": "textarea",
+                        "label": "Leads Data (JSON)",
+                        "tooltip": "Lead attributes to create or update. Provide as a JSON object with fields like first_name, last_name, email, phone, etc.",
+                        "index": 3
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "options": [
+                {
+                    "label": "Job ID",
+                    "value": "job_id"
+                },
+                {
+                    "label": "Message",
+                    "value": "message"
+                },
+                {
+                    "label": "Status",
+                    "value": "status"
+                }
+            ]
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PD94"
+}

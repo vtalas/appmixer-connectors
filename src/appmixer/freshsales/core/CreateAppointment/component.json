@@ -1,0 +1,180 @@
+{
+    "name": "appmixer.freshsales.core.CreateAppointment",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Book a meeting with attendees and link it to a related entity.",
+    "version": "1.0.0",
+    "auth": {
+        "service": "appmixer:freshsales"
+    },
+    "quota": {
+        "manager": "appmixer:freshsales",
+        "resources": "requests"
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "from_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "end_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "time_zone": {
+                        "type": "string"
+                    },
+                    "targetable_type": {
+                        "type": "string"
+                    },
+                    "targetable_id": {
+                        "type": "integer"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "attendee_name": {
+                        "type": "string"
+                    },
+                    "attendee_email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "title",
+                    "from_date",
+                    "end_date"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "title": {
+                        "type": "text",
+                        "label": "Title",
+                        "tooltip": "Appointment title.",
+                        "index": 1
+                    },
+                    "from_date": {
+                        "type": "date-time",
+                        "label": "From Date",
+                        "tooltip": "Start datetime of the appointment (ISO 8601, UTC).",
+                        "index": 2
+                    },
+                    "end_date": {
+                        "type": "date-time",
+                        "label": "End Date",
+                        "tooltip": "End datetime of the appointment (ISO 8601, UTC).",
+                        "index": 3
+                    },
+                    "time_zone": {
+                        "type": "text",
+                        "label": "Time Zone",
+                        "tooltip": "Time zone for the appointment (e.g., UTC, America/New_York).",
+                        "index": 4
+                    },
+                    "targetable_type": {
+                        "type": "text",
+                        "label": "Related Entity Type",
+                        "tooltip": "Type of the entity this appointment is linked to (e.g., Contact, Deal, SalesAccount).",
+                        "index": 5
+                    },
+                    "targetable_id": {
+                        "type": "number",
+                        "label": "Related Entity ID",
+                        "tooltip": "ID of the related entity.",
+                        "index": 6
+                    },
+                    "location": {
+                        "type": "text",
+                        "label": "Location",
+                        "tooltip": "Meeting location or conferencing link.",
+                        "index": 7
+                    },
+                    "description": {
+                        "type": "textarea",
+                        "label": "Description",
+                        "tooltip": "Agenda or notes for the appointment.",
+                        "index": 8
+                    },
+                    "attendee_name": {
+                        "type": "text",
+                        "label": "Attendee Name",
+                        "tooltip": "Full name of the attendee.",
+                        "index": 9
+                    },
+                    "attendee_email": {
+                        "type": "text",
+                        "label": "Attendee Email",
+                        "tooltip": "Email address of the attendee.",
+                        "index": 10
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "options": [
+                {
+                    "label": "Appointment ID",
+                    "value": "appointment.id"
+                },
+                {
+                    "label": "Title",
+                    "value": "appointment.title"
+                },
+                {
+                    "label": "From Date",
+                    "value": "appointment.from_date"
+                },
+                {
+                    "label": "End Date",
+                    "value": "appointment.end_date"
+                },
+                {
+                    "label": "Time Zone",
+                    "value": "appointment.time_zone"
+                },
+                {
+                    "label": "Location",
+                    "value": "appointment.location"
+                },
+                {
+                    "label": "Description",
+                    "value": "appointment.description"
+                },
+                {
+                    "label": "Targetable Type",
+                    "value": "appointment.targetable_type"
+                },
+                {
+                    "label": "Targetable ID",
+                    "value": "appointment.targetable_id"
+                },
+                {
+                    "label": "Attendees",
+                    "value": "appointment.appointment_attendees"
+                },
+                {
+                    "label": "Created At",
+                    "value": "appointment.created_at"
+                },
+                {
+                    "label": "Updated At",
+                    "value": "appointment.updated_at"
+                }
+            ]
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PD94"
+}
