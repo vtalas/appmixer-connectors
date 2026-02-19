@@ -453,9 +453,9 @@ const rq = (context, { action, url, method = 'GET', data }) => {
 };
 
 const UpdateContact = {
-    method: "PUT",
-    path: "/api/contacts/{id}",
-    docsUrl: "https://developer.freshsales.io/api/#contacts",
+    method: 'PUT',
+    path: '/api/contacts/{id}',
+    docsUrl: 'https://developer.freshsales.io/api/#contacts',
     async execute(context, { id, contact, ...rest }) {
         const { data } = await rq(context, {
             action: `/api/contacts/${id}`,
