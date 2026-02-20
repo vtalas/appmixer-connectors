@@ -37,14 +37,14 @@ module.exports = {
 
         const response = await context.httpRequest({
             method: 'POST',
-            url: `https://${context.domain}/api/tasks`,
+            url: `https://${context.auth.domain}/api/tasks`,
             headers: {
-                'Authorization': `Bearer ${context.auth.accessToken}`,
+                'Authorization': `Token token=${context.auth.apiKey}`,
                 'Content-Type': 'application/json'
             },
             data: { task }
         });
 
-        return context.sendJson(response.data, 'out');
+        return context.sendJson(response.data.task, 'out');
     }
 };

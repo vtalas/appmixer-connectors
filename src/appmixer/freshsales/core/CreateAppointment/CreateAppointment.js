@@ -27,15 +27,6 @@ module.exports = {
             throw new context.CancelError('End Date is required!');
         }
 
-        // Build appointment attendees array if attendee info provided
-        const appointmentAttendees = [];
-        if (attendee_email) {
-            appointmentAttendees.push({
-                attendee_name,
-                attendee_email
-            });
-        }
-
         // Build request payload
         const appointmentData = {
             appointment: {
@@ -58,9 +49,6 @@ module.exports = {
         if (targetable_type && targetable_id) {
             appointmentData.appointment.targetable_type = targetable_type;
             appointmentData.appointment.targetable_id = targetable_id;
-        }
-        if (appointmentAttendees.length > 0) {
-            appointmentData.appointment.appointment_attendees_attributes = appointmentAttendees;
         }
 
         // Make API request
