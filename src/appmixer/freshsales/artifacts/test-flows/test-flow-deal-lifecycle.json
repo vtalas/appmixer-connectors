@@ -1,0 +1,438 @@
+{
+    "name": "E2E Freshsales - Deal Lifecycle",
+    "description": "End-to-end test for Freshsales connector - tests Deal CRUD lifecycle (Create, Get, Update, Delete)",
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 64,
+            "y": 16,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 256,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "dealName",
+                                                "text": "E2E Test Deal"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "dealAmount",
+                                                "text": "5000"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedDealName",
+                                                "text": "E2E Test Deal Updated"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedDealAmount",
+                                                "text": "9500"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create-deal": {
+            "type": "appmixer.freshsales.core.CreateDeal",
+            "x": 448,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "deal_name": {
+                                        "var-deal-name": {
+                                            "variable": "$.set-variables.out.dealName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "deal_amount": {
+                                        "var-deal-amount": {
+                                            "variable": "$.set-variables.out.dealAmount",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "deal_name": "{{{var-deal-name}}}",
+                                    "deal_amount": "{{{var-deal-amount}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-create": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-deal": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-deal": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-create-id": {
+                                            "variable": "$.create-deal.out.id",
+                                            "functions": []
+                                        },
+                                        "field-create-name": {
+                                            "variable": "$.create-deal.out.name",
+                                            "functions": []
+                                        },
+                                        "field-create-amount": {
+                                            "variable": "$.create-deal.out.amount",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-create-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-create-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "E2E Test Deal"
+                                            },
+                                            {
+                                                "field": "{{{field-create-amount}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "get-deal": {
+            "type": "appmixer.freshsales.core.GetDeal",
+            "x": 640,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-deal": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-deal": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-deal-id": {
+                                            "variable": "$.create-deal.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-deal-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-get": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-deal": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-deal": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-get-id": {
+                                            "variable": "$.get-deal.out.id",
+                                            "functions": []
+                                        },
+                                        "field-get-name": {
+                                            "variable": "$.get-deal.out.name",
+                                            "functions": []
+                                        },
+                                        "field-get-amount": {
+                                            "variable": "$.get-deal.out.amount",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-get-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-get-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "E2E Test Deal"
+                                            },
+                                            {
+                                                "field": "{{{field-get-amount}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update-deal": {
+            "type": "appmixer.freshsales.core.UpdateDeal",
+            "x": 832,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-deal": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-deal": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-update-id": {
+                                            "variable": "$.get-deal.out.id",
+                                            "functions": []
+                                        }
+                                    },
+                                    "name": {},
+                                    "amount": {}
+                                },
+                                "lambda": {
+                                    "id": "{{{var-update-id}}}",
+                                    "name": "E2E Test Deal Updated",
+                                    "amount": 9500
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-update": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "update-deal": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "update-deal": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-upd-id": {
+                                            "variable": "$.update-deal.out.id",
+                                            "functions": []
+                                        },
+                                        "field-upd-name": {
+                                            "variable": "$.update-deal.out.name",
+                                            "functions": []
+                                        },
+                                        "field-upd-amount": {
+                                            "variable": "$.update-deal.out.amount",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-upd-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-upd-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "E2E Test Deal Updated"
+                                            },
+                                            {
+                                                "field": "{{{field-upd-amount}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1392,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-create": ["out"],
+                    "assert-get": ["out"],
+                    "assert-update": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-deal": {
+            "type": "appmixer.freshsales.core.DeleteDeal",
+            "x": 1584,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-delete-id": {
+                                            "variable": "$.create-deal.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-delete-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1776,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-deal": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "delete-deal": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "testCase": "E2E Freshsales - Deal Lifecycle",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

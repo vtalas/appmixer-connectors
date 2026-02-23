@@ -1,0 +1,618 @@
+{
+    "name": "E2E Freshsales - List and Search",
+    "description": "End-to-end test for Freshsales connector - tests CreateContact, ListContactsbyView, ListDeals, ListAppointments, ListTasks, GlobalSearchRecords",
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 64,
+            "y": 16,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 256,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "contactFirstName",
+                                                "text": "E2ETest"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "contactLastName",
+                                                "text": "FreshsalesContact"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "contactEmail",
+                                                "text": "e2etest.freshsales@appmixer-test.com"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "contactsViewId",
+                                                "text": "1"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "dealsViewId",
+                                                "text": "1"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "searchQuery",
+                                                "text": "E2ETest"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create-contact": {
+            "type": "appmixer.freshsales.core.CreateContact",
+            "x": 448,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "first_name": {
+                                        "var-first-name": {
+                                            "variable": "$.set-variables.out.contactFirstName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "last_name": {
+                                        "var-last-name": {
+                                            "variable": "$.set-variables.out.contactLastName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "email": {
+                                        "var-email": {
+                                            "variable": "$.set-variables.out.contactEmail",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "first_name": "{{{var-first-name}}}",
+                                    "last_name": "{{{var-last-name}}}",
+                                    "email": "{{{var-email}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-create-contact": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-contact": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "contact-id": {
+                                            "variable": "$.create-contact.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{contact-id}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "list-contacts-by-view": {
+            "type": "appmixer.freshsales.core.ListContactsbyView",
+            "x": 640,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-contact": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "view_id": {
+                                        "var-view-id": {
+                                            "variable": "$.set-variables.out.contactsViewId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "view_id": "{{{var-view-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-list-contacts": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-contacts-by-view": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-contacts-by-view": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "meta-total": {
+                                            "variable": "$.list-contacts-by-view.out.meta.total",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{meta-total}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "global-search": {
+            "type": "appmixer.freshsales.core.GlobalSearchRecords",
+            "x": 832,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-contacts-by-view": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-contacts-by-view": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "q": {
+                                        "var-search-query": {
+                                            "variable": "$.set-variables.out.searchQuery",
+                                            "functions": []
+                                        }
+                                    },
+                                    "entity_type": {},
+                                    "per_page": {}
+                                },
+                                "lambda": {
+                                    "q": "{{{var-search-query}}}",
+                                    "entity_type": "contact",
+                                    "per_page": 10
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-global-search": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "global-search": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "global-search": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "results-field": {
+                                            "variable": "$.global-search.out.results",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{results-field}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "list-deals": {
+            "type": "appmixer.freshsales.core.ListDeals",
+            "x": 640,
+            "y": 400,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "view_id": {
+                                        "var-deals-view-id": {
+                                            "variable": "$.set-variables.out.dealsViewId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "view_id": "{{{var-deals-view-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-list-deals": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 400,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-deals": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-deals": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "deals-field": {
+                                            "variable": "$.list-deals.out.deals",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{deals-field}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "list-appointments": {
+            "type": "appmixer.freshsales.core.ListAppointments",
+            "x": 640,
+            "y": 528,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "filter": {}
+                                },
+                                "lambda": {
+                                    "filter": "upcoming"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-list-appointments": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 528,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-appointments": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-appointments": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "appointments-field": {
+                                            "variable": "$.list-appointments.out.appointments",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{appointments-field}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "list-tasks": {
+            "type": "appmixer.freshsales.core.ListTasks",
+            "x": 640,
+            "y": 656,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "filter": {},
+                                    "page": {}
+                                },
+                                "lambda": {
+                                    "filter": "open",
+                                    "page": 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-list-tasks": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 656,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-tasks": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-tasks": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "tasks-field": {
+                                            "variable": "$.list-tasks.out.tasks",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{tasks-field}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1392,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-create-contact": ["out"],
+                    "assert-list-contacts": ["out"],
+                    "assert-global-search": ["out"],
+                    "assert-list-deals": ["out"],
+                    "assert-list-appointments": ["out"],
+                    "assert-list-tasks": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-contact": {
+            "type": "appmixer.freshsales.core.DeleteContact",
+            "x": 1584,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-contact-id": {
+                                            "variable": "$.create-contact.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-contact-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1776,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-contact": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "delete-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "testCase": "E2E Freshsales - List and Search",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,423 @@
+{
+    "name": "E2E Freshsales - Appointment Lifecycle",
+    "description": "End-to-end test for Freshsales connector - tests appointment CRUD lifecycle: Create, Get, Update, Delete",
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 64,
+            "y": 16,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 272,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "appointmentTitle",
+                                                "text": "E2E Test Appointment"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedTitle",
+                                                "text": "E2E Test Appointment Updated"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "fromDate",
+                                                "text": "2026-03-01T10:00:00Z"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "endDate",
+                                                "text": "2026-03-01T11:00:00Z"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedLocation",
+                                                "text": "E2E Conference Room"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create-appointment": {
+            "type": "appmixer.freshsales.core.CreateAppointment",
+            "x": 464,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "title": {
+                                        "var-title": {
+                                            "variable": "$.set-variables.out.appointmentTitle",
+                                            "functions": []
+                                        }
+                                    },
+                                    "from_date": {
+                                        "var-from-date": {
+                                            "variable": "$.set-variables.out.fromDate",
+                                            "functions": []
+                                        }
+                                    },
+                                    "end_date": {
+                                        "var-end-date": {
+                                            "variable": "$.set-variables.out.endDate",
+                                            "functions": []
+                                        }
+                                    },
+                                    "time_zone": {},
+                                    "description": {}
+                                },
+                                "lambda": {
+                                    "title": "{{{var-title}}}",
+                                    "from_date": "{{{var-from-date}}}",
+                                    "end_date": "{{{var-end-date}}}",
+                                    "time_zone": "UTC",
+                                    "description": "Created by E2E automated test"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-create": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-appointment": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-appointment": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-appointment-id": {
+                                            "variable": "$.create-appointment.out.appointment.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-appointment-id}}}",
+                                                "assertion": "notEmpty"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "get-appointment": {
+            "type": "appmixer.freshsales.core.GetAppointment",
+            "x": 656,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-appointment": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-appointment": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-appointment-id": {
+                                            "variable": "$.create-appointment.out.appointment.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-appointment-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-get": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-appointment": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-appointment": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-get-title": {
+                                            "variable": "$.get-appointment.out.title",
+                                            "functions": []
+                                        },
+                                        "expected-title": {
+                                            "variable": "$.set-variables.out.appointmentTitle",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-get-title}}}",
+                                                "assertion": "equal",
+                                                "expected": "{{{expected-title}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update-appointment": {
+            "type": "appmixer.freshsales.core.UpdateAppointment",
+            "x": 848,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-appointment": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-appointment": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-update-id": {
+                                            "variable": "$.create-appointment.out.appointment.id",
+                                            "functions": []
+                                        }
+                                    },
+                                    "title": {
+                                        "var-updated-title": {
+                                            "variable": "$.set-variables.out.updatedTitle",
+                                            "functions": []
+                                        }
+                                    },
+                                    "location": {
+                                        "var-location": {
+                                            "variable": "$.set-variables.out.updatedLocation",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-update-id}}}",
+                                    "title": "{{{var-updated-title}}}",
+                                    "location": "{{{var-location}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-update": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "update-appointment": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "update-appointment": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-updated-title": {
+                                            "variable": "$.update-appointment.out.title",
+                                            "functions": []
+                                        },
+                                        "expected-updated-title": {
+                                            "variable": "$.set-variables.out.updatedTitle",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-updated-title}}}",
+                                                "assertion": "equal",
+                                                "expected": "{{{expected-updated-title}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1392,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-create": ["out"],
+                    "assert-get": ["out"],
+                    "assert-update": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-appointment": {
+            "type": "appmixer.freshsales.core.DeleteAppointment",
+            "x": 1616,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-delete-id": {
+                                            "variable": "$.create-appointment.out.appointment.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-delete-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1808,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-appointment": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "delete-appointment": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "testCase": "E2E Freshsales - Appointment Lifecycle",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

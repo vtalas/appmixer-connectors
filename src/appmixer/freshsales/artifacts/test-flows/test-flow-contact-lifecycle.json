@@ -1,0 +1,474 @@
+{
+    "name": "E2E Freshsales - Contact Lifecycle",
+    "description": "End-to-end test for Freshsales connector - tests Contact CRUD lifecycle (Create, Get, Update, Delete)",
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 64,
+            "y": 16,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "set-variables": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 256,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "variables": {}
+                                },
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "firstName",
+                                                "text": "E2E"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "lastName",
+                                                "text": "TestContact"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "email",
+                                                "text": "e2e.testcontact@appmixer-test.com"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "jobTitle",
+                                                "text": "QA Engineer"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedJobTitle",
+                                                "text": "Senior QA Engineer"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedLastName",
+                                                "text": "TestContactUpdated"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create-contact": {
+            "type": "appmixer.freshsales.core.CreateContact",
+            "x": 448,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "set-variables": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "set-variables": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "first_name": {
+                                        "var-first-name": {
+                                            "variable": "$.set-variables.out.firstName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "last_name": {
+                                        "var-last-name": {
+                                            "variable": "$.set-variables.out.lastName",
+                                            "functions": []
+                                        }
+                                    },
+                                    "email": {
+                                        "var-email": {
+                                            "variable": "$.set-variables.out.email",
+                                            "functions": []
+                                        }
+                                    },
+                                    "job_title": {
+                                        "var-job-title": {
+                                            "variable": "$.set-variables.out.jobTitle",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "first_name": "{{{var-first-name}}}",
+                                    "last_name": "{{{var-last-name}}}",
+                                    "email": "{{{var-email}}}",
+                                    "job_title": "{{{var-job-title}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-create": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-contact": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-contact-id": {
+                                            "variable": "$.create-contact.out.id",
+                                            "functions": []
+                                        },
+                                        "field-first-name": {
+                                            "variable": "$.create-contact.out.first_name",
+                                            "functions": []
+                                        },
+                                        "field-email": {
+                                            "variable": "$.create-contact.out.email",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-contact-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-first-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "E2E"
+                                            },
+                                            {
+                                                "field": "{{{field-email}}}",
+                                                "assertion": "equal",
+                                                "expected": "e2e.testcontact@appmixer-test.com"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "get-contact": {
+            "type": "appmixer.freshsales.core.GetContact",
+            "x": 640,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-contact": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-contact-id": {
+                                            "variable": "$.create-contact.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-contact-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-get": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-contact": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-get-id": {
+                                            "variable": "$.get-contact.out.id",
+                                            "functions": []
+                                        },
+                                        "field-get-first-name": {
+                                            "variable": "$.get-contact.out.first_name",
+                                            "functions": []
+                                        },
+                                        "field-get-last-name": {
+                                            "variable": "$.get-contact.out.last_name",
+                                            "functions": []
+                                        },
+                                        "field-get-job-title": {
+                                            "variable": "$.get-contact.out.job_title",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-get-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-get-first-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "E2E"
+                                            },
+                                            {
+                                                "field": "{{{field-get-last-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "TestContact"
+                                            },
+                                            {
+                                                "field": "{{{field-get-job-title}}}",
+                                                "assertion": "equal",
+                                                "expected": "QA Engineer"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update-contact": {
+            "type": "appmixer.freshsales.core.UpdateContact",
+            "x": 832,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-contact": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-update-id": {
+                                            "variable": "$.get-contact.out.id",
+                                            "functions": []
+                                        }
+                                    },
+                                    "last_name": {},
+                                    "job_title": {}
+                                },
+                                "lambda": {
+                                    "id": "{{{var-update-id}}}",
+                                    "last_name": "TestContactUpdated",
+                                    "job_title": "Senior QA Engineer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-update": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 272,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "update-contact": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "update-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-upd-id": {
+                                            "variable": "$.update-contact.out.id",
+                                            "functions": []
+                                        },
+                                        "field-upd-last-name": {
+                                            "variable": "$.update-contact.out.last_name",
+                                            "functions": []
+                                        },
+                                        "field-upd-job-title": {
+                                            "variable": "$.update-contact.out.job_title",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-upd-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-upd-last-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "TestContactUpdated"
+                                            },
+                                            {
+                                                "field": "{{{field-upd-job-title}}}",
+                                                "assertion": "equal",
+                                                "expected": "Senior QA Engineer"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1392,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-create": ["out"],
+                    "assert-get": ["out"],
+                    "assert-update": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-contact": {
+            "type": "appmixer.freshsales.core.DeleteContact",
+            "x": 1584,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "id": {
+                                        "var-delete-id": {
+                                            "variable": "$.create-contact.out.id",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "id": "{{{var-delete-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1776,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "delete-contact": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "successStoreId": "64f6f1f9193228000754082f",
+                    "failedStoreId": "64f6f1f0193228000754082e"
+                },
+                "transform": {
+                    "in": {
+                        "delete-contact": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "testCase": "E2E Freshsales - Contact Lifecycle",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
