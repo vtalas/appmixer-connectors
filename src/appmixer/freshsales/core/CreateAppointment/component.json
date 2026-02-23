@@ -1,7 +1,7 @@
 {
     "name": "appmixer.freshsales.core.CreateAppointment",
+    "description": "Create a new appointment and optionally link it to a related entity.",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Book a meeting and link it to a related entity.",
     "version": "1.0.0",
     "auth": {
         "service": "appmixer:freshsales"
@@ -30,17 +30,23 @@
                     "time_zone": {
                         "type": "string"
                     },
-                    "targetable_type": {
-                        "type": "string"
-                    },
-                    "targetable_id": {
-                        "type": "integer"
-                    },
                     "location": {
                         "type": "string"
                     },
                     "description": {
                         "type": "string"
+                    },
+                    "targetable_type": {
+                        "type": "string",
+                        "enum": [
+                            "Contact",
+                            "Lead",
+                            "Deal",
+                            "SalesAccount"
+                        ]
+                    },
+                    "targetable_id": {
+                        "type": "integer"
                     }
                 },
                 "required": [
@@ -76,10 +82,28 @@
                         "index": 4
                     },
                     "targetable_type": {
-                        "type": "text",
+                        "type": "select",
                         "label": "Related Entity Type",
-                        "tooltip": "Type of the entity this appointment is linked to (e.g., Contact, Deal, SalesAccount).",
-                        "index": 5
+                        "tooltip": "Type of the entity this appointment is linked to.",
+                        "index": 5,
+                        "options": [
+                            {
+                                "value": "Contact",
+                                "label": "Contact"
+                            },
+                            {
+                                "value": "Lead",
+                                "label": "Lead"
+                            },
+                            {
+                                "value": "Deal",
+                                "label": "Deal"
+                            },
+                            {
+                                "value": "SalesAccount",
+                                "label": "Sales Account"
+                            }
+                        ]
                     },
                     "targetable_id": {
                         "type": "number",
@@ -111,7 +135,6 @@
                 "properties": {
                     "appointment": {
                         "type": "object",
-                        "title": "Appointment",
                         "properties": {
                             "id": {
                                 "type": "integer",
@@ -123,64 +146,49 @@
                             },
                             "from_date": {
                                 "type": "string",
-                                "title": "From Date",
-                                "format": "date-time"
+                                "title": "From Date"
                             },
                             "end_date": {
                                 "type": "string",
-                                "title": "End Date",
-                                "format": "date-time"
+                                "title": "End Date"
                             },
                             "time_zone": {
                                 "type": "string",
                                 "title": "Time Zone"
                             },
                             "location": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
+                                "type": "string",
                                 "title": "Location"
                             },
                             "description": {
+                                "type": "string",
+                                "title": "Description"
+                            },
+                            "targetable_type": {
                                 "type": [
                                     "string",
                                     "null"
                                 ],
-                                "title": "Description"
-                            },
-                            "targetable_type": {
-                                "type": "string",
                                 "title": "Targetable Type"
                             },
                             "targetable_id": {
-                                "type": "integer",
-                                "title": "Targetable ID"
-                            },
-                            "appointment_attendees": {
-                                "type": "array",
-                                "title": "Attendees"
-                            },
-                            "created_at": {
-                                "type": "string",
-                                "title": "Created At",
-                                "format": "date-time"
-                            },
-                            "updated_at": {
-                                "type": "string",
-                                "title": "Updated At",
-                                "format": "date-time"
-                            },
-                            "is_allday": {
-                                "type": "boolean",
-                                "title": "Is All Day"
-                            },
-                            "outcome_id": {
                                 "type": [
                                     "integer",
                                     "null"
                                 ],
-                                "title": "Outcome ID"
+                                "title": "Targetable ID"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "title": "Created At"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "title": "Updated At"
+                            },
+                            "is_allday": {
+                                "type": "boolean",
+                                "title": "Is All Day"
                             },
                             "provider": {
                                 "type": "string",
@@ -190,112 +198,14 @@
                                 "type": "integer",
                                 "title": "Creator ID"
                             },
-                            "latitude": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Latitude"
-                            },
-                            "longitude": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Longitude"
-                            },
-                            "checkedin_at": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Checked In At",
-                                "format": "date-time"
-                            },
-                            "can_checkin_checkout": {
-                                "type": "boolean",
-                                "title": "Can Check In/Out"
-                            },
-                            "checkedout_latitude": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Checked Out Latitude"
-                            },
-                            "checkedout_longitude": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Checked Out Longitude"
-                            },
-                            "checkedout_location": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Checked Out Location"
-                            },
-                            "checkedout_at": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Checked Out At",
-                                "format": "date-time"
-                            },
-                            "checkedin_duration": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "title": "Checked In Duration"
-                            },
-                            "can_checkin": {
-                                "type": "boolean",
-                                "title": "Can Check In"
-                            },
-                            "conference_id": {
-                                "type": [
-                                    "integer",
-                                    "null"
-                                ],
-                                "title": "Conference ID"
-                            },
-                            "targetables": {
-                                "type": "array",
-                                "title": "Targetables"
-                            },
-                            "targetables_with_email": {
-                                "type": "array",
-                                "title": "Targetables With Email"
-                            },
-                            "has_multiple_emails": {
-                                "type": "boolean",
-                                "title": "Has Multiple Emails"
-                            },
                             "appointment_attendee_ids": {
                                 "type": "array",
+                                "title": "Attendee IDs",
                                 "items": {
                                     "type": "integer"
-                                },
-                                "title": "Appointment Attendee IDs"
-                            },
-                            "note_id": {
-                                "type": [
-                                    "integer",
-                                    "null"
-                                ],
-                                "title": "Note ID"
+                                }
                             }
-                        },
-                        "required": [
-                            "id",
-                            "title",
-                            "from_date",
-                            "end_date"
-                        ]
+                        }
                     },
                     "appointment_attendees": {
                         "type": "array",
@@ -304,29 +214,21 @@
                             "type": "object"
                         }
                     },
-                    "conferences": {
-                        "type": "array",
-                        "title": "Conferences",
-                        "items": {
-                            "type": "object"
-                        }
-                    },
-                    "notes": {
-                        "type": "array",
-                        "title": "Notes",
-                        "items": {
-                            "type": "object"
-                        }
-                    },
                     "users": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "title": "Users",
                         "items": {
                             "type": "object"
                         }
                     },
                     "leads": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "title": "Leads",
                         "items": {
                             "type": "object"
