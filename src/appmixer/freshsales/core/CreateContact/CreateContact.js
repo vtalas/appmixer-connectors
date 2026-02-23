@@ -1,7 +1,5 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
     async receive(context) {
 
@@ -23,11 +21,6 @@ module.exports = {
             tags
         } = context.messages.in.content;
 
-        // Validate required fields
-        if (!first_name) {
-            throw new context.CancelError('Contact first name is required!');
-        }
-
         // Build the contact object
         const contactData = {
             first_name,
@@ -45,14 +38,14 @@ module.exports = {
             custom_field
         };
 
-        // Remove undefined values
+        // Remove undefined/null values
         Object.keys(contactData).forEach(key => {
             if (contactData[key] === undefined || contactData[key] === null) {
                 delete contactData[key];
             }
         });
 
-        // Add optional fields if provided
+        // Add optional array fields if provided
         if (sales_accounts) {
             contactData.sales_accounts = sales_accounts;
         }
@@ -60,10 +53,22 @@ module.exports = {
             contactData.tags = tags;
         }
 
-        const { data } = await api.CreateContact.execute(context, {
-            contact: contactData
+        const { domain, apiKey } = context.auth;
+        const url = `https://${domain}/api/contacts`;
+
+        const response = await context.httpRequest({
+            method: 'POST',
+            url,
+            headers: {
+                'Authorization': `Token token=${apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+                contact: contactData
+            }
         });
 
-        return context.sendJson(data.contact, 'out');
+        return context.sendJson(response.data.contact, 'out');
     }
 };

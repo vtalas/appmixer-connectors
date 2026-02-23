@@ -1,7 +1,7 @@
 {
     "name": "appmixer.freshsales.core.CreateTask",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Create a new task in Freshsales. Tasks can be associated with contacts, accounts, or deals.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -206,20 +206,41 @@
                         "title": "Description"
                     },
                     "due_date": {
-                        "type": "string",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "title": "Due Date"
                     },
+                    "status": {
+                        "type": [
+                            "integer",
+                            "string",
+                            "null"
+                        ],
+                        "title": "Status"
+                    },
                     "task_type": {
-                        "type": "string",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "title": "Task Type"
                     },
-                    "priority": {
-                        "type": "string",
-                        "title": "Priority"
+                    "task_type_id": {
+                        "type": [
+                            "string",
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Task Type ID"
                     },
-                    "status": {
-                        "type": "string",
-                        "title": "Status"
+                    "priority": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Priority"
                     },
                     "owner_id": {
                         "type": [
@@ -256,6 +277,53 @@
                     "is_notification_set": {
                         "type": "boolean",
                         "title": "Notification Set"
+                    },
+                    "creater_id": {
+                        "type": [
+                            "string",
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Creator ID"
+                    },
+                    "updater_id": {
+                        "type": [
+                            "string",
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Updater ID"
+                    },
+                    "outcome_id": {
+                        "type": [
+                            "string",
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Outcome ID"
+                    },
+                    "completed_date": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Completed Date"
+                    },
+                    "is_linkedin_type": {
+                        "type": "boolean",
+                        "title": "Is LinkedIn Type"
+                    },
+                    "targetables": {
+                        "type": "array",
+                        "title": "Targetables"
+                    },
+                    "targetables_with_email": {
+                        "type": "array",
+                        "title": "Targetables With Email"
+                    },
+                    "has_multiple_emails": {
+                        "type": "boolean",
+                        "title": "Has Multiple Emails"
                     },
                     "created_at": {
                         "type": "string",

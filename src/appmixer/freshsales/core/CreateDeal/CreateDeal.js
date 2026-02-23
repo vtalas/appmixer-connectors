@@ -96,6 +96,6 @@ module.exports = {
             data: dealData
         });
 
-        return context.sendJson(data, 'out');
+        return context.sendJson(data.deal, 'out');
     }
 };

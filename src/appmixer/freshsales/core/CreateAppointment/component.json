@@ -198,6 +198,109 @@
                                 "type": "integer",
                                 "title": "Creator ID"
                             },
+                            "outcome_id": {
+                                "type": [
+                                    "integer",
+                                    "null"
+                                ],
+                                "title": "Outcome ID"
+                            },
+                            "latitude": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Latitude"
+                            },
+                            "longitude": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Longitude"
+                            },
+                            "checkedin_at": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Checked In At"
+                            },
+                            "checkedout_at": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Checked Out At"
+                            },
+                            "checkedin_duration": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ],
+                                "title": "Checked In Duration"
+                            },
+                            "checkedout_latitude": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Checked Out Latitude"
+                            },
+                            "checkedout_longitude": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Checked Out Longitude"
+                            },
+                            "checkedout_location": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "title": "Checked Out Location"
+                            },
+                            "can_checkin": {
+                                "type": "boolean",
+                                "title": "Can Check In"
+                            },
+                            "can_checkin_checkout": {
+                                "type": "boolean",
+                                "title": "Can Check In/Out"
+                            },
+                            "conference_id": {
+                                "type": [
+                                    "integer",
+                                    "null"
+                                ],
+                                "title": "Conference ID"
+                            },
+                            "note_id": {
+                                "type": [
+                                    "integer",
+                                    "null"
+                                ],
+                                "title": "Note ID"
+                            },
+                            "has_multiple_emails": {
+                                "type": "boolean",
+                                "title": "Has Multiple Emails"
+                            },
+                            "targetables": {
+                                "type": "array",
+                                "title": "Targetables",
+                                "items": {
+                                    "type": "object"
+                                }
+                            },
+                            "targetables_with_email": {
+                                "type": "array",
+                                "title": "Targetables With Email",
+                                "items": {
+                                    "type": "object"
+                                }
+                            },
                             "appointment_attendee_ids": {
                                 "type": "array",
                                 "title": "Attendee IDs",
@@ -210,6 +313,20 @@
                     "appointment_attendees": {
                         "type": "array",
                         "title": "Appointment Attendees",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "conferences": {
+                        "type": "array",
+                        "title": "Conferences",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "notes": {
+                        "type": "array",
+                        "title": "Notes",
                         "items": {
                             "type": "object"
                         }

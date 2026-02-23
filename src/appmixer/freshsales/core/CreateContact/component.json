@@ -1,9 +1,8 @@
 {
     "name": "appmixer.freshsales.core.CreateContact",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Create a new contact with optional account linkage and custom fields.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:freshsales"
     },
@@ -202,9 +201,44 @@
                         "type": "string",
                         "title": "Last Name"
                     },
+                    "display_name": {
+                        "type": "string",
+                        "title": "Display Name"
+                    },
+                    "avatar": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Avatar"
+                    },
                     "email": {
                         "type": "string",
                         "title": "Email"
+                    },
+                    "emails": {
+                        "type": "array",
+                        "title": "Emails",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "value": {
+                                    "type": "string"
+                                },
+                                "is_primary": {
+                                    "type": "boolean"
+                                },
+                                "label": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "mobile_number": {
                         "type": [
@@ -220,9 +254,23 @@
                         ],
                         "title": "Work Number"
                     },
+                    "work_email": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Work Email"
+                    },
                     "job_title": {
                         "type": "string",
                         "title": "Job Title"
+                    },
+                    "address": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Address"
                     },
                     "city": {
                         "type": "string",
@@ -240,12 +288,134 @@
                         "type": "string",
                         "title": "Zipcode"
                     },
-                    "owner_id": {
+                    "time_zone": {
                         "type": [
                             "string",
                             "null"
                         ],
+                        "title": "Time Zone"
+                    },
+                    "owner_id": {
+                        "type": [
+                            "string",
+                            "integer",
+                            "null"
+                        ],
                         "title": "Owner ID"
+                    },
+                    "lead_score": {
+                        "type": "integer",
+                        "title": "Lead Score"
+                    },
+                    "last_seen": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Seen"
+                    },
+                    "last_contacted": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted"
+                    },
+                    "last_contacted_mode": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted Mode"
+                    },
+                    "last_contacted_sales_activity_mode": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted Sales Activity Mode"
+                    },
+                    "open_deals_amount": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "title": "Open Deals Amount"
+                    },
+                    "won_deals_amount": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "title": "Won Deals Amount"
+                    },
+                    "open_deals_count": {
+                        "type": "integer",
+                        "title": "Open Deals Count"
+                    },
+                    "won_deals_count": {
+                        "type": "integer",
+                        "title": "Won Deals Count"
+                    },
+                    "recent_note": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Recent Note"
+                    },
+                    "custom_field": {
+                        "type": "object",
+                        "title": "Custom Fields"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "title": "Tags"
+                    },
+                    "links": {
+                        "type": "object",
+                        "title": "Links"
+                    },
+                    "is_deleted": {
+                        "type": "boolean",
+                        "title": "Is Deleted"
+                    },
+                    "team_user_ids": {
+                        "type": "array",
+                        "title": "Team User IDs"
+                    },
+                    "external_id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "External ID"
+                    },
+                    "subscription_status": {
+                        "type": "integer",
+                        "title": "Subscription Status"
+                    },
+                    "customer_fit": {
+                        "type": "integer",
+                        "title": "Customer Fit"
+                    },
+                    "record_type_id": {
+                        "type": "string",
+                        "title": "Record Type ID"
+                    },
+                    "keyword": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Keyword"
+                    },
+                    "medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Medium"
                     },
                     "created_at": {
                         "type": "string",

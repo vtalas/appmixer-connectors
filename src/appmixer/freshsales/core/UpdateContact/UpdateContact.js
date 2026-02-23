@@ -1,7 +1,5 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
     async receive(context) {
 
@@ -26,28 +24,35 @@ module.exports = {
             linkedin
         } = context.messages.in.content;
 
-        if (!id) {
-            throw new context.CancelError('Contact ID is required!');
-        }
-
         const contactData = {
             first_name, last_name, email, mobile_number, work_number,
             job_title, address, city, state, country, zipcode,
             time_zone, keyword, medium, facebook, twitter, linkedin
         };
 
-        // Remove undefined/null values
+        // Remove undefined/null/empty values
         Object.keys(contactData).forEach(key => {
             if (contactData[key] === undefined || contactData[key] === null || contactData[key] === '') {
                 delete contactData[key];
             }
         });
 
-        const { data } = await api.UpdateContact.execute(context, {
-            id,
-            contact: contactData
+        const { domain, apiKey } = context.auth;
+        const url = `https://${domain}/api/contacts/${id}`;
+
+        const response = await context.httpRequest({
+            method: 'PUT',
+            url,
+            headers: {
+                'Authorization': `Token token=${apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+                contact: contactData
+            }
         });
 
-        return context.sendJson(data.contact, 'out');
+        return context.sendJson(response.data.contact, 'out');
     }
 };

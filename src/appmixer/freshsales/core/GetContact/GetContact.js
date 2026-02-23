@@ -1,23 +1,29 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
     async receive(context) {
 
         const { id, include } = context.messages.in.content;
 
-        if (!id) {
-            throw new context.CancelError('Contact ID is required!');
-        }
+        const { domain, apiKey } = context.auth;
+        const url = `https://${domain}/api/contacts/${id}`;
 
         const params = {};
         if (include) {
             params.include = include;
         }
 
-        const { data } = await api.GetContact.execute(context, { id, ...params });
+        const response = await context.httpRequest({
+            method: 'GET',
+            url,
+            headers: {
+                'Authorization': `Token token=${apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            params
+        });
 
-        return context.sendJson(data.contact, 'out');
+        return context.sendJson(response.data.contact, 'out');
     }
 };
