@@ -236,6 +236,9 @@
                                         "string",
                                         "null"
                                     ]
+                                },
+                                "_destroy": {
+                                    "type": "boolean"
                                 }
                             }
                         }
@@ -335,6 +338,13 @@
                         ],
                         "title": "Last Contacted Sales Activity Mode"
                     },
+                    "last_contacted_via_sales_activity": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted Via Sales Activity"
+                    },
                     "open_deals_amount": {
                         "type": [
                             "number",
@@ -372,6 +382,10 @@
                         "type": "array",
                         "title": "Tags"
                     },
+                    "system_tags": {
+                        "type": "array",
+                        "title": "System Tags"
+                    },
                     "links": {
                         "type": "object",
                         "title": "Links"
@@ -395,6 +409,27 @@
                         "type": "integer",
                         "title": "Subscription Status"
                     },
+                    "subscription_types": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Subscription Types"
+                    },
+                    "unsubscription_reason": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Unsubscription Reason"
+                    },
+                    "other_unsubscription_reason": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Other Unsubscription Reason"
+                    },
                     "customer_fit": {
                         "type": "integer",
                         "title": "Customer Fit"
@@ -416,6 +451,185 @@
                             "null"
                         ],
                         "title": "Medium"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Description"
+                    },
+                    "facebook": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Facebook"
+                    },
+                    "twitter": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Twitter"
+                    },
+                    "linkedin": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "LinkedIn"
+                    },
+                    "whatsapp_subscription_status": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "WhatsApp Subscription Status"
+                    },
+                    "sms_subscription_status": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "SMS Subscription Status"
+                    },
+                    "amb_subscription_status": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "AMB Subscription Status"
+                    },
+                    "last_assigned_at": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Assigned At"
+                    },
+                    "last_seen_chat": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Seen Chat"
+                    },
+                    "first_seen_chat": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Seen Chat"
+                    },
+                    "locale": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Locale"
+                    },
+                    "total_sessions": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Total Sessions"
+                    },
+                    "web_form_ids": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "title": "Web Form IDs"
+                    },
+                    "completed_sales_sequences": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "title": "Completed Sales Sequences"
+                    },
+                    "active_sales_sequences": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "title": "Active Sales Sequences"
+                    },
+                    "phone_numbers": {
+                        "type": "array",
+                        "title": "Phone Numbers"
+                    },
+                    "mcr_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "MCR ID"
+                    },
+                    "first_campaign": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Campaign"
+                    },
+                    "first_medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Medium"
+                    },
+                    "first_source": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Source"
+                    },
+                    "last_campaign": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Campaign"
+                    },
+                    "last_medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Medium"
+                    },
+                    "last_source": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Source"
+                    },
+                    "latest_campaign": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Latest Campaign"
+                    },
+                    "latest_medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Latest Medium"
+                    },
+                    "latest_source": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Latest Source"
                     },
                     "created_at": {
                         "type": "string",
