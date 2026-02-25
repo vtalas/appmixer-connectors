@@ -21,7 +21,7 @@
                         "type": "string"
                     },
                     "deal_amount": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "currency_code": {
                         "type": "string"
@@ -31,13 +31,13 @@
                         "format": "date"
                     },
                     "stage_id": {
-                        "type": "integer"
+                        "type": "string"
                     },
                     "owner_id": {
-                        "type": "integer"
+                        "type": "string"
                     },
                     "sales_account_id": {
-                        "type": "integer"
+                        "type": "string"
                     },
                     "sales_account_name": {
                         "type": "string"
@@ -45,7 +45,7 @@
                     "contacts_list": {
                         "type": "array",
                         "items": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     "tags": {
@@ -99,13 +99,13 @@
                         "index": 4
                     },
                     "owner_id": {
-                        "type": "number",
+                        "type": "text",
                         "label": "Owner/Agent ID",
                         "tooltip": "Owner/agent user ID to assign the deal.",
                         "index": 5
                     },
                     "sales_account_id": {
-                        "type": "number",
+                        "type": "text",
                         "label": "Sales Account ID",
                         "tooltip": "Existing sales account ID to associate with the deal.",
                         "index": 6

@@ -50,7 +50,7 @@ module.exports = {
         const { view_id, sort, sort_type, outputType } = context.messages.in.content;
 
         if (!view_id) {
-            throw new context.CancelError('View ID is required!');
+            throw new context.CancelError('View is required!');
         }
 
         const params = {};
