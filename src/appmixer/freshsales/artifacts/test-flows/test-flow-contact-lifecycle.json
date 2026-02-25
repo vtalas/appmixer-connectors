@@ -1,6 +1,6 @@
 {
     "name": "E2E Freshsales - Contact Lifecycle",
-    "description": "End-to-end test for Freshsales connector - tests Contact CRUD lifecycle (Create, Get, Update, Delete)",
+    "description": "End-to-end test for Freshsales connector - tests Contact CRUD lifecycle: CreateContact, GetContact, UpdateContact, DeleteContact",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -35,17 +35,17 @@
                                             {
                                                 "type": "text",
                                                 "name": "firstName",
-                                                "text": "E2E"
+                                                "text": "E2E Freshsales"
                                             },
                                             {
                                                 "type": "text",
                                                 "name": "lastName",
-                                                "text": "TestContact"
+                                                "text": "Contact Test"
                                             },
                                             {
                                                 "type": "text",
                                                 "name": "email",
-                                                "text": "e2e.testcontact@appmixer-test.com"
+                                                "text": "e2e.freshsales.test@appmixer-e2e.com"
                                             },
                                             {
                                                 "type": "text",
@@ -56,11 +56,6 @@
                                                 "type": "text",
                                                 "name": "updatedJobTitle",
                                                 "text": "Senior QA Engineer"
-                                            },
-                                            {
-                                                "type": "text",
-                                                "name": "updatedLastName",
-                                                "text": "TestContactUpdated"
                                             }
                                         ]
                                     }
@@ -143,7 +138,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-contact-id": {
+                                        "field-id": {
                                             "variable": "$.create-contact.out.id",
                                             "functions": []
                                         },
@@ -161,18 +156,18 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-contact-id}}}",
+                                                "field": "{{{field-id}}}",
                                                 "assertion": "notEmpty"
                                             },
                                             {
                                                 "field": "{{{field-first-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E"
+                                                "expected": "E2E Freshsales"
                                             },
                                             {
                                                 "field": "{{{field-email}}}",
                                                 "assertion": "equal",
-                                                "expected": "e2e.testcontact@appmixer-test.com"
+                                                "expected": "e2e.freshsales.test@appmixer-e2e.com"
                                             }
                                         ]
                                     }
@@ -242,10 +237,6 @@
                                             "variable": "$.get-contact.out.first_name",
                                             "functions": []
                                         },
-                                        "field-get-last-name": {
-                                            "variable": "$.get-contact.out.last_name",
-                                            "functions": []
-                                        },
                                         "field-get-job-title": {
                                             "variable": "$.get-contact.out.job_title",
                                             "functions": []
@@ -262,12 +253,7 @@
                                             {
                                                 "field": "{{{field-get-first-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E"
-                                            },
-                                            {
-                                                "field": "{{{field-get-last-name}}}",
-                                                "assertion": "equal",
-                                                "expected": "TestContact"
+                                                "expected": "E2E Freshsales"
                                             },
                                             {
                                                 "field": "{{{field-get-job-title}}}",
@@ -306,13 +292,16 @@
                                             "functions": []
                                         }
                                     },
-                                    "last_name": {},
-                                    "job_title": {}
+                                    "job_title": {
+                                        "var-updated-job-title": {
+                                            "variable": "$.set-variables.out.updatedJobTitle",
+                                            "functions": []
+                                        }
+                                    }
                                 },
                                 "lambda": {
                                     "id": "{{{var-update-id}}}",
-                                    "last_name": "TestContactUpdated",
-                                    "job_title": "Senior QA Engineer"
+                                    "job_title": "{{{var-updated-job-title}}}"
                                 }
                             }
                         }
@@ -338,15 +327,11 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-upd-id": {
+                                        "field-updated-id": {
                                             "variable": "$.update-contact.out.id",
                                             "functions": []
                                         },
-                                        "field-upd-last-name": {
-                                            "variable": "$.update-contact.out.last_name",
-                                            "functions": []
-                                        },
-                                        "field-upd-job-title": {
+                                        "field-updated-job-title": {
                                             "variable": "$.update-contact.out.job_title",
                                             "functions": []
                                         }
@@ -356,16 +341,11 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-upd-id}}}",
+                                                "field": "{{{field-updated-id}}}",
                                                 "assertion": "notEmpty"
                                             },
                                             {
-                                                "field": "{{{field-upd-last-name}}}",
-                                                "assertion": "equal",
-                                                "expected": "TestContactUpdated"
-                                            },
-                                            {
-                                                "field": "{{{field-upd-job-title}}}",
+                                                "field": "{{{field-updated-job-title}}}",
                                                 "assertion": "equal",
                                                 "expected": "Senior QA Engineer"
                                             }

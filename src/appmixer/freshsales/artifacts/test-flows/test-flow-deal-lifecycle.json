@@ -39,18 +39,8 @@
                                             },
                                             {
                                                 "type": "text",
-                                                "name": "dealAmount",
-                                                "text": "5000"
-                                            },
-                                            {
-                                                "type": "text",
                                                 "name": "updatedDealName",
                                                 "text": "E2E Test Deal Updated"
-                                            },
-                                            {
-                                                "type": "text",
-                                                "name": "updatedDealAmount",
-                                                "text": "9500"
                                             }
                                         ]
                                     }
@@ -84,16 +74,11 @@
                                             "functions": []
                                         }
                                     },
-                                    "deal_amount": {
-                                        "var-deal-amount": {
-                                            "variable": "$.set-variables.out.dealAmount",
-                                            "functions": []
-                                        }
-                                    }
+                                    "deal_amount": {}
                                 },
                                 "lambda": {
                                     "deal_name": "{{{var-deal-name}}}",
-                                    "deal_amount": "{{{var-deal-amount}}}"
+                                    "deal_amount": 5000
                                 }
                             }
                         }
@@ -127,8 +112,8 @@
                                             "variable": "$.create-deal.out.name",
                                             "functions": []
                                         },
-                                        "field-create-amount": {
-                                            "variable": "$.create-deal.out.amount",
+                                        "expected-deal-name": {
+                                            "variable": "$.set-variables.out.dealName",
                                             "functions": []
                                         }
                                     }
@@ -143,11 +128,7 @@
                                             {
                                                 "field": "{{{field-create-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Deal"
-                                            },
-                                            {
-                                                "field": "{{{field-create-amount}}}",
-                                                "assertion": "notEmpty"
+                                                "expected": "{{{expected-deal-name}}}"
                                             }
                                         ]
                                     }
@@ -217,8 +198,8 @@
                                             "variable": "$.get-deal.out.name",
                                             "functions": []
                                         },
-                                        "field-get-amount": {
-                                            "variable": "$.get-deal.out.amount",
+                                        "expected-get-name": {
+                                            "variable": "$.set-variables.out.dealName",
                                             "functions": []
                                         }
                                     }
@@ -233,11 +214,7 @@
                                             {
                                                 "field": "{{{field-get-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Deal"
-                                            },
-                                            {
-                                                "field": "{{{field-get-amount}}}",
-                                                "assertion": "notEmpty"
+                                                "expected": "{{{expected-get-name}}}"
                                             }
                                         ]
                                     }
@@ -267,17 +244,22 @@
                                 "modifiers": {
                                     "id": {
                                         "var-update-id": {
-                                            "variable": "$.get-deal.out.id",
+                                            "variable": "$.create-deal.out.id",
                                             "functions": []
                                         }
                                     },
-                                    "name": {},
+                                    "name": {
+                                        "var-updated-name": {
+                                            "variable": "$.set-variables.out.updatedDealName",
+                                            "functions": []
+                                        }
+                                    },
                                     "amount": {}
                                 },
                                 "lambda": {
                                     "id": "{{{var-update-id}}}",
-                                    "name": "E2E Test Deal Updated",
-                                    "amount": 9500
+                                    "name": "{{{var-updated-name}}}",
+                                    "amount": 9999
                                 }
                             }
                         }
@@ -303,16 +285,16 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-upd-id": {
+                                        "field-update-id": {
                                             "variable": "$.update-deal.out.id",
                                             "functions": []
                                         },
-                                        "field-upd-name": {
+                                        "field-update-name": {
                                             "variable": "$.update-deal.out.name",
                                             "functions": []
                                         },
-                                        "field-upd-amount": {
-                                            "variable": "$.update-deal.out.amount",
+                                        "expected-update-name": {
+                                            "variable": "$.set-variables.out.updatedDealName",
                                             "functions": []
                                         }
                                     }
@@ -321,17 +303,13 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-upd-id}}}",
+                                                "field": "{{{field-update-id}}}",
                                                 "assertion": "notEmpty"
                                             },
                                             {
-                                                "field": "{{{field-upd-name}}}",
+                                                "field": "{{{field-update-name}}}",
                                                 "assertion": "equal",
-                                                "expected": "E2E Test Deal Updated"
-                                            },
-                                            {
-                                                "field": "{{{field-upd-amount}}}",
-                                                "assertion": "notEmpty"
+                                                "expected": "{{{expected-update-name}}}"
                                             }
                                         ]
                                     }

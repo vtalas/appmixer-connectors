@@ -1,6 +1,6 @@
 {
     "name": "E2E Freshsales - Appointment Lifecycle",
-    "description": "End-to-end test for Freshsales connector - tests appointment CRUD lifecycle: Create, Get, Update, Delete",
+    "description": "End-to-end test for Freshsales connector - tests appointment CRUD lifecycle: Create, Get, Update, Delete.",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -12,7 +12,7 @@
         },
         "set-variables": {
             "type": "appmixer.utils.controls.SetVariable",
-            "x": 272,
+            "x": 256,
             "y": 16,
             "version": "1.0.0",
             "source": {
@@ -54,8 +54,8 @@
                                             },
                                             {
                                                 "type": "text",
-                                                "name": "updatedLocation",
-                                                "text": "E2E Conference Room"
+                                                "name": "updatedDescription",
+                                                "text": "Updated by E2E test"
                                             }
                                         ]
                                     }
@@ -68,7 +68,7 @@
         },
         "create-appointment": {
             "type": "appmixer.freshsales.core.CreateAppointment",
-            "x": 464,
+            "x": 448,
             "y": 16,
             "version": "1.0.0",
             "source": {
@@ -109,7 +109,7 @@
                                     "from_date": "{{{var-from-date}}}",
                                     "end_date": "{{{var-end-date}}}",
                                     "time_zone": "UTC",
-                                    "description": "Created by E2E automated test"
+                                    "description": "Created by E2E test"
                                 }
                             }
                         }
@@ -135,7 +135,7 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-appointment-id": {
+                                        "field-appt-id": {
                                             "variable": "$.create-appointment.out.appointment.id",
                                             "functions": []
                                         }
@@ -145,7 +145,7 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-appointment-id}}}",
+                                                "field": "{{{field-appt-id}}}",
                                                 "assertion": "notEmpty"
                                             }
                                         ]
@@ -159,7 +159,7 @@
         },
         "get-appointment": {
             "type": "appmixer.freshsales.core.GetAppointment",
-            "x": 656,
+            "x": 640,
             "y": 144,
             "version": "1.0.0",
             "source": {
@@ -175,14 +175,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "id": {
-                                        "var-appointment-id": {
+                                        "var-appt-id": {
                                             "variable": "$.create-appointment.out.appointment.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "id": "{{{var-appointment-id}}}"
+                                    "id": "{{{var-appt-id}}}"
                                 }
                             }
                         }
@@ -237,7 +237,7 @@
         },
         "update-appointment": {
             "type": "appmixer.freshsales.core.UpdateAppointment",
-            "x": 848,
+            "x": 832,
             "y": 272,
             "version": "1.0.0",
             "source": {
@@ -253,8 +253,8 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "id": {
-                                        "var-update-id": {
-                                            "variable": "$.create-appointment.out.appointment.id",
+                                        "var-appt-id-upd": {
+                                            "variable": "$.get-appointment.out.id",
                                             "functions": []
                                         }
                                     },
@@ -264,17 +264,17 @@
                                             "functions": []
                                         }
                                     },
-                                    "location": {
-                                        "var-location": {
-                                            "variable": "$.set-variables.out.updatedLocation",
+                                    "description": {
+                                        "var-updated-desc": {
+                                            "variable": "$.set-variables.out.updatedDescription",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "id": "{{{var-update-id}}}",
+                                    "id": "{{{var-appt-id-upd}}}",
                                     "title": "{{{var-updated-title}}}",
-                                    "location": "{{{var-location}}}"
+                                    "description": "{{{var-updated-desc}}}"
                                 }
                             }
                         }
@@ -300,12 +300,20 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-updated-title": {
+                                        "field-upd-title": {
                                             "variable": "$.update-appointment.out.title",
                                             "functions": []
                                         },
-                                        "expected-updated-title": {
+                                        "expected-upd-title": {
                                             "variable": "$.set-variables.out.updatedTitle",
+                                            "functions": []
+                                        },
+                                        "field-upd-desc": {
+                                            "variable": "$.update-appointment.out.description",
+                                            "functions": []
+                                        },
+                                        "expected-upd-desc": {
+                                            "variable": "$.set-variables.out.updatedDescription",
                                             "functions": []
                                         }
                                     }
@@ -314,9 +322,14 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-updated-title}}}",
+                                                "field": "{{{field-upd-title}}}",
                                                 "assertion": "equal",
-                                                "expected": "{{{expected-updated-title}}}"
+                                                "expected": "{{{expected-upd-title}}}"
+                                            },
+                                            {
+                                                "field": "{{{field-upd-desc}}}",
+                                                "assertion": "equal",
+                                                "expected": "{{{expected-upd-desc}}}"
                                             }
                                         ]
                                     }
@@ -347,7 +360,7 @@
         },
         "delete-appointment": {
             "type": "appmixer.freshsales.core.DeleteAppointment",
-            "x": 1616,
+            "x": 1584,
             "y": 144,
             "version": "1.0.0",
             "source": {
@@ -363,14 +376,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "id": {
-                                        "var-delete-id": {
+                                        "var-appt-id-del": {
                                             "variable": "$.create-appointment.out.appointment.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "id": "{{{var-delete-id}}}"
+                                    "id": "{{{var-appt-id-del}}}"
                                 }
                             }
                         }
@@ -380,7 +393,7 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1808,
+            "x": 1776,
             "y": 144,
             "version": "1.0.0",
             "source": {

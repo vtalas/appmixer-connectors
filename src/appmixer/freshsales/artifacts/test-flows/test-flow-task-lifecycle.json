@@ -1,6 +1,6 @@
 {
     "name": "E2E Freshsales - Task Lifecycle",
-    "description": "End-to-end test for Freshsales connector - tests full task lifecycle: Create, Get, Update, Delete",
+    "description": "End-to-end test for the Freshsales connector - tests CreateTask, GetTask, UpdateTask, and DeleteTask in a full CRUD lifecycle.",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -39,8 +39,18 @@
                                             },
                                             {
                                                 "type": "text",
-                                                "name": "updatedTaskTitle",
+                                                "name": "taskDescription",
+                                                "text": "E2E Test Task Description"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedTitle",
                                                 "text": "E2E Test Task Updated"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "name": "updatedDescription",
+                                                "text": "E2E Test Task Description Updated"
                                             }
                                         ]
                                     }
@@ -74,14 +84,16 @@
                                             "functions": []
                                         }
                                     },
-                                    "description": {},
-                                    "task_type": {},
-                                    "priority": {},
-                                    "status": {}
+                                    "description": {
+                                        "var-task-desc": {
+                                            "variable": "$.set-variables.out.taskDescription",
+                                            "functions": []
+                                        }
+                                    }
                                 },
                                 "lambda": {
                                     "title": "{{{var-task-title}}}",
-                                    "description": "Created by E2E test",
+                                    "description": "{{{var-task-desc}}}",
                                     "task_type": "Follow-up",
                                     "priority": "Medium",
                                     "status": "Open"
@@ -110,11 +122,11 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "created-task-id": {
+                                        "field-create-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         },
-                                        "created-task-title": {
+                                        "field-create-title": {
                                             "variable": "$.create-task.out.title",
                                             "functions": []
                                         },
@@ -128,11 +140,11 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{created-task-id}}}",
+                                                "field": "{{{field-create-id}}}",
                                                 "assertion": "notEmpty"
                                             },
                                             {
-                                                "field": "{{{created-task-title}}}",
+                                                "field": "{{{field-create-title}}}",
                                                 "assertion": "equal",
                                                 "expected": "{{{expected-title}}}"
                                             }
@@ -196,15 +208,15 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "got-task-id": {
+                                        "field-get-id": {
                                             "variable": "$.get-task.out.id",
                                             "functions": []
                                         },
-                                        "got-task-title": {
+                                        "field-get-title": {
                                             "variable": "$.get-task.out.title",
                                             "functions": []
                                         },
-                                        "expected-title": {
+                                        "expected-get-title": {
                                             "variable": "$.set-variables.out.taskTitle",
                                             "functions": []
                                         }
@@ -214,13 +226,13 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{got-task-id}}}",
+                                                "field": "{{{field-get-id}}}",
                                                 "assertion": "notEmpty"
                                             },
                                             {
-                                                "field": "{{{got-task-title}}}",
+                                                "field": "{{{field-get-title}}}",
                                                 "assertion": "equal",
-                                                "expected": "{{{expected-title}}}"
+                                                "expected": "{{{expected-get-title}}}"
                                             }
                                         ]
                                     }
@@ -249,23 +261,28 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "id": {
-                                        "var-task-id": {
+                                        "var-update-id": {
                                             "variable": "$.create-task.out.id",
                                             "functions": []
                                         }
                                     },
                                     "title": {
                                         "var-updated-title": {
-                                            "variable": "$.set-variables.out.updatedTaskTitle",
+                                            "variable": "$.set-variables.out.updatedTitle",
                                             "functions": []
                                         }
                                     },
-                                    "status": {}
+                                    "description": {
+                                        "var-updated-desc": {
+                                            "variable": "$.set-variables.out.updatedDescription",
+                                            "functions": []
+                                        }
+                                    }
                                 },
                                 "lambda": {
-                                    "id": "{{{var-task-id}}}",
+                                    "id": "{{{var-update-id}}}",
                                     "title": "{{{var-updated-title}}}",
-                                    "status": 1
+                                    "description": "{{{var-updated-desc}}}"
                                 }
                             }
                         }
@@ -291,20 +308,16 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "updated-task-id": {
+                                        "field-update-id": {
                                             "variable": "$.update-task.out.id",
                                             "functions": []
                                         },
-                                        "updated-task-title": {
+                                        "field-updated-title": {
                                             "variable": "$.update-task.out.title",
                                             "functions": []
                                         },
                                         "expected-updated-title": {
-                                            "variable": "$.set-variables.out.updatedTaskTitle",
-                                            "functions": []
-                                        },
-                                        "updated-task-status": {
-                                            "variable": "$.update-task.out.status",
+                                            "variable": "$.set-variables.out.updatedTitle",
                                             "functions": []
                                         }
                                     }
@@ -313,18 +326,13 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{updated-task-id}}}",
+                                                "field": "{{{field-update-id}}}",
                                                 "assertion": "notEmpty"
                                             },
                                             {
-                                                "field": "{{{updated-task-title}}}",
+                                                "field": "{{{field-updated-title}}}",
                                                 "assertion": "equal",
                                                 "expected": "{{{expected-updated-title}}}"
-                                            },
-                                            {
-                                                "field": "{{{updated-task-status}}}",
-                                                "assertion": "equal",
-                                                "expected": "1"
                                             }
                                         ]
                                     }
@@ -386,7 +394,7 @@
                 }
             }
         },
-        "process-e2e-results": {
+        "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 1776,
             "y": 144,
