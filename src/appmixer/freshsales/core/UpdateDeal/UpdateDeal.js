@@ -1,8 +1,7 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
+
     async receive(context) {
 
         const {
@@ -10,10 +9,6 @@ module.exports = {
             deal_stage_id, deal_pipeline_id, probability,
             owner_id, contacts_added_list, contacts_removed_list
         } = context.messages.in.content;
-
-        if (!id) {
-            throw new context.CancelError('Deal ID is required!');
-        }
 
         const dealData = {
             name, amount, currency_code, expected_close,
@@ -39,7 +34,16 @@ module.exports = {
                 : contacts_removed_list;
         }
 
-        const { data } = await api.UpdateDeal.execute(context, { id, deal: dealData });
+        const { data } = await context.httpRequest({
+            method: 'PUT',
+            url: `https://${context.auth.domain}/api/deals/${id}`,
+            headers: {
+                'Authorization': `Token token=${context.auth.apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: { deal: dealData }
+        });
 
         return context.sendJson(data.deal, 'out');
     }

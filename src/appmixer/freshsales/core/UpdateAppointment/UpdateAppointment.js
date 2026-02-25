@@ -1,7 +1,5 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
     async receive(context) {
         const { id, title, from_date, end_date, time_zone, location, description } = context.messages.in.content;
@@ -15,7 +13,16 @@ module.exports = {
         if (location) appointment.location = location;
         if (description) appointment.description = description;
 
-        const { data } = await api.UpdateAppointment.execute(context, { appointment_id: id, appointment });
+        const { data } = await context.httpRequest({
+            method: 'PUT',
+            url: `https://${context.auth.domain}/api/appointments/${id}`,
+            headers: {
+                'Authorization': `Token token=${context.auth.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            data: { appointment }
+        });
+
         return context.sendJson(data.appointment, 'out');
     }
 };

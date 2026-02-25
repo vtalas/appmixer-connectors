@@ -54,8 +54,14 @@
                         "tooltip": "Sort direction.",
                         "index": 2,
                         "options": [
-                            { "label": "Ascending", "value": "asc" },
-                            { "label": "Descending", "value": "desc" }
+                            {
+                                "label": "Ascending",
+                                "value": "asc"
+                            },
+                            {
+                                "label": "Descending",
+                                "value": "desc"
+                            }
                         ]
                     },
                     "outputType": {
@@ -65,10 +71,22 @@
                         "defaultValue": "array",
                         "tooltip": "Choose whether to output all items at once (Array), one item at a time (Object), the first item only (First), or as a CSV file (File).",
                         "options": [
-                            { "label": "All at once (Array)", "value": "array" },
-                            { "label": "One at a time (Object)", "value": "object" },
-                            { "label": "First item only", "value": "first" },
-                            { "label": "CSV file", "value": "file" }
+                            {
+                                "label": "All at once (Array)",
+                                "value": "array"
+                            },
+                            {
+                                "label": "One at a time (Object)",
+                                "value": "object"
+                            },
+                            {
+                                "label": "First item only",
+                                "value": "first"
+                            },
+                            {
+                                "label": "CSV file",
+                                "value": "file"
+                            }
                         ]
                     }
                 }

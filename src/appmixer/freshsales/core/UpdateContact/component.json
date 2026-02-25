@@ -16,47 +16,175 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "integer" },
-                    "first_name": { "type": "string" },
-                    "last_name": { "type": "string" },
-                    "email": { "type": "string" },
-                    "mobile_number": { "type": "string" },
-                    "work_number": { "type": "string" },
-                    "job_title": { "type": "string" },
-                    "address": { "type": "string" },
-                    "city": { "type": "string" },
-                    "state": { "type": "string" },
-                    "country": { "type": "string" },
-                    "zipcode": { "type": "string" },
-                    "time_zone": { "type": "string" },
-                    "keyword": { "type": "string" },
-                    "medium": { "type": "string" },
-                    "facebook": { "type": "string" },
-                    "twitter": { "type": "string" },
-                    "linkedin": { "type": "string" }
+                    "id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "mobile_number": {
+                        "type": "string"
+                    },
+                    "work_number": {
+                        "type": "string"
+                    },
+                    "job_title": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "zipcode": {
+                        "type": "string"
+                    },
+                    "time_zone": {
+                        "type": "string"
+                    },
+                    "keyword": {
+                        "type": "string"
+                    },
+                    "medium": {
+                        "type": "string"
+                    },
+                    "facebook": {
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "type": "string"
+                    },
+                    "linkedin": {
+                        "type": "string"
+                    }
                 },
-                "required": ["id"]
+                "required": [
+                    "id"
+                ]
             },
             "inspector": {
                 "inputs": {
-                    "id": { "type": "text", "label": "Contact ID", "tooltip": "The ID of the contact to update.", "index": 0 },
-                    "first_name": { "type": "text", "label": "First Name", "tooltip": "First name of the contact.", "index": 1 },
-                    "last_name": { "type": "text", "label": "Last Name", "tooltip": "Last name of the contact.", "index": 2 },
-                    "email": { "type": "text", "label": "Email", "tooltip": "Primary email address.", "index": 3 },
-                    "mobile_number": { "type": "text", "label": "Mobile Number", "tooltip": "Mobile phone number.", "index": 4 },
-                    "work_number": { "type": "text", "label": "Work Number", "tooltip": "Work phone number.", "index": 5 },
-                    "job_title": { "type": "text", "label": "Job Title", "tooltip": "Job title or designation.", "index": 6 },
-                    "address": { "type": "text", "label": "Address", "tooltip": "Mailing address.", "index": 7 },
-                    "city": { "type": "text", "label": "City", "tooltip": "City.", "index": 8 },
-                    "state": { "type": "text", "label": "State", "tooltip": "State/Province.", "index": 9 },
-                    "country": { "type": "text", "label": "Country", "tooltip": "Country.", "index": 10 },
-                    "zipcode": { "type": "text", "label": "Zipcode", "tooltip": "Zip/Postal code.", "index": 11 },
-                    "time_zone": { "type": "text", "label": "Time Zone", "tooltip": "Time zone of the contact.", "index": 12 },
-                    "keyword": { "type": "text", "label": "Keyword", "tooltip": "Keyword associated with the contact.", "index": 13 },
-                    "medium": { "type": "text", "label": "Medium", "tooltip": "Medium through which the contact was acquired.", "index": 14 },
-                    "facebook": { "type": "text", "label": "Facebook", "tooltip": "Facebook profile URL.", "index": 15 },
-                    "twitter": { "type": "text", "label": "Twitter", "tooltip": "Twitter profile URL.", "index": 16 },
-                    "linkedin": { "type": "text", "label": "LinkedIn", "tooltip": "LinkedIn profile URL.", "index": 17 }
+                    "id": {
+                        "type": "text",
+                        "label": "Contact ID",
+                        "tooltip": "The ID of the contact to update.",
+                        "index": 0
+                    },
+                    "first_name": {
+                        "type": "text",
+                        "label": "First Name",
+                        "tooltip": "First name of the contact.",
+                        "index": 1
+                    },
+                    "last_name": {
+                        "type": "text",
+                        "label": "Last Name",
+                        "tooltip": "Last name of the contact.",
+                        "index": 2
+                    },
+                    "email": {
+                        "type": "text",
+                        "label": "Email",
+                        "tooltip": "Primary email address.",
+                        "index": 3
+                    },
+                    "mobile_number": {
+                        "type": "text",
+                        "label": "Mobile Number",
+                        "tooltip": "Mobile phone number.",
+                        "index": 4
+                    },
+                    "work_number": {
+                        "type": "text",
+                        "label": "Work Number",
+                        "tooltip": "Work phone number.",
+                        "index": 5
+                    },
+                    "job_title": {
+                        "type": "text",
+                        "label": "Job Title",
+                        "tooltip": "Job title or designation.",
+                        "index": 6
+                    },
+                    "address": {
+                        "type": "text",
+                        "label": "Address",
+                        "tooltip": "Mailing address.",
+                        "index": 7
+                    },
+                    "city": {
+                        "type": "text",
+                        "label": "City",
+                        "tooltip": "City.",
+                        "index": 8
+                    },
+                    "state": {
+                        "type": "text",
+                        "label": "State",
+                        "tooltip": "State/Province.",
+                        "index": 9
+                    },
+                    "country": {
+                        "type": "text",
+                        "label": "Country",
+                        "tooltip": "Country.",
+                        "index": 10
+                    },
+                    "zipcode": {
+                        "type": "text",
+                        "label": "Zipcode",
+                        "tooltip": "Zip/Postal code.",
+                        "index": 11
+                    },
+                    "time_zone": {
+                        "type": "text",
+                        "label": "Time Zone",
+                        "tooltip": "Time zone of the contact.",
+                        "index": 12
+                    },
+                    "keyword": {
+                        "type": "text",
+                        "label": "Keyword",
+                        "tooltip": "Keyword associated with the contact.",
+                        "index": 13
+                    },
+                    "medium": {
+                        "type": "text",
+                        "label": "Medium",
+                        "tooltip": "Medium through which the contact was acquired.",
+                        "index": 14
+                    },
+                    "facebook": {
+                        "type": "text",
+                        "label": "Facebook",
+                        "tooltip": "Facebook profile URL.",
+                        "index": 15
+                    },
+                    "twitter": {
+                        "type": "text",
+                        "label": "Twitter",
+                        "tooltip": "Twitter profile URL.",
+                        "index": 16
+                    },
+                    "linkedin": {
+                        "type": "text",
+                        "label": "LinkedIn",
+                        "tooltip": "LinkedIn profile URL.",
+                        "index": 17
+                    }
                 }
             }
         }
@@ -67,68 +195,470 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "integer", "title": "ID" },
-                    "first_name": { "type": "string", "title": "First Name" },
-                    "last_name": { "type": "string", "title": "Last Name" },
-                    "display_name": { "type": "string", "title": "Display Name" },
-                    "avatar": { "type": ["string", "null"], "title": "Avatar" },
-                    "email": { "type": "string", "title": "Email" },
+                    "id": {
+                        "type": "integer",
+                        "title": "ID"
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "title": "First Name"
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "title": "Last Name"
+                    },
+                    "display_name": {
+                        "type": "string",
+                        "title": "Display Name"
+                    },
+                    "avatar": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Avatar"
+                    },
+                    "email": {
+                        "type": "string",
+                        "title": "Email"
+                    },
                     "emails": {
                         "type": "array",
                         "title": "Emails",
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "integer" },
-                                "value": { "type": "string" },
-                                "is_primary": { "type": "boolean" },
-                                "label": { "type": ["string", "null"] },
-                                "_destroy": { "type": "boolean" }
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "value": {
+                                    "type": "string"
+                                },
+                                "is_primary": {
+                                    "type": "boolean"
+                                },
+                                "label": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "_destroy": {
+                                    "type": "boolean"
+                                }
                             }
                         }
                     },
-                    "mobile_number": { "type": ["string", "null"], "title": "Mobile Number" },
-                    "work_number": { "type": ["string", "null"], "title": "Work Number" },
-                    "work_email": { "type": ["string", "null"], "title": "Work Email" },
-                    "job_title": { "type": ["string", "null"], "title": "Job Title" },
-                    "address": { "type": ["string", "null"], "title": "Address" },
-                    "city": { "type": ["string", "null"], "title": "City" },
-                    "state": { "type": ["string", "null"], "title": "State" },
-                    "country": { "type": ["string", "null"], "title": "Country" },
-                    "zipcode": { "type": ["string", "null"], "title": "Zipcode" },
-                    "time_zone": { "type": ["string", "null"], "title": "Time Zone" },
-                    "lead_score": { "type": "integer", "title": "Lead Score" },
-                    "owner_id": { "type": ["integer", "null"], "title": "Owner ID" },
-                    "open_deals_amount": { "type": ["number", "null"], "title": "Open Deals Amount" },
-                    "won_deals_amount": { "type": ["number", "null"], "title": "Won Deals Amount" },
-                    "open_deals_count": { "type": "integer", "title": "Open Deals Count" },
-                    "won_deals_count": { "type": "integer", "title": "Won Deals Count" },
-                    "last_seen": { "type": ["string", "null"], "title": "Last Seen" },
-                    "last_contacted": { "type": ["string", "null"], "title": "Last Contacted" },
-                    "last_contacted_mode": { "type": ["string", "null"], "title": "Last Contacted Mode" },
-                    "last_contacted_sales_activity_mode": { "type": ["string", "null"], "title": "Last Contacted Sales Activity Mode" },
-                    "last_contacted_via_sales_activity": { "type": ["string", "null"], "title": "Last Contacted Via Sales Activity" },
-                    "last_assigned_at": { "type": ["string", "null"], "title": "Last Assigned At" },
-                    "recent_note": { "type": ["string", "null"], "title": "Recent Note" },
-                    "facebook": { "type": ["string", "null"], "title": "Facebook" },
-                    "twitter": { "type": ["string", "null"], "title": "Twitter" },
-                    "linkedin": { "type": ["string", "null"], "title": "LinkedIn" },
-                    "keyword": { "type": ["string", "null"], "title": "Keyword" },
-                    "medium": { "type": ["string", "null"], "title": "Medium" },
-                    "custom_field": { "type": "object", "title": "Custom Fields" },
-                    "tags": { "type": "array", "title": "Tags" },
-                    "links": { "type": "object", "title": "Links" },
-                    "is_deleted": { "type": "boolean", "title": "Is Deleted" },
-                    "team_user_ids": { "type": "array", "title": "Team User IDs" },
-                    "external_id": { "type": ["string", "null"], "title": "External ID" },
-                    "subscription_status": { "type": "integer", "title": "Subscription Status" },
-                    "customer_fit": { "type": "integer", "title": "Customer Fit" },
-                    "record_type_id": { "type": "string", "title": "Record Type ID" },
-                    "completed_sales_sequences": { "type": ["array", "null"], "title": "Completed Sales Sequences" },
-                    "active_sales_sequences": { "type": ["array", "null"], "title": "Active Sales Sequences" },
-                    "web_form_ids": { "type": ["array", "null"], "title": "Web Form IDs" },
-                    "created_at": { "type": "string", "title": "Created At" },
-                    "updated_at": { "type": "string", "title": "Updated At" }
+                    "mobile_number": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Mobile Number"
+                    },
+                    "work_number": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Work Number"
+                    },
+                    "work_email": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Work Email"
+                    },
+                    "job_title": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Job Title"
+                    },
+                    "address": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Address"
+                    },
+                    "city": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "City"
+                    },
+                    "state": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "State"
+                    },
+                    "country": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Country"
+                    },
+                    "zipcode": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Zipcode"
+                    },
+                    "time_zone": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Time Zone"
+                    },
+                    "lead_score": {
+                        "type": "integer",
+                        "title": "Lead Score"
+                    },
+                    "owner_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Owner ID"
+                    },
+                    "open_deals_amount": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "title": "Open Deals Amount"
+                    },
+                    "won_deals_amount": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "title": "Won Deals Amount"
+                    },
+                    "open_deals_count": {
+                        "type": "integer",
+                        "title": "Open Deals Count"
+                    },
+                    "won_deals_count": {
+                        "type": "integer",
+                        "title": "Won Deals Count"
+                    },
+                    "last_seen": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Seen"
+                    },
+                    "last_contacted": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted"
+                    },
+                    "last_contacted_mode": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted Mode"
+                    },
+                    "last_contacted_sales_activity_mode": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted Sales Activity Mode"
+                    },
+                    "last_contacted_via_sales_activity": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Contacted Via Sales Activity"
+                    },
+                    "last_assigned_at": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Assigned At"
+                    },
+                    "recent_note": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Recent Note"
+                    },
+                    "facebook": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Facebook"
+                    },
+                    "twitter": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Twitter"
+                    },
+                    "linkedin": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "LinkedIn"
+                    },
+                    "keyword": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Keyword"
+                    },
+                    "medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Medium"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Description"
+                    },
+                    "custom_field": {
+                        "type": "object",
+                        "title": "Custom Fields"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "title": "Tags"
+                    },
+                    "system_tags": {
+                        "type": "array",
+                        "title": "System Tags"
+                    },
+                    "links": {
+                        "type": "object",
+                        "title": "Links"
+                    },
+                    "is_deleted": {
+                        "type": "boolean",
+                        "title": "Is Deleted"
+                    },
+                    "team_user_ids": {
+                        "type": "array",
+                        "title": "Team User IDs"
+                    },
+                    "external_id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "External ID"
+                    },
+                    "subscription_status": {
+                        "type": "integer",
+                        "title": "Subscription Status"
+                    },
+                    "subscription_types": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Subscription Types"
+                    },
+                    "unsubscription_reason": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Unsubscription Reason"
+                    },
+                    "other_unsubscription_reason": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Other Unsubscription Reason"
+                    },
+                    "customer_fit": {
+                        "type": "integer",
+                        "title": "Customer Fit"
+                    },
+                    "record_type_id": {
+                        "type": "string",
+                        "title": "Record Type ID"
+                    },
+                    "completed_sales_sequences": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "title": "Completed Sales Sequences"
+                    },
+                    "active_sales_sequences": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "title": "Active Sales Sequences"
+                    },
+                    "web_form_ids": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "title": "Web Form IDs"
+                    },
+                    "whatsapp_subscription_status": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "WhatsApp Subscription Status"
+                    },
+                    "sms_subscription_status": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "SMS Subscription Status"
+                    },
+                    "amb_subscription_status": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "AMB Subscription Status"
+                    },
+                    "last_seen_chat": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Seen Chat"
+                    },
+                    "first_seen_chat": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Seen Chat"
+                    },
+                    "locale": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Locale"
+                    },
+                    "total_sessions": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Total Sessions"
+                    },
+                    "phone_numbers": {
+                        "type": "array",
+                        "title": "Phone Numbers"
+                    },
+                    "mcr_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "MCR ID"
+                    },
+                    "first_campaign": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Campaign"
+                    },
+                    "first_medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Medium"
+                    },
+                    "first_source": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "First Source"
+                    },
+                    "last_campaign": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Campaign"
+                    },
+                    "last_medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Medium"
+                    },
+                    "last_source": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Last Source"
+                    },
+                    "latest_campaign": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Latest Campaign"
+                    },
+                    "latest_medium": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Latest Medium"
+                    },
+                    "latest_source": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Latest Source"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "title": "Created At"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "title": "Updated At"
+                    }
                 },
                 "required": []
             }
