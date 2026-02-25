@@ -8,7 +8,10 @@
     },
     "quota": {
         "manager": "appmixer:freshsales",
-        "resources": "requests"
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
     },
     "inPorts": [
         {
