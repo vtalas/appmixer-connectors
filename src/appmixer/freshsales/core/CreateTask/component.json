@@ -24,8 +24,7 @@
                         "type": "string"
                     },
                     "due_date": {
-                        "type": "string",
-                        "format": "date"
+                        "type": "string"
                     },
                     "task_type": {
                         "type": "string"
@@ -53,7 +52,8 @@
                     }
                 },
                 "required": [
-                    "title"
+                    "title",
+                    "due_date"
                 ]
             },
             "inspector": {
