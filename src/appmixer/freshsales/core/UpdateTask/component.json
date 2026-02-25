@@ -3,7 +3,6 @@
     "description": "Update an existing task by ID.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:freshsales"
     },
@@ -27,7 +26,8 @@
                         "type": "string"
                     },
                     "due_date": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "task_type": {
                         "type": "string"
@@ -52,49 +52,77 @@
                         "type": "text",
                         "label": "Task ID",
                         "tooltip": "The ID of the task to update.",
-                        "index": 0
+                        "index": 1
                     },
                     "title": {
                         "type": "text",
                         "label": "Title",
                         "tooltip": "Task title.",
-                        "index": 1
+                        "index": 2
                     },
                     "description": {
                         "type": "textarea",
                         "label": "Description",
                         "tooltip": "Task description.",
-                        "index": 2
+                        "index": 3
                     },
                     "due_date": {
                         "type": "date-time",
                         "label": "Due Date",
-                        "tooltip": "Due date.",
-                        "index": 3
+                        "tooltip": "Due date and time for the task.",
+                        "index": 4
                     },
                     "task_type": {
                         "type": "text",
                         "label": "Task Type",
                         "tooltip": "Type of task.",
-                        "index": 4
-                    },
-                    "priority": {
-                        "type": "number",
-                        "label": "Priority",
-                        "tooltip": "Priority (0=None, 1=Low, 2=Medium, 3=High).",
                         "index": 5
                     },
+                    "priority": {
+                        "type": "select",
+                        "label": "Priority",
+                        "tooltip": "Priority level of the task.",
+                        "index": 6,
+                        "options": [
+                            {
+                                "label": "None",
+                                "value": 0
+                            },
+                            {
+                                "label": "Low",
+                                "value": 1
+                            },
+                            {
+                                "label": "Medium",
+                                "value": 2
+                            },
+                            {
+                                "label": "High",
+                                "value": 3
+                            }
+                        ]
+                    },
                     "status": {
-                        "type": "number",
+                        "type": "select",
                         "label": "Status",
-                        "tooltip": "Status (0=Open, 1=Completed).",
-                        "index": 6
+                        "tooltip": "Status of the task.",
+                        "index": 7,
+                        "options": [
+                            {
+                                "label": "Open",
+                                "value": 0
+                            },
+                            {
+                                "label": "Completed",
+                                "value": 1
+                            }
+                        ]
                     },
                     "owner_id": {
                         "type": "number",
                         "label": "Owner ID",
-                        "tooltip": "Owner user ID.",
-                        "index": 7
+                        "tooltip": "User ID of the task owner.",
+                        "index": 8
                     }
                 }
             }
@@ -103,111 +131,84 @@
     "outPorts": [
         {
             "name": "out",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "title": "ID"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
-                    "description": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "title": "Description"
-                    },
-                    "status": {
-                        "type": "integer",
-                        "title": "Status"
-                    },
-                    "due_date": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "title": "Due Date"
-                    },
-                    "completed_date": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "title": "Completed Date"
-                    },
-                    "task_type_id": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
-                        "title": "Task Type ID"
-                    },
-                    "owner_id": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
-                        "title": "Owner ID"
-                    },
-                    "outcome_id": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
-                        "title": "Outcome ID"
-                    },
-                    "creater_id": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
-                        "title": "Creator ID"
-                    },
-                    "updater_id": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
-                        "title": "Updater ID"
-                    },
-                    "is_linkedin_type": {
-                        "type": "boolean",
-                        "title": "Is LinkedIn Type"
-                    },
-                    "has_multiple_emails": {
-                        "type": "boolean",
-                        "title": "Has Multiple Emails"
-                    },
-                    "targetables": {
-                        "type": "array",
-                        "title": "Targetables"
-                    },
-                    "targetables_with_email": {
-                        "type": "array",
-                        "title": "Targetables With Email"
-                    },
-                    "user_ids": {
-                        "type": "array",
-                        "title": "User IDs"
-                    },
-                    "targetable": {
-                        "title": "Targetable"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "title": "Created At"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "title": "Updated At"
-                    }
+            "options": [
+                {
+                    "label": "ID",
+                    "value": "id"
                 },
-                "required": []
-            }
+                {
+                    "label": "Title",
+                    "value": "title"
+                },
+                {
+                    "label": "Description",
+                    "value": "description"
+                },
+                {
+                    "label": "Status",
+                    "value": "status"
+                },
+                {
+                    "label": "Due Date",
+                    "value": "due_date"
+                },
+                {
+                    "label": "Completed Date",
+                    "value": "completed_date"
+                },
+                {
+                    "label": "Task Type ID",
+                    "value": "task_type_id"
+                },
+                {
+                    "label": "Owner ID",
+                    "value": "owner_id"
+                },
+                {
+                    "label": "Outcome ID",
+                    "value": "outcome_id"
+                },
+                {
+                    "label": "Creator ID",
+                    "value": "creater_id"
+                },
+                {
+                    "label": "Updater ID",
+                    "value": "updater_id"
+                },
+                {
+                    "label": "Is LinkedIn Type",
+                    "value": "is_linkedin_type"
+                },
+                {
+                    "label": "Has Multiple Emails",
+                    "value": "has_multiple_emails"
+                },
+                {
+                    "label": "Targetables",
+                    "value": "targetables"
+                },
+                {
+                    "label": "Targetables With Email",
+                    "value": "targetables_with_email"
+                },
+                {
+                    "label": "User IDs",
+                    "value": "user_ids"
+                },
+                {
+                    "label": "Targetable",
+                    "value": "targetable"
+                },
+                {
+                    "label": "Created At",
+                    "value": "created_at"
+                },
+                {
+                    "label": "Updated At",
+                    "value": "updated_at"
+                }
+            ]
         }
     ],
     "icon": "data:image/svg+xml;base64,PD94"

@@ -29,7 +29,8 @@
                         "type": "string"
                     },
                     "expected_close": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date"
                     },
                     "deal_stage_id": {
                         "type": "integer"
@@ -57,73 +58,73 @@
             "inspector": {
                 "inputs": {
                     "id": {
-                        "type": "text",
+                        "type": "number",
                         "label": "Deal ID",
                         "tooltip": "The ID of the deal to update.",
-                        "index": 0
+                        "index": 1
                     },
                     "name": {
                         "type": "text",
                         "label": "Deal Name",
                         "tooltip": "Name of the deal.",
-                        "index": 1
+                        "index": 2
                     },
                     "amount": {
                         "type": "number",
                         "label": "Amount",
                         "tooltip": "Value of the deal.",
-                        "index": 2
+                        "index": 3
                     },
                     "currency_code": {
                         "type": "text",
                         "label": "Currency Code",
                         "tooltip": "Currency code (e.g. USD).",
-                        "index": 3
+                        "index": 4
                     },
                     "expected_close": {
                         "type": "date-time",
                         "label": "Expected Close",
+                        "tooltip": "Expected close date.",
                         "config": {
                             "enableTime": false
                         },
-                        "tooltip": "Expected close date.",
-                        "index": 4
+                        "index": 5
                     },
                     "deal_stage_id": {
                         "type": "number",
                         "label": "Stage ID",
                         "tooltip": "Pipeline stage ID.",
-                        "index": 5
+                        "index": 6
                     },
                     "deal_pipeline_id": {
                         "type": "number",
                         "label": "Pipeline ID",
                         "tooltip": "Deal pipeline ID.",
-                        "index": 6
+                        "index": 7
                     },
                     "probability": {
                         "type": "number",
                         "label": "Probability",
                         "tooltip": "Win probability percentage (0-100).",
-                        "index": 7
+                        "index": 8
                     },
                     "owner_id": {
                         "type": "number",
                         "label": "Owner ID",
                         "tooltip": "Owner/agent user ID.",
-                        "index": 8
+                        "index": 9
                     },
                     "contacts_added_list": {
                         "type": "text",
                         "label": "Add Contact IDs",
                         "tooltip": "Comma-separated contact IDs to associate with the deal.",
-                        "index": 9
+                        "index": 10
                     },
                     "contacts_removed_list": {
                         "type": "text",
                         "label": "Remove Contact IDs",
                         "tooltip": "Comma-separated contact IDs to disassociate from the deal.",
-                        "index": 10
+                        "index": 11
                     }
                 }
             }
@@ -333,8 +334,7 @@
                         "type": "object",
                         "title": "Collaboration"
                     }
-                },
-                "required": []
+                }
             }
         }
     ],

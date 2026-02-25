@@ -5,6 +5,10 @@ module.exports = {
 
         const { id } = context.messages.in.content;
 
+        if (!id) {
+            throw new context.CancelError('Deal ID is required!');
+        }
+
         await context.httpRequest({
             method: 'DELETE',
             url: `https://${context.auth.domain}/api/deals/${id}`,
@@ -15,6 +19,6 @@ module.exports = {
             }
         });
 
-        return context.sendJson({ id, deleted: true }, 'out');
+        return context.sendJson({}, 'out');
     }
 };

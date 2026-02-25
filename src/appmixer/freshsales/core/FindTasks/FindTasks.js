@@ -33,7 +33,7 @@ module.exports = {
                 context,
                 context.messages.in.content.outputType,
                 outputPortItemSchema,
-                { label: 'Tasks' }
+                { label: 'Tasks', value: 'tasks' }
             );
         }
 
@@ -53,6 +53,10 @@ module.exports = {
         });
 
         const tasks = data?.tasks || data || [];
+
+        if (tasks.length === 0) {
+            return context.sendJson({}, 'notFound');
+        }
 
         return lib.sendArrayOutput({
             context,

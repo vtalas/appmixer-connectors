@@ -24,6 +24,10 @@ module.exports = {
             linkedin
         } = context.messages.in.content;
 
+        if (!id) {
+            throw new context.CancelError('Contact ID is required!');
+        }
+
         const contactData = {
             first_name, last_name, email, mobile_number, work_number,
             job_title, address, city, state, country, zipcode,

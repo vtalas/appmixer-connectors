@@ -30,16 +30,16 @@
             "inspector": {
                 "inputs": {
                     "id": {
-                        "type": "text",
+                        "type": "number",
                         "label": "Contact ID",
                         "tooltip": "The unique identifier of the contact to retrieve.",
-                        "index": 0
+                        "index": 1
                     },
                     "include": {
                         "type": "text",
                         "label": "Include",
                         "tooltip": "Comma-separated list of associated resources to embed: owner, creater, updater, source, territory, tasks, appointments, notes, sales_accounts.",
-                        "index": 1
+                        "index": 2
                     }
                 }
             }
@@ -526,8 +526,7 @@
                         "type": "string",
                         "title": "Updated At"
                     }
-                },
-                "required": []
+                }
             }
         }
     ],

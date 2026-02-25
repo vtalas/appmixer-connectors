@@ -65,6 +65,10 @@ module.exports = {
 
         const appointments = data?.appointments || data || [];
 
+        if (appointments.length === 0) {
+            return context.sendJson({}, 'notFound');
+        }
+
         return lib.sendArrayOutput({
             context,
             outputPortName: 'out',

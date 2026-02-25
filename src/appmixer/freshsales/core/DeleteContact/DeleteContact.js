@@ -13,10 +13,12 @@ module.exports = {
             method: 'DELETE',
             url: `https://${context.auth.domain}/api/contacts/${id}`,
             headers: {
-                'Authorization': `Token token=${context.auth.apiKey}`
+                'Authorization': `Token token=${context.auth.apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         });
 
-        return context.sendJson({ id, deleted: true }, 'out');
+        return context.sendJson({}, 'out');
     }
 };

@@ -10,6 +10,10 @@ module.exports = {
             owner_id, contacts_added_list, contacts_removed_list
         } = context.messages.in.content;
 
+        if (!id) {
+            throw new context.CancelError('Deal ID is required!');
+        }
+
         const dealData = {
             name, amount, currency_code, expected_close,
             deal_stage_id, deal_pipeline_id, probability, owner_id
@@ -24,14 +28,16 @@ module.exports = {
 
         // Handle contact lists
         if (contacts_added_list) {
-            dealData.contacts_added_list = typeof contacts_added_list === 'string'
-                ? contacts_added_list.split(',').map(i => parseInt(i.trim(), 10)).filter(i => !isNaN(i))
-                : contacts_added_list;
+            dealData.contacts_added_list = contacts_added_list
+                .split(',')
+                .map(i => parseInt(i.trim(), 10))
+                .filter(i => !isNaN(i));
         }
         if (contacts_removed_list) {
-            dealData.contacts_removed_list = typeof contacts_removed_list === 'string'
-                ? contacts_removed_list.split(',').map(i => parseInt(i.trim(), 10)).filter(i => !isNaN(i))
-                : contacts_removed_list;
+            dealData.contacts_removed_list = contacts_removed_list
+                .split(',')
+                .map(i => parseInt(i.trim(), 10))
+                .filter(i => !isNaN(i));
         }
 
         const { data } = await context.httpRequest({

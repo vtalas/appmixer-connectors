@@ -17,7 +17,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -30,7 +30,7 @@
                         "type": "text",
                         "label": "Appointment ID",
                         "tooltip": "The ID of the appointment.",
-                        "index": 0
+                        "index": 1
                     }
                 }
             }

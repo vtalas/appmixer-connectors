@@ -23,10 +23,12 @@
                         "type": "string"
                     },
                     "from_date": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "end_date": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "time_zone": {
                         "type": "string"
@@ -45,46 +47,46 @@
             "inspector": {
                 "inputs": {
                     "id": {
-                        "type": "text",
+                        "type": "number",
                         "label": "Appointment ID",
                         "tooltip": "The ID of the appointment to update.",
-                        "index": 0
+                        "index": 1
                     },
                     "title": {
                         "type": "text",
                         "label": "Title",
                         "tooltip": "Appointment title.",
-                        "index": 1
+                        "index": 2
                     },
                     "from_date": {
                         "type": "date-time",
                         "label": "From Date",
-                        "tooltip": "Start date/time.",
-                        "index": 2
+                        "tooltip": "Start date/time of the appointment.",
+                        "index": 3
                     },
                     "end_date": {
                         "type": "date-time",
                         "label": "End Date",
-                        "tooltip": "End date/time.",
-                        "index": 3
+                        "tooltip": "End date/time of the appointment.",
+                        "index": 4
                     },
                     "time_zone": {
                         "type": "text",
                         "label": "Time Zone",
-                        "tooltip": "Time zone.",
-                        "index": 4
+                        "tooltip": "Time zone for the appointment.",
+                        "index": 5
                     },
                     "location": {
                         "type": "text",
                         "label": "Location",
-                        "tooltip": "Location.",
-                        "index": 5
+                        "tooltip": "Location of the appointment.",
+                        "index": 6
                     },
                     "description": {
                         "type": "textarea",
                         "label": "Description",
-                        "tooltip": "Description.",
-                        "index": 6
+                        "tooltip": "Description of the appointment.",
+                        "index": 7
                     }
                 }
             }

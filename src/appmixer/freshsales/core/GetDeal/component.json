@@ -30,16 +30,16 @@
             "inspector": {
                 "inputs": {
                     "id": {
-                        "type": "text",
+                        "type": "number",
                         "label": "Deal ID",
                         "tooltip": "The unique identifier of the deal.",
-                        "index": 0
+                        "index": 1
                     },
                     "include": {
                         "type": "text",
                         "label": "Include",
                         "tooltip": "Comma-separated list of associated resources: owner, creater, updater, source, contacts, sales_account, deal_stage, deal_type, deal_reason, campaign, deal_payment_status, deal_product, currency.",
-                        "index": 1
+                        "index": 2
                     }
                 }
             }

@@ -43,30 +43,36 @@ module.exports = {
                 context,
                 context.messages.in.content.outputType,
                 outputPortItemSchema,
-                { label: 'Deals' }
+                { label: 'Deals', value: 'deals' }
             );
         }
 
         const { view_id, sort, sort_type, outputType } = context.messages.in.content;
 
         if (!view_id) {
-            throw new context.CancelError('View ID is required! Use deal filters API to get available views.');
+            throw new context.CancelError('View ID is required!');
         }
 
-        const params = new URLSearchParams();
-        if (sort) params.set('sort', sort);
-        if (sort_type) params.set('sort_type', sort_type);
+        const params = {};
+        if (sort) params.sort = sort;
+        if (sort_type) params.sort_type = sort_type;
 
         const { data } = await context.httpRequest({
             method: 'GET',
-            url: `https://${context.auth.domain}/api/deals/view/${view_id}?${params}`,
+            url: `https://${context.auth.domain}/api/deals/view/${view_id}`,
             headers: {
                 'Authorization': `Token token=${context.auth.apiKey}`,
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            params
         });
 
-        const deals = data?.deals || data || [];
+        const deals = data?.deals || [];
+
+        if (deals.length === 0) {
+            return context.sendJson({}, 'notFound');
+        }
 
         return lib.sendArrayOutput({
             context,

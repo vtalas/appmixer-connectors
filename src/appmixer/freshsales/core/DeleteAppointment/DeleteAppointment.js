@@ -6,6 +6,10 @@ module.exports = {
 
         const { id } = context.messages.in.content;
 
+        if (!id) {
+            throw new context.CancelError('Appointment ID is required!');
+        }
+
         await context.httpRequest({
             method: 'DELETE',
             url: `https://${context.auth.domain}/api/appointments/${id}`,
@@ -15,6 +19,6 @@ module.exports = {
             }
         });
 
-        return context.sendJson({ id, deleted: true }, 'out');
+        return context.sendJson({}, 'out');
     }
 };

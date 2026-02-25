@@ -1,9 +1,14 @@
 'use strict';
 
 module.exports = {
+
     async receive(context) {
 
         const { id, include } = context.messages.in.content;
+
+        if (!id) {
+            throw new context.CancelError('Contact ID is required!');
+        }
 
         const { domain, apiKey } = context.auth;
         const url = `https://${domain}/api/contacts/${id}`;

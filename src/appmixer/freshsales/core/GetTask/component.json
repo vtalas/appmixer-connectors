@@ -3,7 +3,6 @@
     "description": "Retrieve a task by ID.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:freshsales"
     },
@@ -28,10 +27,10 @@
             "inspector": {
                 "inputs": {
                     "id": {
-                        "type": "text",
+                        "type": "number",
                         "label": "Task ID",
                         "tooltip": "The ID of the task to retrieve.",
-                        "index": 0
+                        "index": 1
                     }
                 }
             }
@@ -63,6 +62,7 @@
                             "string",
                             "null"
                         ],
+                        "format": "date-time",
                         "title": "Due Date"
                     },
                     "status": {
@@ -78,10 +78,12 @@
                     },
                     "created_at": {
                         "type": "string",
+                        "format": "date-time",
                         "title": "Created At"
                     },
                     "updated_at": {
                         "type": "string",
+                        "format": "date-time",
                         "title": "Updated At"
                     },
                     "completed_date": {
@@ -89,6 +91,7 @@
                             "string",
                             "null"
                         ],
+                        "format": "date-time",
                         "title": "Completed Date"
                     },
                     "creater_id": {
@@ -146,8 +149,7 @@
                         ],
                         "title": "Targetable"
                     }
-                },
-                "required": []
+                }
             }
         }
     ],
