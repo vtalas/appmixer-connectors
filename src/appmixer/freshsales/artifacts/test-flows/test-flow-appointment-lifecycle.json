@@ -1,6 +1,4 @@
 {
-    "name": "E2E Freshsales - Appointment Lifecycle",
-    "description": "End-to-end test for Freshsales connector - tests appointment CRUD lifecycle: Create, Get, Update, Delete.",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -17,7 +15,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "on-start": ["out"]
+                    "on-start": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -73,7 +73,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "set-variables": ["out"]
+                    "set-variables": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -124,7 +126,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-appointment": ["out"]
+                    "create-appointment": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -164,7 +168,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-appointment": ["out"]
+                    "create-appointment": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -197,7 +203,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "get-appointment": ["out"]
+                    "get-appointment": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -242,7 +250,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "get-appointment": ["out"]
+                    "get-appointment": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -289,7 +299,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "update-appointment": ["out"]
+                    "update-appointment": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -347,9 +359,15 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "assert-create": ["out"],
-                    "assert-get": ["out"],
-                    "assert-update": ["out"]
+                    "assert-create": [
+                        "out"
+                    ],
+                    "assert-get": [
+                        "out"
+                    ],
+                    "assert-update": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -365,7 +383,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "after-all": ["out"]
+                    "after-all": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -395,17 +415,16 @@
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 1776,
             "y": 144,
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "in": {
-                    "delete-appointment": ["out"]
+                    "delete-appointment": [
+                        "out"
+                    ]
                 }
             },
             "config": {
-                "properties": {
-                    "successStoreId": "64f6f1f9193228000754082f",
-                    "failedStoreId": "64f6f1f0193228000754082e"
-                },
+                "properties": {},
                 "transform": {
                     "in": {
                         "delete-appointment": {
@@ -422,7 +441,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "jirka@client.io",
+                                    "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Freshsales - Appointment Lifecycle",
                                     "result": "{{{result-var}}}"
                                 }
@@ -432,5 +451,7 @@
                 }
             }
         }
-    }
+    },
+    "name": "E2E Freshsales - Appointment Lifecycle",
+    "type": "automation"
 }

@@ -1,6 +1,4 @@
 {
-    "name": "E2E Freshsales - Contact Lifecycle",
-    "description": "End-to-end test for Freshsales connector - tests Contact CRUD lifecycle: CreateContact, GetContact, UpdateContact, DeleteContact",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -17,7 +15,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "on-start": ["out"]
+                    "on-start": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -73,7 +73,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "set-variables": ["out"]
+                    "set-variables": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -127,7 +129,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-contact": ["out"]
+                    "create-contact": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -185,7 +189,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-contact": ["out"]
+                    "create-contact": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -218,7 +224,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "get-contact": ["out"]
+                    "get-contact": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -276,7 +284,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "get-contact": ["out"]
+                    "get-contact": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -316,7 +326,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "update-contact": ["out"]
+                    "update-contact": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -365,9 +377,15 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "assert-create": ["out"],
-                    "assert-get": ["out"],
-                    "assert-update": ["out"]
+                    "assert-create": [
+                        "out"
+                    ],
+                    "assert-get": [
+                        "out"
+                    ],
+                    "assert-update": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -383,7 +401,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "after-all": ["out"]
+                    "after-all": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -413,17 +433,16 @@
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 1776,
             "y": 144,
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "in": {
-                    "delete-contact": ["out"]
+                    "delete-contact": [
+                        "out"
+                    ]
                 }
             },
             "config": {
-                "properties": {
-                    "successStoreId": "64f6f1f9193228000754082f",
-                    "failedStoreId": "64f6f1f0193228000754082e"
-                },
+                "properties": {},
                 "transform": {
                     "in": {
                         "delete-contact": {
@@ -440,7 +459,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "jirka@client.io",
+                                    "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Freshsales - Contact Lifecycle",
                                     "result": "{{{result-var}}}"
                                 }
@@ -450,5 +469,7 @@
                 }
             }
         }
-    }
+    },
+    "name": "E2E Freshsales - Contact Lifecycle",
+    "type": "automation"
 }

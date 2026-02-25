@@ -1,6 +1,4 @@
 {
-    "name": "E2E Freshsales - Task Lifecycle",
-    "description": "End-to-end test for the Freshsales connector - tests CreateTask, GetTask, UpdateTask, and DeleteTask in a full CRUD lifecycle.",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
@@ -17,7 +15,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "on-start": ["out"]
+                    "on-start": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -68,7 +68,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "set-variables": ["out"]
+                    "set-variables": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -111,7 +113,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-task": ["out"]
+                    "create-task": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -164,7 +168,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-task": ["out"]
+                    "create-task": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -197,7 +203,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "get-task": ["out"]
+                    "get-task": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -250,7 +258,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "get-task": ["out"]
+                    "get-task": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -297,7 +307,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "update-task": ["out"]
+                    "update-task": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -350,9 +362,15 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "assert-create": ["out"],
-                    "assert-get": ["out"],
-                    "assert-update": ["out"]
+                    "assert-create": [
+                        "out"
+                    ],
+                    "assert-get": [
+                        "out"
+                    ],
+                    "assert-update": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -368,7 +386,9 @@
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "after-all": ["out"]
+                    "after-all": [
+                        "out"
+                    ]
                 }
             },
             "config": {
@@ -398,17 +418,16 @@
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 1776,
             "y": 144,
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "in": {
-                    "delete-task": ["out"]
+                    "delete-task": [
+                        "out"
+                    ]
                 }
             },
             "config": {
-                "properties": {
-                    "successStoreId": "64f6f1f9193228000754082f",
-                    "failedStoreId": "64f6f1f0193228000754082e"
-                },
+                "properties": {},
                 "transform": {
                     "in": {
                         "delete-task": {
@@ -425,7 +444,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "recipients": "jirka@client.io",
+                                    "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Freshsales - Task Lifecycle",
                                     "result": "{{{result-var}}}"
                                 }
@@ -435,5 +454,7 @@
                 }
             }
         }
-    }
+    },
+    "name": "E2E Freshsales - Task Lifecycle",
+    "type": "automation"
 }
