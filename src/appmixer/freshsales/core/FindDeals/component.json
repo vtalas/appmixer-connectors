@@ -1,7 +1,7 @@
 {
-    "name": "appmixer.freshsales.core.ListTasks",
+    "name": "appmixer.freshsales.core.FindDeals",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "List tasks with optional filters.",
+    "description": "Find deals by a specific view/filter. Supports outputting as array, individual items, first item only, or CSV file.",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -17,59 +17,59 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "filter": {
+                    "view_id": {
+                        "type": "integer"
+                    },
+                    "sort": {
                         "type": "string"
                     },
-                    "page": {
-                        "type": "integer"
+                    "sort_type": {
+                        "type": "string"
                     },
-                    "owner_id": {
-                        "type": "integer"
+                    "outputType": {
+                        "type": "string"
                     }
                 },
-                "required": []
+                "required": [
+                    "view_id"
+                ]
             },
             "inspector": {
                 "inputs": {
-                    "filter": {
-                        "type": "select",
-                        "label": "Filter",
-                        "tooltip": "Filter tasks.",
-                        "index": 0,
-                        "options": [
-                            {
-                                "label": "Open",
-                                "value": "open"
-                            },
-                            {
-                                "label": "Due Today",
-                                "value": "due_today"
-                            },
-                            {
-                                "label": "Due Tomorrow",
-                                "value": "due_tomorrow"
-                            },
-                            {
-                                "label": "Overdue",
-                                "value": "overdue"
-                            },
-                            {
-                                "label": "Completed",
-                                "value": "completed"
-                            }
-                        ]
+                    "view_id": {
+                        "type": "text",
+                        "label": "View ID",
+                        "tooltip": "The ID of the view/filter to use. Use the deal filters API to get available views.",
+                        "index": 0
                     },
-                    "page": {
-                        "type": "number",
-                        "label": "Page",
-                        "tooltip": "Page number.",
+                    "sort": {
+                        "type": "text",
+                        "label": "Sort Field",
+                        "tooltip": "Field name to sort by (e.g. amount, name, updated_at).",
                         "index": 1
                     },
-                    "owner_id": {
-                        "type": "number",
-                        "label": "Owner ID",
-                        "tooltip": "Filter by owner.",
-                        "index": 2
+                    "sort_type": {
+                        "type": "select",
+                        "label": "Sort Order",
+                        "tooltip": "Sort direction.",
+                        "index": 2,
+                        "options": [
+                            { "label": "Ascending", "value": "asc" },
+                            { "label": "Descending", "value": "desc" }
+                        ]
+                    },
+                    "outputType": {
+                        "type": "select",
+                        "label": "Output Type",
+                        "index": 3,
+                        "defaultValue": "array",
+                        "tooltip": "Choose whether to output all items at once (Array), one item at a time (Object), the first item only (First), or as a CSV file (File).",
+                        "options": [
+                            { "label": "All at once (Array)", "value": "array" },
+                            { "label": "One at a time (Object)", "value": "object" },
+                            { "label": "First item only", "value": "first" },
+                            { "label": "CSV file", "value": "file" }
+                        ]
                     }
                 }
             }
@@ -78,19 +78,22 @@
     "outPorts": [
         {
             "name": "out",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "tasks": {
-                        "type": "array",
-                        "title": "Tasks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "title": "Meta"
+            "options": [
+                {
+                    "label": "Output Type",
+                    "value": "outputType",
+                    "schema": {
+                        "type": "string"
                     }
-                },
-                "required": []
+                }
+            ],
+            "source": {
+                "url": "/component/appmixer/freshsales/core/FindDeals?outPort=out",
+                "data": {
+                    "messages": {
+                        "in/outputType": "inputs/in/outputType"
+                    }
+                }
             }
         }
     ],

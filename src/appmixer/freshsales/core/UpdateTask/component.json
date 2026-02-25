@@ -17,16 +17,34 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "integer" },
-                    "title": { "type": "string" },
-                    "description": { "type": "string" },
-                    "due_date": { "type": "string" },
-                    "task_type": { "type": "string" },
-                    "priority": { "type": "integer" },
-                    "status": { "type": "integer" },
-                    "owner_id": { "type": "integer" }
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "due_date": {
+                        "type": "string"
+                    },
+                    "task_type": {
+                        "type": "string"
+                    },
+                    "priority": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "owner_id": {
+                        "type": "integer"
+                    }
                 },
-                "required": ["id"]
+                "required": [
+                    "id"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -88,25 +106,105 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "integer", "title": "ID" },
-                    "title": { "type": "string", "title": "Title" },
-                    "description": { "type": ["string", "null"], "title": "Description" },
-                    "status": { "type": "integer", "title": "Status" },
-                    "due_date": { "type": ["string", "null"], "title": "Due Date" },
-                    "completed_date": { "type": ["string", "null"], "title": "Completed Date" },
-                    "task_type_id": { "type": ["integer", "null"], "title": "Task Type ID" },
-                    "owner_id": { "type": ["integer", "null"], "title": "Owner ID" },
-                    "outcome_id": { "type": ["integer", "null"], "title": "Outcome ID" },
-                    "creater_id": { "type": ["integer", "null"], "title": "Creator ID" },
-                    "updater_id": { "type": ["integer", "null"], "title": "Updater ID" },
-                    "is_linkedin_type": { "type": "boolean", "title": "Is LinkedIn Type" },
-                    "has_multiple_emails": { "type": "boolean", "title": "Has Multiple Emails" },
-                    "targetables": { "type": "array", "title": "Targetables" },
-                    "targetables_with_email": { "type": "array", "title": "Targetables With Email" },
-                    "user_ids": { "type": "array", "title": "User IDs" },
-                    "targetable": { "title": "Targetable" },
-                    "created_at": { "type": "string", "title": "Created At" },
-                    "updated_at": { "type": "string", "title": "Updated At" }
+                    "id": {
+                        "type": "integer",
+                        "title": "ID"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Description"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "title": "Status"
+                    },
+                    "due_date": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Due Date"
+                    },
+                    "completed_date": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Completed Date"
+                    },
+                    "task_type_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Task Type ID"
+                    },
+                    "owner_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Owner ID"
+                    },
+                    "outcome_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Outcome ID"
+                    },
+                    "creater_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Creator ID"
+                    },
+                    "updater_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Updater ID"
+                    },
+                    "is_linkedin_type": {
+                        "type": "boolean",
+                        "title": "Is LinkedIn Type"
+                    },
+                    "has_multiple_emails": {
+                        "type": "boolean",
+                        "title": "Has Multiple Emails"
+                    },
+                    "targetables": {
+                        "type": "array",
+                        "title": "Targetables"
+                    },
+                    "targetables_with_email": {
+                        "type": "array",
+                        "title": "Targetables With Email"
+                    },
+                    "user_ids": {
+                        "type": "array",
+                        "title": "User IDs"
+                    },
+                    "targetable": {
+                        "title": "Targetable"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "title": "Created At"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "title": "Updated At"
+                    }
                 },
                 "required": []
             }

@@ -1,7 +1,7 @@
 {
-    "name": "appmixer.freshsales.core.ListAppointments",
+    "name": "appmixer.freshsales.core.FindTasks",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "List appointments with optional filters.",
+    "description": "Find tasks with optional filters. Supports outputting as array, individual items, first item only, or CSV file.",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -20,7 +20,10 @@
                     "filter": {
                         "type": "string"
                     },
-                    "include": {
+                    "owner_id": {
+                        "type": "integer"
+                    },
+                    "outputType": {
                         "type": "string"
                     }
                 },
@@ -31,24 +34,34 @@
                     "filter": {
                         "type": "select",
                         "label": "Filter",
-                        "tooltip": "Filter appointments.",
+                        "tooltip": "Filter tasks.",
                         "index": 0,
                         "options": [
-                            {
-                                "label": "Upcoming",
-                                "value": "upcoming"
-                            },
-                            {
-                                "label": "Past",
-                                "value": "past"
-                            }
+                            { "label": "Open", "value": "open" },
+                            { "label": "Due Today", "value": "due_today" },
+                            { "label": "Due Tomorrow", "value": "due_tomorrow" },
+                            { "label": "Overdue", "value": "overdue" },
+                            { "label": "Completed", "value": "completed" }
                         ]
                     },
-                    "include": {
-                        "type": "text",
-                        "label": "Include",
-                        "tooltip": "Comma-separated: creater,owner,updater,targetable.",
+                    "owner_id": {
+                        "type": "number",
+                        "label": "Owner ID",
+                        "tooltip": "Filter by owner.",
                         "index": 1
+                    },
+                    "outputType": {
+                        "type": "select",
+                        "label": "Output Type",
+                        "index": 2,
+                        "defaultValue": "array",
+                        "tooltip": "Choose whether to output all items at once (Array), one item at a time (Object), the first item only (First), or as a CSV file (File).",
+                        "options": [
+                            { "label": "All at once (Array)", "value": "array" },
+                            { "label": "One at a time (Object)", "value": "object" },
+                            { "label": "First item only", "value": "first" },
+                            { "label": "CSV file", "value": "file" }
+                        ]
                     }
                 }
             }
@@ -57,15 +70,22 @@
     "outPorts": [
         {
             "name": "out",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "appointments": {
-                        "type": "array",
-                        "title": "Appointments"
+            "options": [
+                {
+                    "label": "Output Type",
+                    "value": "outputType",
+                    "schema": {
+                        "type": "string"
                     }
-                },
-                "required": []
+                }
+            ],
+            "source": {
+                "url": "/component/appmixer/freshsales/core/FindTasks?outPort=out",
+                "data": {
+                    "messages": {
+                        "in/outputType": "inputs/in/outputType"
+                    }
+                }
             }
         }
     ],
