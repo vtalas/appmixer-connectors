@@ -1,7 +1,7 @@
 {
     "name": "appmixer.freshsales.core.GetTask",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Retrieve a task by ID.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "private": false,
     "auth": {
@@ -83,6 +83,68 @@
                     "updated_at": {
                         "type": "string",
                         "title": "Updated At"
+                    },
+                    "completed_date": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Completed Date"
+                    },
+                    "creater_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Creator ID"
+                    },
+                    "updater_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Updater ID"
+                    },
+                    "outcome_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Outcome ID"
+                    },
+                    "task_type_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Task Type ID"
+                    },
+                    "is_linkedin_type": {
+                        "type": "boolean",
+                        "title": "Is LinkedIn Type"
+                    },
+                    "targetables": {
+                        "type": "array",
+                        "title": "Targetables"
+                    },
+                    "targetables_with_email": {
+                        "type": "array",
+                        "title": "Targetables With Email"
+                    },
+                    "has_multiple_emails": {
+                        "type": "boolean",
+                        "title": "Has Multiple Emails"
+                    },
+                    "user_ids": {
+                        "type": "array",
+                        "title": "User IDs"
+                    },
+                    "targetable": {
+                        "type": [
+                            "object",
+                            "null"
+                        ],
+                        "title": "Targetable"
                     }
                 },
                 "required": []

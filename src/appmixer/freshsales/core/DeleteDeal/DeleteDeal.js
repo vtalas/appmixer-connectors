@@ -1,17 +1,19 @@
 'use strict';
 
-const api = require('../../api');
-
 module.exports = {
     async receive(context) {
 
         const { id } = context.messages.in.content;
 
-        if (!id) {
-            throw new context.CancelError('Deal ID is required!');
-        }
-
-        await api.DeleteDeal.execute(context, { id });
+        await context.httpRequest({
+            method: 'DELETE',
+            url: `https://${context.auth.domain}/api/deals/${id}`,
+            headers: {
+                'Authorization': `Token token=${context.auth.apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
 
         return context.sendJson({ id, deleted: true }, 'out');
     }

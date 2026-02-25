@@ -1,9 +1,8 @@
 {
     "name": "appmixer.freshsales.core.GetAppointment",
-    "author": "Appmixer <info@appmixer.com>",
     "description": "Retrieve an appointment by ID.",
+    "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
-    "private": false,
     "auth": {
         "service": "appmixer:freshsales"
     },
@@ -51,6 +50,13 @@
                         "type": "string",
                         "title": "Title"
                     },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Description"
+                    },
                     "from_date": {
                         "type": "string",
                         "title": "From Date"
@@ -59,12 +65,35 @@
                         "type": "string",
                         "title": "End Date"
                     },
+                    "time_zone": {
+                        "type": "string",
+                        "title": "Time Zone"
+                    },
                     "location": {
                         "type": [
                             "string",
                             "null"
                         ],
                         "title": "Location"
+                    },
+                    "is_allday": {
+                        "type": "boolean",
+                        "title": "Is All Day"
+                    },
+                    "outcome_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Outcome ID"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "title": "Provider"
+                    },
+                    "creater_id": {
+                        "type": "integer",
+                        "title": "Creator ID"
                     },
                     "created_at": {
                         "type": "string",
@@ -73,6 +102,116 @@
                     "updated_at": {
                         "type": "string",
                         "title": "Updated At"
+                    },
+                    "latitude": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Latitude"
+                    },
+                    "longitude": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Longitude"
+                    },
+                    "checkedin_at": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Checked In At"
+                    },
+                    "checkedout_at": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Checked Out At"
+                    },
+                    "checkedin_duration": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "title": "Checked In Duration"
+                    },
+                    "checkedout_latitude": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Checked Out Latitude"
+                    },
+                    "checkedout_longitude": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Checked Out Longitude"
+                    },
+                    "checkedout_location": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Checked Out Location"
+                    },
+                    "can_checkin": {
+                        "type": "boolean",
+                        "title": "Can Check In"
+                    },
+                    "can_checkin_checkout": {
+                        "type": "boolean",
+                        "title": "Can Check In/Out"
+                    },
+                    "conference_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Conference ID"
+                    },
+                    "note_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "title": "Note ID"
+                    },
+                    "has_multiple_emails": {
+                        "type": "boolean",
+                        "title": "Has Multiple Emails"
+                    },
+                    "targetable": {
+                        "type": [
+                            "object",
+                            "null"
+                        ],
+                        "title": "Targetable"
+                    },
+                    "targetables": {
+                        "type": "array",
+                        "title": "Targetables",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "targetables_with_email": {
+                        "type": "array",
+                        "title": "Targetables With Email",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "appointment_attendee_ids": {
+                        "type": "array",
+                        "title": "Attendee IDs",
+                        "items": {
+                            "type": "integer"
+                        }
                     }
                 },
                 "required": []
