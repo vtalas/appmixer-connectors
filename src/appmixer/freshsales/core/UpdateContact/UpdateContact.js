@@ -5,18 +5,18 @@ module.exports = {
 
         const {
             id,
-            first_name,
-            last_name,
+            first_name: firstName,
+            last_name: lastName,
             email,
-            mobile_number,
-            work_number,
-            job_title,
+            mobile_number: mobileNumber,
+            work_number: workNumber,
+            job_title: jobTitle,
             address,
             city,
             state,
             country,
             zipcode,
-            time_zone,
+            time_zone: timeZone,
             keyword,
             medium,
             facebook,
@@ -29,9 +29,10 @@ module.exports = {
         }
 
         const contactData = {
-            first_name, last_name, email, mobile_number, work_number,
-            job_title, address, city, state, country, zipcode,
-            time_zone, keyword, medium, facebook, twitter, linkedin
+            first_name: firstName, last_name: lastName, email,
+            mobile_number: mobileNumber, work_number: workNumber,
+            job_title: jobTitle, address, city, state, country, zipcode,
+            time_zone: timeZone, keyword, medium, facebook, twitter, linkedin
         };
 
         // Remove undefined/null/empty values
@@ -42,11 +43,10 @@ module.exports = {
         });
 
         const { domain, apiKey } = context.auth;
-        const url = `https://${domain}/api/contacts/${id}`;
 
         const response = await context.httpRequest({
             method: 'PUT',
-            url,
+            url: `https://${domain}/api/contacts/${id}`,
             headers: {
                 'Authorization': `Token token=${apiKey}`,
                 'Content-Type': 'application/json',

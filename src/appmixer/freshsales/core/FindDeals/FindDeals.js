@@ -47,19 +47,19 @@ module.exports = {
             );
         }
 
-        const { view_id, sort, sort_type, outputType } = context.messages.in.content;
+        const { view_id: viewId, sort, sort_type: sortType, outputType } = context.messages.in.content;
 
-        if (!view_id) {
+        if (!viewId) {
             throw new context.CancelError('View is required!');
         }
 
         const params = {};
         if (sort) params.sort = sort;
-        if (sort_type) params.sort_type = sort_type;
+        if (sortType) params.sort_type = sortType;
 
         const { data } = await context.httpRequest({
             method: 'GET',
-            url: `https://${context.auth.domain}/api/deals/view/${view_id}`,
+            url: `https://${context.auth.domain}/api/deals/view/${viewId}`,
             headers: {
                 'Authorization': `Token token=${context.auth.apiKey}`,
                 'Content-Type': 'application/json',

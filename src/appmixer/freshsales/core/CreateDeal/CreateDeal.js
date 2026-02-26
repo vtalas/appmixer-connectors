@@ -5,67 +5,49 @@ module.exports = {
     async receive(context) {
 
         const {
-            deal_name,
-            deal_amount,
-            currency_code,
-            expected_close,
-            stage_id,
-            owner_id,
-            sales_account_id,
-            sales_account_name,
-            contacts_list,
+            deal_name: dealName,
+            deal_amount: dealAmount,
+            currency_code: currencyCode,
+            expected_close: expectedClose,
+            stage_id: stageId,
+            owner_id: ownerId,
+            sales_account_id: salesAccountId,
+            sales_account_name: salesAccountName,
+            contacts_list: contactsList,
             tags,
-            custom_fields
+            custom_fields: customFields
         } = context.messages.in.content;
 
-        // Validate required inputs
-        if (!deal_name) {
+        if (!dealName) {
             throw new context.CancelError('Deal Name is required!');
         }
 
-        if (!deal_amount) {
+        if (!dealAmount) {
             throw new context.CancelError('Deal Amount is required!');
         }
 
         // Build the deal object
         const dealData = {
             deal: {
-                name: deal_name,
-                amount: deal_amount
+                name: dealName,
+                amount: dealAmount
             }
         };
 
-        // Add optional fields
-        if (currency_code) {
-            dealData.deal.currency_code = currency_code;
+        if (currencyCode) dealData.deal.currency_code = currencyCode;
+        if (expectedClose) dealData.deal.expected_close = expectedClose;
+        if (stageId) dealData.deal.deal_stage_id = stageId;
+        if (ownerId) dealData.deal.owner_id = ownerId;
+        if (salesAccountId) dealData.deal.sales_account_id = salesAccountId;
+
+        if (salesAccountName) {
+            dealData.deal.sales_account = { name: salesAccountName };
         }
 
-        if (expected_close) {
-            dealData.deal.expected_close = expected_close;
-        }
-
-        if (stage_id) {
-            dealData.deal.deal_stage_id = stage_id;
-        }
-
-        if (owner_id) {
-            dealData.deal.owner_id = owner_id;
-        }
-
-        if (sales_account_id) {
-            dealData.deal.sales_account_id = sales_account_id;
-        }
-
-        if (sales_account_name) {
-            dealData.deal.sales_account = {
-                name: sales_account_name
-            };
-        }
-
-        if (contacts_list) {
-            const contactsArray = typeof contacts_list === 'string'
-                ? contacts_list.split(',').map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id))
-                : Array.isArray(contacts_list) ? contacts_list : [];
+        if (contactsList) {
+            const contactsArray = typeof contactsList === 'string'
+                ? contactsList.split(',').map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id))
+                : Array.isArray(contactsList) ? contactsList : [];
             if (contactsArray.length > 0) {
                 dealData.deal.contacts_added_list = contactsArray;
             }
@@ -80,11 +62,10 @@ module.exports = {
             }
         }
 
-        if (custom_fields && typeof custom_fields === 'object') {
-            dealData.deal.custom_field = custom_fields;
+        if (customFields && typeof customFields === 'object') {
+            dealData.deal.custom_field = customFields;
         }
 
-        // Make the API request with correct authentication and domain
         const { data } = await context.httpRequest({
             method: 'POST',
             url: `https://${context.auth.domain}/api/deals`,

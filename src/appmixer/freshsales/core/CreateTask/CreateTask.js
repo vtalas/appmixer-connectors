@@ -6,15 +6,15 @@ module.exports = {
         const {
             title,
             description,
-            due_date,
-            task_type,
+            due_date: dueDate,
+            task_type: taskType,
             priority,
             status,
-            owner_id,
-            contact_id,
-            account_id,
-            deal_id,
-            is_notification_set
+            owner_id: ownerId,
+            contact_id: contactId,
+            account_id: accountId,
+            deal_id: dealId,
+            is_notification_set: isNotificationSet
         } = context.messages.in.content;
 
         if (!title) {
@@ -24,15 +24,15 @@ module.exports = {
         const task = {
             title,
             ...(description && { description }),
-            ...(due_date && { due_date }),
-            ...(task_type && { task_type }),
+            ...(dueDate && { due_date: dueDate }),
+            ...(taskType && { task_type: taskType }),
             ...(priority && { priority }),
             ...(status && { status }),
-            ...(owner_id && { owner_id: parseInt(owner_id) }),
-            ...(contact_id && { contact_id: parseInt(contact_id) }),
-            ...(account_id && { account_id: parseInt(account_id) }),
-            ...(deal_id && { deal_id: parseInt(deal_id) }),
-            ...(typeof is_notification_set !== 'undefined' && { is_notification_set })
+            ...(ownerId && { owner_id: parseInt(ownerId) }),
+            ...(contactId && { contact_id: parseInt(contactId) }),
+            ...(accountId && { account_id: parseInt(accountId) }),
+            ...(dealId && { deal_id: parseInt(dealId) }),
+            ...(typeof isNotificationSet !== 'undefined' && { is_notification_set: isNotificationSet })
         };
 
         const response = await context.httpRequest({

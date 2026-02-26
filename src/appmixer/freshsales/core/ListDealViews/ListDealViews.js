@@ -35,7 +35,7 @@ module.exports = {
 
     async receive(context) {
 
-        const { page = 1, per_page = 25, outputType } = context.messages.in.content;
+        const { page = 1, per_page: perPage = 25, outputType } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
             return lib.getOutputPortOptions(context, outputType, schema, { label: 'Deal Views', value: 'deal_views' });
@@ -52,7 +52,7 @@ module.exports = {
             },
             params: {
                 page,
-                per_page
+                per_page: perPage
             }
         });
 

@@ -5,9 +5,15 @@ module.exports = {
     async receive(context) {
 
         const {
-            id, name, amount, currency_code, expected_close,
-            deal_stage_id, deal_pipeline_id, probability,
-            owner_id, contacts_added_list, contacts_removed_list
+            id, name, amount,
+            currency_code: currencyCode,
+            expected_close: expectedClose,
+            deal_stage_id: dealStageId,
+            deal_pipeline_id: dealPipelineId,
+            probability,
+            owner_id: ownerId,
+            contacts_added_list: contactsAddedList,
+            contacts_removed_list: contactsRemovedList
         } = context.messages.in.content;
 
         if (!id) {
@@ -15,8 +21,13 @@ module.exports = {
         }
 
         const dealData = {
-            name, amount, currency_code, expected_close,
-            deal_stage_id, deal_pipeline_id, probability, owner_id
+            name, amount,
+            currency_code: currencyCode,
+            expected_close: expectedClose,
+            deal_stage_id: dealStageId,
+            deal_pipeline_id: dealPipelineId,
+            probability,
+            owner_id: ownerId
         };
 
         // Remove undefined/null/empty values
@@ -27,14 +38,14 @@ module.exports = {
         });
 
         // Handle contact lists
-        if (contacts_added_list) {
-            dealData.contacts_added_list = contacts_added_list
+        if (contactsAddedList) {
+            dealData.contacts_added_list = contactsAddedList
                 .split(',')
                 .map(i => parseInt(i.trim(), 10))
                 .filter(i => !isNaN(i));
         }
-        if (contacts_removed_list) {
-            dealData.contacts_removed_list = contacts_removed_list
+        if (contactsRemovedList) {
+            dealData.contacts_removed_list = contactsRemovedList
                 .split(',')
                 .map(i => parseInt(i.trim(), 10))
                 .filter(i => !isNaN(i));

@@ -3,18 +3,24 @@
 module.exports = {
     async receive(context) {
 
-        const { id, title, description, due_date, task_type, priority, status, owner_id } = context.messages.in.content;
+        const {
+            id, title, description,
+            due_date: dueDate,
+            task_type: taskType,
+            priority, status,
+            owner_id: ownerId
+        } = context.messages.in.content;
 
         if (!id) throw new context.CancelError('Task ID is required!');
 
         const task = {};
         if (title !== undefined) task.title = title;
         if (description !== undefined) task.description = description;
-        if (due_date !== undefined) task.due_date = due_date;
-        if (task_type !== undefined) task.task_type = task_type;
+        if (dueDate !== undefined) task.due_date = dueDate;
+        if (taskType !== undefined) task.task_type = taskType;
         if (priority !== undefined) task.priority = priority;
         if (status !== undefined) task.status = status;
-        if (owner_id !== undefined) task.owner_id = parseInt(owner_id);
+        if (ownerId !== undefined) task.owner_id = parseInt(ownerId);
 
         const { data } = await context.httpRequest({
             method: 'PUT',

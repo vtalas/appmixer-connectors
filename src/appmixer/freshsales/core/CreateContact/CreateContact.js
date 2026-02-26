@@ -4,38 +4,38 @@ module.exports = {
     async receive(context) {
 
         const {
-            first_name,
-            last_name,
+            first_name: firstName,
+            last_name: lastName,
             email,
-            mobile_number,
-            work_number,
-            job_title,
+            mobile_number: mobileNumber,
+            work_number: workNumber,
+            job_title: jobTitle,
             website,
             address,
             city,
             state,
             country,
             zipcode,
-            custom_field,
-            sales_accounts,
+            custom_field: customField,
+            sales_accounts: salesAccounts,
             tags
         } = context.messages.in.content;
 
         // Build the contact object
         const contactData = {
-            first_name,
-            last_name,
+            first_name: firstName,
+            last_name: lastName,
             email,
-            mobile_number,
-            work_number,
-            job_title,
+            mobile_number: mobileNumber,
+            work_number: workNumber,
+            job_title: jobTitle,
             website,
             address,
             city,
             state,
             country,
             zipcode,
-            custom_field
+            custom_field: customField
         };
 
         // Remove undefined/null values
@@ -46,19 +46,18 @@ module.exports = {
         });
 
         // Add optional array fields if provided
-        if (sales_accounts) {
-            contactData.sales_accounts = sales_accounts;
+        if (salesAccounts) {
+            contactData.sales_accounts = salesAccounts;
         }
         if (tags) {
             contactData.tags = tags;
         }
 
         const { domain, apiKey } = context.auth;
-        const url = `https://${domain}/api/contacts`;
 
         const response = await context.httpRequest({
             method: 'POST',
-            url,
+            url: `https://${domain}/api/contacts`,
             headers: {
                 'Authorization': `Token token=${apiKey}`,
                 'Content-Type': 'application/json',

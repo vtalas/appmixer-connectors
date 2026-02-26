@@ -27,8 +27,7 @@
                         "type": "string"
                     },
                     "expected_close": {
-                        "type": "string",
-                        "format": "date"
+                        "type": "string"
                     },
                     "stage_id": {
                         "type": "string"
@@ -43,16 +42,10 @@
                         "type": "string"
                     },
                     "contacts_list": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "type": "string"
                     },
                     "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "type": "string"
                     },
                     "custom_fields": {
                         "type": "object"

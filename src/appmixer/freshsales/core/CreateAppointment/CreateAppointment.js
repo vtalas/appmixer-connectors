@@ -6,11 +6,11 @@ module.exports = {
 
         const {
             title,
-            from_date,
-            end_date,
-            time_zone,
-            targetable_type,
-            targetable_id,
+            from_date: fromDate,
+            end_date: endDate,
+            time_zone: timeZone,
+            targetable_type: targetableType,
+            targetable_id: targetableId,
             location,
             description
         } = context.messages.in.content;
@@ -18,16 +18,16 @@ module.exports = {
         // Build appointment object with required fields
         const appointment = {
             title,
-            from_date,
-            end_date
+            from_date: fromDate,
+            end_date: endDate
         };
 
         // Add optional fields only if provided
-        if (time_zone) appointment.time_zone = time_zone;
+        if (timeZone) appointment.time_zone = timeZone;
         if (location) appointment.location = location;
         if (description) appointment.description = description;
-        if (targetable_type) appointment.targetable_type = targetable_type;
-        if (targetable_id) appointment.targetable_id = targetable_id;
+        if (targetableType) appointment.targetable_type = targetableType;
+        if (targetableId) appointment.targetable_id = targetableId;
 
         const { data } = await context.httpRequest({
             method: 'POST',

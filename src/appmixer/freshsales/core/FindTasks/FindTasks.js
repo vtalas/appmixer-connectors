@@ -37,11 +37,11 @@ module.exports = {
             );
         }
 
-        const { filter, owner_id, outputType } = context.messages.in.content;
+        const { filter, owner_id: ownerId, outputType } = context.messages.in.content;
 
         const params = new URLSearchParams();
         if (filter) params.set('filter', filter);
-        if (owner_id) params.set('owner_id', owner_id);
+        if (ownerId) params.set('owner_id', ownerId);
 
         const { data } = await context.httpRequest({
             method: 'GET',
