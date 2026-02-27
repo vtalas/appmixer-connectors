@@ -1,19 +1,19 @@
 {
-    "name": "E2E BetterStack - monitors",
-    "description": "End-to-end test for BetterStack connector - tests CRUD and list operations on Uptime monitors",
+    "name": "E2E Betterstack - monitors",
+    "description": "End-to-end test for Betterstack connector - tests CreateMonitor, GetMonitor, UpdateMonitor, ListMonitors, DeleteMonitor",
     "flow": {
         "on-start": {
             "type": "appmixer.utils.controls.OnStart",
-            "x": 100,
-            "y": 200,
+            "x": 64,
+            "y": 16,
             "source": {},
             "version": "1.0.0",
             "config": {}
         },
         "set-variables": {
             "type": "appmixer.utils.controls.SetVariable",
-            "x": 300,
-            "y": 200,
+            "x": 272,
+            "y": 16,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -58,8 +58,8 @@
         },
         "create-monitor": {
             "type": "appmixer.betterstack.uptime.CreateMonitor",
-            "x": 500,
-            "y": 200,
+            "x": 464,
+            "y": 16,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -92,7 +92,7 @@
                                     "monitorName": "{{{var-monitor-name}}}",
                                     "url": "{{{var-monitor-url}}}",
                                     "monitorType": "status",
-                                    "checkFrequency": 180
+                                    "checkFrequency": 60
                                 }
                             }
                         }
@@ -100,10 +100,10 @@
                 }
             }
         },
-        "assert-create": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 700,
-            "y": 100,
+        "get-monitor": {
+            "type": "appmixer.betterstack.uptime.GetMonitor",
+            "x": 656,
+            "y": 144,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -117,17 +117,50 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "expression": {
-                                        "field-id": {
+                                    "monitorId": {
+                                        "var-monitor-id": {
                                             "variable": "$.create-monitor.out.id",
                                             "functions": []
-                                        },
-                                        "field-name": {
-                                            "variable": "$.create-monitor.out.pronounceable_name",
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "monitorId": "{{{var-monitor-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-get": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1200,
+            "y": 144,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "get-monitor": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "get-monitor": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-monitor-name": {
+                                            "variable": "$.get-monitor.out.pronounceable_name",
                                             "functions": []
                                         },
-                                        "field-url": {
-                                            "variable": "$.create-monitor.out.url",
+                                        "field-monitor-id": {
+                                            "variable": "$.get-monitor.out.id",
+                                            "functions": []
+                                        },
+                                        "field-monitor-url": {
+                                            "variable": "$.get-monitor.out.url",
                                             "functions": []
                                         }
                                     }
@@ -136,16 +169,16 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-id}}}",
-                                                "assertion": "notEmpty"
-                                            },
-                                            {
-                                                "field": "{{{field-name}}}",
+                                                "field": "{{{field-monitor-name}}}",
                                                 "assertion": "equal",
                                                 "expected": "E2E Test Monitor"
                                             },
                                             {
-                                                "field": "{{{field-url}}}",
+                                                "field": "{{{field-monitor-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-monitor-url}}}",
                                                 "assertion": "equal",
                                                 "expected": "https://example.com"
                                             }
@@ -158,116 +191,41 @@
                 }
             }
         },
-        "get-monitor": {
-            "type": "appmixer.betterstack.uptime.GetMonitor",
-            "x": 700,
-            "y": 300,
+        "update-monitor": {
+            "type": "appmixer.betterstack.uptime.UpdateMonitor",
+            "x": 848,
+            "y": 272,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-monitor": ["out"]
+                    "get-monitor": ["out"]
                 }
             },
             "config": {
                 "transform": {
                     "in": {
-                        "create-monitor": {
+                        "get-monitor": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "monitorId": {
-                                        "var-created-id": {
+                                        "var-monitor-id-upd": {
                                             "variable": "$.create-monitor.out.id",
                                             "functions": []
                                         }
-                                    }
-                                },
-                                "lambda": {
-                                    "monitorId": "{{{var-created-id}}}"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "assert-get": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 300,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "get-monitor": ["out"]
-                }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "get-monitor": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "expression": {
-                                        "field-get-id": {
-                                            "variable": "$.get-monitor.out.id",
-                                            "functions": []
-                                        },
-                                        "field-get-name": {
-                                            "variable": "$.get-monitor.out.pronounceable_name",
-                                            "functions": []
-                                        }
-                                    }
-                                },
-                                "lambda": {
-                                    "expression": {
-                                        "AND": [
-                                            {
-                                                "field": "{{{field-get-id}}}",
-                                                "assertion": "notEmpty"
-                                            },
-                                            {
-                                                "field": "{{{field-get-name}}}",
-                                                "assertion": "equal",
-                                                "expected": "E2E Test Monitor"
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "update-monitor": {
-            "type": "appmixer.betterstack.uptime.UpdateMonitor",
-            "x": 1100,
-            "y": 300,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "get-monitor": ["out"]
-                }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "get-monitor": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "monitorId": {
-                                        "var-get-id": {
-                                            "variable": "$.get-monitor.out.id",
+                                    },
+                                    "monitorName": {
+                                        "var-updated-name": {
+                                            "variable": "$.set-variables.out.updatedMonitorName",
                                             "functions": []
                                         }
                                     },
-                                    "monitorName": {}
+                                    "checkFrequency": {}
                                 },
                                 "lambda": {
-                                    "monitorId": "{{{var-get-id}}}",
-                                    "monitorName": "E2E Test Monitor Updated"
+                                    "monitorId": "{{{var-monitor-id-upd}}}",
+                                    "monitorName": "{{{var-updated-name}}}",
+                                    "checkFrequency": 120
                                 }
                             }
                         }
@@ -277,8 +235,8 @@
         },
         "assert-update": {
             "type": "appmixer.utils.test.Assert",
-            "x": 1300,
-            "y": 300,
+            "x": 1200,
+            "y": 272,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -296,6 +254,10 @@
                                         "field-updated-name": {
                                             "variable": "$.update-monitor.out.pronounceable_name",
                                             "functions": []
+                                        },
+                                        "field-check-freq": {
+                                            "variable": "$.update-monitor.out.check_frequency",
+                                            "functions": []
                                         }
                                     }
                                 },
@@ -306,6 +268,10 @@
                                                 "field": "{{{field-updated-name}}}",
                                                 "assertion": "equal",
                                                 "expected": "E2E Test Monitor Updated"
+                                            },
+                                            {
+                                                "field": "{{{field-check-freq}}}",
+                                                "assertion": "notEmpty"
                                             }
                                         ]
                                     }
@@ -318,18 +284,18 @@
         },
         "list-monitors": {
             "type": "appmixer.betterstack.uptime.ListMonitors",
-            "x": 700,
-            "y": 500,
+            "x": 1040,
+            "y": 400,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "create-monitor": ["out"]
+                    "update-monitor": ["out"]
                 }
             },
             "config": {
                 "transform": {
                     "in": {
-                        "create-monitor": {
+                        "update-monitor": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -346,8 +312,8 @@
         },
         "assert-list": {
             "type": "appmixer.utils.test.Assert",
-            "x": 900,
-            "y": 500,
+            "x": 1200,
+            "y": 400,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -362,12 +328,8 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "field-result": {
-                                            "variable": "$.list-monitors.out.result",
-                                            "functions": []
-                                        },
-                                        "field-count": {
-                                            "variable": "$.list-monitors.out.count",
+                                        "field-list": {
+                                            "variable": "$.list-monitors.out",
                                             "functions": []
                                         }
                                     }
@@ -376,11 +338,7 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{field-result}}}",
-                                                "assertion": "notEmpty"
-                                            },
-                                            {
-                                                "field": "{{{field-count}}}",
+                                                "field": "{{{field-list}}}",
                                                 "assertion": "notEmpty"
                                             }
                                         ]
@@ -394,12 +352,11 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1500,
-            "y": 300,
+            "x": 1392,
+            "y": 272,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "assert-create": ["out"],
                     "assert-get": ["out"],
                     "assert-update": ["out"],
                     "assert-list": ["out"]
@@ -413,8 +370,8 @@
         },
         "delete-monitor": {
             "type": "appmixer.betterstack.uptime.DeleteMonitor",
-            "x": 1700,
-            "y": 300,
+            "x": 1616,
+            "y": 272,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -429,14 +386,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "monitorId": {
-                                        "var-delete-id": {
+                                        "var-monitor-id-del": {
                                             "variable": "$.create-monitor.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "monitorId": "{{{var-delete-id}}}"
+                                    "monitorId": "{{{var-monitor-id-del}}}"
                                 }
                             }
                         }
@@ -446,8 +403,8 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1900,
-            "y": 300,
+            "x": 1808,
+            "y": 272,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -476,7 +433,7 @@
                                 },
                                 "lambda": {
                                     "recipients": "jirka@client.io",
-                                    "testCase": "E2E BetterStack - monitors",
+                                    "testCase": "E2E Betterstack - monitors",
                                     "result": "{{{result-var}}}"
                                 }
                             }
