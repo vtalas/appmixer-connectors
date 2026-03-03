@@ -27,7 +27,15 @@
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "variables": {}
+                                    "variables": {
+                                        "27c83a05-d5bd-4145-8f52-32eba26804be": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_timestamp"
+                                                }
+                                            ]
+                                        }
+                                    }
                                 },
                                 "lambda": {
                                     "variables": {
@@ -35,12 +43,7 @@
                                             {
                                                 "type": "text",
                                                 "name": "datasetName",
-                                                "text": "e2e-axiom-test-{{{g_timestamp()}}}"
-                                            },
-                                            {
-                                                "type": "text",
-                                                "name": "ingestData",
-                                                "text": "[{\"message\":\"E2E test event\",\"level\":\"info\",\"source\":\"appmixer-e2e\"}]"
+                                                "text": "e2e-test-{{{27c83a05-d5bd-4145-8f52-32eba26804be}}}"
                                             }
                                         ]
                                     }
@@ -76,11 +79,163 @@
                                             "functions": []
                                         }
                                     },
-                                    "description": {}
+                                    "description": {},
+                                    "kind": {}
                                 },
                                 "lambda": {
                                     "name": "{{{var-dataset-name}}}",
-                                    "description": "E2E test dataset created by Appmixer"
+                                    "description": "E2E test dataset",
+                                    "kind": "axiom:events:v1"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-create": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1008,
+            "y": 16,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-dataset": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-dataset": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-id": {
+                                            "variable": "$.create-dataset.out.id",
+                                            "functions": []
+                                        },
+                                        "field-name": {
+                                            "variable": "$.create-dataset.out.name",
+                                            "functions": []
+                                        },
+                                        "expected-name": {
+                                            "variable": "$.set-variables.out.datasetName",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "field": "{{{field-id}}}",
+                                                "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-name}}}",
+                                                "assertion": "equal",
+                                                "expected": "{{{expected-name}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "list-datasets": {
+            "type": "appmixer.axiom.datasets.ListDatasets",
+            "x": 704,
+            "y": 160,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-dataset": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-dataset": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "outputType": {}
+                                },
+                                "lambda": {
+                                    "outputType": "array"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-list": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1008,
+            "y": 160,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "list-datasets": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "list-datasets": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "field-result": {
+                                            "variable": "$.list-datasets.out",
+                                            "functions": []
+                                        },
+                                        "97b7ceb0-e1b2-4763-8f81-76231d23474f": {
+                                            "variable": "$.set-variables.out.datasetName",
+                                            "functions": []
+                                        },
+                                        "10a6a851-7ea5-4036-a9d3-b25bf7c1d265": {
+                                            "variable": "$.list-datasets.out",
+                                            "functions": [
+                                                {
+                                                    "name": "g_jsonPath",
+                                                    "params": [
+                                                        {
+                                                            "value": "$.[0].name"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{field-result}}}"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "expected": "{{{97b7ceb0-e1b2-4763-8f81-76231d23474f}}}",
+                                                "assertion": "equal",
+                                                "field": "{{{10a6a851-7ea5-4036-a9d3-b25bf7c1d265}}}"
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -90,8 +245,8 @@
         },
         "ingest-data": {
             "type": "appmixer.axiom.datasets.IngestData",
-            "x": 640,
-            "y": 144,
+            "x": 704,
+            "y": 304,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -108,23 +263,22 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "datasetName": {
-                                        "var-dataset-name": {
+                                        "var-ingest-name": {
                                             "variable": "$.create-dataset.out.name",
                                             "functions": []
                                         }
                                     },
-                                    "data": {
-                                        "var-ingest-data": {
-                                            "variable": "$.set-variables.out.ingestData",
-                                            "functions": []
-                                        }
-                                    },
-                                    "dataFormat": {}
+                                    "data": {},
+                                    "dataFormat": {},
+                                    "csvDelimiter": {},
+                                    "eventLabels": {}
                                 },
                                 "lambda": {
-                                    "datasetName": "{{{var-dataset-name}}}",
-                                    "data": "{{{var-ingest-data}}}",
-                                    "dataFormat": "json"
+                                    "datasetName": "{{{var-ingest-name}}}",
+                                    "data": "[{\"message\":\"E2E test event 1\",\"level\":\"info\"},{\"message\":\"E2E test event 2\",\"level\":\"warning\"}]",
+                                    "dataFormat": "json",
+                                    "csvDelimiter": ",",
+                                    "eventLabels": "{\"environment\": \"production\"}"
                                 }
                             }
                         }
@@ -134,8 +288,8 @@
         },
         "assert-ingest": {
             "type": "appmixer.utils.test.Assert",
-            "x": 1200,
-            "y": 144,
+            "x": 1008,
+            "y": 304,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -152,9 +306,13 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "ingested-count": {
+                                        "field-ingested": {
                                             "variable": "$.ingest-data.out.ingested",
                                             "functions": []
+                                        },
+                                        "field-failed": {
+                                            "variable": "$.ingest-data.out.failed",
+                                            "functions": []
                                         }
                                     }
                                 },
@@ -162,8 +320,13 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{ingested-count}}}",
+                                                "field": "{{{field-ingested}}}",
                                                 "assertion": "notEmpty"
+                                            },
+                                            {
+                                                "field": "{{{field-failed}}}",
+                                                "assertion": "equal",
+                                                "expected": "0"
                                             }
                                         ]
                                     }
@@ -174,14 +337,14 @@
                 }
             }
         },
-        "query-dataset": {
-            "type": "appmixer.axiom.queries.QueryDataset",
-            "x": 832,
-            "y": 272,
+        "vacuum-dataset": {
+            "type": "appmixer.axiom.datasets.VacuumDataset",
+            "x": 1024,
+            "y": -192,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "ingest-data": [
+                    "create-dataset": [
                         "out"
                     ]
                 }
@@ -189,67 +352,19 @@
             "config": {
                 "transform": {
                     "in": {
-                        "ingest-data": {
+                        "create-dataset": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "datasetName": {
-                                        "var-dataset-name": {
-                                            "variable": "$.create-dataset.out.name",
-                                            "functions": []
-                                        }
-                                    },
-                                    "startTime": {},
-                                    "endTime": {},
-                                    "resolution": {}
-                                },
-                                "lambda": {
-                                    "datasetName": "{{{var-dataset-name}}}",
-                                    "startTime": "now-1h",
-                                    "endTime": "now",
-                                    "resolution": "auto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "assert-query": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 1200,
-            "y": 272,
-            "version": "1.0.0",
-            "source": {
-                "in": {
-                    "query-dataset": [
-                        "out"
-                    ]
-                }
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "query-dataset": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "expression": {
-                                        "status-field": {
-                                            "variable": "$.query-dataset.out.status",
+                                    "datasetId": {
+                                        "var-vacuum-id": {
+                                            "variable": "$.create-dataset.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "expression": {
-                                        "AND": [
-                                            {
-                                                "field": "{{{status-field}}}",
-                                                "assertion": "notEmpty"
-                                            }
-                                        ]
-                                    }
+                                    "datasetId": "{{{var-vacuum-id}}}"
                                 }
                             }
                         }
@@ -259,15 +374,21 @@
         },
         "after-all": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1392,
-            "y": 208,
+            "x": 1248,
+            "y": 16,
             "version": "1.0.0",
             "source": {
                 "in": {
+                    "assert-create": [
+                        "out"
+                    ],
+                    "assert-list": [
+                        "out"
+                    ],
                     "assert-ingest": [
                         "out"
                     ],
-                    "assert-query": [
+                    "vacuum-dataset": [
                         "out"
                     ]
                 }
@@ -280,8 +401,8 @@
         },
         "delete-dataset": {
             "type": "appmixer.axiom.datasets.DeleteDataset",
-            "x": 1584,
-            "y": 208,
+            "x": 1440,
+            "y": 16,
             "version": "1.0.0",
             "source": {
                 "in": {
@@ -298,14 +419,14 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "datasetId": {
-                                        "var-dataset-id": {
+                                        "var-delete-id": {
                                             "variable": "$.create-dataset.out.id",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
-                                    "datasetId": "{{{var-dataset-id}}}"
+                                    "datasetId": "{{{var-delete-id}}}"
                                 }
                             }
                         }
@@ -315,8 +436,8 @@
         },
         "process-results": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1776,
-            "y": 208,
+            "x": 1664,
+            "y": 16,
             "version": "1.0.1",
             "source": {
                 "in": {
@@ -334,18 +455,26 @@
                                 "type": "json2new",
                                 "modifiers": {
                                     "recipients": {},
-                                    "testCase": {},
                                     "result": {
                                         "result-var": {
                                             "variable": "$.after-all.out",
                                             "functions": []
                                         }
+                                    },
+                                    "testCase": {
+                                        "1b3b4ee6-e1c0-4feb-9cbe-98894939bf67": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_flowName"
+                                                }
+                                            ]
+                                        }
                                     }
                                 },
                                 "lambda": {
                                     "recipients": "test@appmixer.ai",
-                                    "testCase": "E2E Axiom - Query Data",
-                                    "result": "{{{result-var}}}"
+                                    "result": "{{{result-var}}}",
+                                    "testCase": "{{{1b3b4ee6-e1c0-4feb-9cbe-98894939bf67}}}"
                                 }
                             }
                         }
@@ -354,7 +483,7 @@
             }
         }
     },
-    "name": "E2E Axiom - Query Data",
-    "type": "automation",
-    "notes": {}
+    "name": "E2E Axiom - List and Ingest Data",
+    "notes": {},
+    "type": "automation"
 }
