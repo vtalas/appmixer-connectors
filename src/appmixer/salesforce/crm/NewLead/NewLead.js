@@ -42,8 +42,6 @@ module.exports = {
         }
 
         await Promise.map(diff, lead => {
-
-            context.log({ 'step': 'new lead', lead });
             return context.sendJson(lead, 'lead');
         });
 
