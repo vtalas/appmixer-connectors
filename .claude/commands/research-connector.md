@@ -4,9 +4,9 @@ Research API authentication options for a connector and optionally post findings
 
 ## Arguments
 - `$ARGUMENTS` - Format: `<connector-name> [api-docs-url] [github-issue-url]`
-    - `connector-name` (required): Name of the service/API to research (e.g., "todoist", "slack")
-    - `api-docs-url` (optional): URL to the API documentation
-    - `github-issue-url` (optional): GitHub issue URL to read requirements from and post findings to
+   - `connector-name` (required): Name of the service/API to research (e.g., "todoist", "slack")
+   - `api-docs-url` (optional): URL to the API documentation
+   - `github-issue-url` (optional): GitHub issue URL to read requirements from and post findings to
   
 ## Instructions
 
