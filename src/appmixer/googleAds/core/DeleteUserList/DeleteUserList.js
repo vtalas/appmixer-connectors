@@ -23,7 +23,7 @@ module.exports = {
 
         lib.ensureRequired(resourceName, 'User List ID or Resource Name is required!', context);
 
-        const { data } = await context.httpRequest({
+        await context.httpRequest({
             method: 'POST',
             url: `${lib.API_BASE_URL}/customers/${lib.normalizeCustomerId(customerId)}/userLists:mutate`,
             headers: lib.buildHeaders(context, { loginCustomerId }),
@@ -34,9 +34,6 @@ module.exports = {
             }
         });
 
-        // Google Ads returns empty results on successful delete
-        const success = data.results && Array.isArray(data.results) && data.results.length >= 0;
-
-        return context.sendJson({ success }, 'out');
+        return context.sendJson({ }, 'out');
     }
 };
