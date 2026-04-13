@@ -1,10 +1,10 @@
 {
     "name": "appmixer.facebook",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "changelog": {
         "1.0.0": ["Initial version"],
         "1.0.1": ["Minor fixes"],
-        "2.0.0": [
+        "2.0.1": [
             "Updated to Facebook Graph API v25.0.",
             "Removed deprecated fbgraph and bluebird dependencies — uses native fetch via context.httpRequest.",
             "Updated OAuth scopes: manage_pages → pages_manage_posts/pages_read_engagement, publish_pages → pages_manage_posts.",
