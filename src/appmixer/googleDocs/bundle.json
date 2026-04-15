@@ -7,6 +7,9 @@
         ],
         "1.0.0": [
             "Initial version with Google Docs operations"
+        ],
+        "1.1.0": [
+            "CreateDocument: added HTML rich text support via contentType selector"
         ]
     }
 }
