@@ -1,7 +1,6 @@
 {
     "name": "appmixer.google.drive",
-    "version": "2.2.4",
-    "engine": ">=6.1",
+    "version": "1.4.8",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -53,35 +52,8 @@
         "1.4.7": [
             "CreateFolder, FindFileOrFolder, UploadFile: handle the filename or folder name containing special characters."
         ],
-        "2.0.1": [
-            "Removed deprecated components: GetFile, ExportFile. Use DownloadFile instead. Removed ListFiles. Use FindFilesOrFolders instead.",
-            "Renamed FindFileOrFolder to FindFilesOrFolders.",
-            "Renamed NewFile to NewFileOrFolder.",
-            "Renamed UpdatedFile to UpdatedFileOrFolder.",
-            "Added new components: UpdatedFile, GetFileMetadata, CreateFileFromText, AddFileOrFolderPermission, CreateShortcut, UpdateFile.",
-            "Improved input fields UX of multiple components.",
-            "Improved labels and tooltips of all components.",
-            "Improved output variables of all components."
-        ],
-        "2.1.1": [
-            "FindFilesOrFolders: added support for recursive search and ordering of returned items.",
-            "NewFileOrFolder, UpdatedFileOrFolder: added support for monitoring files/folders in a folder recursively.",
-            "DeletedFileOrFolder: new component to monitor deleted files or folders.",
-            "AddFileOrFolderPermission: fixed domain type permissions."
-        ],
-        "2.2.0": [
-            "Added multiselect input normalization for improved compatibility.",
-            "FindFilesOrFolders: fileTypes field now accepts both array and comma-separated string inputs.",
-            "DeletedFileOrFolder, NewFileOrFolder, UpdatedFileOrFolder: fileTypesRestriction field now accepts both array and comma-separated string inputs."
-        ],
-        "2.2.2": [
-            "UploadFile: fixed an issue with uploading files to shared drives."
-        ],
-        "2.2.3": [
-            "Fixed an issue with triggers NewFileOrFolder, UpdatedFileOrFolder, and DeletedFileOrFolder which could result in errors when accessing file parents in some scenarios (e.g., read-only access and/or shared drives)."
-        ],
-        "2.2.4": [
-            "Fixed an issue with NewFileOrFolder trigger causing false negatives when processing changes in shared folders."
+        "1.4.8": [
+            "UploadFile: fixed an issue with uploading files to shared drives. Backport from the 2.x.x version."
         ]
     }
 }

@@ -1,39 +1,61 @@
 'use strict';
 const { google } = require('googleapis');
-const lib = require('../lib');
+const commons = require('../drive-commons');
 
 module.exports = {
 
     async receive(context) {
 
-        const auth = lib.getOauth2Client(context.auth);
+        const auth = commons.getOauth2Client(context.auth);
         const drive = google.drive({ version: 'v3', auth });
+        const { userId } = context.auth;
         let { folderName, folderLocation, useExisting } = context.messages.in.content;
-        const escapedFolderName = lib.escapeSpecialCharacters(folderName);
+        const escapedFolderName = commons.escapeSpecialCharacters(folderName);
         const resource = {
             name: folderName,
             mimeType: 'application/vnd.google-apps.folder'
         };
         let folderId;
         if (folderLocation) {
-            folderId = typeof folderLocation === 'string' ? folderLocation : folderLocation.id;
+            if (typeof folderLocation === 'string') {
+                folderId = folderLocation;
+            } else {
+                folderId = folderLocation.id;
+            }
             resource.parents = [folderId];
         }
 
         if (useExisting) {
             const query = `name='${escapedFolderName}' and mimeType='application/vnd.google-apps.folder' and parents in '${folderLocation ? folderId : 'root'}' and trashed=false`;
-            const { data } = await drive.files.list({ q: query, fields: '*', pageSize: 1 });
+            const { data } = await drive.files.list({
+                q: query
+            });
+            await context.log({ query, data });
             const { files = [] } = data;
             if (files.length > 0) {
-                return context.sendJson({ googleDriveFileMetadata: files[0] }, 'out');
+                const existingFolder = files[0];
+                return context.sendJson({
+                    folderId: existingFolder.id,
+                    folderName: folderName,
+                    mimeType: 'application/vnd.google-apps.folder',
+                    webViewLink: existingFolder.webViewLink,
+                    createdTime: existingFolder.createdTime
+                }, 'out');
             }
         }
 
         const response = await drive.files.create({
+            quotaUser: userId,
             resource,
-            fields: '*'
+            fields: 'id, name, mimeType, webViewLink, createdTime'
         });
 
-        return context.sendJson({ googleDriveFileMetadata: response.data }, 'out');
+        return context.sendJson({
+            folderId: response.data.id,
+            folderName: response.data.name,
+            mimeType: response.data.mimeType,
+            webViewLink: response.data.webViewLink,
+            createdTime: response.data.createdTime
+        }, 'out');
     }
 };

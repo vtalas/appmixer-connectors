@@ -1,14 +1,14 @@
 {
     "name": "appmixer.google.drive.DeleteFileOrFolder",
     "author": "David Durman <david@client.io>",
-    "description": "Delete a file or folder from your Google Drive.",
-    "version": "2.0.0",
+    "description": "Delete a file/folder in your drive.",
     "private": false,
     "auth": {
-        "service": "appmixer:google:drive",
+        "service": "appmixer:google",
         "scope": [
             "https://www.googleapis.com/auth/drive",
-            "https://www.googleapis.com/auth/drive.readonly"
+            "https://www.googleapis.com/auth/drive.appdata",
+            "https://www.googleapis.com/auth/drive.file"
         ]
     },
     "quota": {
@@ -24,23 +24,17 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "fileId": {
-                        "oneOf": [
-                            { "type": "string" },
-                            { "type": "object" }
-                        ]
-                    }
+                    "fileId": { "type": "string" }
                 },
                 "required": ["fileId"]
             },
             "inspector": {
                 "inputs": {
                     "fileId": {
-                        "type": "googlepicker",
-                        "view": ["DOCS", "FOLDERS"],
+                        "type": "text",
                         "index": 1,
-                        "label": "Google Drive File or Folder ID",
-                        "tooltip": "The ID of the Google Drive file or folder."
+                        "label": "Google Drive File/Folder ID",
+                        "tooltip": "The ID of the file/folder to delete."
                     }
                 }
             }
@@ -50,7 +44,7 @@
         {
             "name": "out",
             "options": [
-                { "label": "GDrive File or Folder ID", "value": "googleDriveFileId", "schema": { "type": "string" } }
+                { "label": "Google Drive File ID", "value": "googleDriveFileId" }
             ]
         }
     ],

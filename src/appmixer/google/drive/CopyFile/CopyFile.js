@@ -1,12 +1,12 @@
 'use strict';
 const { google } = require('googleapis');
-const lib = require('../lib');
+const commons = require('../drive-commons');
 
 module.exports = {
 
     async receive(context) {
 
-        const auth = lib.getOauth2Client(context.auth);
+        const auth = commons.getOauth2Client(context.auth);
         const drive = google.drive({ version: 'v3', auth });
         let { fileId, fileName, folderLocation } = context.messages.in.content;
 
@@ -16,15 +16,25 @@ module.exports = {
 
         let folderId;
         if (folderLocation) {
-            folderId = typeof folderLocation === 'string' ? folderLocation : folderLocation.id;
+            if (typeof folderLocation === 'string') {
+                folderId = folderLocation;
+            } else {
+                folderId = folderLocation.id;
+            }
             resource.parents = [folderId];
         }
 
         const response = await drive.files.copy({
-            fileId: typeof fileId === 'string' ? fileId : fileId.id,
+            fileId,
             resource,
-            fields: '*'
+            fields: 'id, name, mimeType, webViewLink, createdTime'
         });
-        return context.sendJson({ googleDriveFileMetadata: response.data }, 'out');
+        return context.sendJson({
+            fileId: response.data.id,
+            fileName: response.data.name,
+            mimeType: response.data.mimeType,
+            webViewLink: response.data.webViewLink,
+            createdTime: response.data.createdTime
+        }, 'out');
     }
 };
