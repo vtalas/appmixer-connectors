@@ -1,9 +1,19 @@
 'use strict';
 
+function kvToObj(arr) {
+    if (!arr || !Array.isArray(arr)) return {};
+    return Object.fromEntries(arr.map(({ key, value }) => [key, value]));
+}
+
+
 module.exports = {
     async receive(context) {
 
-        const { url, method, headers, parameters, body } = context.messages.in.content;
+        const { url, method, headers: headersKV, parameters: parametersKV, body: bodyKV } = context.messages.in.content;
+
+        const extraHeaders = kvToObj(headersKV);
+        const queryParams = kvToObj(parametersKV);
+        const bodyData = kvToObj(bodyKV);
 
         if (!url) {
             throw new context.CancelError('API Endpoint URL is required!');
@@ -12,31 +22,7 @@ module.exports = {
         if (!method) {
             throw new context.CancelError('HTTP Method is required!');
         }
-
-        // Parse headers
-        let parsedHeaders = {};
-        if (headers) {
-            try {
-                parsedHeaders = typeof headers === 'string' ? JSON.parse(headers) : headers;
-            } catch (e) {
-                throw new context.CancelError('Headers must be valid JSON.');
-            }
-        }
-
-        // Parse parameters and build query string
-        let queryString = '';
-        if (parameters) {
-            let parsedParams;
-            try {
-                parsedParams = typeof parameters === 'string' ? JSON.parse(parameters) : parameters;
-            } catch (e) {
-                throw new context.CancelError('Query Parameters must be valid JSON.');
-            }
-            const qs = new URLSearchParams(parsedParams).toString();
-            if (qs) queryString = '?' + qs;
-        }
-
-        const targetUrl = `https://api.axiom.co${url.startsWith('/') ? '' : '/'}${url}` + queryString;
+        const targetUrl = `https://api.axiom.co${url.startsWith('/') ? '' : '/'}${url}`;
 
         const requestOptions = {
             method,
@@ -45,16 +31,16 @@ module.exports = {
                 'Authorization': `Bearer ${context.auth.apiToken}`,
                 'x-axiom-org-id': context.auth.organizationId,
                 'Content-Type': 'application/json',
-                ...parsedHeaders
+                ...extraHeaders
             }
         };
 
-        if (body) {
-            try {
-                requestOptions.data = typeof body === 'string' ? JSON.parse(body) : body;
-            } catch (e) {
-                throw new context.CancelError('Request Body must be valid JSON.');
-            }
+        if (Object.keys(bodyData).length > 0) {
+            requestOptions.data = bodyData;
+        }
+
+        if (Object.keys(queryParams).length > 0) {
+            requestOptions.params = queryParams;
         }
 
         const response = await context.httpRequest(requestOptions);

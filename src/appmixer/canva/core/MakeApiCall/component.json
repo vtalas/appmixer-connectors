@@ -28,7 +28,13 @@
                         "default": "GET"
                     },
                     "body": {
-                        "type": "string"
+                        "type": "array"
+                    },
+                    "headers": {
+                        "type": "array"
+                    },
+                    "parameters": {
+                        "type": "array"
                     }
                 },
                 "required": [
@@ -73,10 +79,34 @@
                         ]
                     },
                     "body": {
-                        "type": "textarea",
-                        "index": 3,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Request Body",
-                        "tooltip": "Enter the request body for the API call."
+                        "index": 3,
+                        "tooltip": "Enter the request body as key-value pairs."
+                    },
+                    "headers": {
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
+                        "label": "Request Headers",
+                        "index": 3,
+                        "tooltip": "Optional additional request headers."
+                    },
+                    "parameters": {
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
+                        "label": "Query Parameters",
+                        "index": 4,
+                        "tooltip": "Optional query parameters."
                     }
                 }
             }

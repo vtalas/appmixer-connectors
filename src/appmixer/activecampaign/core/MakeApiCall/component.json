@@ -34,13 +34,13 @@
                         ]
                     },
                     "headers": {
-                        "type": "string"
+                        "type": "array"
                     },
                     "parameters": {
-                        "type": "string"
+                        "type": "array"
                     },
                     "body": {
-                        "type": "string"
+                        "type": "array"
                     }
                 },
                 "required": [
@@ -86,22 +86,34 @@
                         ]
                     },
                     "headers": {
-                        "type": "textarea",
-                        "index": 3,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Request Headers",
-                        "tooltip": "Optional additional request headers as a JSON object (e.g. <code>{\"X-Custom-Header\": \"value\"}</code>)."
+                        "index": 3,
+                        "tooltip": "Optional additional request headers."
                     },
                     "parameters": {
-                        "type": "textarea",
-                        "index": 4,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Query Parameters",
-                        "tooltip": "Optional query parameters as a JSON object (e.g. <code>{\"key\": \"value\"}</code>)."
+                        "index": 4,
+                        "tooltip": "Optional query parameters."
                     },
                     "body": {
-                        "type": "textarea",
-                        "index": 5,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Request Body",
-                        "tooltip": "Enter the request body for the API call (JSON format)."
+                        "index": 5,
+                        "tooltip": "Enter the request body as key-value pairs."
                     }
                 }
             }

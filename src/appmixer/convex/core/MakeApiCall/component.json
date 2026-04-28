@@ -34,13 +34,13 @@
                         ]
                     },
                     "body": {
-                        "type": "string"
+                        "type": "array"
                     },
                     "headers": {
-                        "type": "string"
+                        "type": "array"
                     },
                     "parameters": {
-                        "type": "string"
+                        "type": "array"
                     }
                 },
                 "required": [
@@ -86,22 +86,34 @@
                         ]
                     },
                     "body": {
-                        "type": "textarea",
-                        "index": 5,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Request Body (JSON)",
-                        "tooltip": "Optional JSON request payload. Leave empty for methods like GET or DELETE."
+                        "index": 5,
+                        "tooltip": "Enter the request body as key-value pairs."
                     },
                     "headers": {
-                        "type": "textarea",
-                        "index": 3,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Headers",
-                        "tooltip": "Optional additional HTTP headers as a JSON object (e.g. <code>{\"X-Custom-Header\": \"value\"}</code>)."
+                        "index": 3,
+                        "tooltip": "Optional additional request headers."
                     },
                     "parameters": {
-                        "type": "textarea",
-                        "index": 4,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Query Parameters",
-                        "tooltip": "Optional query parameters as a JSON object (e.g. <code>{\"limit\": 10, \"offset\": 0}</code>)."
+                        "index": 4,
+                        "tooltip": "Optional query parameters."
                     }
                 }
             }

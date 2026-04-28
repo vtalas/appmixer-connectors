@@ -1,9 +1,19 @@
 'use strict';
 
+function kvToObj(arr) {
+    if (!arr || !Array.isArray(arr)) return {};
+    return Object.fromEntries(arr.map(({ key, value }) => [key, value]));
+}
+
+
 module.exports = {
     async receive(context) {
 
-        const { url, method, headers, parameters, body } = context.messages.in.content;
+        const { url, method, headers: headersKV, parameters: parametersKV, body: bodyKV } = context.messages.in.content;
+
+        const extraHeaders = kvToObj(headersKV);
+        const queryParams = kvToObj(parametersKV);
+        const bodyData = kvToObj(bodyKV);
 
         if (!url) {
             throw new context.CancelError('API Endpoint URL is required!');
@@ -12,49 +22,27 @@ module.exports = {
             throw new context.CancelError('HTTP Method is required!');
         }
 
-        let parsedHeaders = {};
-        if (headers) {
-            try {
-                parsedHeaders = JSON.parse(headers);
-            } catch (e) {
-                throw new context.CancelError('Headers must be a valid JSON object.');
-            }
-        }
-
-        let parsedParameters = {};
-        if (parameters) {
-            try {
-                parsedParameters = JSON.parse(parameters);
-            } catch (e) {
-                throw new context.CancelError('Parameters must be a valid JSON object.');
-            }
-        }
-
         const baseUrl = 'https://www.virustotal.com/api/v3';
         const targetUrl = url.startsWith('http://') || url.startsWith('https://')
             ? url
             : `${baseUrl}${url}`;
 
-        const queryString = Object.keys(parsedParameters).length
-            ? '?' + new URLSearchParams(parsedParameters).toString()
-            : '';
-
         const requestOptions = {
             method,
-            url: targetUrl + queryString,
+            url: targetUrl,
             headers: {
                 'x-apikey': context.auth.apiKey,
                 'Content-Type': 'application/json',
-                ...parsedHeaders
+                ...extraHeaders
             }
         };
 
-        if (body) {
-            try {
-                requestOptions.data = JSON.parse(body);
-            } catch (e) {
-                throw new context.CancelError('Request Body must be valid JSON.');
-            }
+        if (Object.keys(bodyData).length > 0) {
+            requestOptions.data = bodyData;
+        }
+
+        if (Object.keys(queryParams).length > 0) {
+            requestOptions.params = queryParams;
         }
 
         const response = await context.httpRequest(requestOptions);

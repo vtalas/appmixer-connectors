@@ -1,6 +1,6 @@
 {
     "name": "appmixer.logscale",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "changelog": {
         "1.0.0": [
             "Initial release with SendEvent and SendEvents components for Falcon LogScale ingestion."

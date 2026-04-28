@@ -20,10 +20,19 @@
                         "type": "string"
                     },
                     "body": {
-                        "type": "string"
+                        "type": "array"
+                    },
+                    "headers": {
+                        "type": "array"
+                    },
+                    "parameters": {
+                        "type": "array"
                     }
                 },
-                "required": ["url", "method"]
+                "required": [
+                    "url",
+                    "method"
+                ]
             },
             "inspector": {
                 "inputs": {
@@ -38,20 +47,59 @@
                         "index": 2,
                         "label": "Method",
                         "options": [
-                            { "label": "GET", "value": "GET" },
-                            { "label": "POST", "value": "POST" },
-                            { "label": "PUT", "value": "PUT" },
-                            { "label": "PATCH", "value": "PATCH" },
-                            { "label": "DELETE", "value": "DELETE" }
+                            {
+                                "label": "GET",
+                                "value": "GET"
+                            },
+                            {
+                                "label": "POST",
+                                "value": "POST"
+                            },
+                            {
+                                "label": "PUT",
+                                "value": "PUT"
+                            },
+                            {
+                                "label": "PATCH",
+                                "value": "PATCH"
+                            },
+                            {
+                                "label": "DELETE",
+                                "value": "DELETE"
+                            }
                         ],
                         "defaultValue": "GET",
                         "tooltip": "Select the HTTP method for the API call."
                     },
                     "body": {
-                        "type": "textarea",
-                        "index": 3,
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
                         "label": "Body",
-                        "tooltip": "Enter the request body for the API call."
+                        "index": 3,
+                        "tooltip": "Enter the request body as key-value pairs."
+                    },
+                    "headers": {
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
+                        "label": "Request Headers",
+                        "index": 3,
+                        "tooltip": "Optional additional request headers."
+                    },
+                    "parameters": {
+                        "type": "key-value",
+                        "keyLabel": "Key",
+                        "valueLabel": "Value",
+                        "addLabel": "Add item",
+                        "removeLabel": "Remove item",
+                        "label": "Query Parameters",
+                        "index": 4,
+                        "tooltip": "Optional query parameters."
                     }
                 }
             }
@@ -61,9 +109,18 @@
         {
             "name": "out",
             "options": [
-                { "label": "Response", "value": "response" },
-                { "label": "Status", "value": "status" },
-                { "label": "Status Text", "value": "statusText" }
+                {
+                    "label": "Response",
+                    "value": "response"
+                },
+                {
+                    "label": "Status",
+                    "value": "status"
+                },
+                {
+                    "label": "Status Text",
+                    "value": "statusText"
+                }
             ]
         }
     ],
