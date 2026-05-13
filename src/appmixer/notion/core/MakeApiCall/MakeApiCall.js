@@ -22,7 +22,8 @@ module.exports = {
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`,
                 'Content-Type': 'application/json',
-                'Notion-Version': API_VERSION //api version from lib.js
+                'Notion-Version': API_VERSION, //api version from lib.js
+                ...extraHeaders
             }
         };
 

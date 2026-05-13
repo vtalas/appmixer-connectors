@@ -19,7 +19,8 @@ module.exports = {
             url: url,
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...extraHeaders
             }
         };
 

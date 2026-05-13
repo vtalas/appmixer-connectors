@@ -27,15 +27,6 @@ module.exports = {
             ? url
             : `${baseUrl}${url}`;
 
-        let parsedBody = {};
-        if (body) {
-            try {
-                parsedBody = JSON.parse(body);
-            } catch (e) {
-                throw new context.CancelError('Request Body must be valid JSON.');
-            }
-        }
-
         const requestOptions = {
             method,
             url: targetUrl,
@@ -45,7 +36,7 @@ module.exports = {
             },
             data: {
                 apptoken: context.auth.apiKey,
-                ...parsedBody
+                ...bodyData
             }
         };
 

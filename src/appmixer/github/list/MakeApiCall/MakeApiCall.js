@@ -24,7 +24,8 @@ module.exports = {
             headers: {
                 'accept': 'application/vnd.github+json',
                 'X-GitHub-Api-Version': '2022-11-28',
-                'Authorization': `Bearer ${context.accessToken || context.auth?.accessToken}`
+                'Authorization': `Bearer ${context.accessToken || context.auth?.accessToken}`,
+                ...extraHeaders
             }
         };
 

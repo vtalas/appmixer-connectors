@@ -21,20 +21,20 @@ module.exports = {
             url: (context.resource || context.auth.resource) + url,
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${context.accessToken || context.auth?.accessToken}`
+                Authorization: `Bearer ${context.accessToken || context.auth?.accessToken}`,
+                ...extraHeaders
             },
-            data: body
+            data: bodyData
         };
+
+        if (Object.keys(queryParams).length > 0) {
+            options.params = queryParams;
+        }
 
         await context.log({ step: 'Making request', options });
 
         try {
-            const { data, status, statusText } = if (Object.keys(queryParams).length > 0) {
-            requestOptions.params = queryParams;
-        }
-
-        await context.httpRequest(options);
-
+            const { data, status, statusText } = await context.httpRequest(options);
             return context.sendJson({ response: data, status, statusText }, 'out');
         } catch (error) {
             // If Axios throws an error, the response is in error.response.data.
