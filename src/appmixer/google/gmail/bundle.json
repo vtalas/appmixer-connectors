@@ -58,6 +58,8 @@
         ],
         "2.0.9": [
             "Added output examples to component schemas."
-        ]
+        ],
+        "2.1.0": [
+            "MakeApiCall: standardize key-value pair inputs, add URL trailing slash guard, improved error handling"        ]
     }
 }
