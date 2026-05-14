@@ -1,6 +1,6 @@
 {
     "name": "appmixer.microsoft.sharepoint",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -53,7 +53,8 @@
         "1.3.3": [
             "Added output examples to component schemas."
         ],
-        "1.4.0": [
-            "MakeApiCall: standardize key-value pair inputs, add URL trailing slash guard, improved error handling"        ]
+        "2.0.0": [
+            "(breaking change) MakeApiCall: standardize key-value pair inputs for body, headers, and parameters — existing flows using string/textarea body input must be updated"
+        ]
     }
 }

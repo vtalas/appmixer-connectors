@@ -1,6 +1,6 @@
 {
     "name": "appmixer.notion",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "changelog": {
         "1.0.1": [
             "Initial release"
@@ -8,7 +8,8 @@
         "1.0.2": [
             "Added output examples to component schemas."
         ],
-        "1.1.0": [
-            "MakeApiCall: standardize key-value pair inputs, add URL trailing slash guard, improved error handling"        ]
+        "2.0.0": [
+            "(breaking change) MakeApiCall: standardize key-value pair inputs for body, headers, and parameters — existing flows using string/textarea body input must be updated"
+        ]
     }
 }

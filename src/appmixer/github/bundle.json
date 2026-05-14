@@ -1,6 +1,6 @@
 {
     "name": "appmixer.github",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "changelog": {
         "1.0.3": [
             "Removed 'None' empty string value from ListAssignees, ListLabels and ListMilestones."
@@ -20,7 +20,8 @@
         "2.1.2": [
             "Added output examples to component schemas."
         ],
-        "2.2.0": [
-            "MakeApiCall: standardize key-value pair inputs, add URL trailing slash guard, improved error handling"        ]
+        "3.0.0": [
+            "(breaking change) MakeApiCall: standardize key-value pair inputs for body, headers, and parameters — existing flows using string/textarea body input must be updated"
+        ]
     }
 }

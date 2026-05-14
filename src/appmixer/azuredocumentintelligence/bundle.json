@@ -1,6 +1,6 @@
 {
     "name": "appmixer.azuredocumentintelligence",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "changelog": {
         "1.0.2": [
             "Initial version."
@@ -18,7 +18,8 @@
         "2.1.1": [
             "Added output examples to component schemas."
         ],
-        "2.2.0": [
-            "MakeApiCall: standardize key-value pair inputs, add URL trailing slash guard, improved error handling"        ]
+        "3.0.0": [
+            "(breaking change) Added MakeApiCall component with key-value pair inputs for body, headers, and parameters"
+        ]
     }
 }
