@@ -1,0 +1,14 @@
+{
+    "name": "appmixer.whatsapp",
+    "version": "1.0.0",
+    "changelog": {
+        "1.0.0": [
+            "Initial WhatsApp Business Cloud API connector.",
+            "Messages: SendTextMessage, SendTemplateMessage, SendImageMessage, SendVideoMessage, SendAudioMessage, SendDocumentMessage, SendLocationMessage.",
+            "Media: UploadMedia, GetMediaURL, DownloadMedia, DeleteMedia.",
+            "Sender phone numbers: RegisterSenderPhoneNumber (Register Sender), DeregisterPhoneNumber, ListPhoneNumbers, GetPhoneNumber, GetRegistrationStatus, EnsurePhoneNumberRegistered — all operate on YOUR business sender numbers, never on recipients.",
+            "Triggers (webhook): NewMessage, MessageStatusUpdated.",
+            "Core: MakeApiCall (per #1459 standard)."
+        ]
+    }
+}
