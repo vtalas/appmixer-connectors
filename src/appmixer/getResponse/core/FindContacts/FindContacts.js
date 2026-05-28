@@ -84,17 +84,8 @@ module.exports = {
             params
         });
 
-        const { data, status, headers: responseHeaders } = response;
+        const { data } = response;
         const contacts = Array.isArray(data) ? data : [];
-
-        await context.log({
-            step: 'response',
-            status,
-            'x-total-count': responseHeaders && (responseHeaders['totalcount'] || responseHeaders['TotalCount']),
-            count: contacts.length,
-            firstThree: contacts.slice(0, 3),
-            rawDataType: Array.isArray(data) ? 'array' : typeof data
-        });
 
         if (contacts.length === 0) {
             return context.sendJson({}, 'notFound');
