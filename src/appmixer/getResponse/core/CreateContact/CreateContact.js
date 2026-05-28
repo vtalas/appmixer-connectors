@@ -71,8 +71,10 @@ module.exports = {
         }
 
         // https://apireference.getresponse.com/#contacts
-        // Note: The API returns 202 Accepted with no body, only a Location header
-        await context.httpRequest({
+        // GetResponse returns 202 Accepted with no body — the new contact's URL is
+        // in the Location response header (e.g. https://api.getresponse.com/v3/contacts/{contactId}).
+        // We extract contactId from that header so the user doesn't need to query for it.
+        const response = await context.httpRequest({
             method: 'POST',
             url: 'https://api.getresponse.com/v3/contacts',
             headers: {
@@ -83,15 +85,21 @@ module.exports = {
             data: body
         });
 
-        // The API returns 202 Accepted with no body.
-        // Echo back the input values for reference.
-        // To get the contactId, use FindContacts with email filter after this component.
-        const result = {
+        const location = response.headers && (response.headers.location || response.headers.Location);
+        const contactId = location ? location.split('/').pop() : null;
+
+        await context.log({
+            step: 'created',
+            status: response.status,
+            location,
+            contactId
+        });
+
+        return context.sendJson({
+            contactId,
             email,
             name: name || null,
             campaignId
-        };
-
-        return context.sendJson(result, 'out');
+        }, 'out');
     }
 };

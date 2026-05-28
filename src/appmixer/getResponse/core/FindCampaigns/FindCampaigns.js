@@ -65,7 +65,7 @@ module.exports = {
 
         const campaigns = Array.isArray(data) ? data : [];
 
-        if (campaigns.length === 0 && outputType !== 'array') {
+        if (campaigns.length === 0) {
             return context.sendJson({}, 'notFound');
         }
 

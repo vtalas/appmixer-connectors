@@ -67,10 +67,11 @@ module.exports = {
             params['sort[' + sortBy + ']'] = sortOrder || 'asc';
         }
 
-        // Set limit to maximum of 1000 per API documentation
-        params.limit = 1000;
+        // GetResponse paginates via perPage (max 1000), not limit.
+        params.perPage = 1000;
 
-        // Retrieve contacts from getResponse API
+        await context.log({ step: 'request', url: 'https://api.getresponse.com/v3/contacts', params });
+
         // https://apireference.getresponse.com/#contacts
         const response = await context.httpRequest({
             method: 'GET',
@@ -83,17 +84,10 @@ module.exports = {
             params
         });
 
-        // GetResponse API v3 returns contacts in _embedded.contacts array
-        let contacts = [];
-        const embedded = response.data && response.data['_embedded'];
-        if (embedded && Array.isArray(embedded.contacts)) {
-            contacts = embedded.contacts;
-        } else if (Array.isArray(response.data)) {
-            // Fallback for direct array response
-            contacts = response.data;
-        }
+        const { data } = response;
+        const contacts = Array.isArray(data) ? data : [];
 
-        if (contacts.length === 0 && outputType !== 'array') {
+        if (contacts.length === 0) {
             return context.sendJson({}, 'notFound');
         }
 
