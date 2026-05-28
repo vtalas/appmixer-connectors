@@ -1,0 +1,274 @@
+{
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 48,
+            "y": 208,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "find-campaigns-array": {
+            "type": "appmixer.getResponse.core.FindCampaigns",
+            "x": 208,
+            "y": 96,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "outputType": {}
+                                },
+                                "lambda": {
+                                    "outputType": "array"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-campaigns-list": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 400,
+            "y": 96,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "find-campaigns-array": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "find-campaigns-array": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "campaigns-count": {
+                                            "variable": "$.find-campaigns-array.out.count",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{campaigns-count}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "find-contacts-array": {
+            "type": "appmixer.getResponse.core.FindContacts",
+            "x": 208,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "outputType": {}
+                                },
+                                "lambda": {
+                                    "outputType": "array"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-contacts-list": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 400,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "find-contacts-array": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "find-contacts-array": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "contacts-count": {
+                                            "variable": "$.find-contacts-array.out.count",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{contacts-count}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "find-tags-array": {
+            "type": "appmixer.getResponse.core.FindTags",
+            "x": 208,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "outputType": {}
+                                },
+                                "lambda": {
+                                    "outputType": "array"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-tags-list": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 400,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "find-tags-array": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "find-tags-array": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "tags-count": {
+                                            "variable": "$.find-tags-array.out.count",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{tags-count}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 592,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-campaigns-list": ["out"],
+                    "assert-contacts-list": ["out"],
+                    "assert-tags-list": ["out"]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 784,
+            "y": 208,
+            "version": "1.0.1",
+            "source": {
+                "in": {
+                    "after-all": ["out"]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E GetResponse - list-operations",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "name": "E2E GetResponse - list-operations",
+    "type": "automation",
+    "notes": {}
+}

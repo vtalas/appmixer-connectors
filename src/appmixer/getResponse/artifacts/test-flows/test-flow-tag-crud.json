@@ -1,0 +1,352 @@
+{
+    "flow": {
+        "on-start": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 48,
+            "y": 208,
+            "source": {},
+            "version": "1.0.0",
+            "config": {}
+        },
+        "create-tag": {
+            "type": "appmixer.getResponse.core.CreateTag",
+            "x": 208,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "on-start": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "on-start": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "name": {},
+                                    "ts": {
+                                        "variable": "$.on-start.out.started",
+                                        "functions": [
+                                            {
+                                                "name": "g_timestamp"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "lambda": {
+                                    "name": "e2e-tag-{{{ts}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-tag-created": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 400,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-tag": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-tag": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "tag-id": {
+                                            "variable": "$.create-tag.out.tagId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{tag-id}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update-tag": {
+            "type": "appmixer.getResponse.core.UpdateTag",
+            "x": 608,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-tag": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-tag": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "tagId": {
+                                        "var-tag-id": {
+                                            "variable": "$.create-tag.out.tagId",
+                                            "functions": []
+                                        }
+                                    },
+                                    "name": {},
+                                    "ts": {
+                                        "variable": "$.on-start.out.started",
+                                        "functions": [
+                                            {
+                                                "name": "g_timestamp"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "lambda": {
+                                    "tagId": "{{{var-tag-id}}}",
+                                    "name": "e2e-tag-updated-{{{ts}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-tag-updated": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 800,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "update-tag": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "update-tag": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "updated-tag-id": {
+                                            "variable": "$.update-tag.out.tagId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{updated-tag-id}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "find-tags": {
+            "type": "appmixer.getResponse.core.FindTags",
+            "x": 608,
+            "y": 96,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "create-tag": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "create-tag": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "outputType": {}
+                                },
+                                "lambda": {
+                                    "outputType": "first"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "assert-find-tags": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 800,
+            "y": 96,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "find-tags": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "find-tags": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "found-tag-id": {
+                                            "variable": "$.find-tags.out.tagId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{found-tag-id}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "after-all": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1008,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "assert-tag-created": [
+                        "out"
+                    ],
+                    "assert-tag-updated": [
+                        "out"
+                    ],
+                    "assert-find-tags": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            }
+        },
+        "delete-tag": {
+            "type": "appmixer.getResponse.core.DeleteTag",
+            "x": 1200,
+            "y": 208,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "after-all": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "after-all": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "tagId": {
+                                        "var-tag-id": {
+                                            "variable": "$.create-tag.out.tagId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "tagId": "{{{var-tag-id}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process-results": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1392,
+            "y": 208,
+            "version": "1.0.1",
+            "source": {
+                "in": {
+                    "delete-tag": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "delete-tag": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "result-var": {
+                                            "variable": "$.after-all.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E GetResponse - tag-crud",
+                                    "result": "{{{result-var}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "name": "E2E GetResponse - tag-crud",
+    "type": "automation",
+    "notes": {}
+}
