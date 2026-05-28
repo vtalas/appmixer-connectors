@@ -1,6 +1,6 @@
 {
     "name": "appmixer.microsoft.sharepoint",
-    "version": "1.3.3",
+    "version": "2.0.0",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -52,6 +52,9 @@
         ],
         "1.3.3": [
             "Added output examples to component schemas."
+        ],
+        "2.0.0": [
+            "(breaking change) MakeApiCall: headers and parameters changed to key-value array inputs (body remains textarea/JSON to support nested structures) per standard #1459 — existing flows that used the old string/textarea headers or parameters must be updated"
         ]
     }
 }

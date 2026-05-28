@@ -1,6 +1,6 @@
 {
     "name": "appmixer.pipedrive",
-    "version": "2.3.1",
+    "version": "3.0.0",
     "changelog": {
         "1.0.0": [
             "Initial version."
@@ -48,6 +48,9 @@
         ],
         "2.3.1": [
             "Added output examples to component schemas."
+        ],
+        "3.0.0": [
+            "(breaking change) MakeApiCall: headers and parameters changed to key-value array inputs per standard #1459 — existing flows that previously set these as JSON strings must migrate to the key-value editor. Body remains textarea/JSON."
         ]
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "appmixer.monday",
-    "version": "3.1.1",
+    "version": "4.0.0",
     "changelog": {
         "1.0.1": [
             "Fixed FindItems component.",
@@ -73,6 +73,9 @@
         ],
         "3.1.1": [
             "Added output examples to component schemas."
+        ],
+        "4.0.0": [
+            "(breaking change) MakeApiCall: headers and parameters changed to key-value array inputs per standard #1459 — existing flows that previously set these as JSON strings must migrate to the key-value editor. Body remains textarea/JSON."
         ]
     }
 }
