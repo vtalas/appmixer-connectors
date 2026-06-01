@@ -1,6 +1,6 @@
 {
     "name": "appmixer.hubspot",
-    "version": "4.7.0",
+    "version": "4.8.0",
     "engine": ">=6.0.0",
     "changelog": {
         "1.0.0": [
@@ -100,6 +100,12 @@
         ],
         "4.7.0": [
             "Added MakeApiCall component for performing arbitrary authorized API calls to the HubSpot API."
+        ],
+        "4.8.0": [
+            "Added ContactPropertyChanged trigger: fires when a specific contact property changes value.",
+            "Added NewContactInList trigger: polls for new contacts added to a specific HubSpot list.",
+            "Added FormSubmission trigger: polls for new submissions of a specific HubSpot form.",
+            "Updated routes.js to dynamically create HubSpot webhook subscriptions for custom properties used in ContactPropertyChanged."
         ]
     }
 }

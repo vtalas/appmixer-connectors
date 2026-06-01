@@ -23,7 +23,7 @@ module.exports = async (context) => {
 
             try {
                 const subscriptionType = eventName.split(':')[0];
-                const subscriptions = getSubscriptionsByType(subscriptionType, context);
+                const subscriptions = getSubscriptionsByType(subscriptionType, context, params);
                 const results = await getHubSpotSubscriptions(context, params);
                 const currentActiveSubs = results.filter(s => s.enabled).map(s => s.eventType);
 
@@ -174,7 +174,7 @@ async function triggerListenersDelayed(context, eventName, payload) {
     await context.triggerListeners({ eventName, payload });
 }
 
-function getSubscriptionsByType(subscriptionType, context) {
+function getSubscriptionsByType(subscriptionType, context, params = {}) {
 
     let subscriptions = [];
 
@@ -187,7 +187,13 @@ function getSubscriptionsByType(subscriptionType, context) {
             }
         }));
     } else if (subscriptionType === 'contact.propertyChange') {
-        subscriptions = WATCHED_PROPERTIES_CONTACT.map(propertyName => ({
+        // Start with the default watched properties.
+        const propertySet = new Set(WATCHED_PROPERTIES_CONTACT);
+        // If a specific property was requested (e.g. by ContactPropertyChanged), ensure it is included.
+        if (params.propertyName) {
+            propertySet.add(params.propertyName);
+        }
+        subscriptions = Array.from(propertySet).map(propertyName => ({
             enabled: true,
             subscriptionDetails: {
                 subscriptionType,
