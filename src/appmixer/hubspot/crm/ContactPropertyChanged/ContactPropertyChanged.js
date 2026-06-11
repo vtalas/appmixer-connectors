@@ -45,7 +45,9 @@ class ContactPropertyChanged extends BaseSubscriptionComponent {
                 if (event.propertyName && event.propertyName !== watchedProperty) {
                     continue;
                 }
-                const cacheKey = `hubspot-contact-prop-changed-${watchedProperty}-${contactId}`;
+                // Scope the dedupe key per component instance — staticCache is shared across all
+                // instances, so two flows watching the same property must not consume each other's events.
+                const cacheKey = `hubspot-contact-prop-changed-${context.componentId}-${watchedProperty}-${contactId}`;
                 const cached = await context.staticCache.get(cacheKey);
                 if (cached && event.occurredAt <= cached) {
                     continue;
@@ -74,7 +76,16 @@ class ContactPropertyChanged extends BaseSubscriptionComponent {
             properties: propertiesToReturn
         });
 
-        await context.sendArray(data.results, 'contact');
+        // HubSpot emits propertyChange events for the initial property values on contact creation.
+        // Drop those so a freshly created contact doesn't fire as a "property changed" — same guard
+        // UpdatedContact uses.
+        const results = (data.results || []).filter(contact => contact.updatedAt !== contact.createdAt);
+
+        if (!results.length) {
+            return context.response();
+        }
+
+        await context.sendArray(results, 'contact');
 
         return context.response();
     }

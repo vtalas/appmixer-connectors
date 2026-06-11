@@ -8,10 +8,11 @@ module.exports = {
 
     async start(context) {
 
-        // Store the current timestamp as the baseline. On first poll we'll seed the
-        // last-seen submission time to now and not emit historical submissions.
+        // Seed the last-seen submission time to now so historical submissions are not emitted.
+        // Any submission arriving after this baseline (including between start and the first poll)
+        // is newer than lastSeenAt and will be picked up.
         const now = Date.now();
-        await context.saveState({ lastSeenAt: now, isFirstRun: true });
+        await context.saveState({ lastSeenAt: now });
         return context.setTimeout({}, context.config?.pollIntervalMs || DEFAULT_POLL_INTERVAL_MS);
     },
 
@@ -25,16 +26,18 @@ module.exports = {
             return;
         }
 
-        const hubspot = new Hubspot(context.auth.accessToken);
         const { formId } = context.properties;
-        const state = context.state || {};
-        const lastSeenAt = state.lastSeenAt || Date.now();
-        const isFirstRun = state.isFirstRun === true;
-
-        let newLastSeenAt = lastSeenAt;
-        let newSubmissions = [];
 
         try {
+            const hubspot = new Hubspot(context.auth.accessToken);
+            const state = context.state || {};
+            // lastSeenAt is seeded to Date.now() in start(), so historical submissions are already
+            // excluded — no first-run flag needed.
+            const lastSeenAt = state.lastSeenAt || Date.now();
+
+            let newLastSeenAt = lastSeenAt;
+            const newSubmissions = [];
+
             // Fetch recent submissions. HubSpot returns results newest first.
             // We paginate until we reach submissions older than lastSeenAt.
             let after = undefined;
@@ -58,9 +61,7 @@ module.exports = {
                 for (const submission of results) {
                     const submittedAt = submission.submittedAt || 0;
                     if (submittedAt > lastSeenAt) {
-                        if (!isFirstRun) {
-                            newSubmissions.push(submission);
-                        }
+                        newSubmissions.push(submission);
                         if (submittedAt > newLastSeenAt) {
                             newLastSeenAt = submittedAt;
                         }
@@ -76,20 +77,19 @@ module.exports = {
                 }
             } while (after && !done);
 
+            if (newSubmissions.length) {
+                // Emit oldest first so downstream components process in chronological order.
+                await context.sendArray(newSubmissions.reverse(), 'submission');
+            }
+
+            // Advance the watermark only after a successful emit, so a failed send is retried next poll.
+            await context.saveState({ lastSeenAt: newLastSeenAt });
+
         } catch (err) {
             await context.log({ step: 'hubspot-form-submission-poll-error', formId, error: err.message });
-            // Reschedule even on error.
-            return context.setTimeout({}, context.config?.pollIntervalMs || DEFAULT_POLL_INTERVAL_MS);
+        } finally {
+            // Always reschedule so one failed poll self-heals instead of permanently killing the trigger.
+            await context.setTimeout({}, context.config?.pollIntervalMs || DEFAULT_POLL_INTERVAL_MS);
         }
-
-        // Update state with new last seen timestamp.
-        await context.saveState({ lastSeenAt: newLastSeenAt, isFirstRun: false });
-
-        if (newSubmissions.length) {
-            // Emit oldest first so downstream components process in chronological order.
-            await context.sendArray(newSubmissions.reverse(), 'submission');
-        }
-
-        return context.setTimeout({}, context.config?.pollIntervalMs || DEFAULT_POLL_INTERVAL_MS);
     }
 };
