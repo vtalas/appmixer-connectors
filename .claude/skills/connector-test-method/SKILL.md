@@ -26,9 +26,28 @@ So `test()` is what makes Test Mode actually useful.
 Key facts about how the engine calls it:
 - The context is created from the component (with an **empty message**), so it carries the
   component's config — **`context.auth` and `context.properties` are fully available**.
+- **`context.state` is empty** — the flow was never started, so no `tick()` has ever saved a
+  cursor. `test()` must not rely on reading state (and must not write it, see Hard rules).
 - `test()` runs inside a `try/catch`. If it **throws**, the error is logged and the chain
   falls through to the log/schema fallbacks. **Throw on "no example available" — never
   return null or send nothing.**
+
+## Where `test()` lives
+
+`test()` is just another exported method in the trigger's behavior file, next to
+`tick()`/`receive()`. **No `component.json` change is needed** — the engine detects the method
+automatically:
+
+```javascript
+'use strict';
+
+module.exports = {
+
+    async tick(context) { /* production polling logic */ },
+
+    async test(context) { /* one read-only fetch + sendJson, see below */ }
+};
+```
 
 ## Core principle: `test()` and `tick()`/`receive()` must share code
 
@@ -46,14 +65,17 @@ Factor the production path into helpers that both entry points reuse:
 Ideally `test()` adds only: a different query (newest-first, single item), a "take the first
 record" line, and a `throw` when empty. Everything else flows through the shared helpers.
 
-❌ **Anti-pattern** (current risk): `test()` re-declares the base URL, auth config, `include`
-param logic and the axios call, duplicating `tick()`. The two **will** drift — someone fixes a
-header or a mapped field in `tick()` and forgets `test()`, and the test silently emits a
-stale/wrong shape.
+❌ **Anti-pattern**: `test()` re-declares the base URL, auth config, query param logic and the
+HTTP call, duplicating `tick()`. The two **will** drift — someone fixes a header or a mapped
+field in `tick()` and forgets `test()`, and the test silently emits a stale/wrong shape.
 
 ✅ **Pattern:** one `requestX(context, query, opts)` helper does the fetch + map and returns
 mapped records (+ next page); `tick()` loops/dedups/saves state around it, `test()` calls it
 once with a newest-first query and emits `records[0]`.
+
+Use the built-in **`context.httpRequest`** for the HTTP call (axios-compatible options/response:
+`{ method, url, params, data, headers }` → `{ data, status, headers }`). It needs no extra
+dependency in your connector's `package.json` and goes through the platform's HTTP stack.
 
 ```javascript
 // shared by BOTH tick() and test() — request shape + mapping live in one place
@@ -61,8 +83,11 @@ async function requestTickets(context, urlOrParams, normalizedEmbed) {
     const { auth } = context;
     const url = typeof urlOrParams === 'string'
         ? urlOrParams
-        : `https://${auth.domain}.freshdesk.com/api/v2/tickets?${urlOrParams.toString()}`;
-    const res = await axios.get(url, { auth: { username: auth.apiKey, password: 'X' } });
+        : `https://${auth.domain}.example.com/api/v2/tickets?${urlOrParams.toString()}`;
+    const credentials = Buffer.from(`${auth.apiKey}:X`).toString('base64');
+    const res = await context.httpRequest({
+        url, headers: { Authorization: `Basic ${credentials}` }
+    });
     const records = (res.data || []).map(t => mapTicket(t, normalizedEmbed));
     const match = (res.headers.link || '').match(/<([^>]+)>;\s*rel="next"/);
     return { records, nextUrl: match ? match[1] : null };
@@ -110,8 +135,38 @@ logic is inlined in `tick()`/`receive()`.
    call the shared request with a **newest-first, single-item** query (`per_page=1`/`limit=1`,
    `order_by=<created>` `desc`) honoring `context.properties` filters, then `sendJson(records[0],
    '<port>')`. **No cursor, no `saveState`.** `throw` if empty.
-6. **Verify:** `appmixer test component ./src/appmixer/<connector>/core/<Component> --test`
-   (the `--test` flag invokes `test()` directly), then `npm run lint` and `npm run validate`.
+6. **Verify** (see "Verifying your test() method" below): run lint/validate, then invoke
+   `test()` either via the CLI `--test` flag or via Flow Test Mode on a live instance.
+
+## Verifying your `test()` method
+
+Always run the static checks first:
+
+```bash
+npm run lint
+npm run validate
+```
+
+Then verify the method actually emits a realistic item. Two options:
+
+**Option 1 — Appmixer CLI** (requires a CLI version that supports the `--test` flag; check with
+`appmixer test component --help`):
+
+```bash
+# one-time: store auth credentials for the connector
+appmixer test auth login ./src/appmixer/<connector>/auth.js
+
+# invoke test() directly (skips start/stop/tick/receive, exactly like Flow Test Mode)
+appmixer test component ./src/appmixer/<connector>/<path-to-trigger> --test
+```
+
+Without stored auth data the CLI fails before `test()` is even called.
+
+**Option 2 — live instance** (works with any CLI version): pack & publish the connector
+(`appmixer pack` + `appmixer publish`), build a small flow with the trigger connected to a
+downstream component, and run **Test** in the designer without starting the flow. The trigger's
+output in the test run should show a real, fetchable item (not `"sample"` / `0` placeholders —
+those mean the engine fell back to schema samples because `test()` threw or is missing).
 
 ## Trigger groups
 
@@ -126,28 +181,34 @@ logic is inlined in `tick()`/`receive()`.
 
 ### Group A example (canonical — `freshdesk.NewTicket`)
 
-Note how `tick()` and `test()` both go through `getNormalizedEmbed()` + `requestTickets()`
-(which itself calls `mapTicket()`). `test()` adds only the newest-first query and `records[0]`.
-See `src/appmixer/freshdesk/tickets/NewTicket/NewTicket.js` for the full file.
+The shared pieces live in the connector's `lib.js` so every component issues requests the same
+way: `apiCall()` (auth + base URL on top of `context.httpRequest`), `mapTicket()` (raw ticket →
+output `fields`) and `requestTickets()` (one page: fetch + map + pagination parsing). `tick()`
+and `test()` both go through `requestTickets()`; `test()` adds only the newest-first query and
+`records[0]`. See `src/appmixer/freshdesk/lib.js` + `tickets/NewTicket/NewTicket.js`.
 
 ```javascript
-function getNormalizedEmbed(context) {
-    const { embed } = context.properties;
-    return embed ? normalizeMultiselectInput(embed, context, 'Embed fields') : [];
+// lib.js — single source of truth for request shape, mapping and pagination
+async function apiCall(context, { method = 'GET', url, params, data, headers = {} } = {}) {
+    const baseUrl = `https://${context.auth.domain}.freshdesk.com/api/v2`;
+    const credentials = Buffer.from(`${context.auth.apiKey}:X`).toString('base64');
+    return context.httpRequest({
+        method,
+        url: /^https?:\/\//.test(url) ? url : `${baseUrl}${url}`,
+        headers: { Authorization: `Basic ${credentials}`, ...headers },
+        params, data
+    });
 }
 
-// Shared request + mapping + pagination — the single source of truth for output shape.
-async function requestTickets(context, urlOrParams, normalizedEmbed) {
-    const { auth } = context;
-    const url = typeof urlOrParams === 'string'
-        ? urlOrParams
-        : `https://${auth.domain}.freshdesk.com/api/v2/tickets?${urlOrParams.toString()}`;
-    const res = await axios.get(url, { auth: { username: auth.apiKey, password: 'X' } });
-    const records = (res.data || []).map(t => mapTicket(t, normalizedEmbed));
+async function requestTickets(context, urlOrParams, normalizedEmbed = []) {
+    const url = typeof urlOrParams === 'string' ? urlOrParams : `/tickets?${urlOrParams.toString()}`;
+    const res = await apiCall(context, { url });
+    const records = (res.data || []).map(ticket => mapTicket(ticket, normalizedEmbed));
     const match = (res.headers.link || '').match(/<([^>]+)>;\s*rel="next"/);
     return { records, nextUrl: match ? match[1] : null };
 }
 
+// NewTicket.js
 async test(context) {
     const normalizedEmbed = getNormalizedEmbed(context);
 
@@ -224,6 +285,76 @@ async test(context) {
 }
 ```
 
+### Group E example (`utils.timers.SchedulerTrigger`)
+
+No external API — `test()` returns a synthetic but well-formed payload. The key is still code
+sharing: the schedule computation (`getNextRun()`) is the same function `start()`/`receive()`
+use, so the emitted dates respect the user's configured schedule, timezone and end date.
+See `src/appmixer/utils/timers/SchedulerTrigger/SchedulerTrigger.js`.
+
+```javascript
+async test(context) {
+    const { timezone = 'GMT' } = context.properties;
+    if (timezone && !isValidTimezone(timezone)) {
+        throw new context.CancelError('Invalid timezone');
+    }
+
+    const now = moment().toISOString();
+    // Same computation start()/receive() use — no timeout set, no state touched.
+    const nextDate = this.getNextRun(context, { now, previousDate: null, firstTime: true });
+    if (!nextDate) {
+        throw new Error('No next run within the configured schedule (end date reached).');
+    }
+
+    return context.sendJson({
+        previousDate: null,
+        nextDateGMT: nextDate.toISOString(),
+        nextDateLocal: moment(nextDate).tz(timezone).format('YYYY-MM-DDTHH:mm:ss.SSS'),
+        timezone
+    }, 'out');
+}
+```
+
+### Group F example (`utils.forms.FormTrigger`)
+
+The output schema is dynamic (defined by `context.properties.fields.ADD`), so `test()` walks the
+configured fields and synthesizes a plausible value per `field.type`. Match what a real
+submission produces: HTML forms submit **strings** (only checkbox is normalized to a boolean by
+`receive()`), and prefer the field's configured `defaultValue` for realism.
+See `src/appmixer/utils/forms/FormTrigger/FormTrigger.js`.
+
+```javascript
+test(context) {
+    const fields = (context.properties.fields && context.properties.fields.ADD) || [];
+    if (!fields.length) {
+        throw new Error('No form fields defined.');
+    }
+
+    const entry = {};
+    fields.forEach((field, index) => {
+        const name = 'field_' + index;
+        if (field.type === 'checkbox') {
+            entry[name] = true;
+            return;
+        }
+        if (field.defaultValue) {
+            entry[name] = field.defaultValue;
+            return;
+        }
+        switch (field.type) {
+            case 'number': entry[name] = '42'; break;
+            case 'date': entry[name] = '2026-01-01'; break;
+            case 'email': entry[name] = 'user@example.com'; break;
+            case 'color': entry[name] = '#336699'; break;
+            case 'password': entry[name] = 'secret'; break;
+            default: entry[name] = field.label || 'Sample text';
+        }
+    });
+
+    return context.sendJson(entry, 'entry');
+}
+```
+
 ## Per-trigger checklist
 
 - [ ] **`test()` shares the request + mapping path with `tick()`/`receive()`** — no duplicated
@@ -233,7 +364,8 @@ async test(context) {
 - [ ] Honors `context.properties` filters
 - [ ] Emits exactly one item, shape matches `tick()`/`receive()` exactly, correct port name
 - [ ] Throws (not returns null) when no example exists
-- [ ] `appmixer test component …`, `npm run lint`, `npm run validate` all pass
+- [ ] `npm run lint` + `npm run validate` pass, and `test()` verified via CLI `--test` or
+      Flow Test Mode on a live instance (see "Verifying your test() method")
 
 ## Reference connectors
 
@@ -267,3 +399,13 @@ Worked examples across the groups:
   skips `addListener` and reuses the same `conversations.history` call the polling
   `slack.list.NewChannelMessage` trigger uses, honoring the same `ignoreBotMessages` filter as
   `receive()`.
+
+**Group E — scheduler/timer:**
+- **`utils.timers.SchedulerTrigger`** (`src/appmixer/utils/timers/SchedulerTrigger/`) — `test()`
+  reuses the same `getNextRun()` computation as `start()`/`receive()` and emits the next-run
+  payload without setting any timeout or touching state.
+
+**Group F — form (dynamic schema):**
+- **`utils.forms.FormTrigger`** (`src/appmixer/utils/forms/FormTrigger/`) — `test()` synthesizes
+  one entry from `properties.fields.ADD`, matching the exact shape a real POST submission
+  produces (`field_<index>` keys, string values, checkbox → boolean, `defaultValue` preferred).
