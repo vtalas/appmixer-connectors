@@ -1,7 +1,10 @@
 {
     "name": "appmixer.jira",
-    "version": "3.0.1",
+    "version": "3.1.0",
     "changelog": {
+        "3.1.0": [
+            "Added test() (Flow Test Mode) to all triggers: NewIssue, UpdatedIssue, NewProject, DeletedProject (polling) and NewIssueWebhook, UpdatedIssueWebhook, DeletedIssue, NewProjectWebhook, UpdatedProject, DeletedProjectWebhook. Shared jira-commons.fetchLatestIssue/fetchLatestProject reuse the same search/project requests as tick() (newest-first, no `> now` baseline); webhook variants reshape the record into the webhook payload via toWebhookShape."
+        ],
         "1.0.0": [
             "Initial version"
         ],
