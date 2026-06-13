@@ -29,5 +29,17 @@ module.exports = {
             const subscriberData = mailchimpDriver.parseData(data);
             await context.sendJson(subscriberData, 'out');
         }
+    },
+
+    async test(context) {
+
+        // No webhook registration: fetch the newest subscribed member of the list and
+        // reshape it into the same body a 'subscribe' webhook delivers (parseData output).
+        const { listId } = context.properties;
+        const member = await mailchimpDriver.getLatestMember(context, listId, 'subscribed');
+        if (!member) {
+            throw new Error('No subscribers in the list to use as test data.');
+        }
+        return context.sendJson(mailchimpDriver.toSubscriberWebhookShape(member, listId), 'out');
     }
 };
