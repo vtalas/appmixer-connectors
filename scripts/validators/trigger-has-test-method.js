@@ -69,7 +69,19 @@ const SKIP = new Set([
     'google/drive/DeletedFileOrFolder',
     // 6. Event with no read-only upstream reachable from the trigger's properties
     // (beehiiv exposes no publication-wide survey-response list endpoint).
-    'beehiiv/core/SurveyResponseSubmitted'
+    'beehiiv/core/SurveyResponseSubmitted',
+    // 7. Engine-internal / control / test-harness components. These have no external
+    // upstream to sample: utils/test/* are E2E-flow harness pieces, utils/storage/*
+    // fire on internal store changes, and utils/controls/* are input-port control
+    // components (not event triggers).
+    'utils/test/AfterAll',
+    'utils/test/CallCount',
+    'utils/test/Tick',
+    'utils/storage/OnItemAdded',
+    'utils/storage/OnItemRemoved',
+    'utils/storage/OnItemUpdated',
+    'utils/controls/Counter',
+    'utils/controls/Digest'
 ]);
 
 const TICK = /(?<![.\w])(?:async\s+)?tick\s*\(\s*context\s*\)/;

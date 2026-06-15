@@ -1,7 +1,10 @@
 {
     "name": "appmixer.whatsapp",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "changelog": {
+        "2.2.0": [
+            "Added test() (Flow Test Mode) to the NewMessage and MessageStatusUpdated triggers (representative synthetic payload — the WhatsApp Cloud API cannot list past messages/statuses)."
+        ],
         "1.0.0": [
             "Initial WhatsApp Business Cloud API connector.",
             "Messages: SendTextMessage, SendTemplateMessage, SendImageMessage, SendVideoMessage, SendAudioMessage, SendDocumentMessage, SendLocationMessage.",
