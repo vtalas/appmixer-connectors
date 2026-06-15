@@ -7,6 +7,32 @@ const lib = require('../../lib');
 
 module.exports = {
 
+    // Flow Test Mode: the WhatsApp Cloud API has no endpoint to list past status
+    // updates, so emit a representative status in the exact shape routes.js maps a
+    // status into for this trigger.
+    async test(context) {
+
+        const wabaId = (context.properties && context.properties.businessAccountId)
+            || lib.resolveWabaId(context);
+        if (!wabaId) {
+            throw new context.CancelError(
+                'No WhatsApp Business Account ID to build test data. Fill the inspector '
+                + 'field or reconnect the WhatsApp account.'
+            );
+        }
+
+        return context.sendJson({
+            id: 'wamid.TEST' + Date.now(),
+            recipientId: '15551234567',
+            status: 'delivered',
+            timestamp: String(Math.floor(Date.now() / 1000)),
+            conversation: { id: 'TEST_CONVERSATION', origin: { type: 'service' } },
+            errors: undefined,
+            wabaId,
+            phoneNumberId: '000000000000000'
+        }, 'status');
+    },
+
     async start(context) {
 
         // Form override (inspector input) wins over the auto-discovered default

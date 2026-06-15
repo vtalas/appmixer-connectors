@@ -13,6 +13,31 @@ const lib = require('../../lib');
 
 module.exports = {
 
+    // Flow Test Mode: the WhatsApp Cloud API has no endpoint to list received
+    // messages, so emit a representative inbound text message in the exact shape
+    // routes.js delivers to this trigger: { ...msg, wabaId, phoneNumberId }.
+    async test(context) {
+
+        const wabaId = (context.properties && context.properties.businessAccountId)
+            || lib.resolveWabaId(context);
+        if (!wabaId) {
+            throw new context.CancelError(
+                'No WhatsApp Business Account ID to build test data. Fill the inspector '
+                + 'field or reconnect the WhatsApp account.'
+            );
+        }
+
+        return context.sendJson({
+            from: '15551234567',
+            id: 'wamid.TEST' + Date.now(),
+            timestamp: String(Math.floor(Date.now() / 1000)),
+            type: 'text',
+            text: { body: 'Hello from Appmixer Flow Test Mode.' },
+            wabaId,
+            phoneNumberId: '000000000000000'
+        }, 'message');
+    },
+
     async start(context) {
 
         // Form override (inspector input) wins over the auto-discovered default

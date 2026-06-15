@@ -1,9 +1,12 @@
 {
     "name": "appmixer.facebook",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "changelog": {
         "1.0.0": ["Initial version"],
         "1.0.1": ["Minor fixes"],
+        "2.1.0": [
+            "Added test() (Flow Test Mode) to all triggers: NewPagePost."
+        ],
         "2.0.0": [
             "Updated to Facebook Graph API v25.0.",
             "Removed deprecated fbgraph and bluebird dependencies — uses native fetch via context.httpRequest.",
