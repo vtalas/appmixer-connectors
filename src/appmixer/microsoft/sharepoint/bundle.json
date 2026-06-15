@@ -1,6 +1,6 @@
 {
     "name": "appmixer.microsoft.sharepoint",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -58,6 +58,9 @@
         ],
         "2.1.0": [
             "Added test() (Flow Test Mode) to the WatchLocation trigger."
+        ],
+        "2.2.0": [
+            "Added test() (Flow Test Mode) to the NewFile and UpdatedFile triggers."
         ]
     }
 }

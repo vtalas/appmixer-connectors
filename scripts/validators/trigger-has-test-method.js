@@ -60,7 +60,16 @@ const SKIP = new Set([
     // 4. Action components that use start() for lifecycle but have an `in` port and
     // perform a mutation — not fetchable triggers (no read-only item to sample).
     'wiz/core/UploadScan',
-    'plivo/sms/SendSMSAndWaitForReply'
+    'plivo/sms/SendSMSAndWaitForReply',
+    // 5. Diff/delta-based deletion triggers — a deleted item no longer exists upstream
+    // and there is no read-only endpoint that lists "currently deleted" items, so the
+    // production payload (removed/trashed facet) cannot be reconstructed faithfully.
+    'microsoft/sharepoint/DeletedFile',
+    'google/bigquery/DeletedRow',
+    'google/drive/DeletedFileOrFolder',
+    // 6. Event with no read-only upstream reachable from the trigger's properties
+    // (beehiiv exposes no publication-wide survey-response list endpoint).
+    'beehiiv/core/SurveyResponseSubmitted'
 ]);
 
 const TICK = /(?<![.\w])(?:async\s+)?tick\s*\(\s*context\s*\)/;
