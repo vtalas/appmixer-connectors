@@ -53,7 +53,13 @@ const SKIP = new Set([
     // 3. Message-queue consumers / internal engine events — no read-only sample.
     'rabbitmq/platform/NewMessage',
     'kafka/platform/NewMessage',
-    'system/core/OnAnyFlowComponentError'
+    'system/core/OnAnyFlowComponentError',
+    // 3b. Inbound-only webhooks with no REST endpoint to fetch a past event
+    // (LINE messaging is push/reply only — received messages can't be listed).
+    'line/core/NewMessages',
+    // 4. Action component (has an `in` port, uploads documents) that uses start()
+    // only to schedule a drain timer — not a fetchable trigger.
+    'wiz/core/UploadScan'
 ]);
 
 const TICK = /(?<![.\w])(?:async\s+)?tick\s*\(\s*context\s*\)/;

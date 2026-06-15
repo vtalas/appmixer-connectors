@@ -25,6 +25,26 @@ module.exports = {
         }
     },
 
+    // Flow Test Mode: fetch the sheet's newest row through the SAME single-row
+    // GET that receive() uses, so the emitted shape is identical.
+    async test(context) {
+
+        const { sheetId } = context.properties;
+        if (!sheetId) {
+            throw new context.CancelError('Sheet ID is required!');
+        }
+
+        const sheet = await this.httpRequest(context, 'GET', `/sheets/${sheetId}`);
+        const rows = sheet.rows || [];
+        if (!rows.length) {
+            throw new Error('The sheet has no rows to use as test data.');
+        }
+        // Rows come back in row order; the last one is the most recently added.
+        const newestRowId = rows[rows.length - 1].id;
+        const data = await this.httpRequest(context, 'GET', `/sheets/${sheetId}/rows/${newestRowId}`);
+        return context.sendJson(data, 'out');
+    },
+
     async receive(context) {
 
         const { challenge, events } = context.messages.webhook?.content?.data || {};
