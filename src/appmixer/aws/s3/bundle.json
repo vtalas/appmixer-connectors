@@ -1,6 +1,6 @@
 {
     "name": "appmixer.aws.s3",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -28,6 +28,9 @@
         ],
         "2.0.0": [
             "Breaking change (Will require re-authentication): Updated AWS SDK to v3."
+        ],
+        "2.1.0": [
+            "Added test() (Flow Test Mode) to polling triggers: NewBucket, DeletedBucket."
         ]
     }
 }

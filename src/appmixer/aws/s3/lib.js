@@ -1,6 +1,6 @@
 'use strict';
 
-const { S3Client, GetBucketNotificationConfigurationCommand, PutBucketNotificationConfigurationCommand } = require('@aws-sdk/client-s3');
+const { S3Client, GetBucketNotificationConfigurationCommand, PutBucketNotificationConfigurationCommand, ListBucketsCommand } = require('@aws-sdk/client-s3');
 const { SNSClient, CreateTopicCommand, SetTopicAttributesCommand, SubscribeCommand, UnsubscribeCommand, DeleteTopicCommand, ConfirmSubscriptionCommand } = require('@aws-sdk/client-sns');
 const { KMSClient, DescribeKeyCommand, ListKeyPoliciesCommand, GetKeyPolicyCommand } = require('@aws-sdk/client-kms');
 const crypto = require('crypto');
@@ -27,6 +27,26 @@ module.exports = {
             kms,
             region
         };
+    },
+
+    /**
+     * List all buckets for the configured account/region. Shared by the NewBucket /
+     * DeletedBucket polling triggers (tick + test) so they all fetch buckets the same way.
+     * @param {Context} context
+     * @return {Promise<Array>} array of raw bucket objects ({ Name, CreationDate, ... })
+     */
+    async listBuckets(context) {
+
+        const { s3, region } = this.init(context);
+        try {
+            const response = await s3.send(new ListBucketsCommand({ BucketRegion: region }));
+            return response.Buckets || [];
+        } catch (error) {
+            // Re-throw with just the error message. Otherwise a
+            // [unable to serialize, circular reference is too complex to analyze]
+            // error is thrown.
+            throw new Error(error.message);
+        }
     },
 
     /**

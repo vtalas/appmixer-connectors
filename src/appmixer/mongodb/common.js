@@ -162,6 +162,31 @@ module.exports = {
         }
     },
 
+    // Read-only fetch of the newest document in the configured collection.
+    // Shared by every trigger's test() (Flow Test Mode). Opens its own short-lived
+    // client and closes it; does NOT touch any state, change stream or resume token.
+    async fetchLatestDocument(context) {
+        const { flowId, componentId } = context;
+        const connectionUri = context.auth.connectionUri;
+
+        const { client, connectionId } = await module.exports.getClient(
+            context, flowId, componentId, connectionUri, context.auth
+        );
+
+        try {
+            const collection = module.exports.getCollection(
+                client, context.auth.database, context.properties.collection
+            );
+            // Newest document first; mirrors the same find()+JSON normalization
+            // path tick()/processDocuments() use to shape emitted documents.
+            const doc = await collection.findOne({}, { sort: { _id: -1 } });
+            if (!doc) return null;
+            return JSON.parse(JSON.stringify(doc));
+        } finally {
+            await module.exports.closeClient(context, connectionId);
+        }
+    },
+
     async closeClient(context, connectionId) {
         await context.service.stateUnset(connectionId);
         const client = MONGO_CONNECTOR_OPEN_CONNECTIONS[connectionId];

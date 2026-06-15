@@ -1,7 +1,10 @@
 {
     "name": "appmixer.google.spreadsheets",
-    "version": "4.1.0",
+    "version": "4.2.0",
     "changelog": {
+        "4.2.0": [
+            "Added test() (Flow Test Mode) to polling triggers: NewRow, UpdatedRow."
+        ],
         "1.0.0": [
             "Initial version"
         ],

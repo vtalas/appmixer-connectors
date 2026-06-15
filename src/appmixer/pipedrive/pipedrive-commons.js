@@ -118,6 +118,39 @@ module.exports = {
         }
     },
 
+    /**
+     * Shared request path used by both tick() and test() of the polling triggers.
+     * Lists all records of the given collection and returns the array of driver model
+     * objects (each exposing .get()/.toObject()), throwing a CancelError on API failure.
+     * @param {Object} context
+     * @param {string} collectionName - Pipedrive driver collection (e.g. 'Deals', 'Notes')
+     * @param {Object} [params] - query params passed to getAllAsync
+     * @return {Promise<Array>} array of driver model objects
+     */
+    async listRecords(context, collectionName, params = {}) {
+        const client = this.getPromisifiedClient(context.auth.apiKey, collectionName);
+        const response = await client.getAllAsync(params);
+        if (response.success === false) {
+            throw new context.CancelError(response.formattedError);
+        }
+        return Array.isArray(response.data) ? response.data : [];
+    },
+
+    /**
+     * Fetch a single representative record for Flow Test Mode. Reuses the same
+     * listRecords() request path as tick() and returns the first record in the
+     * exact shape tick() emits (item.toObject()), or null when none exist.
+     * @param {Object} context
+     * @param {string} collectionName
+     * @param {Object} [params]
+     * @return {Promise<Object|null>}
+     */
+    async fetchLatestExample(context, collectionName, params = {}) {
+        const records = await this.listRecords(context, collectionName, params);
+        const first = records[0];
+        return first ? first.toObject() : null;
+    },
+
     stringToContactArray,
     PagingAggregator,
     checkListForChanges: appmixerLib.component.checkListForChanges
