@@ -24,6 +24,31 @@ module.exports = {
 
     },
 
+    test(context) {
+
+        // Sub-flow call trigger: there is no upstream to fetch. The output shape is defined
+        // by the configured input fields (properties.input.ADD), mirrored by
+        // generateOutputPortOptions(). Synthesize a single representative payload of the same
+        // { input: { callerId, <field>: value, ... } } shape receive() emits.
+        const fields = context.properties.input?.ADD || [];
+
+        const data = { callerId: context.flowId };
+        fields.forEach(field => {
+            if (!field.name) {
+                return;
+            }
+            switch (field.type) {
+                case 'number': data[field.name] = 42; break;
+                case 'boolean': data[field.name] = true; break;
+                case 'object': data[field.name] = {}; break;
+                case 'array': data[field.name] = []; break;
+                default: data[field.name] = 'Sample text';
+            }
+        });
+
+        return context.sendJson({ input: data }, 'out');
+    },
+
     shareInput(context) {
 
         // Let the plugin know that the input definition changed so that all
