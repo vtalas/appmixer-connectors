@@ -30,12 +30,30 @@ function componentName(componentPath) {
     return path.basename(path.dirname(componentPath));
 }
 
-// Triggers where test() is intentionally absent (Group D: generic webhooks with no
-// schema/upstream, and the up/down monitor that has no record to fetch). Keyed by
-// the connector-relative path so renames surface as a miss rather than a silent skip.
+// Triggers where test() is intentionally absent. Keyed by the connector-relative
+// path so renames surface as a miss rather than a silent skip. Three reasons:
+//   1. Group D generic webhooks with no schema/upstream, and the up/down monitor
+//      that has no record to fetch.
+//   2. Action components that define start() only for driver/connection lifecycle
+//      (they have inPorts and a receive() that does the work) — not triggers.
+//   3. Message-queue consumers and internal engine-event triggers with no read-only
+//      way to sample a representative item (consuming is destructive / no upstream API).
 const SKIP = new Set([
+    // 1. Generic webhooks / monitors with no upstream record to fetch.
     'utils/http/DynamicWebhook',
-    'utils/http/Uptime'
+    'utils/http/Uptime',
+    // 2. Action components that define start() for connection lifecycle only.
+    'mongodb/db/CreateDocument',
+    'mongodb/db/DeleteDocument',
+    'mongodb/db/Query',
+    'mongodb/db/UpdateDocument',
+    'rabbitmq/platform/Publish',
+    'rabbitmq/platform/SendToQueue',
+    'kafka/platform/SendMessage',
+    // 3. Message-queue consumers / internal engine events — no read-only sample.
+    'rabbitmq/platform/NewMessage',
+    'kafka/platform/NewMessage',
+    'system/core/OnAnyFlowComponentError'
 ]);
 
 const TICK = /(?<![.\w])(?:async\s+)?tick\s*\(\s*context\s*\)/;
