@@ -261,5 +261,28 @@ module.exports = {
         } finally {
             lock?.unlock();
         }
+    },
+
+    // Flow Test Mode: emit one representative document using the SAME fetch/filter path as
+    // tick() (newest-first via orderBy createdTime desc), mirroring the recursive branch, but
+    // WITHOUT dedup state, locking or state writes.
+    async test(context) {
+
+        const { folder = {}, recursive } = context.properties;
+        const folderId = typeof folder === 'string' ? folder : folder.id;
+
+        const folderIds = await getMonitoredFolderIds(context, folderId, recursive);
+        let documents = await fetchDocuments(context, folderId, recursive);
+
+        if (folderId && recursive) {
+            documents = filterByFolders(documents, folderIds);
+        }
+
+        if (!documents.length) {
+            throw new Error('No documents found to use as test data.');
+        }
+
+        // fetchDocuments orders by createdTime desc, so the first entry is the newest.
+        return context.sendJson(documents[0], 'out');
     }
 };
