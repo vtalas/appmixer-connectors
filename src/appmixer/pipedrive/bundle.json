@@ -1,6 +1,6 @@
 {
     "name": "appmixer.pipedrive",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "changelog": {
         "1.0.0": [
             "Initial version."
@@ -49,6 +49,9 @@
         ],
         "2.4.0": [
             "Added test() (Flow Test Mode) to polling triggers: NewActivity, NewDeal, NewGoal, NewNote, NewOrganization, NewPerson, NewPipeline, NewProduct, DealUpdated."
+        ],
+        "2.5.0": [
+            "Added test() (Flow Test Mode) to webhook triggers: PersonAdded, PersonUpdated, PersonDeleted."
         ]
     }
 }

@@ -57,9 +57,10 @@ const SKIP = new Set([
     // 3b. Inbound-only webhooks with no REST endpoint to fetch a past event
     // (LINE messaging is push/reply only — received messages can't be listed).
     'line/core/NewMessages',
-    // 4. Action component (has an `in` port, uploads documents) that uses start()
-    // only to schedule a drain timer — not a fetchable trigger.
-    'wiz/core/UploadScan'
+    // 4. Action components that use start() for lifecycle but have an `in` port and
+    // perform a mutation — not fetchable triggers (no read-only item to sample).
+    'wiz/core/UploadScan',
+    'plivo/sms/SendSMSAndWaitForReply'
 ]);
 
 const TICK = /(?<![.\w])(?:async\s+)?tick\s*\(\s*context\s*\)/;

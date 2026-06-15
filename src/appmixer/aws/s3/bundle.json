@@ -1,6 +1,6 @@
 {
     "name": "appmixer.aws.s3",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -31,6 +31,9 @@
         ],
         "2.1.0": [
             "Added test() (Flow Test Mode) to polling triggers: NewBucket, DeletedBucket."
+        ],
+        "2.2.0": [
+            "Added test() (Flow Test Mode) to S3 event triggers: NewObject, UpdatedObject, DeletedObject. Builds a representative event record from the most-recently-modified object in the bucket (read-only)."
         ]
     }
 }

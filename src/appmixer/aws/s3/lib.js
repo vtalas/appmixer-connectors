@@ -1,6 +1,6 @@
 'use strict';
 
-const { S3Client, GetBucketNotificationConfigurationCommand, PutBucketNotificationConfigurationCommand, ListBucketsCommand } = require('@aws-sdk/client-s3');
+const { S3Client, GetBucketNotificationConfigurationCommand, PutBucketNotificationConfigurationCommand, ListBucketsCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const { SNSClient, CreateTopicCommand, SetTopicAttributesCommand, SubscribeCommand, UnsubscribeCommand, DeleteTopicCommand, ConfirmSubscriptionCommand } = require('@aws-sdk/client-sns');
 const { KMSClient, DescribeKeyCommand, ListKeyPoliciesCommand, GetKeyPolicyCommand } = require('@aws-sdk/client-kms');
 const crypto = require('crypto');
@@ -47,6 +47,49 @@ module.exports = {
             // error is thrown.
             throw new Error(error.message);
         }
+    },
+
+    /**
+     * Find the most-recently-modified object in the configured bucket and reshape it into the
+     * exact S3 event-notification `object` record that the NewObject / UpdatedObject triggers
+     * emit from `receive()` (`{ key, size, eTag }`). Read-only (listObjectsV2 only) — used by
+     * the triggers' test() methods to produce realistic Flow Test Mode data without a real event.
+     * @param {Context} context
+     * @return {Promise<Object|null>} S3-event-shaped object record, or null if the bucket is empty
+     */
+    async fetchLatestObject(context) {
+
+        const { bucket } = context.properties;
+        const { s3 } = this.init(context);
+
+        let latest = null;
+        let continuationToken;
+        // ListObjectsV2 returns no ordering guarantee, so scan all pages and keep the newest.
+        do {
+            const response = await s3.send(new ListObjectsV2Command({
+                Bucket: bucket,
+                ContinuationToken: continuationToken
+            }));
+            const contents = response.Contents || [];
+            for (const item of contents) {
+                if (!latest || new Date(item.LastModified) > new Date(latest.LastModified)) {
+                    latest = item;
+                }
+            }
+            continuationToken = response.IsTruncated ? response.NextContinuationToken : undefined;
+        } while (continuationToken);
+
+        if (!latest) {
+            return null;
+        }
+
+        // Reshape into the S3 event-notification object record (same keys S3 puts on the wire).
+        // eTag in S3 events is unquoted; ListObjectsV2 returns it quoted.
+        return {
+            key: latest.Key,
+            size: latest.Size,
+            eTag: typeof latest.ETag === 'string' ? latest.ETag.replace(/^"|"$/g, '') : latest.ETag
+        };
     },
 
     /**

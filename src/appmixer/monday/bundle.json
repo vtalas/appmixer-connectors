@@ -1,7 +1,10 @@
 {
     "name": "appmixer.monday",
-    "version": "3.1.0",
+    "version": "3.2.0",
     "changelog": {
+        "3.2.0": [
+            "Added test() (Flow Test Mode) to the NewItem, ArchivedItem, DeletedItem triggers."
+        ],
         "1.0.1": [
             "Fixed FindItems component.",
             "Added an output field 'position' in 'listGroups' component.",

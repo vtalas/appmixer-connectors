@@ -151,6 +151,31 @@ module.exports = {
         return first ? first.toObject() : null;
     },
 
+    /**
+     * Read-only fetch of the newest person for the webhook triggers' test() (Flow
+     * Test Mode). The person webhook triggers (PersonAdded/PersonUpdated/PersonDeleted)
+     * register a v2 webhook whose receive() forwards the bare person object
+     * (data.data for create/change, data.previous for delete). To produce that exact
+     * shape without a real event, this lists persons newest-first via the REST API and
+     * returns the first one. Returns null when no person exists.
+     * @param {Object} context
+     * @param {string} [sortField] - person timestamp to sort by, e.g. 'add_time' or 'update_time'
+     * @return {Promise<Object|null>}
+     */
+    async fetchLatestPerson(context, sortField = 'add_time') {
+        const response = await context.httpRequest({
+            method: 'GET',
+            url: 'https://api.pipedrive.com/v1/persons',
+            params: {
+                api_token: context.auth.apiKey,
+                sort: `${sortField} DESC`,
+                limit: 1
+            }
+        });
+        const persons = response.data?.data;
+        return Array.isArray(persons) && persons.length ? persons[0] : null;
+    },
+
     stringToContactArray,
     PagingAggregator,
     checkListForChanges: appmixerLib.component.checkListForChanges
