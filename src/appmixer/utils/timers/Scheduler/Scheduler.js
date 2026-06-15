@@ -26,6 +26,29 @@ module.exports = {
         }
     },
 
+    async test(context) {
+
+        // Sourceless schedule: emit a single representative payload of the same shape
+        // scheduleJob() sends, computed from the same cron expression and timezone, but
+        // without acquiring a lock, setting a timeout or touching state.
+        const { timezone } = context.properties;
+        if (timezone && !isValidTimezone(timezone)) {
+            throw new context.CancelError('Invalid timezone');
+        }
+
+        const expression = getExpression(context.properties);
+        const options = timezone ? { tz: timezone } : {};
+        const interval = parser.parseExpression(expression, options);
+        if (!interval.hasNext()) {
+            throw new context.CancelError('Next scheduled date doesn\'t exist');
+        }
+
+        const now = moment().toISOString();
+        const nextDate = interval.next().toISOString();
+
+        return context.sendJson({ previousDate: null, now, nextDate }, 'out');
+    },
+
     async start(context) {
 
         return this.scheduleJob(context, { previousDate: null, firstTime: true });
