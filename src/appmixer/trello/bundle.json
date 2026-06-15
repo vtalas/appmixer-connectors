@@ -1,7 +1,10 @@
 {
     "name": "appmixer.trello",
-    "version": "2.1.6",
+    "version": "2.2.0",
     "changelog": {
+        "2.2.0": [
+            "Added test() (Flow Test Mode) to all triggers: NewCard, NewActivity, NewNotification — each reuses the shared trello-commons.fetchAll request path with tick() and emits the newest matching item (picked via the Trello id timestamp)."
+        ],
         "1.0.0": [
             "Initial version"
         ],
