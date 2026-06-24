@@ -1,6 +1,6 @@
 {
     "name": "appmixer.jira",
-    "version": "3.2.0",
+    "version": "3.3.0",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -70,6 +70,10 @@
         ],
         "3.2.0": [
             "Added MakeApiCall component for performing arbitrary authorized API calls to the Jira API."
+        ],
+        "3.3.0": [
+            "Added issue comment components: `AddComment`, `ListComments` and `DeleteComment`.",
+            "Added `GetIssueChangelog` component for retrieving an issue's change history."
         ]
     }
 }
