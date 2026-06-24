@@ -1,5 +1,10 @@
 'use strict';
 
+// Box requires `fields` on this endpoint for shared_link to be returned, and it
+// narrows the response to the mini representation plus whatever is listed — so the
+// set declared on the output port is requested.
+const OUTPUT_FIELDS = 'type,id,name,shared_link';
+
 module.exports = {
 
     async receive(context) {
@@ -44,6 +49,7 @@ module.exports = {
                 'Authorization': `Bearer ${context.auth.accessToken}`,
                 'Content-Type': 'application/json'
             },
+            params: { fields: OUTPUT_FIELDS },
             data: {
                 shared_link: sharedLink
             }

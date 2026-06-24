@@ -1,7 +1,7 @@
 {
     "name": "appmixer.box.core.FindFilesOrFolders",
     "label": "Find Files or Folders",
-    "description": "Search for files and folders by name, content, type, owner, etc. This component will return a maximum of 200 records per search. Note: Box Search uses an index that may take several minutes to index newly created or modified files. If a recently created file is not found, wait a few minutes and try again.",
+    "description": "Find files and folders. With a Query it searches the whole account (or a subtree); with the Query left empty it lists the contents of the selected folder. Search returns a maximum of 200 records and relies on the Box search index, which can take several minutes to pick up newly created or modified files — browsing a folder is immediate.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "auth": {
@@ -19,6 +19,12 @@
                 "properties": {
                     "query": {
                         "type": "string"
+                    },
+                    "folderId": {
+                        "type": "string"
+                    },
+                    "exactMatch": {
+                        "type": "boolean"
                     },
                     "type": {
                         "type": "string"
@@ -38,14 +44,8 @@
                     "outputType": {
                         "type": "string",
                         "default": "array"
-                    },
-                    "exactMatch": {
-                        "type": "boolean"
                     }
-                },
-                "required": [
-                    "query"
-                ]
+                }
             },
             "inspector": {
                 "inputs": {
@@ -53,20 +53,26 @@
                         "type": "text",
                         "index": 0,
                         "label": "Query",
-                        "tooltip": "The search query string (e.g., file name fragment)."
+                        "tooltip": "The search query string (e.g. a file name fragment). Leave empty to list the contents of the folder selected below instead of searching."
+                    },
+                    "folderId": {
+                        "type": "text",
+                        "index": 1,
+                        "label": "Folder ID",
+                        "tooltip": "The folder to work with. Use 0 for the root folder. When Query is empty this folder is listed; when Query is set it limits the search to this folder and its subfolders."
                     },
                     "exactMatch": {
                         "type": "toggle",
-                        "index": 1,
+                        "index": 2,
                         "label": "Exact Match",
                         "defaultValue": false,
                         "tooltip": "When enabled, only returns items whose name exactly matches the query. Box search uses fuzzy/tokenized matching by default, so this option filters results client-side to return only exact matches."
                     },
                     "type": {
                         "type": "select",
-                        "index": 2,
+                        "index": 3,
                         "label": "Type",
-                        "tooltip": "Filter by item type: file or folder.",
+                        "tooltip": "Filter by item type: file or folder. Applies to both searching and listing.",
                         "options": [
                             {
                                 "label": "File",
@@ -80,13 +86,13 @@
                     },
                     "ancestorFolderIds": {
                         "type": "text",
-                        "index": 3,
+                        "index": 4,
                         "label": "Ancestor Folder IDs",
-                        "tooltip": "Comma-separated list of ancestor folder IDs to limit scope."
+                        "tooltip": "Advanced, search only: comma-separated list of ancestor folder IDs to limit the search scope. Overrides Folder ID."
                     },
                     "contentTypes": {
                         "type": "multiselect",
-                        "index": 4,
+                        "index": 5,
                         "label": "Content Types",
                         "tooltip": "Select content types to search: name, description, file_content, comments, tags.",
                         "options": [
@@ -114,13 +120,13 @@
                     },
                     "fields": {
                         "type": "text",
-                        "index": 5,
+                        "index": 6,
                         "label": "Fields",
-                        "tooltip": "Comma-separated list of fields to include."
+                        "tooltip": "Comma-separated list of fields to include. Leave empty to get Box's standard field set when searching, and the fields declared on the output port when listing a folder."
                     },
                     "outputType": {
                         "type": "select",
-                        "index": 6,
+                        "index": 7,
                         "label": "Output Type",
                         "defaultValue": "array",
                         "tooltip": "Choose whether you want to receive the result set as one complete list, or first item only or one item at a time or stream the items to a file.",
