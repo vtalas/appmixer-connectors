@@ -1,0 +1,79 @@
+{
+    "name": "appmixer.zendesk.tickets.ListTicketFields",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "List all ticket fields.",
+    "private": false,
+    "quota": {
+        "manager": "appmixer:zendesk:tickets",
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "auth": {
+        "service": "appmixer:zendesk:tickets",
+        "scope": [
+            "read"
+        ]
+    },
+    "icon": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIGZpbGw9IiMwMDAwMDAiIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDE0IDE0IiByb2xlPSJpbWciIGZvY3VzYWJsZT0iZmFsc2UiIGFyaWEtaGlkZGVuPSJ0cnVlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im0gNi41NDI1LDExLjU0NzUgLTUuNTQyNSwwIDUuNTQyNSwtNi42OTE1IDAsNi42OTE1IHogbSA2LjQ1NzUsMCAtNS41NDI1LDAgYyAwLC0xLjUzMTUgMS4yMzk1LC0yLjc3MTUgMi43NzE1LC0yLjc3MTUgMS41MzE1LDAgMi43NzEsMS4yNDEgMi43NzEsMi43NzE1IHogbSAtNS41NDI1LC0yLjQwMiAwLC02LjY5MyA1LjU0MjUsMCAtNS41NDI1LDYuNjkzIHogTSA2LjU0MjUsMi40NTI1IEMgNi41NDI1LDMuOTgzIDUuMzAyLDUuMjI0NSAzLjc3MSw1LjIyNDUgMi4yNDEsNS4yMjQ1IDEsMy45ODQgMSwyLjQ1MzUgbCA1LjU0MjUsMCAwLC0xMGUtNCB6Ii8+PC9zdmc+",
+    "version": "1.0.0",
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "outputType": {
+                        "type": "string"
+                    }
+                }
+            },
+            "inspector": {
+                "inputs": {
+                    "outputType": {
+                        "type": "select",
+                        "label": "Output Type",
+                        "index": 1,
+                        "defaultValue": "array",
+                        "tooltip": "Choose whether you want to receive the fields as one complete list, or one field at a time or a CSV file with all fields.",
+                        "options": [
+                            {
+                                "label": "First Field",
+                                "value": "first"
+                            },
+                            {
+                                "label": "All fields at once",
+                                "value": "array"
+                            },
+                            {
+                                "label": "One field at a time",
+                                "value": "object"
+                            },
+                            {
+                                "label": "CSV file with all fields",
+                                "value": "file"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "source": {
+                "url": "/component/appmixer/zendesk/tickets/ListTicketFields?outPort=out&ignoreAuth=true",
+                "data": {
+                    "properties": {
+                        "generateOutputPortOptions": true
+                    },
+                    "messages": {
+                        "in/outputType": "inputs/in/outputType"
+                    }
+                }
+            }
+        }
+    ]
+}
