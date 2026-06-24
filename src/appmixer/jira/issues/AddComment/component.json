@@ -1,0 +1,80 @@
+{
+    "name": "appmixer.jira.issues.AddComment",
+    "description": "Add a comment to an issue.",
+    "author": "Appmixer <info@appmixer.com>",
+    "version": "1.0.0",
+    "auth": {
+        "service": "appmixer:jira",
+        "scope": [
+            "write:jira-work",
+            "read:jira-work"
+        ]
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "comment": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "comment"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "id": {
+                        "type": "text",
+                        "label": "Issue ID or Key",
+                        "index": 1,
+                        "tooltip": "Enter the ID or Key of the issue."
+                    },
+                    "comment": {
+                        "type": "textarea",
+                        "label": "Comment",
+                        "index": 2,
+                        "tooltip": "The text of the comment to add."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "example": "10001"
+                    },
+                    "self": {
+                        "type": "string",
+                        "title": "Self",
+                        "example": "https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10001"
+                    },
+                    "created": {
+                        "type": "string",
+                        "title": "Created",
+                        "example": "2024-01-15T09:30:00.000+0000"
+                    },
+                    "updated": {
+                        "type": "string",
+                        "title": "Updated",
+                        "example": "2024-01-15T09:30:00.000+0000"
+                    }
+                }
+            }
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI1MDAiIHZpZXdCb3g9IjIuNTkgMCAyMTQuMDkxMDEwMDggMjI0IiB3aWR0aD0iMjM2MSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGxpbmVhckdyYWRpZW50IGlkPSJhIiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIC0xIDAgMjY0KSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxMDIuNCIgeDI9IjU2LjE1IiB5MT0iMjE4LjYzIiB5Mj0iMTcyLjM5Ij48c3RvcCBvZmZzZXQ9Ii4xOCIgc3RvcC1jb2xvcj0iIzAwNTJjYyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzI2ODRmZiIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiIiB4MT0iMTE0LjY1IiB4Mj0iMTYwLjgxIiB4bGluazpocmVmPSIjYSIgeTE9Ijg1Ljc3IiB5Mj0iMTMxLjkyIi8+PHBhdGggZD0ibTIxNC4wNiAxMDUuNzMtOTYuMzktOTYuMzktOS4zNC05LjM0LTcyLjU2IDcyLjU2LTMzLjE4IDMzLjE3YTguODkgOC44OSAwIDAgMCAwIDEyLjU0bDY2LjI5IDY2LjI5IDM5LjQ1IDM5LjQ0IDcyLjU1LTcyLjU2IDEuMTMtMS4xMiAzMi4wNS0zMmE4Ljg3IDguODcgMCAwIDAgMC0xMi41OXptLTEwNS43MyAzOS4zOS0zMy4xMi0zMy4xMiAzMy4xMi0zMy4xMiAzMy4xMSAzMy4xMnoiIGZpbGw9IiMyNjg0ZmYiLz48cGF0aCBkPSJtMTA4LjMzIDc4Ljg4YTU1Ljc1IDU1Ljc1IDAgMCAxIC0uMjQtNzguNjFsLTcyLjQ3IDcyLjQ0IDM5LjQ0IDM5LjQ0eiIgZmlsbD0idXJsKCNhKSIvPjxwYXRoIGQ9Im0xNDEuNTMgMTExLjkxLTMzLjIgMzMuMjFhNTUuNzcgNTUuNzcgMCAwIDEgMCA3OC44Nmw3Mi42Ny03Mi42M3oiIGZpbGw9InVybCgjYikiLz48L3N2Zz4="
+}
