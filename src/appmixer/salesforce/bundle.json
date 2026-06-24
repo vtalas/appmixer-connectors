@@ -41,6 +41,9 @@
         ],
         "1.6.0": [
             "Added `CreateOpportunity`, `UpdateOpportunity` and `AddToCampaign` components."
+        ],
+        "1.6.0": [
+            "Added `CreateTask` component."
         ]
     }
 }

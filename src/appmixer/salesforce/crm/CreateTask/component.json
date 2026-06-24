@@ -1,0 +1,167 @@
+{
+    "name": "appmixer.salesforce.crm.CreateTask",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Create a new task in Salesforce.",
+    "private": false,
+    "auth": {
+        "service": "appmixer:salesforce"
+    },
+    "quota": {
+        "manager": "appmixer:salesforce",
+        "resources": "requests"
+    },
+    "version": "1.0.0",
+    "dependencies": {
+        "service": "1.1.2"
+    },
+    "inPorts": [
+        {
+            "name": "task",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "subject": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "priority": {
+                        "type": "string"
+                    },
+                    "activityDate": {
+                        "type": "string"
+                    },
+                    "whoId": {
+                        "type": "string"
+                    },
+                    "whatId": {
+                        "type": "string"
+                    },
+                    "ownerId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "subject"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "subject": {
+                        "type": "text",
+                        "label": "Subject",
+                        "index": 1,
+                        "tooltip": "The subject line of the task."
+                    },
+                    "status": {
+                        "type": "text",
+                        "label": "Status",
+                        "index": 2,
+                        "tooltip": "The status of the task (e.g. Not Started, In Progress, Completed)."
+                    },
+                    "priority": {
+                        "type": "text",
+                        "label": "Priority",
+                        "index": 3,
+                        "tooltip": "The priority of the task (e.g. High, Normal, Low)."
+                    },
+                    "activityDate": {
+                        "type": "date-time",
+                        "label": "Due Date",
+                        "index": 4,
+                        "tooltip": "The due date of the task."
+                    },
+                    "whoId": {
+                        "type": "text",
+                        "label": "Who ID (Contact/Lead)",
+                        "index": 5,
+                        "tooltip": "The ID of the contact or lead the task is associated with."
+                    },
+                    "whatId": {
+                        "type": "text",
+                        "label": "What ID (Account/Opportunity)",
+                        "index": 6,
+                        "tooltip": "The ID of the related record (e.g. Account or Opportunity)."
+                    },
+                    "ownerId": {
+                        "type": "text",
+                        "label": "Owner ID",
+                        "index": 7,
+                        "tooltip": "The ID of the user who owns the task."
+                    },
+                    "description": {
+                        "type": "textarea",
+                        "label": "Description",
+                        "index": 8,
+                        "tooltip": "A text description of the task."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "newTask",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "Id": {
+                        "type": "string",
+                        "title": "ID",
+                        "example": "00T5g00000ABCDEFGHI"
+                    },
+                    "Subject": {
+                        "type": "string",
+                        "title": "Subject",
+                        "example": "Call back the customer"
+                    },
+                    "Status": {
+                        "type": "string",
+                        "title": "Status",
+                        "example": "Not Started"
+                    },
+                    "Priority": {
+                        "type": "string",
+                        "title": "Priority",
+                        "example": "Normal"
+                    },
+                    "ActivityDate": {
+                        "type": "string",
+                        "title": "Due Date",
+                        "example": "2026-03-31"
+                    },
+                    "WhoId": {
+                        "type": "string",
+                        "title": "Who ID",
+                        "example": "0035g00000ABCDEFGHI"
+                    },
+                    "WhatId": {
+                        "type": "string",
+                        "title": "What ID",
+                        "example": "0065g00000ABCDEFGHI"
+                    },
+                    "OwnerId": {
+                        "type": "string",
+                        "title": "Owner ID",
+                        "example": "0055g00000ABCDEFGHI"
+                    },
+                    "IsClosed": {
+                        "type": "boolean",
+                        "title": "Is Closed",
+                        "example": false
+                    },
+                    "CreatedDate": {
+                        "type": "string",
+                        "title": "Created Date",
+                        "example": "2026-01-15T10:30:00.000+0000"
+                    }
+                }
+            }
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5OTkgNjk5LjI0MSI+PGRlZnM+PHN0eWxlPi5he2ZpbGw6IzAwYTFlMDt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImEiIGQ9Ik00MTYuMjI0LDc2Ljc2M2MzMi4yMTktMzMuNTcsNzcuMDc0LTU0LjM5MSwxMjYuNjgyLTU0LjM5MSw2NS45NDYsMCwxMjMuNDgsMzYuNzcyLDE1NC4xMiw5MS4zNjFhMjEyLjk4NCwyMTIuOTg0LDAsMCwxLDg3LjEwNi0xOC41MTRjMTE4Ljk0LDAsMjE1LjM2OCw5Ny4yNjgsMjE1LjM2OCwyMTcuMjQ3UzkwMy4wNzIsNTI5LjcyNyw3ODQuMTMyLDUyOS43MjdBMjEzLjc0LDIxMy43NCwwLDAsMSw3NDEuNzEsNTI1LjVhMTU3LjQzNiwxNTcuNDM2LDAsMCwxLTIwNi4yODksNjQuNzkzLDE3OS42MjEsMTc5LjYyMSwwLDAsMS0zMzMuOTExLTguMTI2LDE2NC43NzUsMTY0Ljc3NSwwLDAsMS0zNC4yNjgsMy41NzJDNzUuMTU1LDU4NS43NC41LDUxMC4zMTcuNSw0MTcuMjYyQTE2OC43NDEsMTY4Ljc0MSwwLDAsMSw4My44NzgsMjcxLjMyNWExOTIuODY2LDE5Mi44NjYsMCwwLDEtMTUuOTY3LTc3LjA2QzY3LjkxMSw4Ny4yNSwxNTQuNzkuNSwyNjEuOTQ4LjVBMTkzLjc5MSwxOTMuNzkxLDAsMCwxLDQxNi4yMjQsNzYuNzYzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMC41IC0wLjUpIi8+PC9zdmc+"
+}
