@@ -1,6 +1,6 @@
 {
     "name": "appmixer.activecampaign",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "changelog": {
         "1.0.0": [
             "Initial version"
@@ -26,6 +26,13 @@
             "Added test() methods to triggers (NewContact, UpdatedContact, NewDeal, UpdatedDeal, NewTask, UpdatedTask) to support Flow Test Mode.",
             "Refactored trigger output building into shared reshape helpers used by both receive()/tick() and test().",
             "BugFix: UpdatedContact and the deal triggers now emit custom fields under the correct customField_<id> keys (previously stringified the field object)."
+        ],
+        "1.3.0": [
+            "GetContacts: new action to retrieve contacts with filtering.",
+            "GetDeals: new action to retrieve deals with filtering.",
+            "GetAutomations: new action to retrieve automations with filtering.",
+            "AbandonedCart: new trigger that fires when an e-commerce cart is abandoned.",
+            "OrderStatusUpdated: new trigger that fires when an e-commerce order status changes."
         ]
     }
 }
