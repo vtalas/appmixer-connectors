@@ -1,0 +1,111 @@
+{
+    "name": "appmixer.salesforce.crm.AddToCampaign",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Add a contact or lead to a campaign (creates a Campaign Member).",
+    "private": false,
+    "auth": {
+        "service": "appmixer:salesforce"
+    },
+    "quota": {
+        "manager": "appmixer:salesforce",
+        "resources": "requests"
+    },
+    "version": "1.0.0",
+    "dependencies": {
+        "service": "1.1.2"
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "campaignId": {
+                        "type": "string"
+                    },
+                    "contactId": {
+                        "type": "string"
+                    },
+                    "leadId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "campaignId"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "campaignId": {
+                        "type": "text",
+                        "label": "Campaign ID",
+                        "index": 1,
+                        "tooltip": "The ID of the campaign."
+                    },
+                    "contactId": {
+                        "type": "text",
+                        "label": "Contact ID",
+                        "index": 2,
+                        "tooltip": "The ID of the contact to add. Provide either a Contact ID or a Lead ID."
+                    },
+                    "leadId": {
+                        "type": "text",
+                        "label": "Lead ID",
+                        "index": 3,
+                        "tooltip": "The ID of the lead to add. Provide either a Contact ID or a Lead ID."
+                    },
+                    "status": {
+                        "type": "text",
+                        "label": "Member Status",
+                        "index": 4,
+                        "tooltip": "The campaign member status (e.g. Sent, Responded). Defaults to the campaign's default status."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "Id": {
+                        "type": "string",
+                        "title": "ID",
+                        "example": "00v5g00000ABCDEFGHI"
+                    },
+                    "CampaignId": {
+                        "type": "string",
+                        "title": "Campaign ID",
+                        "example": "7015g00000ZYXWVUTSR"
+                    },
+                    "ContactId": {
+                        "type": "string",
+                        "title": "Contact ID",
+                        "example": "0035g00000ABCDEFGHI"
+                    },
+                    "LeadId": {
+                        "type": "string",
+                        "title": "Lead ID",
+                        "example": "00Q5g00000ABCDEFGHI"
+                    },
+                    "Status": {
+                        "type": "string",
+                        "title": "Status",
+                        "example": "Sent"
+                    },
+                    "CreatedDate": {
+                        "type": "string",
+                        "title": "Created Date",
+                        "example": "2026-01-15T10:30:00.000+0000"
+                    }
+                }
+            }
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5OTkgNjk5LjI0MSI+PGRlZnM+PHN0eWxlPi5he2ZpbGw6IzAwYTFlMDt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImEiIGQ9Ik00MTYuMjI0LDc2Ljc2M2MzMi4yMTktMzMuNTcsNzcuMDc0LTU0LjM5MSwxMjYuNjgyLTU0LjM5MSw2NS45NDYsMCwxMjMuNDgsMzYuNzcyLDE1NC4xMiw5MS4zNjFhMjEyLjk4NCwyMTIuOTg0LDAsMCwxLDg3LjEwNi0xOC41MTRjMTE4Ljk0LDAsMjE1LjM2OCw5Ny4yNjgsMjE1LjM2OCwyMTcuMjQ3UzkwMy4wNzIsNTI5LjcyNyw3ODQuMTMyLDUyOS43MjdBMjEzLjc0LDIxMy43NCwwLDAsMSw3NDEuNzEsNTI1LjVhMTU3LjQzNiwxNTcuNDM2LDAsMCwxLTIwNi4yODksNjQuNzkzLDE3OS42MjEsMTc5LjYyMSwwLDAsMS0zMzMuOTExLTguMTI2LDE2NC43NzUsMTY0Ljc3NSwwLDAsMS0zNC4yNjgsMy41NzJDNzUuMTU1LDU4NS43NC41LDUxMC4zMTcuNSw0MTcuMjYyQTE2OC43NDEsMTY4Ljc0MSwwLDAsMSw4My44NzgsMjcxLjMyNWExOTIuODY2LDE5Mi44NjYsMCwwLDEtMTUuOTY3LTc3LjA2QzY3LjkxMSw4Ny4yNSwxNTQuNzkuNSwyNjEuOTQ4LjVBMTkzLjc5MSwxOTMuNzkxLDAsMCwxLDQxNi4yMjQsNzYuNzYzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMC41IC0wLjUpIi8+PC9zdmc+"
+}

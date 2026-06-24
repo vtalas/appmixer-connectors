@@ -1,0 +1,202 @@
+{
+    "name": "appmixer.salesforce.crm.CreateOpportunity",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Create a new opportunity in Salesforce.",
+    "private": false,
+    "auth": {
+        "service": "appmixer:salesforce"
+    },
+    "quota": {
+        "manager": "appmixer:salesforce",
+        "resources": "requests"
+    },
+    "version": "1.0.0",
+    "dependencies": {
+        "service": "1.1.2"
+    },
+    "inPorts": [
+        {
+            "name": "opportunity",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "stageName": {
+                        "type": "string"
+                    },
+                    "closeDate": {
+                        "type": "string"
+                    },
+                    "accountId": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "probability": {
+                        "type": "number"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "leadSource": {
+                        "type": "string"
+                    },
+                    "nextStep": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "stageName",
+                    "closeDate"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "name": {
+                        "type": "text",
+                        "label": "Name",
+                        "index": 1,
+                        "tooltip": "The name of the opportunity."
+                    },
+                    "stageName": {
+                        "type": "text",
+                        "label": "Stage",
+                        "index": 2,
+                        "tooltip": "The current stage of the opportunity (e.g. Prospecting, Closed Won)."
+                    },
+                    "closeDate": {
+                        "type": "date-time",
+                        "label": "Close Date",
+                        "index": 3,
+                        "tooltip": "The date when the opportunity is expected to close."
+                    },
+                    "accountId": {
+                        "type": "text",
+                        "label": "Account ID",
+                        "index": 4,
+                        "tooltip": "The ID of the account this opportunity is linked to."
+                    },
+                    "amount": {
+                        "type": "number",
+                        "label": "Amount",
+                        "index": 5,
+                        "tooltip": "The estimated total sale amount."
+                    },
+                    "probability": {
+                        "type": "number",
+                        "label": "Probability (%)",
+                        "index": 6,
+                        "tooltip": "The probability (0-100) that the opportunity will close."
+                    },
+                    "type": {
+                        "type": "text",
+                        "label": "Type",
+                        "index": 7,
+                        "tooltip": "The type of opportunity (e.g. New Business, Existing Business)."
+                    },
+                    "leadSource": {
+                        "type": "text",
+                        "label": "Lead Source",
+                        "index": 8,
+                        "tooltip": "The source of this opportunity."
+                    },
+                    "nextStep": {
+                        "type": "text",
+                        "label": "Next Step",
+                        "index": 9,
+                        "tooltip": "Description of the next task in closing the opportunity."
+                    },
+                    "description": {
+                        "type": "textarea",
+                        "label": "Description",
+                        "index": 10,
+                        "tooltip": "A text description of the opportunity."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "newOpportunity",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "Id": {
+                        "type": "string",
+                        "title": "ID",
+                        "example": "0065g00000ABCDEFGHI"
+                    },
+                    "Name": {
+                        "type": "string",
+                        "title": "Name",
+                        "example": "Acme - 50 Widgets"
+                    },
+                    "StageName": {
+                        "type": "string",
+                        "title": "Stage",
+                        "example": "Prospecting"
+                    },
+                    "CloseDate": {
+                        "type": "string",
+                        "title": "Close Date",
+                        "example": "2026-03-31"
+                    },
+                    "Amount": {
+                        "type": "number",
+                        "title": "Amount",
+                        "example": 50000
+                    },
+                    "Probability": {
+                        "type": "number",
+                        "title": "Probability",
+                        "example": 10
+                    },
+                    "AccountId": {
+                        "type": "string",
+                        "title": "Account ID",
+                        "example": "0015g00000ZYXWVUTSR"
+                    },
+                    "Type": {
+                        "type": "string",
+                        "title": "Type",
+                        "example": "New Business"
+                    },
+                    "LeadSource": {
+                        "type": "string",
+                        "title": "Lead Source",
+                        "example": "Web"
+                    },
+                    "IsClosed": {
+                        "type": "boolean",
+                        "title": "Is Closed",
+                        "example": false
+                    },
+                    "IsWon": {
+                        "type": "boolean",
+                        "title": "Is Won",
+                        "example": false
+                    },
+                    "CreatedDate": {
+                        "type": "string",
+                        "title": "Created Date",
+                        "example": "2026-01-15T10:30:00.000+0000"
+                    },
+                    "LastModifiedDate": {
+                        "type": "string",
+                        "title": "Last Modified Date",
+                        "example": "2026-01-16T08:00:00.000+0000"
+                    }
+                }
+            }
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5OTkgNjk5LjI0MSI+PGRlZnM+PHN0eWxlPi5he2ZpbGw6IzAwYTFlMDt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImEiIGQ9Ik00MTYuMjI0LDc2Ljc2M2MzMi4yMTktMzMuNTcsNzcuMDc0LTU0LjM5MSwxMjYuNjgyLTU0LjM5MSw2NS45NDYsMCwxMjMuNDgsMzYuNzcyLDE1NC4xMiw5MS4zNjFhMjEyLjk4NCwyMTIuOTg0LDAsMCwxLDg3LjEwNi0xOC41MTRjMTE4Ljk0LDAsMjE1LjM2OCw5Ny4yNjgsMjE1LjM2OCwyMTcuMjQ3UzkwMy4wNzIsNTI5LjcyNyw3ODQuMTMyLDUyOS43MjdBMjEzLjc0LDIxMy43NCwwLDAsMSw3NDEuNzEsNTI1LjVhMTU3LjQzNiwxNTcuNDM2LDAsMCwxLTIwNi4yODksNjQuNzkzLDE3OS42MjEsMTc5LjYyMSwwLDAsMS0zMzMuOTExLTguMTI2LDE2NC43NzUsMTY0Ljc3NSwwLDAsMS0zNC4yNjgsMy41NzJDNzUuMTU1LDU4NS43NC41LDUxMC4zMTcuNSw0MTcuMjYyQTE2OC43NDEsMTY4Ljc0MSwwLDAsMSw4My44NzgsMjcxLjMyNWExOTIuODY2LDE5Mi44NjYsMCwwLDEtMTUuOTY3LTc3LjA2QzY3LjkxMSw4Ny4yNSwxNTQuNzkuNSwyNjEuOTQ4LjVBMTkzLjc5MSwxOTMuNzkxLDAsMCwxLDQxNi4yMjQsNzYuNzYzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMC41IC0wLjUpIi8+PC9zdmc+"
+}
