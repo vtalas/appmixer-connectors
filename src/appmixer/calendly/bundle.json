@@ -31,6 +31,12 @@
         ],
         "3.2.0": [
             "Added MakeApiCall component for performing arbitrary authorized API calls to the Calendly API."
+        ],
+        "3.2.0": [
+            "Added test() (Flow Test Mode) to all triggers: InviteeCreated, InviteeCanceled, InviteeNoShowCreated, InviteeNoShowDeleted \u2014 fetch the newest matching invitee via REST and reshape it into the exact webhook payload, without registering a webhook."
+        ],
+        "3.2.0": [
+            "Added action components: `GetCurrentUser`, `ListEventTypes`, `ListScheduledEvents` and `CancelEvent` (the connector previously had only triggers)."
         ]
     }
 }

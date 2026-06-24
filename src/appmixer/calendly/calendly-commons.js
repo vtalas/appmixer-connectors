@@ -3,6 +3,37 @@
 module.exports = {
 
     /**
+     * Fetch all pages of a Calendly collection endpoint, following the
+     * `pagination.next_page` links. Returns the concatenated `collection` arrays.
+     * @param {Context} context
+     * @param {string} url - the initial request URL
+     * @param {object} [params] - query params for the first request only (next_page URLs already include them)
+     * @returns {Promise<object[]>}
+     */
+    async apiGetAll(context, url, params = {}) {
+        const { accessToken } = context.auth;
+        const headers = { 'Authorization': `Bearer ${accessToken}` };
+
+        let items = [];
+        let nextUrl = url;
+        let isFirst = true;
+
+        while (nextUrl) {
+            const { data } = await context.httpRequest({
+                method: 'GET',
+                url: nextUrl,
+                headers,
+                ...(isFirst ? { params } : {})
+            });
+            items = items.concat(data.collection || []);
+            nextUrl = data.pagination?.next_page || null;
+            isFirst = false;
+        }
+
+        return items;
+    },
+
+    /**
      * Get request for calendly.
      * @param {Context} context
      * @param {string} event - should be one of ['invitee.created', 'invitee.canceled', 'invitee_no_show.created', 'invitee_no_show.deleted']
