@@ -2,50 +2,53 @@
 
 // What this validator checks
 // --------------------------
-// Every connector should ship a generic `MakeApiCall` component — the
-// "call any endpoint" helper that lets a flow hit endpoints the connector
-// does not (yet) wrap in a dedicated component. See issue #1459 for the
-// component standard (the shape of that component is enforced separately by
-// makeapicall-standards.js).
+// Every connector SHOULD ship a generic MakeApiCall component — a "call any
+// endpoint" escape hatch that lets flow builders reach endpoints we haven't
+// wrapped in a dedicated component yet. This validator asserts that each
+// connector root (a directory holding a bundle.json) contains a component
+// folder named `MakeApiCall` (the `MakeAPICall` casing is also accepted, since
+// a few older connectors use it).
 //
-// This validator only checks PRESENCE: for every connector (a directory under
-// src/appmixer that contains a service.json) it asserts that at least one
-// `MakeApiCall/component.json` exists somewhere under the connector root.
+// What counts as a connector
+// --------------------------
+// One bundle.json == one connector. Connectors can be nested under a vendor
+// namespace (e.g. google/gmail, microsoft/sharepoint), so the search for a
+// MakeApiCall folder is scoped to the connector's own subtree and STOPS at any
+// nested bundle.json — a child connector's MakeApiCall must not credit its
+// parent (and vice versa).
 //
-// Scope / modes
-// -------------
-// A connector is only evaluated when it is "in scope" for the run, i.e. one of
-// the files handed to the validator (context.bundleFiles / componentFiles)
-// lives under that connector. This keeps the validator correct under:
-//   • full repo run   — every connector is in scope (all files passed)
-//   • --connector     — only the selected connector's files are passed
-//   • --changed       — only connectors with a changed bundle/component file
-//                       are checked, so unrelated missing connectors do not
-//                       fail an unrelated diff. Adding a MakeApiCall bumps the
-//                       connector's bundle.json, which brings it into scope and
-//                       the check then passes.
+// The presence check hits the filesystem directly (not context.componentFiles)
+// so it stays correct under --changed, where componentFiles is filtered to the
+// diff: changing only a connector's bundle.json must still see its existing
+// MakeApiCall on disk.
 //
-// Where it does NOT make sense
-// ----------------------------
-// Some connectors have no generic authorized REST surface to call — database
-// drivers (mongodb, postgres, ...), message brokers (kafka, rabbitmq),
-// internal/utility connectors (utils, system), keyless/multi-module HTTP
-// connectors with no connector-level credential, and OAuth1 request-signing
-// connectors. Those are suppressed via scripts/validators/_ignore-list.js
-// (each with a recorded reason) rather than carrying a stub component.
+// Threshold-gated (ratchet)
+// -------------------------
+// Listed in scripts/validators/.thresholds.json with a cap equal to the number
+// of connectors still missing MakeApiCall. CI fails only when the count goes UP
+// (a new connector ships without one); as connectors gain MakeApiCall the count
+// drops and the threshold can be ratcheted down with --update-thresholds. The
+// target floor is 0.
+//
+// Connectors that legitimately have no remote API to call (engine-internal
+// utility bundles such as utils/*) are suppressed via
+// scripts/validators/_ignore-list.js with a recorded reason, like every other
+// validator's known deviations.
 
 const fs = require('fs');
 const path = require('path');
 
-// True when `componentPath` is a `MakeApiCall/component.json`.
-function isMakeApiCallComponent(componentPath) {
+const IGNORED_DIRS = new Set(['node_modules', '.git', 'dist', 'coverage', '.cache']);
 
-    return path.basename(componentPath) === 'component.json'
-        && path.basename(path.dirname(componentPath)) === 'MakeApiCall';
+function isMakeApiCallName(name) {
+
+    return /^MakeApi?Call$/i.test(name);
 }
 
-// Walk `dir` looking for any MakeApiCall/component.json. Returns true on the
-// first hit (no need to collect them all).
+// Walks `dir` looking for a MakeApiCall component folder (a directory named
+// MakeApiCall/MakeAPICall that holds a component.json). Does NOT descend into a
+// subdirectory that contains its own bundle.json — that subtree is a separate
+// connector and owns its own MakeApiCall.
 function hasMakeApiCall(dir) {
 
     let entries;
@@ -56,71 +59,45 @@ function hasMakeApiCall(dir) {
         return false;
     }
 
-    for (const entry of entries) {
-        const fullPath = path.join(dir, entry.name);
+    const subDirs = [];
 
-        if (entry.isDirectory()) {
-            if (entry.name === 'node_modules' || entry.name === '.git') continue;
-            if (hasMakeApiCall(fullPath)) return true;
+    for (const entry of entries) {
+        if (!entry.isDirectory() || IGNORED_DIRS.has(entry.name)) {
             continue;
         }
 
-        if (isMakeApiCallComponent(fullPath)) return true;
+        const fullPath = path.join(dir, entry.name);
+
+        if (isMakeApiCallName(entry.name) && fs.existsSync(path.join(fullPath, 'component.json'))) {
+            return true;
+        }
+
+        subDirs.push(fullPath);
+    }
+
+    for (const subDir of subDirs) {
+        // A nested connector boundary — its MakeApiCall belongs to it, not here.
+        if (fs.existsSync(path.join(subDir, 'bundle.json'))) {
+            continue;
+        }
+
+        if (hasMakeApiCall(subDir)) {
+            return true;
+        }
     }
 
     return false;
 }
 
-// All connector roots = directories directly under src/appmixer that contain a
-// service.json. Returns a list of absolute connector-root paths.
-function discoverConnectorRoots(connectorsRoot) {
-
-    let entries;
-
-    try {
-        entries = fs.readdirSync(connectorsRoot, { withFileTypes: true });
-    } catch (err) {
-        return [];
-    }
-
-    const roots = [];
-
-    for (const entry of entries) {
-        if (!entry.isDirectory()) continue;
-
-        const root = path.join(connectorsRoot, entry.name);
-        if (fs.existsSync(path.join(root, 'service.json'))) {
-            roots.push(root);
-        }
-    }
-
-    return roots;
-}
-
 module.exports = {
     name: 'connector-has-makeapicall',
-    description: 'Every connector ships a generic MakeApiCall component (issue #1459)',
+    description: 'Every connector ships a generic MakeApiCall component (ratchet)',
     run(context) {
+        for (const bundlePath of context.bundleFiles) {
+            const connectorRoot = path.dirname(bundlePath);
 
-        const { connectorsRoot, bundleFiles, componentFiles, addFailure } = context;
-
-        const roots = discoverConnectorRoots(connectorsRoot);
-
-        // A connector is in scope when any file passed to this run lives under
-        // it (full run = all connectors; --changed = only touched connectors).
-        const inScopeFiles = [...bundleFiles, ...componentFiles];
-
-        for (const root of roots) {
-            const prefix = root + path.sep;
-            const inScope = inScopeFiles.some((filePath) => filePath.startsWith(prefix));
-
-            if (!inScope) continue;
-
-            if (!hasMakeApiCall(root)) {
-                addFailure(
-                    path.join(root, 'service.json'),
-                    'connector has no MakeApiCall component — add a generic "call any endpoint" helper (issue #1459), or ignore-list it if the connector exposes no generic authorized REST API'
-                );
+            if (!hasMakeApiCall(connectorRoot)) {
+                context.addFailure(bundlePath, 'connector has no MakeApiCall component — add a generic "call any endpoint" component (core/MakeApiCall) following the standard in issue #1459');
             }
         }
     }
