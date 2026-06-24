@@ -1,0 +1,140 @@
+{
+    "name": "appmixer.trello.list.GetCard",
+    "author": "Appmixer <info@appmixer.com>",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwMCIgaGVpZ2h0PSIyNTAwIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSI1MCUiIHkxPSIwJSIgeDI9IjUwJSIgeTI9IjEwMCUiIGlkPSJhIj48c3RvcCBzdG9wLWNvbG9yPSIjMDA5MUU2IiBvZmZzZXQ9IjAlIi8+PHN0b3Agc3RvcC1jb2xvcj0iIzAwNzlCRiIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNhKSIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiIHJ4PSIyNSIvPjxyZWN0IGZpbGw9IiNGRkYiIHg9IjE0NC42NCIgeT0iMzMuMjgiIHdpZHRoPSI3OC4wOCIgaGVpZ2h0PSIxMTIiIHJ4PSIxMiIvPjxyZWN0IGZpbGw9IiNGRkYiIHg9IjMzLjI4IiB5PSIzMy4yOCIgd2lkdGg9Ijc4LjA4IiBoZWlnaHQ9IjE3NiIgcng9IjEyIi8+PC9zdmc+",
+    "description": "Get a single card by ID.",
+    "version": "1.0.0",
+    "auth": {
+        "service": "appmixer:trello"
+    },
+    "quota": {
+        "manager": "appmixer:trello",
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "boardId": {
+                        "type": "string"
+                    },
+                    "boardCardId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "boardCardId"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "boardId": {
+                        "type": "select",
+                        "label": "Board",
+                        "index": 1,
+                        "source": {
+                            "url": "/component/appmixer/trello/list/ListBoards?outPort=boards",
+                            "data": {
+                                "transform": "./transformers#boardsToSelectArray"
+                            }
+                        },
+                        "tooltip": "Select a board."
+                    },
+                    "boardCardId": {
+                        "type": "select",
+                        "label": "Card",
+                        "index": 2,
+                        "source": {
+                            "url": "/component/appmixer/trello/list/ListBoardsCards?outPort=cards",
+                            "data": {
+                                "messages": {
+                                    "in/boardId": "inputs/in/boardId"
+                                },
+                                "transform": "./transformers#cardListsToSelectArray"
+                            }
+                        },
+                        "tooltip": "Select a card."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "card",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Card ID",
+                        "example": "5abbe4b7ddc1b351ef961425"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "example": "Implement feature"
+                    },
+                    "desc": {
+                        "type": "string",
+                        "title": "Description",
+                        "example": "Add the new export option."
+                    },
+                    "closed": {
+                        "type": "boolean",
+                        "title": "Closed (Archived)",
+                        "example": false
+                    },
+                    "idBoard": {
+                        "type": "string",
+                        "title": "Board ID",
+                        "example": "5abbe4b7ddc1b351ef961420"
+                    },
+                    "idList": {
+                        "type": "string",
+                        "title": "List ID",
+                        "example": "5abbe4b7ddc1b351ef961430"
+                    },
+                    "url": {
+                        "type": "string",
+                        "title": "URL",
+                        "example": "https://trello.com/c/abc12345/1-implement-feature"
+                    },
+                    "shortUrl": {
+                        "type": "string",
+                        "title": "Short URL",
+                        "example": "https://trello.com/c/abc12345"
+                    },
+                    "due": {
+                        "type": "string",
+                        "title": "Due Date",
+                        "example": "2024-02-01T17:00:00.000Z"
+                    },
+                    "dueComplete": {
+                        "type": "boolean",
+                        "title": "Due Complete",
+                        "example": false
+                    }
+                }
+            }
+        },
+        {
+            "name": "notFound",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "boardCardId": {
+                        "type": "string",
+                        "title": "Card ID",
+                        "example": "5abbe4b7ddc1b351ef961425"
+                    }
+                }
+            }
+        }
+    ]
+}

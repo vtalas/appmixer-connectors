@@ -1,0 +1,150 @@
+{
+    "name": "appmixer.trello.list.AddCommentToCard",
+    "author": "Appmixer <info@appmixer.com>",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwMCIgaGVpZ2h0PSIyNTAwIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSI1MCUiIHkxPSIwJSIgeDI9IjUwJSIgeTI9IjEwMCUiIGlkPSJhIj48c3RvcCBzdG9wLWNvbG9yPSIjMDA5MUU2IiBvZmZzZXQ9IjAlIi8+PHN0b3Agc3RvcC1jb2xvcj0iIzAwNzlCRiIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNhKSIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiIHJ4PSIyNSIvPjxyZWN0IGZpbGw9IiNGRkYiIHg9IjE0NC42NCIgeT0iMzMuMjgiIHdpZHRoPSI3OC4wOCIgaGVpZ2h0PSIxMTIiIHJ4PSIxMiIvPjxyZWN0IGZpbGw9IiNGRkYiIHg9IjMzLjI4IiB5PSIzMy4yOCIgd2lkdGg9Ijc4LjA4IiBoZWlnaHQ9IjE3NiIgcng9IjEyIi8+PC9zdmc+",
+    "description": "Add a comment to a card.",
+    "version": "1.0.0",
+    "auth": {
+        "service": "appmixer:trello"
+    },
+    "quota": {
+        "manager": "appmixer:trello",
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "boardId": {
+                        "type": "string"
+                    },
+                    "boardCardId": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "boardCardId",
+                    "text"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "boardId": {
+                        "type": "select",
+                        "label": "Board",
+                        "index": 1,
+                        "source": {
+                            "url": "/component/appmixer/trello/list/ListBoards?outPort=boards",
+                            "data": {
+                                "transform": "./transformers#boardsToSelectArray"
+                            }
+                        },
+                        "tooltip": "Select a board."
+                    },
+                    "boardCardId": {
+                        "type": "select",
+                        "label": "Card",
+                        "index": 2,
+                        "source": {
+                            "url": "/component/appmixer/trello/list/ListBoardsCards?outPort=cards",
+                            "data": {
+                                "messages": {
+                                    "in/boardId": "inputs/in/boardId"
+                                },
+                                "transform": "./transformers#cardListsToSelectArray"
+                            }
+                        },
+                        "tooltip": "Select a card."
+                    },
+                    "text": {
+                        "type": "textarea",
+                        "label": "Comment",
+                        "index": 3,
+                        "tooltip": "The text of the comment to add."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "comment",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Comment ID",
+                        "example": "5abbe4b7ddc1b351ef961426"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "example": "commentCard"
+                    },
+                    "date": {
+                        "type": "string",
+                        "title": "Date",
+                        "example": "2024-01-15T09:30:00.000Z"
+                    },
+                    "data": {
+                        "type": "object",
+                        "title": "Data",
+                        "properties": {
+                            "text": {
+                                "type": "string",
+                                "title": "Text",
+                                "example": "Looks good to me!"
+                            },
+                            "card": {
+                                "type": "object",
+                                "title": "Card",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "title": "Card ID",
+                                        "example": "5abbe4b7ddc1b351ef961425"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "title": "Card Name",
+                                        "example": "Implement feature"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "memberCreator": {
+                        "type": "object",
+                        "title": "Member Creator",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "title": "Member ID",
+                                "example": "5abbe4b7ddc1b351ef961400"
+                            },
+                            "fullName": {
+                                "type": "string",
+                                "title": "Full Name",
+                                "example": "Jane Developer"
+                            },
+                            "username": {
+                                "type": "string",
+                                "title": "Username",
+                                "example": "janedev"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
