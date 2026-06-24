@@ -1,0 +1,132 @@
+{
+    "name": "appmixer.notion.core.AppendBlockChildren",
+    "author": "Appmixer <info@appmixer.com>",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTYuMDE3IDQuMzEzbDU1LjMzMyAtNC4wODdjNi43OTcgLTAuNTgzIDguNTQzIC0wLjE5IDEyLjgxNyAyLjkxN2wxNy42NjMgMTIuNDQzYzIuOTEzIDIuMTQgMy44ODMgMi43MjMgMy44ODMgNS4wNTN2NjguMjQzYzAgNC4yNzcgLTEuNTUzIDYuODA3IC02Ljk5IDcuMTkzTDI0LjQ2NyA5OS45NjdjLTQuMDggMC4xOTMgLTYuMDIzIC0wLjM5IC04LjE2IC0zLjExM0wzLjMgNzkuOTRjLTIuMzMzIC0zLjExMyAtMy4zIC01LjQ0MyAtMy4zIC04LjE2N1YxMS4xMTNjMCAtMy40OTcgMS41NTMgLTYuNDEzIDYuMDE3IC02Ljh6IiBmaWxsPSIjZmZmIi8+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02MS4zNSAwLjIyN2wtNTUuMzMzIDQuMDg3QzEuNTUzIDQuNyAwIDcuNjE3IDAgMTEuMTEzdjYwLjY2YzAgMi43MjMgMC45NjcgNS4wNTMgMy4zIDguMTY3bDEzLjAwNyAxNi45MTNjMi4xMzcgMi43MjMgNC4wOCAzLjMwNyA4LjE2IDMuMTEzbDY0LjI1NyAtMy44OWM1LjQzMyAtMC4zODcgNi45OSAtMi45MTcgNi45OSAtNy4xOTNWMjAuNjRjMCAtMi4yMSAtMC44NzMgLTIuODQ3IC0zLjQ0MyAtNC43MzNMNzQuMTY3IDMuMTQzYy00LjI3MyAtMy4xMDcgLTYuMDIgLTMuNSAtMTIuODE3IC0yLjkxN3pNMjUuOTIgMTkuNTIzYy01LjI0NyAwLjM1MyAtNi40MzcgMC40MzMgLTkuNDE3IC0xLjk5TDguOTI3IDExLjUwN2MtMC43NyAtMC43OCAtMC4zODMgLTEuNzUzIDEuNTU3IC0xLjk0N2w1My4xOTMgLTMuODg3YzQuNDY3IC0wLjM5IDYuNzkzIDEuMTY3IDguNTQgMi41MjdsOS4xMjMgNi42MWMwLjM5IDAuMTk3IDEuMzYgMS4zNiAwLjE5MyAxLjM2bC01NC45MzMgMy4zMDcgLTAuNjggMC4wNDd6TTE5LjgwMyA4OC4zVjMwLjM2N2MwIC0yLjUzIDAuNzc3IC0zLjY5NyAzLjEwMyAtMy44OTNMODYgMjIuNzhjMi4xNCAtMC4xOTMgMy4xMDcgMS4xNjcgMy4xMDcgMy42OTN2NTcuNTQ3YzAgMi41MyAtMC4zOSA0LjY3IC0zLjg4MyA0Ljg2M2wtNjAuMzc3IDMuNWMtMy40OTMgMC4xOTMgLTUuMDQzIC0wLjk3IC01LjA0MyAtNC4wODN6bTU5LjYgLTU0LjgyN2MwLjM4NyAxLjc1IDAgMy41IC0xLjc1IDMuN2wtMi45MSAwLjU3N3Y0Mi43NzNjLTIuNTI3IDEuMzYgLTQuODUzIDIuMTM3IC02Ljc5NyAyLjEzNyAtMy4xMDcgMCAtMy44ODMgLTAuOTczIC02LjIxIC0zLjg4N2wtMTkuMDMgLTI5Ljk0djI4Ljk2N2w2LjAyIDEuMzYzczAgMy41IC00Ljg1NyAzLjVsLTEzLjM5IDAuNzc3Yy0wLjM5IC0wLjc4IDAgLTIuNzIzIDEuMzU3IC0zLjExbDMuNDk3IC0wLjk3di0zOC4zTDMwLjQ4IDQwLjY2N2MtMC4zOSAtMS43NSAwLjU4IC00LjI3NyAzLjMgLTQuNDczbDE0LjM2NyAtMC45NjcgMTkuOCAzMC4zMjd2LTI2LjgzbC01LjA0NyAtMC41OGMtMC4zOSAtMi4xNDMgMS4xNjMgLTMuNyAzLjEwMyAtMy44OWwxMy40IC0wLjc4eiIgZmlsbD0iIzAwMCIvPgo8L3N2Zz4K",
+    "description": "Append content blocks to a page or block.",
+    "auth": {
+        "service": "appmixer:notion"
+    },
+    "quota": {
+        "manager": "appmixer:notion",
+        "resources": "general",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "private": false,
+    "version": "1.0.0",
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "blockId": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "children": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "blockId"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "blockId": {
+                        "type": "text",
+                        "index": 1,
+                        "label": "Block or Page ID",
+                        "tooltip": "Enter the ID of the page or block to append content to."
+                    },
+                    "content": {
+                        "type": "textarea",
+                        "index": 2,
+                        "label": "Content",
+                        "tooltip": "Plain text content. Each line becomes a paragraph block. Ignored if Children (JSON) is provided."
+                    },
+                    "children": {
+                        "type": "textarea",
+                        "index": 3,
+                        "label": "Children (JSON)",
+                        "tooltip": "Optional. A JSON array of Notion block objects for full control over the appended content."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "object": {
+                        "type": "string",
+                        "title": "Object",
+                        "example": "list"
+                    },
+                    "results": {
+                        "type": "array",
+                        "title": "Appended Blocks",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "object": {
+                                    "type": "string",
+                                    "title": "Object",
+                                    "example": "block"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "title": "Block ID",
+                                    "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                                },
+                                "type": {
+                                    "type": "string",
+                                    "title": "Type",
+                                    "example": "paragraph"
+                                },
+                                "has_children": {
+                                    "type": "boolean",
+                                    "title": "Has Children",
+                                    "example": false
+                                },
+                                "archived": {
+                                    "type": "boolean",
+                                    "title": "Archived",
+                                    "example": false
+                                },
+                                "created_time": {
+                                    "type": "string",
+                                    "title": "Created Time",
+                                    "example": "2026-01-15T10:30:00.000Z"
+                                },
+                                "last_edited_time": {
+                                    "type": "string",
+                                    "title": "Last Edited Time",
+                                    "example": "2026-01-15T10:30:00.000Z"
+                                }
+                            }
+                        },
+                        "example": [
+                            {
+                                "object": "block",
+                                "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                                "type": "paragraph",
+                                "has_children": false,
+                                "archived": false,
+                                "created_time": "2026-01-15T10:30:00.000Z",
+                                "last_edited_time": "2026-01-15T10:30:00.000Z"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}
