@@ -1,0 +1,114 @@
+{
+    "name": "appmixer.asana.tasks.GetTask",
+    "author": "Appmixer <info@appmixer.com>",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAwIiBoZWlnaHQ9IjIzMTEiIHZpZXdCb3g9Ijc4MS4zNjEgMCA5NDQuODkzIDg3My4zNzciPjxyYWRpYWxHcmFkaWVudCBpZD0iYSIgY3g9Ijk0My45OTIiIGN5PSIxMjIxLjQxNiIgcj0iLjY2MyIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCg5NDQuODkzNCAwIDAgLTg3My4zNzcyIC04OTA3MTcuODc1IDEwNjcyMzQuNzUpIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZiOTAwIi8+PHN0b3Agb2Zmc2V0PSIuNiIgc3RvcC1jb2xvcj0iI2Y5NWQ4ZiIvPjxzdG9wIG9mZnNldD0iLjk5OSIgc3RvcC1jb2xvcj0iI2Y5NTM1MyIvPjwvcmFkaWFsR3JhZGllbnQ+PHBhdGggZmlsbD0idXJsKCNhKSIgZD0iTTE1MjAuNzY2IDQ2Mi4zNzFjLTExMy41MDggMC0yMDUuNTA4IDkyLTIwNS41MDggMjA1LjQ4OCAwIDExMy40OTkgOTIgMjA1LjUxOCAyMDUuNTA4IDIwNS41MTggMTEzLjQ4OSAwIDIwNS40ODgtOTIuMDE5IDIwNS40ODgtMjA1LjUxOCAwLTExMy40ODgtOTEuOTk5LTIwNS40ODgtMjA1LjQ4OC0yMDUuNDg4em0tNTMzLjkwNy4wMWMtMTEzLjQ4OS4wMS0yMDUuNDk4IDkxLjk5LTIwNS40OTggMjA1LjQ4OCAwIDExMy40ODkgOTIuMDA5IDIwNS40OTggMjA1LjQ5OCAyMDUuNDk4IDExMy40OTggMCAyMDUuNTA4LTkyLjAwOSAyMDUuNTA4LTIwNS40OTggMC0xMTMuNDk5LTkyLjAxLTIwNS40ODgtMjA1LjUxOC0yMDUuNDg4aC4wMXptNDcyLjQ0Ny0yNTYuODgzYzAgMTEzLjQ4OS05MS45OTkgMjA1LjUxOC0yMDUuNDg4IDIwNS41MTgtMTEzLjUwOCAwLTIwNS41MDgtOTIuMDI5LTIwNS41MDgtMjA1LjUxOFMxMTQwLjMxIDAgMTI1My44MTcgMGMxMTMuNDg5IDAgMjA1LjQ3OSA5Mi4wMDkgMjA1LjQ3OSAyMDUuNDk4aC4wMXoiLz48L3N2Zz4=",
+    "description": "Get a single task by its ID.",
+    "version": "1.0.0",
+    "auth": {
+        "service": "appmixer:asana"
+    },
+    "quota": {
+        "manager": "appmixer:asana",
+        "resources": "requests",
+        "scope": {
+            "userId": "{{userId}}"
+        }
+    },
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "taskId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "taskId"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "taskId": {
+                        "type": "text",
+                        "label": "Task ID",
+                        "index": 1,
+                        "tooltip": "Enter the ID (gid) of the task to get."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "gid": {
+                        "type": "string",
+                        "title": "gid",
+                        "example": "1201234567890123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "example": "Write the spec"
+                    },
+                    "resource_type": {
+                        "type": "string",
+                        "title": "Resource Type",
+                        "example": "task"
+                    },
+                    "completed": {
+                        "type": "boolean",
+                        "title": "Completed",
+                        "example": false
+                    },
+                    "notes": {
+                        "type": "string",
+                        "title": "Notes",
+                        "example": "Cover all the edge cases."
+                    },
+                    "due_on": {
+                        "type": "string",
+                        "title": "Due On",
+                        "example": "2026-02-01"
+                    },
+                    "assignee": {
+                        "type": "object",
+                        "title": "Assignee",
+                        "properties": {
+                            "gid": {
+                                "type": "string",
+                                "title": "Assignee.gid",
+                                "example": "1209876543210987"
+                            },
+                            "name": {
+                                "type": "string",
+                                "title": "Assignee.Name",
+                                "example": "Jane Developer"
+                            }
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "title": "Created At",
+                        "example": "2026-01-15T10:30:00.000Z"
+                    },
+                    "modified_at": {
+                        "type": "string",
+                        "title": "Modified At",
+                        "example": "2026-01-16T08:00:00.000Z"
+                    },
+                    "permalink_url": {
+                        "type": "string",
+                        "title": "Permalink URL",
+                        "example": "https://app.asana.com/0/1201234567890123/1201234567890123"
+                    }
+                }
+            }
+        }
+    ]
+}
