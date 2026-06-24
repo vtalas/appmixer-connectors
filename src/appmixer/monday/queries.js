@@ -378,5 +378,37 @@ module.exports = {
             id
         }
         }`,
-    addFileToUpdate: ({ updateId }) => `mutation add_file_to_update($file: File!) { add_file_to_update (update_id: ${updateId} file: $file) {id}}`
+    addFileToUpdate: ({ updateId }) => `mutation add_file_to_update($file: File!) { add_file_to_update (update_id: ${updateId} file: $file) {id}}`,
+    ChangeColumnValues: `
+    mutation change_multiple_column_values (
+        $boardId: ID!,
+        $itemId: ID!,
+        $columnValues: JSON!,
+        $createLabelsIfMissing: Boolean
+    ) {
+        change_multiple_column_values (
+            board_id: $boardId,
+            item_id: $itemId,
+            column_values: $columnValues,
+            create_labels_if_missing: $createLabelsIfMissing
+        ) {
+            id
+            name
+        }
+    }
+    `,
+    MoveItemToGroup: `
+    mutation move_item_to_group (
+        $itemId: ID!,
+        $groupId: String!
+    ) {
+        move_item_to_group (
+            item_id: $itemId,
+            group_id: $groupId
+        ) {
+            id
+            name
+        }
+    }
+    `
 };

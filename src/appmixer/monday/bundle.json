@@ -1,6 +1,6 @@
 {
     "name": "appmixer.monday",
-    "version": "3.2.0",
+    "version": "3.3.0",
     "changelog": {
         "1.0.1": [
             "Fixed FindItems component.",
@@ -74,6 +74,9 @@
         ],
         "3.2.0": [
             "Added test() (Flow Test Mode) to the NewItem, ArchivedItem, DeletedItem triggers."
+        ],
+        "3.3.0": [
+            "Added `ChangeColumnValue` and `MoveItemToGroup` components."
         ]
     }
 }
