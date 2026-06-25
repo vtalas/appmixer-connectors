@@ -10,5 +10,6 @@
     "outport-schema-xor-options": 8,
     "output-port-examples": 9948,
     "required-inputs-asserted": 505,
-    "trigger-has-test-method": 0
+    "trigger-has-test-method": 0,
+    "find-naming-by-shape": 11
 }
