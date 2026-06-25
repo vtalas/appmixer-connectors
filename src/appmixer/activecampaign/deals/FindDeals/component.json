@@ -1,5 +1,5 @@
 {
-    "name": "appmixer.activecampaign.deals.GetDeals",
+    "name": "appmixer.activecampaign.deals.FindDeals",
     "description": "Retrieve deals with all of their details, with optional filtering. Returns a maximum of 100 deals.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
@@ -77,7 +77,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/activecampaign/deals/GetDeals?outPort=out&ignoreAuth=true",
+                "url": "/component/appmixer/activecampaign/deals/FindDeals?outPort=out&ignoreAuth=true",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true

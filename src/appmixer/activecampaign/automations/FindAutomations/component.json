@@ -1,6 +1,6 @@
 {
-    "name": "appmixer.activecampaign.contacts.GetContacts",
-    "description": "Retrieve contacts with all of their details, with optional filtering. Returns a maximum of 100 contacts.",
+    "name": "appmixer.activecampaign.automations.FindAutomations",
+    "description": "Retrieve automations with all of their details, with optional filtering by name. Returns a maximum of 100 automations.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "auth": {
@@ -19,43 +19,22 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "search": { "type": "string" },
-                    "email": { "type": "string" },
-                    "status": { "type": "string" },
+                    "name": { "type": "string" },
                     "outputType": { "type": "string" }
                 }
             },
             "inspector": {
                 "inputs": {
-                    "search": {
+                    "name": {
                         "type": "text",
-                        "label": "Search",
+                        "label": "Name",
                         "index": 1,
-                        "tooltip": "Filter contacts that match the given value in the contact names, organization, phone or email."
-                    },
-                    "email": {
-                        "type": "text",
-                        "label": "Email",
-                        "index": 2,
-                        "tooltip": "Filter contacts by an exact email address."
-                    },
-                    "status": {
-                        "type": "select",
-                        "label": "Status",
-                        "index": 3,
-                        "tooltip": "Filter contacts by their status.",
-                        "options": [
-                            { "label": "Any", "value": "-1" },
-                            { "label": "Unconfirmed", "value": "0" },
-                            { "label": "Active", "value": "1" },
-                            { "label": "Unsubscribed", "value": "2" },
-                            { "label": "Bounced", "value": "3" }
-                        ]
+                        "tooltip": "Filter automations whose name contains the given value."
                     },
                     "outputType": {
                         "type": "select",
                         "label": "Output Type",
-                        "index": 4,
+                        "index": 2,
                         "defaultValue": "array",
                         "tooltip": "Choose whether you want to receive the result set as one complete list, or first item only or one item at a time or stream the items to a file.",
                         "options": [
@@ -73,7 +52,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/activecampaign/contacts/GetContacts?outPort=out&ignoreAuth=true",
+                "url": "/component/appmixer/activecampaign/automations/FindAutomations?outPort=out&ignoreAuth=true",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true
