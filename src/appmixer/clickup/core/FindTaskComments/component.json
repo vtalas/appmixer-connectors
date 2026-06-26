@@ -1,7 +1,7 @@
 {
-    "name": "appmixer.clickup.core.GetTaskComments",
+    "name": "appmixer.clickup.core.FindTaskComments",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "List the comments on a task.",
+    "description": "Find the comments on a task.",
     "private": false,
     "auth": {
         "service": "appmixer:clickup"

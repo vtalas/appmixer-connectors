@@ -28,6 +28,9 @@
         ],
         "2.3.0": [
             "Added `GetTask`, `CreateTaskComment` and `GetTaskComments` components."
+        ],
+        "2.3.0": [
+            "Added `GetTask`, `CreateTaskComment` and `FindTaskComments` components."
         ]
     }
 }
