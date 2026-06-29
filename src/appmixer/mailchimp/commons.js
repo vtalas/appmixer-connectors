@@ -182,7 +182,9 @@ module.exports = {
         members: (context, args) => makeMailchimpRequest(context, 'GET', `/search-members?query=${args.query}&list_id=${args.listId}&count=${args.count}&offset=${args.offset}`, args)
     },
     campaigns: {
-        campaigns: (context, args) => makeMailchimpRequest(context, 'GET', `/campaigns?count=${args.count}&offset=${args.offset}`, args)
+        campaigns: (context, args) => makeMailchimpRequest(context, 'GET', `/campaigns?count=${args.count}&offset=${args.offset}`, args),
+        createCampaign: (context, args) => makeMailchimpRequest(context, 'POST', '/campaigns', args),
+        sendCampaign: (context, args) => makeMailchimpRequest(context, 'POST', `/campaigns/${args.campaignId}/actions/send`, args)
     },
     fileManager: {
         files: (context, args) => makeMailchimpRequest(context, 'GET', `/file-manager/files?count=${args.count}&offset=${args.offset}`, args),
