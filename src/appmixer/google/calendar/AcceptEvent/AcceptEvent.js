@@ -8,7 +8,7 @@ const calendar = GoogleApi.calendar('v3');
 const patchEvent = Promise.promisify(calendar.events.patch, { context: calendar.events });
 
 /**
- * Component for declining a calendar event invitation on Google Calendar.
+ * Component for accepting a calendar event invitation on Google Calendar.
  * @extends {Component}
  */
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
                 attendees: [
                     {
                         email: attendeeEmail,
-                        responseStatus: 'declined'
+                        responseStatus: 'accepted'
                     }
                 ]
             }

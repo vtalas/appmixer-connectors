@@ -1,7 +1,7 @@
 {
-    "name": "appmixer.google.calendar.DeclineEvent",
+    "name": "appmixer.google.calendar.AcceptEvent",
     "author": "Appmixer <info@appmixer.com>",
-    "description": "Decline a calendar event invitation.",
+    "description": "Accept a calendar event invitation.",
     "auth": {
         "service": "appmixer:google",
         "scope": [
@@ -47,13 +47,13 @@
                                 "transform": "./transformers#eventsToSelectArray"
                             }
                         },
-                        "tooltip": "The event ID to decline."
+                        "tooltip": "The event ID to accept."
                     },
                     "attendeeEmail": {
                         "type": "text",
                         "label": "Attendee Email",
                         "index": 3,
-                        "tooltip": "The email address of the attendee declining the event (typically your own email address)."
+                        "tooltip": "The email address of the attendee accepting the event (typically your own email address)."
                     },
                     "sendUpdates": {
                         "type": "select",
@@ -74,7 +74,7 @@
                             }
                         ],
                         "defaultValue": "none",
-                        "tooltip": "Whether to send notifications to attendees about the declination. Use \"all\" to notify all attendees, \"externalOnly\" for non-Google Calendar users, or \"none\" for no notifications."
+                        "tooltip": "Whether to send notifications to attendees about the acceptance. Use \"all\" to notify all attendees, \"externalOnly\" for non-Google Calendar users, or \"none\" for no notifications."
                     }
                 }
             },
@@ -181,7 +181,10 @@
                     "value": "start",
                     "schema": {
                         "type": "object",
-                        "example": { "dateTime": "2024-04-12T09:00:00Z", "timeZone": "UTC" }
+                        "example": {
+                            "dateTime": "2024-04-12T09:00:00Z",
+                            "timeZone": "UTC"
+                        }
                     }
                 },
                 {
@@ -189,7 +192,10 @@
                     "value": "end",
                     "schema": {
                         "type": "object",
-                        "example": { "dateTime": "2024-04-12T10:00:00Z", "timeZone": "UTC" }
+                        "example": {
+                            "dateTime": "2024-04-12T10:00:00Z",
+                            "timeZone": "UTC"
+                        }
                     }
                 },
                 {
@@ -221,7 +227,12 @@
                     "value": "attendees",
                     "schema": {
                         "type": "array",
-                        "example": [{ "email": "attendee@example.com", "responseStatus": "declined" }]
+                        "example": [
+                            {
+                                "email": "attendee@example.com",
+                                "responseStatus": "accepted"
+                            }
+                        ]
                     }
                 }
             ]
