@@ -13,7 +13,9 @@ module.exports = {
             params: options.params,
             headers: {
                 Authorization: `Bearer ${context.auth?.accessToken || context.accessToken}`,
-                accept: 'application/json'
+                accept: 'application/json',
+                // Caller-supplied headers (e.g. Prefer: outlook.timezone) extend/override the defaults.
+                ...options.headers
             }
         });
     },

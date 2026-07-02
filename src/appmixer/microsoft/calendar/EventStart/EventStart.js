@@ -9,7 +9,10 @@ const LOOK_AHEAD_MS = 1000 * 60 * 60 * 24 * 7 * 4;
 
 /**
  * Fetch the calendar view (recurring events expanded into single instances) ordered by start time
- * for the window [from, from + 4 weeks].
+ * for the window [from, from + 4 weeks]. Note that calendarView returns every event that
+ * OVERLAPS the window, so events that are already ongoing at `from` are included too — this is
+ * what makes the "flow started in the middle of an event" case in the component description work
+ * without any look-behind.
  * @param {Context} context
  * @param {Date} from
  * @return {Promise<Array>}
@@ -24,6 +27,11 @@ async function fetchUpcomingEvents(context, from) {
             endDateTime: new Date(from.getTime() + LOOK_AHEAD_MS).toISOString(),
             '$orderby': 'start/dateTime',
             '$top': 100
+        },
+        headers: {
+            // Pin the response timezone so start/end dateTime values are guaranteed UTC
+            // regardless of the mailbox timezone — shouldTrigger() parses them as UTC.
+            'Prefer': 'outlook.timezone="UTC"'
         }
     });
     return (data && data.value) || [];
@@ -46,7 +54,8 @@ function shouldTrigger(event, triggered, tickPeriod) {
     }
 
     const now = Date.now();
-    // Graph calendarView returns start.dateTime in UTC (no offset), so append 'Z'.
+    // start.dateTime carries no offset; it is UTC because fetchUpcomingEvents pins the
+    // response timezone with Prefer: outlook.timezone="UTC" — so appending 'Z' is safe.
     const eventStart = new Date(`${event.start.dateTime}Z`).getTime();
 
     // Start of the event is either in the past or somewhere between now and the next tick.
@@ -73,7 +82,18 @@ module.exports = {
             }
         }
 
-        return context.saveState({ triggered });
+        // Prune state to the ids still visible in the current window so `triggered` does not
+        // grow unbounded on long-running flows. Events that dropped out of the window have
+        // ended (calendarView returns overlapping events only) and cannot fire again.
+        const windowIds = new Set(events.map(event => event.id));
+        const prunedTriggered = {};
+        for (const id of Object.keys(triggered)) {
+            if (windowIds.has(id)) {
+                prunedTriggered[id] = triggered[id];
+            }
+        }
+
+        return context.saveState({ triggered: prunedTriggered });
     },
 
     async test(context) {

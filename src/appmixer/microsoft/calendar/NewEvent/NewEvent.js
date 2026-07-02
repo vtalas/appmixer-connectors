@@ -74,10 +74,18 @@ module.exports = {
                 // Check if the client state is the one we expect. If not, it may be possible this change notification
                 // did not originate from MS Graph.
                 if (notification.clientState === clientState) {
-                    const eventResponse = await makeRequest(context, {
-                        method: 'GET',
-                        path: `/me/events/${notification.resourceData.id}`
-                    });
+                    let eventResponse;
+                    try {
+                        eventResponse = await makeRequest(context, {
+                            method: 'GET',
+                            path: `/me/events/${notification.resourceData.id}`
+                        });
+                    } catch (err) {
+                        // Notifications can arrive minutes after the change — the event may have
+                        // been deleted meanwhile. Skip it instead of failing the whole trigger.
+                        if (err.response?.status === 404) continue;
+                        throw err;
+                    }
                     await context.sendJson(eventResponse.data, 'out');
                 }
             }
