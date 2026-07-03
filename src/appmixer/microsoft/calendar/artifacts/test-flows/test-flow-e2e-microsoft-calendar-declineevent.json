@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - DeclineEvent",
     "flow": {
         "3b024b44-ed50-46bb-b601-bdb5d8b3702c": {
             "type": "appmixer.utils.controls.OnStart",
@@ -141,7 +140,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "17981091-df7d-4235-8236-78a2c2d62ec7": {
             "type": "appmixer.utils.timers.Wait",
@@ -406,7 +406,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - DeclineEvent"
                                 }
@@ -418,7 +418,14 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - DeclineEvent",
+    "type": "automation",
+    "wizard": {
+        "fields": []
+    },
+    "notes": {}
 }

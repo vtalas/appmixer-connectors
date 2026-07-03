@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - NewEvent trigger",
     "flow": {
         "387fb403-004b-4b8b-8c03-b71254577ede": {
             "type": "appmixer.utils.controls.OnStart",
@@ -142,7 +141,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "ae1d62fe-aef8-47a1-a33c-875daa813a05": {
             "type": "appmixer.utils.test.Assert",
@@ -331,7 +331,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - NewEvent trigger"
                                 }
@@ -343,7 +343,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "c387ba90-52da-4682-afe5-3b242726f857": {
             "type": "appmixer.utils.timers.Wait",
@@ -379,5 +380,8 @@
                 "onError": "stopFlow"
             }
         }
-    }
+    },
+    "name": "E2E MS Calendar - NewEvent trigger",
+    "type": "automation",
+    "notes": {}
 }

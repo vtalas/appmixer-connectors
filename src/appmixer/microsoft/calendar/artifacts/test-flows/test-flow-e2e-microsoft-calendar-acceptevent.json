@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - AcceptEvent",
     "flow": {
         "34cb1589-9569-4e70-bc5d-2b962f596d25": {
             "type": "appmixer.utils.controls.OnStart",
@@ -141,7 +140,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "0219c5a3-3412-42aa-be86-a55214d32800": {
             "type": "appmixer.utils.timers.Wait",
@@ -406,7 +406,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - AcceptEvent"
                                 }
@@ -418,7 +418,14 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - AcceptEvent",
+    "type": "automation",
+    "wizard": {
+        "fields": []
+    },
+    "notes": {}
 }

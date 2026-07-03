@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - DeleteEvent",
     "flow": {
         "783f2226-1e48-49cc-91ec-7125873a4dc6": {
             "type": "appmixer.utils.controls.OnStart",
@@ -131,7 +130,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "21db98ab-27b6-427a-b9b0-009122ad2629": {
             "type": "appmixer.microsoft.calendar.DeleteEvent",
@@ -174,7 +174,7 @@
         },
         "a94d8d9a-5791-44bf-82f3-20f7bcf16117": {
             "type": "appmixer.microsoft.calendar.ListEvents",
-            "label": "ListEvents (verify deletion \u2014 expects empty result)",
+            "label": "ListEvents (verify deletion — expects empty result)",
             "x": 880,
             "y": 32,
             "source": {
@@ -259,8 +259,8 @@
         },
         "bc38fa27-0a63-4dc0-8910-41142c508a85": {
             "type": "appmixer.utils.test.AfterAll",
-            "x": 1712,
-            "y": 176,
+            "x": 1280,
+            "y": 32,
             "source": {
                 "in": {
                     "30c5e69b-4698-430f-86e4-b40b48bdb501": [
@@ -280,8 +280,8 @@
         },
         "28424c82-c3a0-4e65-89ef-d6727b4ae6ee": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1920,
-            "y": 176,
+            "x": 1504,
+            "y": 32,
             "source": {
                 "in": {
                     "bc38fa27-0a63-4dc0-8910-41142c508a85": [
@@ -307,7 +307,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - DeleteEvent"
                                 }
@@ -319,7 +319,14 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - DeleteEvent",
+    "type": "automation",
+    "wizard": {
+        "fields": []
+    },
+    "notes": {}
 }

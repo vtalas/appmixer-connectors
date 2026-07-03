@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - UpdateEvent",
     "flow": {
         "0a346bca-a3ec-43ce-9a5e-116d74ec58b8": {
             "type": "appmixer.utils.controls.OnStart",
@@ -131,7 +130,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "93e2cf32-6d1a-41d0-a1ff-b8e73ecce0d0": {
             "type": "appmixer.microsoft.calendar.UpdateEvent",
@@ -322,7 +322,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - UpdateEvent"
                                 }
@@ -334,7 +334,11 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - UpdateEvent",
+    "type": "automation",
+    "notes": {}
 }

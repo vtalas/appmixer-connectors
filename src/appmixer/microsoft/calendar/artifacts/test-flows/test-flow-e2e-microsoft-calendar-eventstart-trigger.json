@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - EventStart trigger",
     "flow": {
         "6d8abfc7-d49c-401d-8d4b-a2cc601162b4": {
             "type": "appmixer.utils.controls.OnStart",
@@ -130,7 +129,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "5eb82eaa-7eee-4e94-ad4d-08b97be1f9b7": {
             "type": "appmixer.utils.test.Assert",
@@ -270,7 +270,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - EventStart trigger"
                                 }
@@ -282,7 +282,11 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - EventStart trigger",
+    "type": "automation",
+    "notes": {}
 }

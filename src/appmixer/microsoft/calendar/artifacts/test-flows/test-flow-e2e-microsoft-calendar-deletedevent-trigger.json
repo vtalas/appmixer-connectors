@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - DeletedEvent trigger",
     "flow": {
         "406e0c67-be8c-45d4-ba16-811ac68f7027": {
             "type": "appmixer.utils.controls.OnStart",
@@ -66,11 +65,11 @@
         "9ed94b3d-29a1-4032-af17-33885fcf607a": {
             "type": "appmixer.microsoft.calendar.CreateEvent",
             "label": "CreateEvent (test data)",
-            "x": 464,
+            "x": 608,
             "y": 32,
             "source": {
                 "in": {
-                    "9c5d4fe0-e1e0-462f-a45b-af1f4a1f60f7": [
+                    "ed5dc931-5ccf-4e6a-affa-92b82ac5b422": [
                         "out"
                     ]
                 }
@@ -78,7 +77,8 @@
             "config": {
                 "transform": {
                     "in": {
-                        "9c5d4fe0-e1e0-462f-a45b-af1f4a1f60f7": {
+                        "9c5d4fe0-e1e0-462f-a45b-af1f4a1f60f7": {},
+                        "ed5dc931-5ccf-4e6a-affa-92b82ac5b422": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
@@ -142,13 +142,14 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "b5ec815f-c51b-49b2-baaf-0c8c960175fd": {
             "type": "appmixer.microsoft.calendar.DeleteEvent",
             "label": "DeleteEvent (provokes the trigger)",
-            "x": 672,
-            "y": 32,
+            "x": 832,
+            "y": -80,
             "source": {
                 "in": {
                     "9ed94b3d-29a1-4032-af17-33885fcf607a": [
@@ -291,7 +292,7 @@
             },
             "config": {
                 "properties": {
-                    "timeout": 420
+                    "timeout": 180
                 }
             },
             "errorHandling": {
@@ -328,7 +329,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - DeletedEvent trigger"
                                 }
@@ -340,7 +341,43 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
+            },
+            "version": "1.0.1"
+        },
+        "ed5dc931-5ccf-4e6a-affa-92b82ac5b422": {
+            "type": "appmixer.utils.timers.Wait",
+            "source": {
+                "in": {
+                    "9c5d4fe0-e1e0-462f-a45b-af1f4a1f60f7": [
+                        "out"
+                    ]
+                }
+            },
+            "x": 432,
+            "y": 32,
+            "config": {
+                "transform": {
+                    "in": {
+                        "9c5d4fe0-e1e0-462f-a45b-af1f4a1f60f7": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "interval": {}
+                                },
+                                "lambda": {
+                                    "interval": "1m"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
+    },
+    "name": "E2E MS Calendar - DeletedEvent trigger",
+    "type": "automation",
+    "wizard": {
+        "fields": []
+    },
+    "notes": {}
 }

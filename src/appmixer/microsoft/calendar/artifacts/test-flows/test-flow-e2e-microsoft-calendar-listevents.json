@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - ListEvents",
     "flow": {
         "edc21df2-ce18-4283-a9bc-c7562fa81843": {
             "type": "appmixer.utils.controls.OnStart",
@@ -131,7 +130,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "6dcc81b8-5dcf-4118-b1df-62fa40f47763": {
             "type": "appmixer.microsoft.calendar.ListEvents",
@@ -317,7 +317,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - ListEvents"
                                 }
@@ -329,7 +329,11 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - ListEvents",
+    "type": "automation",
+    "notes": {}
 }

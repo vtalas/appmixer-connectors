@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - GetEvent",
     "flow": {
         "f493404a-cc1e-4661-871a-e7532c99a5d7": {
             "type": "appmixer.utils.controls.OnStart",
@@ -131,7 +130,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "f9712d81-4cde-4745-ab7b-65cf3a94b9b1": {
             "type": "appmixer.microsoft.calendar.GetEvent",
@@ -315,7 +315,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - GetEvent"
                                 }
@@ -327,7 +327,11 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - GetEvent",
+    "type": "automation",
+    "notes": {}
 }

@@ -1,5 +1,4 @@
 {
-    "name": "E2E MS Calendar - CreateEvent",
     "flow": {
         "bce8b24b-b8b1-4321-82a6-606faa2cdeaa": {
             "type": "appmixer.utils.controls.OnStart",
@@ -131,7 +130,8 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         },
         "104683bc-81e4-48a8-b5db-67dcf317a26f": {
             "type": "appmixer.utils.test.Assert",
@@ -321,7 +321,7 @@
                                     "testCase": {}
                                 },
                                 "lambda": {
-                                    "recipients": "vero.a@appmixer.ai",
+                                    "recipients": "test@appmixer.ai",
                                     "result": "{{{result-var}}}",
                                     "testCase": "E2E MS Calendar - CreateEvent"
                                 }
@@ -333,7 +333,11 @@
             "errorHandling": {
                 "autoRetry": false,
                 "onError": "stopFlow"
-            }
+            },
+            "version": "1.0.1"
         }
-    }
+    },
+    "name": "E2E MS Calendar - CreateEvent",
+    "type": "automation",
+    "notes": {}
 }
