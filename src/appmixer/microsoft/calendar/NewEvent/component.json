@@ -1,148 +1,228 @@
 {
-    "name": "appmixer.microsoft.calendar.UpdateEvent",
+    "name": "appmixer.microsoft.calendar.NewEvent",
     "author": "AppMixer <info@appmixer.com>",
-    "label": "Update Event",
-    "description": "Update the properties of the event object.",
+    "label": "New Event",
+    "description": "Triggers when a new event is created in your calendar.",
+    "private": false,
+    "version": "1.0.0",
+    "webhook": true,
     "auth": {
         "service": "appmixer:microsoft",
         "scope": [
-            "Calendars.ReadWrite"
+            "Calendars.Read"
         ]
     },
-    "quota": {
-        "manager": "appmixer:microsoft:calendar",
-        "maxWait": 5000,
-        "resources": "requests",
-        "scope": {
-            "userId": "{{userId}}"
-        }
-    },
-    "private": false,
-    "version": "1.0.0",
-    "inPorts": [
-        {
-            "name": "in",
-            "inspector": {
-                "inputs": {
-                    "eventId": {
-                        "type": "text",
-                        "label": "Event ID",
-                        "index": 1
-                    },
-                    "subject": {
-                        "label": "Subject",
-                        "type": "text",
-                        "index": 2,
-                        "tooltip": "The text of the event's subject line."
-                    },
-                    "start": {
-                        "label": "Start time",
-                        "type": "date-time",
-                        "index": 3,
-                        "tooltip": "The start date, time, and time zone of the event. By default, the start time is in UTC."
-                    },
-                    "end": {
-                        "label": "End time",
-                        "type": "date-time",
-                        "index": 4,
-                        "tooltip": "The date, time, and time zone that the event ends. By default, the end time is in UTC."
-                    },
-                    "isAllDay": {
-                        "label": "All day event",
-                        "type": "toggle",
-                        "index": 5,
-                        "tooltip": "Set to true if the event lasts all day. If true, regardless of whether it's a single-day or multi-day event, start and end time must be set to midnight and be in the same time zone."
-                    },
-                    "emails": {
-                        "label": "Attendees",
-                        "type": "text",
-                        "index": 6,
-                        "tooltip": "The email addresses of the meeting attendees, separated by semicolons."
-                    },
-                    "body": {
-                        "label": "Body",
-                        "type": "textarea",
-                        "index": 7,
-                        "tooltip": "The body of the message associated with the event in text format."
-                    },
-                    "location": {
-                        "label": "Location",
-                        "type": "text",
-                        "index": 8,
-                        "tooltip": "The location of the event."
-                    }
+    "properties": {
+        "schema": {
+            "properties": {
+                "resource": {
+                    "type": "string"
                 }
-            },
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "eventId": {
-                        "type": "string"
-                    },
-                    "subject": {
-                        "type": "string"
-                    },
-                    "emails": {
-                        "type": "string"
-                    },
-                    "start": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/definitions/Date"
-                            },
-                            {
-                                "$ref": "#/definitions/DateTime"
-                            }
-                        ]
-                    },
-                    "end": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/definitions/Date"
-                            },
-                            {
-                                "$ref": "#/definitions/DateTime"
-                            }
-                        ]
-                    },
-                    "isAllDay": {
-                        "type": "boolean"
-                    },
-                    "body": {
-                        "type": "string"
-                    },
-                    "location": {
-                        "type": "string"
-                    }
-                },
-                "definitions": {
-                    "Date": {
-                        "type": "string",
-                        "pattern": "^[0-9]{4}-[0|1][0-9]-[0-3][0-9]$"
-                    },
-                    "DateTime": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "required": [
-                    "eventId"
-                ]
+            }
+        },
+        "inspector": {
+            "inputs": {
+                "resource": {
+                    "type": "text",
+                    "defaultValue": "/me/events",
+                    "index": 1,
+                    "label": "Resource",
+                    "tooltip": "The URI of the resource that emits the change notification relative to https://graph.microsoft.com. Defaults to <code>/me/events</code> (the default calendar). See more details in <a target=\"_blank\" href=\"https://learn.microsoft.com/en-us/graph/api/resources/webhooks\">the Microsoft documentation</a>."
+                }
             }
         }
-    ],
+    },
     "outPorts": [
         {
             "name": "out",
-            "source": {
-                "url": "/component/appmixer/microsoft/calendar/ListEvents?outPort=out&ignoreAuth=true",
-                "data": {
-                    "properties": {
-                        "generateOutputPortOptions": true
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Event ID",
+                        "example": "AAMkAGI1AAAt9AHjAAA="
                     },
-                    "messages": {
-                        "in/outputType": "object",
-                        "in/eventId": "dummy"
+                    "createdDateTime": {
+                        "type": "string",
+                        "title": "Created Date Time",
+                        "example": "2024-04-10T08:00:00Z"
+                    },
+                    "lastModifiedDateTime": {
+                        "type": "string",
+                        "title": "Last Modified Date Time",
+                        "example": "2024-04-11T09:30:00Z"
+                    },
+                    "changeKey": {
+                        "type": "string",
+                        "title": "Change Key",
+                        "example": "DwAAABYAAAA9AHjAAAA"
+                    },
+                    "categories": {
+                        "type": "array",
+                        "title": "Categories",
+                        "example": [
+                            "Blue category"
+                        ]
+                    },
+                    "iCalUId": {
+                        "type": "string",
+                        "title": "iCalUId",
+                        "example": "040000008200E00074C5B7101A82E00800000000"
+                    },
+                    "subject": {
+                        "type": "string",
+                        "title": "Subject",
+                        "example": "Project sync"
+                    },
+                    "bodyPreview": {
+                        "type": "string",
+                        "title": "Body Preview",
+                        "example": "Weekly project sync meeting."
+                    },
+                    "body": {
+                        "type": "object",
+                        "title": "Body",
+                        "properties": {
+                            "contentType": {
+                                "type": "string",
+                                "title": "Content Type",
+                                "example": "html"
+                            },
+                            "content": {
+                                "type": "string",
+                                "title": "Content",
+                                "example": "<p>Weekly project sync meeting.</p>"
+                            }
+                        }
+                    },
+                    "importance": {
+                        "type": "string",
+                        "title": "Importance",
+                        "example": "normal"
+                    },
+                    "sensitivity": {
+                        "type": "string",
+                        "title": "Sensitivity",
+                        "example": "normal"
+                    },
+                    "isAllDay": {
+                        "type": "boolean",
+                        "title": "Is All Day",
+                        "example": false
+                    },
+                    "isCancelled": {
+                        "type": "boolean",
+                        "title": "Is Cancelled",
+                        "example": false
+                    },
+                    "isOrganizer": {
+                        "type": "boolean",
+                        "title": "Is Organizer",
+                        "example": true
+                    },
+                    "showAs": {
+                        "type": "string",
+                        "title": "Show As",
+                        "example": "busy"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "example": "singleInstance"
+                    },
+                    "webLink": {
+                        "type": "string",
+                        "title": "Web Link",
+                        "example": "https://outlook.office365.com/owa/?itemid=AAMkAGI1&exvsurl=1&path=/calendar/item"
+                    },
+                    "isOnlineMeeting": {
+                        "type": "boolean",
+                        "title": "Is Online Meeting",
+                        "example": false
+                    },
+                    "onlineMeetingUrl": {
+                        "type": "string",
+                        "title": "Online Meeting Url",
+                        "example": "https://teams.microsoft.com/l/meetup-join/19%3ameeting"
+                    },
+                    "start": {
+                        "type": "object",
+                        "title": "Start",
+                        "properties": {
+                            "dateTime": {
+                                "type": "string",
+                                "title": "Date Time",
+                                "example": "2024-04-12T09:00:00.0000000"
+                            },
+                            "timeZone": {
+                                "type": "string",
+                                "title": "Time Zone",
+                                "example": "UTC"
+                            }
+                        }
+                    },
+                    "end": {
+                        "type": "object",
+                        "title": "End",
+                        "properties": {
+                            "dateTime": {
+                                "type": "string",
+                                "title": "Date Time",
+                                "example": "2024-04-12T10:00:00.0000000"
+                            },
+                            "timeZone": {
+                                "type": "string",
+                                "title": "Time Zone",
+                                "example": "UTC"
+                            }
+                        }
+                    },
+                    "location": {
+                        "type": "object",
+                        "title": "Location",
+                        "properties": {
+                            "displayName": {
+                                "type": "string",
+                                "title": "Display Name",
+                                "example": "Meeting room 1"
+                            }
+                        }
+                    },
+                    "organizer": {
+                        "type": "object",
+                        "title": "Organizer",
+                        "properties": {
+                            "emailAddress": {
+                                "type": "object",
+                                "title": "Email Address",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "title": "Name",
+                                        "example": "Adele Vance"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "title": "Address",
+                                        "example": "adele@example.com"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "attendees": {
+                        "type": "array",
+                        "title": "Attendees",
+                        "example": [
+                            {
+                                "type": "required",
+                                "emailAddress": {
+                                    "name": "Alex Wilber",
+                                    "address": "alex@example.com"
+                                }
+                            }
+                        ]
                     }
                 }
             }
