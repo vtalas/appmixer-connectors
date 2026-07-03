@@ -136,7 +136,7 @@
         "104683bc-81e4-48a8-b5db-67dcf317a26f": {
             "type": "appmixer.utils.test.Assert",
             "label": "Assert: created event has id",
-            "x": 1088,
+            "x": 720,
             "y": 32,
             "source": {
                 "in": {
@@ -182,7 +182,7 @@
         "b5c52747-753e-4f5f-93f2-1781aa472342": {
             "type": "appmixer.utils.test.Assert",
             "label": "Assert: subject matches",
-            "x": 1088,
+            "x": 720,
             "y": 176,
             "source": {
                 "in": {
@@ -229,7 +229,7 @@
         "239df318-884c-4c3b-b577-1f3bba371fa7": {
             "type": "appmixer.microsoft.calendar.DeleteEvent",
             "label": "DeleteEvent (cleanup)",
-            "x": 1088,
+            "x": 720,
             "y": 320,
             "source": {
                 "in": {
@@ -294,7 +294,7 @@
         },
         "22aff9e2-bacc-4472-a4ca-fb146639d0e9": {
             "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1920,
+            "x": 1280,
             "y": 176,
             "source": {
                 "in": {
