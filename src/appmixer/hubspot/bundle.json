@@ -105,7 +105,8 @@
             "Added ContactPropertyChanged trigger: fires when a specific contact property changes value.",
             "Added NewContactInList trigger: polls for new contacts added to a specific HubSpot list.",
             "Added FormSubmission trigger: polls for new submissions of a specific HubSpot form.",
-            "Updated routes.js to dynamically create HubSpot webhook subscriptions for custom properties used in ContactPropertyChanged."
+            "Updated routes.js to dynamically create HubSpot webhook subscriptions for custom properties used in ContactPropertyChanged.",
+            "Added the 'forms' OAuth scope, required by the FormSubmission trigger's submissions API."
         ]
     }
 }

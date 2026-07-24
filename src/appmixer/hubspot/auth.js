@@ -12,6 +12,7 @@ module.exports = {
             'oauth',
             'tickets',
             'e-commerce',
+            'forms',
             'timeline',
             'media_bridge.read',
             'crm.lists.read',
