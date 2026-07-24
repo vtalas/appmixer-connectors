@@ -28,10 +28,16 @@
         "inspector": {
             "inputs": {
                 "formId": {
-                    "type": "text",
+                    "type": "select",
                     "label": "Form ID",
-                    "tooltip": "The GUID of the HubSpot form to watch for new submissions.",
-                    "index": 1
+                    "tooltip": "Select the HubSpot form to watch for new submissions.",
+                    "index": 1,
+                    "source": {
+                        "url": "/component/appmixer/hubspot/crm/ListForms?outPort=out",
+                        "data": {
+                            "transform": "./ListForms#formsToSelectArray"
+                        }
+                    }
                 }
             }
         }

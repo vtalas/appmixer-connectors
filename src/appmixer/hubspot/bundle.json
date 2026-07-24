@@ -114,7 +114,8 @@
             "FormSubmission: fixed the submissions endpoint path (form-integrations/v1/submissions/forms, the by-form variant returns 404).",
             "Added required-input validation (CancelError) across create/update/delete/find components.",
             "Added output port examples across crm and engagements components.",
-            "Contact variable pickers (dynamic contact outPorts) now show types and example values."
+            "Contact variable pickers (dynamic contact outPorts) now show types and example values.",
+            "FormSubmission: the form is now selected from a dropdown (ListForms source) instead of a raw GUID input."
         ]
     }
 }
