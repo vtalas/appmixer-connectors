@@ -19,8 +19,6 @@ module.exports = {
         const { auth } = context;
         const hs = new Hubspot(auth.accessToken, context.config);
 
-        context.log({ stage: 'CRM - EnrollContactInWorkflow', workflowId, email });
-
         // https://developers.hubspot.com/docs/reference/api/automation/workflows/v2
         await hs.call(
             'post',

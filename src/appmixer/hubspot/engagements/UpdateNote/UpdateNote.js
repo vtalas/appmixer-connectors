@@ -26,8 +26,6 @@ module.exports = {
             }
         };
 
-        context.log({ stage: 'Engagements - UpdateNote payload', payload });
-
         const { data } = await hs.call(
             'patch',
             `crm/v3/objects/notes/${noteId}`,

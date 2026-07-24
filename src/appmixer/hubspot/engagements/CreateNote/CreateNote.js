@@ -42,8 +42,6 @@ module.exports = {
             ]
         };
 
-        context.log({ stage: 'Engagements - CreateNote payload', payload });
-
         const { data } = await hs.call(
             'post',
             'crm/v3/objects/notes',

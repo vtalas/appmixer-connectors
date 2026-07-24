@@ -49,8 +49,6 @@ module.exports = {
             ]
         };
 
-        context.log({ stage: 'Engagements - CreateTask payload', payload });
-
         const { data } = await hs.call(
             'post',
             'crm/v3/objects/tasks',
