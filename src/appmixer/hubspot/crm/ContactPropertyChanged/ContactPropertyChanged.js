@@ -89,6 +89,17 @@ class ContactPropertyChanged extends BaseSubscriptionComponent {
 
         return context.response();
     }
+
+    async test(context) {
+
+        // Latest contact that has the watched property set — same record shape
+        // (id, properties, createdAt, updatedAt, archived) the batch/read emit uses.
+        const filters = context.properties.propertyName
+            ? [{ propertyName: context.properties.propertyName, operator: 'HAS_PROPERTY' }]
+            : [];
+        const record = await this.fetchLatestExample(context, 'contacts', { sortProperty: 'lastmodifieddate', filters });
+        return context.sendJson(record, 'contact');
+    }
 }
 
 module.exports = new ContactPropertyChanged(subscriptionType);

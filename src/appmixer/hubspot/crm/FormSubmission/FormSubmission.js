@@ -91,5 +91,21 @@ module.exports = {
             // Always reschedule so one failed poll self-heals instead of permanently killing the trigger.
             await context.setTimeout({}, context.config?.pollIntervalMs || DEFAULT_POLL_INTERVAL_MS);
         }
+    },
+
+    async test(context) {
+
+        const { formId } = context.properties;
+        const hubspot = new Hubspot(context.auth.accessToken);
+
+        // Latest submission of the configured form — the same raw submission
+        // shape receive() emits (submittedAt, values, pageUrl, ...).
+        const { data } = await hubspot.call('get', `form-integrations/v1/submissions/by-form/${formId}`, { limit: 1 });
+        const submission = data.results && data.results[0];
+        if (!submission) {
+            throw new context.CancelError('The selected form has no submissions to use as test data.');
+        }
+
+        return context.sendJson(submission, 'submission');
     }
 };

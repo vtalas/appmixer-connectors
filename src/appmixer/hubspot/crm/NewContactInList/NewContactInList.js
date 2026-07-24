@@ -7,6 +7,31 @@ const DEFAULT_POLL_INTERVAL_MS = 5 * 60 * 1000;
 // HubSpot's batch/read endpoint accepts at most 100 inputs per call.
 const BATCH_READ_CHUNK_SIZE = 100;
 
+async function resolveProperties(context, hubspot) {
+
+    const { properties } = context.properties;
+    if (!properties) {
+        return getObjectProperties(context, hubspot, 'contacts', 'names');
+    }
+    return properties.split(',');
+}
+
+async function readContactsBatch(hubspot, ids, properties) {
+
+    const contacts = [];
+    for (let i = 0; i < ids.length; i += BATCH_READ_CHUNK_SIZE) {
+        const chunk = ids.slice(i, i + BATCH_READ_CHUNK_SIZE);
+        const { data } = await hubspot.call('post', 'crm/v3/objects/contacts/batch/read', {
+            inputs: chunk.map((id) => ({ id })),
+            properties
+        });
+        if (data.results?.length) {
+            contacts.push(...data.results);
+        }
+    }
+    return contacts;
+}
+
 module.exports = {
 
     async start(context) {
@@ -28,19 +53,14 @@ module.exports = {
             return;
         }
 
-        const { listId, properties } = context.properties;
+        const { listId } = context.properties;
 
         try {
             const hubspot = new Hubspot(context.auth.accessToken);
             const state = context.state || {};
             const lastJoinedAt = state.lastJoinedAt || Date.now();
 
-            let propertiesToReturn;
-            if (!properties) {
-                propertiesToReturn = await getObjectProperties(context, hubspot, 'contacts', 'names');
-            } else {
-                propertiesToReturn = properties.split(',');
-            }
+            const propertiesToReturn = await resolveProperties(context, hubspot);
 
             // Page through list members newest-first by join time. Stop as soon as we reach a member
             // that joined at or before the watermark — everything older has already been seen. This
@@ -89,17 +109,7 @@ module.exports = {
             // influx of new members doesn't 400 the whole poll.
             if (newRecordIds.length) {
                 newRecordIds.reverse();
-                const contacts = [];
-                for (let i = 0; i < newRecordIds.length; i += BATCH_READ_CHUNK_SIZE) {
-                    const chunk = newRecordIds.slice(i, i + BATCH_READ_CHUNK_SIZE);
-                    const { data } = await hubspot.call('post', 'crm/v3/objects/contacts/batch/read', {
-                        inputs: chunk.map((id) => ({ id })),
-                        properties: propertiesToReturn
-                    });
-                    if (data.results?.length) {
-                        contacts.push(...data.results);
-                    }
-                }
+                const contacts = await readContactsBatch(hubspot, newRecordIds, propertiesToReturn);
                 if (contacts.length) {
                     await context.sendArray(contacts, 'contact');
                 }
@@ -115,5 +125,27 @@ module.exports = {
             // Always reschedule so one failed poll self-heals instead of permanently killing the trigger.
             await context.setTimeout({}, context.config?.pollIntervalMs || DEFAULT_POLL_INTERVAL_MS);
         }
+    },
+
+    async test(context) {
+
+        const { listId } = context.properties;
+        const hubspot = new Hubspot(context.auth.accessToken);
+
+        // Newest member of the configured list, read through the same batch/read
+        // path receive() uses so the emitted shape is identical.
+        const { data } = await hubspot.call('get', `crm/v3/lists/${listId}/memberships/join-order`, { limit: 1 });
+        const record = data.results && data.results[0];
+        if (!record) {
+            throw new context.CancelError('The selected list has no members to use as test data.');
+        }
+
+        const properties = await resolveProperties(context, hubspot);
+        const [contact] = await readContactsBatch(hubspot, [String(record.recordId)], properties);
+        if (!contact) {
+            throw new context.CancelError('Could not read the latest list member to use as test data.');
+        }
+
+        return context.sendJson(contact, 'contact');
     }
 };

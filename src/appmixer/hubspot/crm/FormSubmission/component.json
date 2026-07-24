@@ -17,9 +17,13 @@
     "properties": {
         "schema": {
             "properties": {
-                "formId": { "type": "string" }
+                "formId": {
+                    "type": "string"
+                }
             },
-            "required": ["formId"]
+            "required": [
+                "formId"
+            ]
         },
         "inspector": {
             "inputs": {
@@ -39,27 +43,42 @@
                 {
                     "label": "Form ID",
                     "value": "formId",
-                    "schema": { "type": "string" }
+                    "schema": {
+                        "type": "string",
+                        "example": "a2c3e5f7-1b2d-4e6f-8a9b-0c1d2e3f4a5b"
+                    }
                 },
                 {
                     "label": "Submitted At",
                     "value": "submittedAt",
-                    "schema": { "type": "string" }
+                    "schema": {
+                        "type": "string",
+                        "example": 1784548800000
+                    }
                 },
                 {
                     "label": "Page URL",
                     "value": "pageUrl",
-                    "schema": { "type": "string" }
+                    "schema": {
+                        "type": "string",
+                        "example": "https://www.example.com/contact-us"
+                    }
                 },
                 {
                     "label": "Page Name",
                     "value": "pageName",
-                    "schema": { "type": "string" }
+                    "schema": {
+                        "type": "string",
+                        "example": "Contact Us"
+                    }
                 },
                 {
                     "label": "Portal ID",
                     "value": "portalId",
-                    "schema": { "type": "number" }
+                    "schema": {
+                        "type": "number",
+                        "example": 12345678
+                    }
                 },
                 {
                     "label": "Values",
@@ -69,10 +88,20 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "name": { "type": "string" },
-                                "value": { "type": "string" }
+                                "name": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "string"
+                                }
                             }
-                        }
+                        },
+                        "example": [
+                            {
+                                "name": "email",
+                                "value": "jane.doe@example.com"
+                            }
+                        ]
                     }
                 }
             ]
