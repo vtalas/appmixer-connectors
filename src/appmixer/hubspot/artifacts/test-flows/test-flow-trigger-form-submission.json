@@ -82,7 +82,7 @@
                                     }
                                 },
                                 "lambda": {
-                                    "url": "https://api.hsforms.com/submissions/v3/integration/submit/PORTAL_ID/FORM_ID",
+                                    "url": "https://api.hsforms.com/submissions/v3/integration/submit/143181089/f5a57b31-ed90-4266-8c5d-0327de4edc08",
                                     "method": "POST",
                                     "body": "{\"fields\": [{\"name\": \"email\", \"value\": \"e2e-form-{{{ts-198dc583}}}@example.com\"}]}"
                                 }
@@ -104,7 +104,7 @@
             },
             "config": {
                 "properties": {
-                    "formId": "FORM_ID"
+                    "formId": "f5a57b31-ed90-4266-8c5d-0327de4edc08"
                 }
             }
         },
