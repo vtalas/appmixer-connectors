@@ -11,6 +11,7 @@ module.exports = {
         scope: [
             'oauth',
             'tickets',
+            'automation',
             'e-commerce',
             'forms',
             'timeline',

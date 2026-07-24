@@ -17,18 +17,30 @@
     "properties": {
         "schema": {
             "properties": {
-                "listId": { "type": "string" },
-                "properties": { "type": "string" }
+                "listId": {
+                    "type": "string"
+                },
+                "properties": {
+                    "type": "string"
+                }
             },
-            "required": ["listId"]
+            "required": [
+                "listId"
+            ]
         },
         "inspector": {
             "inputs": {
                 "listId": {
-                    "type": "text",
+                    "type": "select",
                     "label": "List ID",
-                    "tooltip": "The ID of the HubSpot contact list to watch for new members.",
-                    "index": 1
+                    "tooltip": "Select the HubSpot contact list to watch for new members.",
+                    "index": 1,
+                    "source": {
+                        "url": "/component/appmixer/hubspot/crm/ListLists?outPort=out",
+                        "data": {
+                            "transform": "./ListLists#listsToSelectArray"
+                        }
+                    }
                 },
                 "properties": {
                     "type": "text",

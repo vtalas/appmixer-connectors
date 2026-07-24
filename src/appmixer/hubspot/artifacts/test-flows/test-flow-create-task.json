@@ -1,7 +1,7 @@
 {
-    "name": "E2E HubSpot - New Contact In List Trigger",
+    "name": "E2E HubSpot - Create Task",
     "flow": {
-        "aeadf9b0-c957-4120-9117-46af23bd6d70": {
+        "6e99139a-abf3-4382-bbf5-0552758b6394": {
             "type": "appmixer.utils.controls.OnStart",
             "x": 64,
             "y": 320,
@@ -12,13 +12,13 @@
                 "onError": "stopFlow"
             }
         },
-        "696946f2-f59b-4a32-ad7f-af9c9c5f0f3d": {
-            "type": "appmixer.utils.timers.Wait",
+        "2e5586c1-092f-41aa-9560-3bbc8eef3930": {
+            "type": "appmixer.hubspot.crm.CreateContact",
             "x": 272,
             "y": 320,
             "source": {
                 "in": {
-                    "aeadf9b0-c957-4120-9117-46af23bd6d70": [
+                    "6e99139a-abf3-4382-bbf5-0552758b6394": [
                         "out"
                     ]
                 }
@@ -31,46 +31,12 @@
             "config": {
                 "transform": {
                     "in": {
-                        "aeadf9b0-c957-4120-9117-46af23bd6d70": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "interval": {}
-                                },
-                                "lambda": {
-                                    "interval": "1m"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "207a8722-3a74-4127-8a60-7f02ede1dad7": {
-            "type": "appmixer.hubspot.crm.CreateContact",
-            "x": 480,
-            "y": 320,
-            "source": {
-                "in": {
-                    "696946f2-f59b-4a32-ad7f-af9c9c5f0f3d": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "errorHandling": {
-                "autoRetry": false,
-                "onError": "stopFlow"
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "696946f2-f59b-4a32-ad7f-af9c9c5f0f3d": {
+                        "6e99139a-abf3-4382-bbf5-0552758b6394": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "email": {
-                                        "ts-6ef46d38": {
+                                        "ts-cccdce6d": {
                                             "functions": [
                                                 {
                                                     "name": "g_timestamp"
@@ -82,9 +48,9 @@
                                     "lastname": {}
                                 },
                                 "lambda": {
-                                    "email": "e2e-list-{{{ts-6ef46d38}}}@example.com",
+                                    "email": "e2e-task-{{{ts-cccdce6d}}}@example.com",
                                     "firstname": "E2E",
-                                    "lastname": "InList"
+                                    "lastname": "TaskTarget"
                                 }
                             }
                         }
@@ -92,14 +58,63 @@
                 }
             }
         },
-        "1bbf8ba4-8dd7-437d-a344-d845624927ed": {
-            "type": "appmixer.hubspot.crm.AddContactToList",
+        "e3818c84-a730-4b2c-9852-95074605899d": {
+            "type": "appmixer.hubspot.engagements.CreateTask",
+            "x": 480,
+            "y": 320,
+            "source": {
+                "in": {
+                    "2e5586c1-092f-41aa-9560-3bbc8eef3930": [
+                        "contact"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "2e5586c1-092f-41aa-9560-3bbc8eef3930": {
+                            "contact": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "objectId": {
+                                        "oid-1": {
+                                            "variable": "$.2e5586c1-092f-41aa-9560-3bbc8eef3930.contact.id",
+                                            "functions": []
+                                        }
+                                    },
+                                    "associationTypeId": {},
+                                    "hsTaskSubject": {},
+                                    "hsTaskBody": {},
+                                    "hsTaskStatus": {},
+                                    "hsTaskType": {}
+                                },
+                                "lambda": {
+                                    "objectId": "{{{oid-1}}}",
+                                    "associationTypeId": 204,
+                                    "hsTaskSubject": "E2E follow-up task",
+                                    "hsTaskBody": "Created by the E2E Create Task flow.",
+                                    "hsTaskStatus": "NOT_STARTED",
+                                    "hsTaskType": "TODO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "d510af5a-06ee-4df0-aefc-f4acb768815a": {
+            "type": "appmixer.utils.test.Assert",
             "x": 688,
             "y": 320,
             "source": {
                 "in": {
-                    "207a8722-3a74-4127-8a60-7f02ede1dad7": [
-                        "contact"
+                    "e3818c84-a730-4b2c-9852-95074605899d": [
+                        "out"
                     ]
                 }
             },
@@ -111,74 +126,17 @@
             "config": {
                 "transform": {
                     "in": {
-                        "207a8722-3a74-4127-8a60-7f02ede1dad7": {
-                            "contact": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "contactIds": {
-                                        "aid-1": {
-                                            "variable": "$.207a8722-3a74-4127-8a60-7f02ede1dad7.contact.id",
-                                            "functions": []
-                                        }
-                                    },
-                                    "listId": {}
-                                },
-                                "lambda": {
-                                    "listId": "5",
-                                    "contactIds": "{{{aid-1}}}"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "e003bf6e-3d34-4315-b92c-41acf0d69f24": {
-            "type": "appmixer.hubspot.crm.NewContactInList",
-            "x": 64,
-            "y": 576,
-            "source": {},
-            "version": "1.0.0",
-            "errorHandling": {
-                "autoRetry": false,
-                "onError": "stopFlow"
-            },
-            "config": {
-                "properties": {
-                    "listId": "5"
-                }
-            }
-        },
-        "b4c80398-e6e2-4967-9767-e938c86af0db": {
-            "type": "appmixer.utils.test.Assert",
-            "x": 272,
-            "y": 576,
-            "source": {
-                "in": {
-                    "e003bf6e-3d34-4315-b92c-41acf0d69f24": [
-                        "contact"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "errorHandling": {
-                "autoRetry": false,
-                "onError": "stopFlow"
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "e003bf6e-3d34-4315-b92c-41acf0d69f24": {
-                            "contact": {
+                        "e3818c84-a730-4b2c-9852-95074605899d": {
+                            "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "expression": {
-                                        "av-0-e7a47883": {
-                                            "variable": "$.e003bf6e-3d34-4315-b92c-41acf0d69f24.contact.properties.hs_object_id",
+                                        "tid-1": {
+                                            "variable": "$.e3818c84-a730-4b2c-9852-95074605899d.out.id",
                                             "functions": []
                                         },
-                                        "av-1-00915855": {
-                                            "variable": "$.e003bf6e-3d34-4315-b92c-41acf0d69f24.contact.properties.email",
+                                        "tar-1": {
+                                            "variable": "$.e3818c84-a730-4b2c-9852-95074605899d.out.archived",
                                             "functions": []
                                         }
                                     }
@@ -187,13 +145,13 @@
                                     "expression": {
                                         "AND": [
                                             {
-                                                "field": "{{{av-0-e7a47883}}}",
+                                                "field": "{{{tid-1}}}",
                                                 "assertion": "notEmpty"
                                             },
                                             {
-                                                "field": "{{{av-1-00915855}}}",
-                                                "assertion": "regex",
-                                                "expected": "^e2e-list-.*@example\\.com$"
+                                                "field": "{{{tar-1}}}",
+                                                "assertion": "equal",
+                                                "expected": "false"
                                             }
                                         ]
                                     }
@@ -204,13 +162,13 @@
                 }
             }
         },
-        "d29bf69a-5319-43dd-af5b-46753194bf8d": {
+        "e2980f97-cf41-4a54-8e80-b3d7d7485bbe": {
             "type": "appmixer.utils.test.AfterAll",
             "x": 896,
             "y": 320,
             "source": {
                 "in": {
-                    "b4c80398-e6e2-4967-9767-e938c86af0db": [
+                    "d510af5a-06ee-4df0-aefc-f4acb768815a": [
                         "out"
                     ]
                 }
@@ -222,17 +180,17 @@
             },
             "config": {
                 "properties": {
-                    "timeout": 420
+                    "timeout": 180
                 }
             }
         },
-        "f197d829-e199-491a-95dd-cbb62a0f98c1": {
+        "0d314e90-4260-455f-9936-3f56edcb0cdb": {
             "type": "appmixer.hubspot.core.MakeApiCall",
-            "x": 1312,
+            "x": 1104,
             "y": 320,
             "source": {
                 "in": {
-                    "d43f3675-e13d-4218-ae76-aff762312db8": [
+                    "e2980f97-cf41-4a54-8e80-b3d7d7485bbe": [
                         "out"
                     ]
                 }
@@ -245,20 +203,20 @@
             "config": {
                 "transform": {
                     "in": {
-                        "d43f3675-e13d-4218-ae76-aff762312db8": {
+                        "e2980f97-cf41-4a54-8e80-b3d7d7485bbe": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "url": {
-                                        "del-2": {
-                                            "variable": "$.e003bf6e-3d34-4315-b92c-41acf0d69f24.contact.properties.hs_object_id",
+                                        "dt-1": {
+                                            "variable": "$.e3818c84-a730-4b2c-9852-95074605899d.out.id",
                                             "functions": []
                                         }
                                     },
                                     "method": {}
                                 },
                                 "lambda": {
-                                    "url": "/crm/v3/objects/contacts/{{{del-2}}}",
+                                    "url": "/crm/v3/objects/tasks/{{{dt-1}}}",
                                     "method": "DELETE"
                                 }
                             }
@@ -267,13 +225,13 @@
                 }
             }
         },
-        "8efea08e-2951-4c90-a3fd-04fedc154806": {
-            "type": "appmixer.utils.test.ProcessE2EResults",
-            "x": 1520,
+        "518386a7-225e-4cc5-b2c4-fd743590d18d": {
+            "type": "appmixer.hubspot.core.MakeApiCall",
+            "x": 1312,
             "y": 320,
             "source": {
                 "in": {
-                    "f197d829-e199-491a-95dd-cbb62a0f98c1": [
+                    "0d314e90-4260-455f-9936-3f56edcb0cdb": [
                         "out"
                     ]
                 }
@@ -286,23 +244,64 @@
             "config": {
                 "transform": {
                     "in": {
-                        "f197d829-e199-491a-95dd-cbb62a0f98c1": {
+                        "0d314e90-4260-455f-9936-3f56edcb0cdb": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "url": {
+                                        "dc-1": {
+                                            "variable": "$.2e5586c1-092f-41aa-9560-3bbc8eef3930.contact.id",
+                                            "functions": []
+                                        }
+                                    },
+                                    "method": {}
+                                },
+                                "lambda": {
+                                    "url": "/crm/v3/objects/contacts/{{{dc-1}}}",
+                                    "method": "DELETE"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "3e82e172-528e-40e7-9c79-f0eeeda295b0": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 1520,
+            "y": 320,
+            "source": {
+                "in": {
+                    "518386a7-225e-4cc5-b2c4-fd743590d18d": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "518386a7-225e-4cc5-b2c4-fd743590d18d": {
                             "out": {
                                 "type": "json2new",
                                 "modifiers": {
                                     "recipients": {},
                                     "testCase": {},
                                     "result": {
-                                        "res-e19615f2": {
-                                            "variable": "$.f197d829-e199-491a-95dd-cbb62a0f98c1.out",
+                                        "res-ct": {
+                                            "variable": "$.e2980f97-cf41-4a54-8e80-b3d7d7485bbe.out",
                                             "functions": []
                                         }
                                     }
                                 },
                                 "lambda": {
                                     "recipients": "test@appmixer.com",
-                                    "testCase": "E2E HubSpot - New Contact In List Trigger",
-                                    "result": "{{{res-e19615f2}}}"
+                                    "testCase": "E2E HubSpot - Create Task",
+                                    "result": "{{{res-ct}}}"
                                 }
                             }
                         }
@@ -311,47 +310,6 @@
                 "properties": {
                     "successStoreId": "695d11bf9bd2c7da7fff03f6",
                     "failedStoreId": "695d11c1c38355dede7fa7a0"
-                }
-            }
-        },
-        "d43f3675-e13d-4218-ae76-aff762312db8": {
-            "type": "appmixer.hubspot.crm.RemoveContactFromList",
-            "x": 1104,
-            "y": 320,
-            "source": {
-                "in": {
-                    "d29bf69a-5319-43dd-af5b-46753194bf8d": [
-                        "out"
-                    ]
-                }
-            },
-            "version": "1.0.0",
-            "errorHandling": {
-                "autoRetry": false,
-                "onError": "stopFlow"
-            },
-            "config": {
-                "transform": {
-                    "in": {
-                        "d29bf69a-5319-43dd-af5b-46753194bf8d": {
-                            "out": {
-                                "type": "json2new",
-                                "modifiers": {
-                                    "contactIds": {
-                                        "rid-1": {
-                                            "variable": "$.e003bf6e-3d34-4315-b92c-41acf0d69f24.contact.properties.hs_object_id",
-                                            "functions": []
-                                        }
-                                    },
-                                    "listId": {}
-                                },
-                                "lambda": {
-                                    "listId": "5",
-                                    "contactIds": "{{{rid-1}}}"
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }

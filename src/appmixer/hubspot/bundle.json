@@ -106,7 +106,11 @@
             "Added NewContactInList trigger: polls for new contacts added to a specific HubSpot list.",
             "Added FormSubmission trigger: polls for new submissions of a specific HubSpot form.",
             "Updated routes.js to dynamically create HubSpot webhook subscriptions for custom properties used in ContactPropertyChanged.",
-            "Added the 'forms' OAuth scope, required by the FormSubmission trigger's submissions API."
+            "Added the 'forms' OAuth scope, required by the FormSubmission trigger's submissions API.",
+            "Added AddContactToList and RemoveContactFromList components and a list selection dropdown (ListLists source) for NewContactInList.",
+            "Added CreateTask component for creating tasks (engagements of type TASK) associated with HubSpot objects.",
+            "Added EnrollContactInWorkflow component for enrolling a contact in a HubSpot workflow by email, with a ListWorkflows helper source.",
+            "Added the 'automation' OAuth scope required by the workflows API."
         ]
     }
 }
