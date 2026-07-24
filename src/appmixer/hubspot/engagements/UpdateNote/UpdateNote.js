@@ -9,6 +9,13 @@ module.exports = {
             hsNoteBody
         } = context.messages.in.content;
 
+        if (!noteId) {
+            throw new context.CancelError('Note ID is required!');
+        }
+        if (!hsNoteBody) {
+            throw new context.CancelError('Note Body is required!');
+        }
+
         const { auth } = context;
         const hs = new Hubspot(auth.accessToken, context.config);
 

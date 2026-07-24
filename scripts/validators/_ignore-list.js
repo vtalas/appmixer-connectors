@@ -276,12 +276,55 @@ module.exports = [
         reason: 'Pre-existing snake_case input property names (created_at_min, product_type, accepts_marketing, ...) mirror the Shopify Admin API field names 1:1 and are referenced by published flows and the buildOrder/buildProduct mappers. Renaming to camelCase is a breaking change deferred to a future major version. Surfaced now only because the apiKey auth migration touched every component.json.'
     },
     {
+        validator: 'delete-returns-empty',
+        paths: [
+            'hubspot/crm/DeleteCompany/component.json',
+            'hubspot/crm/DeleteContact/component.json',
+            'hubspot/crm/DeleteDeal/component.json'
+        ],
+        reason: 'These published Delete components return { companyId | contactId | dealId } and declare those fields as outPort options that existing flows map. Switching to the standard empty-object return is a breaking output change deferred to a future major version. Surfaced now only because the 4.8.0 quality pass touched these files.'
+    },
+    {
+        validator: 'delete-update-shape',
+        paths: [
+            'hubspot/crm/UpdateCompany/component.json',
+            'hubspot/crm/UpdateContact/component.json'
+        ],
+        reason: 'UpdateContact accepts email OR contactId (either identifies the record) and UpdateCompany resolves the company by domain, so neither has a single always-required ID input. Marking one required now would break existing flows that use the other identifier. Deferred to a future major redesign.'
+    },
+    {
+        validator: 'find-list-no-pagination',
+        paths: [
+            'hubspot/crm/FindCompanies/component.json',
+            'hubspot/crm/FindContacts/component.json',
+            'hubspot/crm/ListContacts/component.json',
+            'hubspot/crm/ListDeals/component.json'
+        ],
+        reason: 'The limit input is a long-published part of these components and existing flows set it. Removing it is a breaking change deferred to a future major version. Surfaced now only because the 4.8.0 quality pass touched these files.'
+    },
+    {
         validator: 'dynamic-outport-required-inputs',
         messageIncludes: 'ignoreAuth=true',
         paths: [
             'hubspot/crm/ContactPropertyChanged/component.json',
-            'hubspot/crm/NewContactInList/component.json'
+            'hubspot/crm/NewContactInList/component.json',
+            'hubspot/crm/CreateCompany/component.json',
+            'hubspot/crm/CreateDeal/component.json',
+            'hubspot/crm/FindCompanies/component.json',
+            'hubspot/crm/FindContacts/component.json',
+            'hubspot/crm/GetContact/component.json',
+            'hubspot/crm/GetDeal/component.json',
+            'hubspot/crm/ListContacts/component.json',
+            'hubspot/crm/ListDeals/component.json',
+            'hubspot/crm/NewContact/component.json',
+            'hubspot/crm/NewDeal/component.json',
+            'hubspot/crm/UpdateCompany/component.json',
+            'hubspot/crm/UpdateContact/component.json',
+            'hubspot/crm/UpdateDeal/component.json',
+            'hubspot/crm/UpdatedContact/component.json',
+            'hubspot/crm/UpdatedDeal/component.json',
+            'hubspot/engagements/FindNotes/component.json'
         ],
-        reason: 'The contact outPort source is GetContactsProperties, which calls the live HubSpot properties API to build the variable picker — the same authenticated source every other hubspot contact component (NewContact, GetContact, ...) uses without ignoreAuth. Adding ignoreAuth=true would make the dropdown request unauthenticated and fail.'
+        reason: 'Every hubspot dynamic outPort source resolves through the live HubSpot properties API (GetContactsProperties / GetDealsProperties / GetCompaniesProperties, either directly or via componentStaticCall inside the component\'s own generateOutputPortOptions). These calls need an authenticated session; adding ignoreAuth=true would make the dropdown request unauthenticated and fail with 500 Invalid URL chips in the designer.'
     }
 ];

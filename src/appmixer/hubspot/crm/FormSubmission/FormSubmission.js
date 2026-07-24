@@ -51,7 +51,7 @@ module.exports = {
 
                 const { data } = await hubspot.call(
                     'get',
-                    `form-integrations/v1/submissions/by-form/${formId}`,
+                    `form-integrations/v1/submissions/forms/${formId}`,
                     params
                 );
 
@@ -100,7 +100,7 @@ module.exports = {
 
         // Latest submission of the configured form — the same raw submission
         // shape receive() emits (submittedAt, values, pageUrl, ...).
-        const { data } = await hubspot.call('get', `form-integrations/v1/submissions/by-form/${formId}`, { limit: 1 });
+        const { data } = await hubspot.call('get', `form-integrations/v1/submissions/forms/${formId}`, { limit: 1 });
         const submission = data.results && data.results[0];
         if (!submission) {
             throw new context.CancelError('The selected form has no submissions to use as test data.');

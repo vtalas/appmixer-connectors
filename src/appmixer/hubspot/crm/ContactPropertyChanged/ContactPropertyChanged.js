@@ -98,6 +98,9 @@ class ContactPropertyChanged extends BaseSubscriptionComponent {
             ? [{ propertyName: context.properties.propertyName, operator: 'HAS_PROPERTY' }]
             : [];
         const record = await this.fetchLatestExample(context, 'contacts', { sortProperty: 'lastmodifieddate', filters });
+        if (!record) {
+            throw new context.CancelError('No contact found to use as test data.');
+        }
         return context.sendJson(record, 'contact');
     }
 }

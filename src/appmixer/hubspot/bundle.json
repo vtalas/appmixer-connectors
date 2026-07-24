@@ -110,7 +110,11 @@
             "Added AddContactToList and RemoveContactFromList components and a list selection dropdown (ListLists source) for NewContactInList.",
             "Added CreateTask component for creating tasks (engagements of type TASK) associated with HubSpot objects.",
             "Added EnrollContactInWorkflow component for enrolling a contact in a HubSpot workflow by email, with a ListWorkflows helper source.",
-            "Added the 'automation' OAuth scope required by the workflows API."
+            "Added the 'automation' OAuth scope required by the workflows API.",
+            "FormSubmission: fixed the submissions endpoint path (form-integrations/v1/submissions/forms, the by-form variant returns 404).",
+            "Added required-input validation (CancelError) across create/update/delete/find components.",
+            "Added output port examples across crm and engagements components.",
+            "Contact variable pickers (dynamic contact outPorts) now show types and example values."
         ]
     }
 }

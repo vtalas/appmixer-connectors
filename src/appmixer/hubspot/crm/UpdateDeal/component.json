@@ -21,14 +21,30 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "dealId": { "type":  "string" },
-                    "dealname": { "type":  "string" },
-                    "dealstage": { "type":  "string" },
-                    "pipeline": { "type":  "string" },
-                    "hubSpotOwnerId": { "type":  "string" },
-                    "closedate": { "type":  "string" },
-                    "amount": { "type":  "string" },
-                    "additionalProperties": { "type":  "object" }
+                    "dealId": {
+                        "type": "string"
+                    },
+                    "dealname": {
+                        "type": "string"
+                    },
+                    "dealstage": {
+                        "type": "string"
+                    },
+                    "pipeline": {
+                        "type": "string"
+                    },
+                    "hubSpotOwnerId": {
+                        "type": "string"
+                    },
+                    "closedate": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "string"
+                    },
+                    "additionalProperties": {
+                        "type": "object"
+                    }
                 },
                 "required": [
                     "dealId"
@@ -101,9 +117,13 @@
                         "type": "expression",
                         "label": "Additional Properties",
                         "tooltip": "Addition HubSpot or custom properties to add to the deal.",
-                        "exclusiveFields": ["name"],
+                        "exclusiveFields": [
+                            "name"
+                        ],
                         "index": 8,
-                        "levels": ["AND"],
+                        "levels": [
+                            "AND"
+                        ],
                         "fields": {
                             "name": {
                                 "type": "select",
@@ -141,14 +161,24 @@
             "source": {
                 "url": "/component/appmixer/hubspot/crm/GetDealsProperties?outPort=out",
                 "data": {
-                    "transform": "./GetDealsProperties#dealToSelectArray"
+                    "transform": "./GetDealsProperties#dealToSelectArray",
+                    "messages": {
+                        "in/dealId": "dummy"
+                    }
                 }
             }
         },
         {
             "name": "notUpdated",
             "options": [
-                { "label": "Deal ID", "value": "dealId" }
+                {
+                    "label": "Deal ID",
+                    "value": "dealId",
+                    "schema": {
+                        "type": "string",
+                        "example": "931201"
+                    }
+                }
             ]
         }
     ],

@@ -24,13 +24,27 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "dealname": { "type":  "string" },
-                    "dealstage": { "type":  "string" },
-                    "pipeline": { "type":  "string" },
-                    "hubSpotOwnerId": { "type":  "string" },
-                    "closedate": { "type":  "string" },
-                    "amount": { "type":  "string" },
-                    "additionalProperties": { "type":  "object" }
+                    "dealname": {
+                        "type": "string"
+                    },
+                    "dealstage": {
+                        "type": "string"
+                    },
+                    "pipeline": {
+                        "type": "string"
+                    },
+                    "hubSpotOwnerId": {
+                        "type": "string"
+                    },
+                    "closedate": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "string"
+                    },
+                    "additionalProperties": {
+                        "type": "object"
+                    }
                 },
                 "required": [
                     "dealname"
@@ -103,9 +117,13 @@
                         "type": "expression",
                         "label": "Additional Properties",
                         "tooltip": "Addition HubSpot or custom properties to add to the deal.",
-                        "exclusiveFields": ["name"],
+                        "exclusiveFields": [
+                            "name"
+                        ],
                         "index": 7,
-                        "levels": ["AND"],
+                        "levels": [
+                            "AND"
+                        ],
                         "fields": {
                             "name": {
                                 "type": "select",
@@ -143,7 +161,10 @@
             "source": {
                 "url": "/component/appmixer/hubspot/crm/GetDealsProperties?outPort=out",
                 "data": {
-                    "transform": "./GetDealsProperties#dealToSelectArray"
+                    "transform": "./GetDealsProperties#dealToSelectArray",
+                    "messages": {
+                        "in/dealname": "dummy"
+                    }
                 }
             }
         }
