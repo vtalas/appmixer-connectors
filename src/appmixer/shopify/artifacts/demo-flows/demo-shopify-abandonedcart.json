@@ -1,6 +1,4 @@
 {
-    "name": "Demo Shopify - Abandoned Cart",
-    "type": "automation",
     "flow": {
         "e3000000-0000-0000-0000-000000000001": {
             "type": "appmixer.shopify.checkouts.AbandonedCart",
@@ -29,70 +27,29 @@
                             "checkout": {
                                 "type": "json2new",
                                 "modifiers": {
-                                    "a": {
-                                        "variable": "$.e3000000-0000-0000-0000-000000000001.checkout",
-                                        "functions": [
-                                            {
-                                                "name": "g_jsonPath",
-                                                "params": [
-                                                    {
-                                                        "value": "$.email"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                    "to": {
+                                        "a": {
+                                            "variable": "$.e3000000-0000-0000-0000-000000000001.checkout.email",
+                                            "functions": []
+                                        }
                                     },
-                                    "b": {
-                                        "variable": "$.e3000000-0000-0000-0000-000000000001.checkout",
-                                        "functions": [
-                                            {
-                                                "name": "g_jsonPath",
-                                                "params": [
-                                                    {
-                                                        "value": "$.abandoned_checkout_url"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "c": {
-                                        "variable": "$.e3000000-0000-0000-0000-000000000001.checkout",
-                                        "functions": [
-                                            {
-                                                "name": "g_jsonPath",
-                                                "params": [
-                                                    {
-                                                        "value": "$.total_price"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "d": {
-                                        "variable": "$.e3000000-0000-0000-0000-000000000001.checkout",
-                                        "functions": [
-                                            {
-                                                "name": "g_jsonPath",
-                                                "params": [
-                                                    {
-                                                        "value": "$.currency"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "e": {
-                                        "variable": "$.e3000000-0000-0000-0000-000000000001.checkout",
-                                        "functions": [
-                                            {
-                                                "name": "g_jsonPath",
-                                                "params": [
-                                                    {
-                                                        "value": "$.id"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                    "html": {
+                                        "b": {
+                                            "variable": "$.e3000000-0000-0000-0000-000000000001.checkout.abandoned_checkout_url",
+                                            "functions": []
+                                        },
+                                        "c": {
+                                            "variable": "$.e3000000-0000-0000-0000-000000000001.checkout.total_price",
+                                            "functions": []
+                                        },
+                                        "d": {
+                                            "variable": "$.e3000000-0000-0000-0000-000000000001.checkout.currency",
+                                            "functions": []
+                                        },
+                                        "e": {
+                                            "variable": "$.e3000000-0000-0000-0000-000000000001.checkout.id",
+                                            "functions": []
+                                        }
                                     }
                                 },
                                 "lambda": {
@@ -104,12 +61,11 @@
                         }
                     }
                 }
-            }
+            },
+            "version": "1.1.1"
         }
     },
-    "wizard": {
-        "fields": []
-    },
+    "name": "Demo Shopify - Abandoned Cart",
     "notes": {
         "22222222-de30-4000-8000-000000000001": {
             "content": "## How to verify this trigger\n\nAbandoned checkouts cannot be created through the Admin API — only a real storefront session creates one:\n\n1. Open the online store in an **incognito window** (https://<store>.myshopify.com; dev stores are password-protected — password is in Online Store → Preferences). A fresh window is required, otherwise Shopify resumes your previous checkout instead of creating a new one.\n2. Add a product to the cart and proceed to checkout.\n3. Enter an **email address and shipping address** and continue to the payment step (without contact info the checkout never appears in the abandoned list).\n4. Close the tab before paying.\n\nShopify lists the checkout in Admin → Orders → Abandoned checkouts (and in the API this trigger polls) after a delay of **~10 minutes**. The flow must already be running at that moment — the trigger baselines existing checkouts on its first poll and only emits checkouts that appear while it runs.",
@@ -118,5 +74,9 @@
             "x": 64,
             "y": -80
         }
+    },
+    "type": "automation",
+    "wizard": {
+        "fields": []
     }
 }
