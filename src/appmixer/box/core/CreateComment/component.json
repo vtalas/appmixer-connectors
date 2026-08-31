@@ -80,21 +80,24 @@
                     "label": "Type",
                     "value": "type",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "comment"
                     }
                 },
                 {
                     "label": "Comment ID",
                     "value": "id",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "123456789"
                     }
                 },
                 {
                     "label": "Message",
                     "value": "message",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Looks good to me!"
                     }
                 },
                 {
@@ -105,16 +108,24 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Created By.Type"
+                                "title": "Created By.Type",
+                                "example": "comment"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Created By.Id"
+                                "title": "Created By.Id",
+                                "example": "123456789"
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Created By.Name"
+                                "title": "Created By.Name",
+                                "example": "Documents"
                             }
+                        },
+                        "example": {
+                            "type": "comment",
+                            "id": "123456789",
+                            "name": "Documents"
                         }
                     }
                 },
@@ -126,16 +137,24 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Item.Type"
+                                "title": "Item.Type",
+                                "example": "comment"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Item.Id"
+                                "title": "Item.Id",
+                                "example": "123456789"
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Item.Name"
+                                "title": "Item.Name",
+                                "example": "Documents"
                             }
+                        },
+                        "example": {
+                            "type": "comment",
+                            "id": "123456789",
+                            "name": "Documents"
                         }
                     }
                 }

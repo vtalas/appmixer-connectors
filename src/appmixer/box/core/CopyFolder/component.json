@@ -66,21 +66,24 @@
                     "label": "Type",
                     "value": "type",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "folder"
                     }
                 },
                 {
                     "label": "Folder ID",
                     "value": "id",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "123456789"
                     }
                 },
                 {
                     "label": "Name",
                     "value": "name",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Documents"
                     }
                 },
                 {
@@ -91,16 +94,24 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Parent.Type"
+                                "title": "Parent.Type",
+                                "example": "folder"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Parent.Id"
+                                "title": "Parent.Id",
+                                "example": "123456789"
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Parent.Name"
+                                "title": "Parent.Name",
+                                "example": "Documents"
                             }
+                        },
+                        "example": {
+                            "type": "folder",
+                            "id": "123456789",
+                            "name": "Documents"
                         }
                     }
                 }

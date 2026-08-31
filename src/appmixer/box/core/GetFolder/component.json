@@ -18,7 +18,7 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "folder_id": {
+                    "folderId": {
                         "type": "string"
                     },
                     "fields": {
@@ -26,12 +26,12 @@
                     }
                 },
                 "required": [
-                    "folder_id"
+                    "folderId"
                 ]
             },
             "inspector": {
                 "inputs": {
-                    "folder_id": {
+                    "folderId": {
                         "type": "text",
                         "index": 1,
                         "label": "Folder ID",
@@ -55,35 +55,40 @@
                     "label": "Type",
                     "value": "type",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "folder"
                     }
                 },
                 {
                     "label": "Folder ID",
                     "value": "id",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "123456789"
                     }
                 },
                 {
                     "label": "Name",
                     "value": "name",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Documents"
                     }
                 },
                 {
                     "label": "Created At",
                     "value": "created_at",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "2024-01-15T10:30:00-08:00"
                     }
                 },
                 {
                     "label": "Modified At",
                     "value": "modified_at",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "2024-01-15T10:30:00-08:00"
                     }
                 },
                 {
@@ -94,7 +99,8 @@
                         "properties": {
                             "total_count": {
                                 "type": "number",
-                                "title": "Item Collection.Total Count"
+                                "title": "Item Collection.Total Count",
+                                "example": 3
                             },
                             "entries": {
                                 "type": "array",
@@ -103,15 +109,18 @@
                                     "properties": {
                                         "type": {
                                             "type": "string",
-                                            "title": "Item Collection.Entries.Type"
+                                            "title": "Item Collection.Entries.Type",
+                                            "example": "folder"
                                         },
                                         "id": {
                                             "type": "string",
-                                            "title": "Item Collection.Entries.Id"
+                                            "title": "Item Collection.Entries.Id",
+                                            "example": "123456789"
                                         },
                                         "name": {
                                             "type": "string",
-                                            "title": "Item Collection.Entries.Name"
+                                            "title": "Item Collection.Entries.Name",
+                                            "example": "Documents"
                                         }
                                     }
                                 },
@@ -119,12 +128,26 @@
                             },
                             "limit": {
                                 "type": "number",
-                                "title": "Item Collection.Limit"
+                                "title": "Item Collection.Limit",
+                                "example": 42
                             },
                             "offset": {
                                 "type": "number",
-                                "title": "Item Collection.Offset"
+                                "title": "Item Collection.Offset",
+                                "example": 42
                             }
+                        },
+                        "example": {
+                            "total_count": 3,
+                            "entries": [
+                                {
+                                    "type": "folder",
+                                    "id": "123456789",
+                                    "name": "Documents"
+                                }
+                            ],
+                            "limit": 42,
+                            "offset": 42
                         }
                     }
                 }

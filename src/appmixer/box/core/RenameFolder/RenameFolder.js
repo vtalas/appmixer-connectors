@@ -4,7 +4,7 @@ module.exports = {
 
     async receive(context) {
 
-        const { folder_id: folderId, name, ifMatch } = context.messages.in.content;
+        const { folderId, name, ifMatch } = context.messages.in.content;
 
         // Validate required inputs
         if (!folderId) {

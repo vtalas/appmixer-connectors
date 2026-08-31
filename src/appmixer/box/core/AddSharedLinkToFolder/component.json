@@ -103,56 +103,64 @@
                     "label": "Type",
                     "value": "type",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "folder"
                     }
                 },
                 {
                     "label": "ID",
                     "value": "id",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "123456789"
                     }
                 },
                 {
                     "label": "Name",
                     "value": "name",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Documents"
                     }
                 },
                 {
                     "label": "Shared Link URL",
                     "value": "shared_link.url",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "https://app.box.com/s/abc123xyz"
                     }
                 },
                 {
                     "label": "Shared Link Access",
                     "value": "shared_link.access",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "open"
                     }
                 },
                 {
                     "label": "Shared Link Download URL",
                     "value": "shared_link.download_url",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "https://app.box.com/s/abc123xyz"
                     }
                 },
                 {
                     "label": "Shared Link Can Download",
                     "value": "shared_link.permissions.can_download",
                     "schema": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "example": false
                     }
                 },
                 {
                     "label": "Shared Link Can Preview",
                     "value": "shared_link.permissions.can_preview",
                     "schema": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "example": false
                     }
                 },
                 {
@@ -163,29 +171,43 @@
                         "properties": {
                             "access": {
                                 "type": "string",
-                                "title": "Shared Link.Access"
+                                "title": "Shared Link.Access",
+                                "example": "open"
                             },
                             "url": {
                                 "type": "string",
-                                "title": "Shared Link.Url"
+                                "title": "Shared Link.Url",
+                                "example": "https://app.box.com/s/abc123xyz"
                             },
                             "download_url": {
                                 "type": "string",
-                                "title": "Shared Link.Download Url"
+                                "title": "Shared Link.Download Url",
+                                "example": "https://app.box.com/s/abc123xyz"
                             },
                             "permissions": {
                                 "type": "object",
                                 "properties": {
                                     "can_download": {
                                         "type": "boolean",
-                                        "title": "Shared Link.Permissions.Can Download"
+                                        "title": "Shared Link.Permissions.Can Download",
+                                        "example": false
                                     },
                                     "can_preview": {
                                         "type": "boolean",
-                                        "title": "Shared Link.Permissions.Can Preview"
+                                        "title": "Shared Link.Permissions.Can Preview",
+                                        "example": false
                                     }
                                 },
                                 "title": "Shared Link.Permissions"
+                            }
+                        },
+                        "example": {
+                            "access": "open",
+                            "url": "https://app.box.com/s/abc123xyz",
+                            "download_url": "https://app.box.com/s/abc123xyz",
+                            "permissions": {
+                                "can_download": false,
+                                "can_preview": false
                             }
                         }
                     }

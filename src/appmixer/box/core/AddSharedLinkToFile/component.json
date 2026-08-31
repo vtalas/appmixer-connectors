@@ -103,14 +103,16 @@
                     "label": "Type",
                     "value": "type",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "file"
                     }
                 },
                 {
                     "label": "Id",
                     "value": "id",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "123456789"
                     }
                 },
                 {
@@ -121,16 +123,24 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "File Version.Type"
+                                "title": "File Version.Type",
+                                "example": "file"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "File Version.Id"
+                                "title": "File Version.Id",
+                                "example": "123456789"
                             },
                             "sha1": {
                                 "type": "string",
-                                "title": "File Version.Sha1"
+                                "title": "File Version.Sha1",
+                                "example": "example"
                             }
+                        },
+                        "example": {
+                            "type": "file",
+                            "id": "123456789",
+                            "sha1": "example"
                         }
                     }
                 },
@@ -138,42 +148,48 @@
                     "label": "Sequence Id",
                     "value": "sequence_id",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "123456789"
                     }
                 },
                 {
                     "label": "Etag",
                     "value": "etag",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "1"
                     }
                 },
                 {
                     "label": "Sha1",
                     "value": "sha1",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "example"
                     }
                 },
                 {
                     "label": "Name",
                     "value": "name",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Documents"
                     }
                 },
                 {
                     "label": "Description",
                     "value": "description",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Team documents"
                     }
                 },
                 {
                     "label": "Size",
                     "value": "size",
                     "schema": {
-                        "type": "number"
+                        "type": "number",
+                        "example": 1048576
                     }
                 },
                 {
@@ -184,7 +200,8 @@
                         "properties": {
                             "total_count": {
                                 "type": "number",
-                                "title": "Path Collection.Total Count"
+                                "title": "Path Collection.Total Count",
+                                "example": 3
                             },
                             "entries": {
                                 "type": "array",
@@ -193,11 +210,13 @@
                                     "properties": {
                                         "type": {
                                             "type": "string",
-                                            "title": "Path Collection.Entries.Type"
+                                            "title": "Path Collection.Entries.Type",
+                                            "example": "file"
                                         },
                                         "id": {
                                             "type": "string",
-                                            "title": "Path Collection.Entries.Id"
+                                            "title": "Path Collection.Entries.Id",
+                                            "example": "123456789"
                                         },
                                         "sequence_id": {
                                             "type": "null",
@@ -209,12 +228,25 @@
                                         },
                                         "name": {
                                             "type": "string",
-                                            "title": "Path Collection.Entries.Name"
+                                            "title": "Path Collection.Entries.Name",
+                                            "example": "Documents"
                                         }
                                     }
                                 },
                                 "title": "Path Collection.Entries"
                             }
+                        },
+                        "example": {
+                            "total_count": 3,
+                            "entries": [
+                                {
+                                    "type": "file",
+                                    "id": "123456789",
+                                    "sequence_id": null,
+                                    "etag": null,
+                                    "name": "Documents"
+                                }
+                            ]
                         }
                     }
                 },
@@ -222,42 +254,48 @@
                     "label": "Created At",
                     "value": "created_at",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "2024-01-15T10:30:00-08:00"
                     }
                 },
                 {
                     "label": "Modified At",
                     "value": "modified_at",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "2024-01-15T10:30:00-08:00"
                     }
                 },
                 {
                     "label": "Trashed At",
                     "value": "trashed_at",
                     "schema": {
-                        "type": "null"
+                        "type": "null",
+                        "example": null
                     }
                 },
                 {
                     "label": "Purged At",
                     "value": "purged_at",
                     "schema": {
-                        "type": "null"
+                        "type": "null",
+                        "example": null
                     }
                 },
                 {
                     "label": "Content Created At",
                     "value": "content_created_at",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "2024-01-15T10:30:00-08:00"
                     }
                 },
                 {
                     "label": "Content Modified At",
                     "value": "content_modified_at",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "2024-01-15T10:30:00-08:00"
                     }
                 },
                 {
@@ -268,20 +306,30 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Created By.Type"
+                                "title": "Created By.Type",
+                                "example": "file"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Created By.Id"
+                                "title": "Created By.Id",
+                                "example": "123456789"
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Created By.Name"
+                                "title": "Created By.Name",
+                                "example": "Documents"
                             },
                             "login": {
                                 "type": "string",
-                                "title": "Created By.Login"
+                                "title": "Created By.Login",
+                                "example": "user@example.com"
                             }
+                        },
+                        "example": {
+                            "type": "file",
+                            "id": "123456789",
+                            "name": "Documents",
+                            "login": "user@example.com"
                         }
                     }
                 },
@@ -293,20 +341,30 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Modified By.Type"
+                                "title": "Modified By.Type",
+                                "example": "file"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Modified By.Id"
+                                "title": "Modified By.Id",
+                                "example": "123456789"
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Modified By.Name"
+                                "title": "Modified By.Name",
+                                "example": "Documents"
                             },
                             "login": {
                                 "type": "string",
-                                "title": "Modified By.Login"
+                                "title": "Modified By.Login",
+                                "example": "user@example.com"
                             }
+                        },
+                        "example": {
+                            "type": "file",
+                            "id": "123456789",
+                            "name": "Documents",
+                            "login": "user@example.com"
                         }
                     }
                 },
@@ -318,20 +376,30 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Owned By.Type"
+                                "title": "Owned By.Type",
+                                "example": "file"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Owned By.Id"
+                                "title": "Owned By.Id",
+                                "example": "123456789"
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Owned By.Name"
+                                "title": "Owned By.Name",
+                                "example": "Documents"
                             },
                             "login": {
                                 "type": "string",
-                                "title": "Owned By.Login"
+                                "title": "Owned By.Login",
+                                "example": "user@example.com"
                             }
+                        },
+                        "example": {
+                            "type": "file",
+                            "id": "123456789",
+                            "name": "Documents",
+                            "login": "user@example.com"
                         }
                     }
                 },
@@ -343,11 +411,13 @@
                         "properties": {
                             "url": {
                                 "type": "string",
-                                "title": "Shared Link.Url"
+                                "title": "Shared Link.Url",
+                                "example": "https://app.box.com/s/abc123xyz"
                             },
                             "download_url": {
                                 "type": "string",
-                                "title": "Shared Link.Download Url"
+                                "title": "Shared Link.Download Url",
+                                "example": "https://app.box.com/s/abc123xyz"
                             },
                             "vanity_url": {
                                 "type": "null",
@@ -359,15 +429,18 @@
                             },
                             "effective_access": {
                                 "type": "string",
-                                "title": "Shared Link.Effective Access"
+                                "title": "Shared Link.Effective Access",
+                                "example": "open"
                             },
                             "effective_permission": {
                                 "type": "string",
-                                "title": "Shared Link.Effective Permission"
+                                "title": "Shared Link.Effective Permission",
+                                "example": "can_download"
                             },
                             "is_password_enabled": {
                                 "type": "boolean",
-                                "title": "Shared Link.Is Password Enabled"
+                                "title": "Shared Link.Is Password Enabled",
+                                "example": false
                             },
                             "unshared_at": {
                                 "type": "null",
@@ -375,33 +448,57 @@
                             },
                             "download_count": {
                                 "type": "number",
-                                "title": "Shared Link.Download Count"
+                                "title": "Shared Link.Download Count",
+                                "example": 3
                             },
                             "preview_count": {
                                 "type": "number",
-                                "title": "Shared Link.Preview Count"
+                                "title": "Shared Link.Preview Count",
+                                "example": 3
                             },
                             "access": {
                                 "type": "string",
-                                "title": "Shared Link.Access"
+                                "title": "Shared Link.Access",
+                                "example": "open"
                             },
                             "permissions": {
                                 "type": "object",
                                 "properties": {
                                     "can_preview": {
                                         "type": "boolean",
-                                        "title": "Shared Link.Permissions.Can Preview"
+                                        "title": "Shared Link.Permissions.Can Preview",
+                                        "example": false
                                     },
                                     "can_download": {
                                         "type": "boolean",
-                                        "title": "Shared Link.Permissions.Can Download"
+                                        "title": "Shared Link.Permissions.Can Download",
+                                        "example": false
                                     },
                                     "can_edit": {
                                         "type": "boolean",
-                                        "title": "Shared Link.Permissions.Can Edit"
+                                        "title": "Shared Link.Permissions.Can Edit",
+                                        "example": false
                                     }
                                 },
                                 "title": "Shared Link.Permissions"
+                            }
+                        },
+                        "example": {
+                            "url": "https://app.box.com/s/abc123xyz",
+                            "download_url": "https://app.box.com/s/abc123xyz",
+                            "vanity_url": null,
+                            "vanity_name": null,
+                            "effective_access": "open",
+                            "effective_permission": "can_download",
+                            "is_password_enabled": false,
+                            "unshared_at": null,
+                            "download_count": 3,
+                            "preview_count": 3,
+                            "access": "open",
+                            "permissions": {
+                                "can_preview": false,
+                                "can_download": false,
+                                "can_edit": false
                             }
                         }
                     }
@@ -414,11 +511,13 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "title": "Parent.Type"
+                                "title": "Parent.Type",
+                                "example": "file"
                             },
                             "id": {
                                 "type": "string",
-                                "title": "Parent.Id"
+                                "title": "Parent.Id",
+                                "example": "123456789"
                             },
                             "sequence_id": {
                                 "type": "null",
@@ -430,8 +529,16 @@
                             },
                             "name": {
                                 "type": "string",
-                                "title": "Parent.Name"
+                                "title": "Parent.Name",
+                                "example": "Documents"
                             }
+                        },
+                        "example": {
+                            "type": "file",
+                            "id": "123456789",
+                            "sequence_id": null,
+                            "etag": null,
+                            "name": "Documents"
                         }
                     }
                 },
@@ -439,7 +546,8 @@
                     "label": "Item Status",
                     "value": "item_status",
                     "schema": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "active"
                     }
                 }
             ]
