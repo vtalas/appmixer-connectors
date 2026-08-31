@@ -20,7 +20,7 @@ module.exports = {
             throw new context.CancelError('Invalid File ID. Failed to get file information.');
         }
 
-        if (fileInfo.length > 50 * 1024 * 1024) {
+        if (fileInfo.size > 50 * 1024 * 1024) {
             throw new context.CancelError('Maximum file size is 50MB.');
         }
 
@@ -32,28 +32,37 @@ module.exports = {
 
         // Create form data for multipart/form-data upload
         const form = new FormData();
-        form.append('attributes', JSON.stringify({
+        const attributes = {
             name: fileName,
             parent: {
-                id: parentId
+                id: parentId || '0'
             }
-        }));
+        };
+
+        form.append('attributes', JSON.stringify(attributes));
         form.append('file', fileStream, {
             filename: fileName,
             contentType: fileInfo.contentType || 'application/octet-stream'
         });
 
         // https://developer.box.com/reference/post-files-content/
-        const { data } = await context.httpRequest({
-            method: 'POST',
-            url: 'https://upload.box.com/api/2.0/files/content',
-            headers: {
-                'Authorization': `Bearer ${context.auth.accessToken}`,
-                ...form.getHeaders()
-            },
-            data: form
-        });
+        try {
+            const { data } = await context.httpRequest({
+                method: 'POST',
+                url: 'https://upload.box.com/api/2.0/files/content',
+                headers: {
+                    'Authorization': `Bearer ${context.auth.accessToken}`,
+                    ...form.getHeaders()
+                },
+                data: form
+            });
 
-        return context.sendJson(data, 'out');
+            return context.sendJson(data, 'out');
+        } catch (error) {
+            if (error.statusCode === 409) {
+                throw new context.CancelError(`A file named "${fileName}" already exists in the target folder.`);
+            }
+            throw error;
+        }
     }
 };

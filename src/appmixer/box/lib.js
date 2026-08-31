@@ -1,3 +1,5 @@
+'use strict';
+
 const pathModule = require('path');
 
 const DEFAULT_PREFIX = 'box-objects-export';
@@ -21,7 +23,6 @@ module.exports = {
                 outputPortName
             );
         } else if (outputType === 'object') {
-            // One by one.
             // One by one.
             for (let index = 0; index < records.length; index++) {
                 await context.sendJson(
@@ -47,10 +48,6 @@ module.exports = {
         } else {
             throw new context.CancelError('Unsupported outputType ' + outputType);
         }
-    },
-
-    getProperty(obj, path) {
-        return path.split('.').reduce((acc, part) => acc?.[part], obj);
     },
 
     getOutputPortOptions(context, outputType, itemSchema, { label }) {

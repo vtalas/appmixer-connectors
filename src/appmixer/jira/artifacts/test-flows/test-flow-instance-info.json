@@ -1,0 +1,273 @@
+{
+    "flow": {
+        "10dfd5f7-d137-4d8c-9264-b203cb6a1bb0": {
+            "config": {
+                "transform": {
+                    "in": {
+                        "73aef913-8714-4d52-a255-b230da03e73e": {
+                            "out": {
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{version-check}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "version-check": {
+                                            "functions": [],
+                                            "variable": "$.73aef913-8714-4d52-a255-b230da03e73e.out.version"
+                                        }
+                                    }
+                                },
+                                "type": "json2new"
+                            }
+                        }
+                    }
+                }
+            },
+            "source": {
+                "in": {
+                    "73aef913-8714-4d52-a255-b230da03e73e": [
+                        "out"
+                    ]
+                }
+            },
+            "type": "appmixer.utils.test.Assert",
+            "x": 528,
+            "y": 80
+        },
+        "40d110d1-4a60-4180-b62c-b6551f4bfe6f": {
+            "config": {
+                "properties": {
+                    "timeout": 30
+                }
+            },
+            "source": {
+                "in": {
+                    "10dfd5f7-d137-4d8c-9264-b203cb6a1bb0": [
+                        "out"
+                    ],
+                    "4def661c-e913-4db1-ba4d-aaf805617745": [
+                        "out"
+                    ],
+                    "707ef656-3add-43ac-ae3d-4a95a6f5b830": [
+                        "out"
+                    ],
+                    "ffa82879-0dae-4751-9734-6509f0fb7e44": [
+                        "out"
+                    ]
+                }
+            },
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 752,
+            "y": 320
+        },
+        "4def661c-e913-4db1-ba4d-aaf805617745": {
+            "config": {
+                "transform": {
+                    "in": {
+                        "73aef913-8714-4d52-a255-b230da03e73e": {
+                            "out": {
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{build-number-check}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "build-number-check": {
+                                            "functions": [],
+                                            "variable": "$.73aef913-8714-4d52-a255-b230da03e73e.out.buildNumber"
+                                        }
+                                    }
+                                },
+                                "type": "json2new"
+                            }
+                        }
+                    }
+                }
+            },
+            "source": {
+                "in": {
+                    "73aef913-8714-4d52-a255-b230da03e73e": [
+                        "out"
+                    ]
+                }
+            },
+            "type": "appmixer.utils.test.Assert",
+            "x": 528,
+            "y": 240
+        },
+        "6d3d102f-a97d-47ed-9c95-fc804dd77f83": {
+            "config": {},
+            "source": {},
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 80,
+            "y": 320
+        },
+        "707ef656-3add-43ac-ae3d-4a95a6f5b830": {
+            "config": {
+                "transform": {
+                    "in": {
+                        "73aef913-8714-4d52-a255-b230da03e73e": {
+                            "out": {
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{server-time-check}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "server-time-check": {
+                                            "functions": [],
+                                            "variable": "$.73aef913-8714-4d52-a255-b230da03e73e.out.serverTime"
+                                        }
+                                    }
+                                },
+                                "type": "json2new"
+                            }
+                        }
+                    }
+                }
+            },
+            "source": {
+                "in": {
+                    "73aef913-8714-4d52-a255-b230da03e73e": [
+                        "out"
+                    ]
+                }
+            },
+            "type": "appmixer.utils.test.Assert",
+            "x": 528,
+            "y": 400
+        },
+        "73aef913-8714-4d52-a255-b230da03e73e": {
+            "config": {
+                "properties": {
+                    "account": "698ef14bf513883a8203d020"
+                },
+                "transform": {
+                    "in": {
+                        "6d3d102f-a97d-47ed-9c95-fc804dd77f83": {
+                            "out": {
+                                "lambda": {},
+                                "modifiers": {},
+                                "type": "json2new"
+                            }
+                        }
+                    }
+                }
+            },
+            "source": {
+                "in": {
+                    "6d3d102f-a97d-47ed-9c95-fc804dd77f83": [
+                        "out"
+                    ]
+                }
+            },
+            "type": "appmixer.jira.core.GetInstanceInfo",
+            "x": 304,
+            "y": 320
+        },
+        "b5c44e58-9a01-4ce9-9e21-4a16ccfbda30": {
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "40d110d1-4a60-4180-b62c-b6551f4bfe6f": {
+                            "out": {
+                                "lambda": {
+                                    "recipients": "jirka@client.io",
+                                    "result": "{{{result-var}}}",
+                                    "testCase": "E2E Jira - instance-info"
+                                },
+                                "modifiers": {
+                                    "recipients": {},
+                                    "result": {
+                                        "result-var": {
+                                            "functions": [],
+                                            "variable": "$.40d110d1-4a60-4180-b62c-b6551f4bfe6f.out"
+                                        }
+                                    },
+                                    "testCase": {}
+                                },
+                                "type": "json2new"
+                            }
+                        }
+                    }
+                }
+            },
+            "source": {
+                "in": {
+                    "40d110d1-4a60-4180-b62c-b6551f4bfe6f": [
+                        "out"
+                    ]
+                }
+            },
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 976,
+            "y": 320
+        },
+        "ffa82879-0dae-4751-9734-6509f0fb7e44": {
+            "config": {
+                "transform": {
+                    "in": {
+                        "73aef913-8714-4d52-a255-b230da03e73e": {
+                            "out": {
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{base-url-check}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "base-url-check": {
+                                            "functions": [],
+                                            "variable": "$.73aef913-8714-4d52-a255-b230da03e73e.out.baseUrl"
+                                        }
+                                    }
+                                },
+                                "type": "json2new"
+                            }
+                        }
+                    }
+                }
+            },
+            "source": {
+                "in": {
+                    "73aef913-8714-4d52-a255-b230da03e73e": [
+                        "out"
+                    ]
+                }
+            },
+            "type": "appmixer.utils.test.Assert",
+            "x": 528,
+            "y": 560
+        }
+    },
+    "name": "E2E Jira - instance-info",
+    "notes": {},
+    "wizard": {
+        "fields": []
+    }
+}

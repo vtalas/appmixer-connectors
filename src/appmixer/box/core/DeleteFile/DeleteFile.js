@@ -4,10 +4,10 @@ module.exports = {
 
     async receive(context) {
 
-        const { file_id: fileId, ifMatch } = context.messages.in.content;
+        const { fileId, ifMatch } = context.messages.in.content;
 
         if (!fileId) {
-            throw new context.CancelError('File Id is required.');
+            throw new context.CancelError('File ID is required.');
         }
 
         const headers = {

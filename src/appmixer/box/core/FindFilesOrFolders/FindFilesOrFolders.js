@@ -76,10 +76,11 @@ module.exports = {
         const {
             query,
             type,
-            ancestor_folder_ids: ancestorFolderIds,
-            content_types: contentTypes,
+            ancestorFolderIds,
+            contentTypes,
             fields,
-            outputType
+            outputType,
+            exactMatch
         } = context.messages.in.content;
 
         if (!query) {
@@ -87,7 +88,7 @@ module.exports = {
         }
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Entries', value: 'entries' });
+            return lib.getOutputPortOptions(context, outputType, schema, { label: 'Entries' });
         }
 
         const params = {
@@ -103,7 +104,9 @@ module.exports = {
         }
 
         if (contentTypes) {
-            params.content_types = lib.normalizeMultiselectInput(contentTypes, context, 'Content Types');
+            // Box API expects content_types as a comma-separated string, not an array
+            const contentTypesArray = lib.normalizeMultiselectInput(contentTypes, context, 'Content Types');
+            params.content_types = contentTypesArray.join(',');
         }
 
         if (fields) {
@@ -123,7 +126,13 @@ module.exports = {
             }
         });
 
-        const records = data.entries || [];
+        let records = data.entries || [];
+
+        // Apply client-side exact match filtering if enabled
+        // Box Search API uses tokenized/fuzzy matching by default
+        if (exactMatch) {
+            records = records.filter(item => item.name === query);
+        }
 
         if (records.length === 0) {
             return context.sendJson({}, 'notFound');

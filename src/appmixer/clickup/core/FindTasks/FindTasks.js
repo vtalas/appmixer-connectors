@@ -16,7 +16,6 @@ module.exports = {
             throw new context.CancelError('List ID is required');
         }
 
-
         if (generateOutputPortOptions) {
             return this.getOutputPortOptions(context, outputType);
         }
@@ -34,9 +33,9 @@ module.exports = {
                 assignees: commaSeparatedStringToArray(assigneeIds),
                 statuses: normalizedStatuses,
                 tags: commaSeparatedStringToArray(tags),
-                order_by: orderBy,
-                paramsSerializer: { indexes: false }
-            }
+                order_by: orderBy
+            },
+            paramsSerializer: { indexes: false }
         });
 
         if (!tasks || tasks.length === 0) {
@@ -47,7 +46,8 @@ module.exports = {
             context,
             outputPortName,
             outputType,
-            records: tasks
+            records: tasks,
+            arrayKey: 'tasks'
         });
     },
 
@@ -55,6 +55,8 @@ module.exports = {
 
         if (outputType === 'object' || outputType === 'first') {
             return context.sendJson([
+                { label: 'Current Item Index', value: 'index', schema: { type: 'integer' } },
+                { label: 'Items Count', value: 'count', schema: { type: 'integer' } },
                 { label: 'Task ID', value: 'id' },
                 { label: 'Name', value: 'name' },
                 { label: 'Status', value: 'status.status' },
@@ -83,6 +85,20 @@ module.exports = {
                                 id: { type: 'string', title: 'ID' },
                                 username: { type: 'string', title: 'Username' },
                                 email: { type: 'string', title: 'Email' }
+                            }
+                        }
+                    }
+                },
+                {
+                    label: 'Custom Fields', value: 'custom_fields', schema: {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string', title: 'Field ID' },
+                                name: { type: 'string', title: 'Name' },
+                                type: { type: 'string', title: 'Type' },
+                                value: { type: 'string', title: 'Value' }
                             }
                         }
                     }
@@ -141,6 +157,19 @@ module.exports = {
                                         }
                                     }
                                 },
+                                custom_fields: {
+                                    title: 'Custom Fields',
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {
+                                            id: { type: 'string', title: 'Field ID' },
+                                            name: { type: 'string', title: 'Name' },
+                                            type: { type: 'string', title: 'Type' },
+                                            value: { type: 'string', title: 'Value' }
+                                        }
+                                    }
+                                },
                                 dueDate: { type: 'string', title: 'Due Date' },
                                 url: { type: 'string', title: 'URL' },
                                 'list.id': { type: 'string', title: 'List ID' },
@@ -153,7 +182,8 @@ module.exports = {
                             }
                         }
                     }
-                }
+                },
+                { label: 'Items Count', value: 'count', schema: { type: 'integer' } }
             ], outputPortName);
         } else if (outputType === 'file') {
             return context.sendJson([

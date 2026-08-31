@@ -7,8 +7,6 @@ module.exports = {
 
         return {
 
-            // scope: ['root_readwrite'],
-
             accountNameFromProfileInfo: function(context) {
                 return context.profileInfo.login;
             },
@@ -81,8 +79,6 @@ module.exports = {
                     }
                 });
 
-
-                console.log(data);
                 return {
                     accessToken: data.access_token,
                     accessTokenExpDate: new Date(Date.now() + data.expires_in * 1000),
@@ -98,8 +94,6 @@ module.exports = {
                         Authorization: `Bearer ${context.accessToken}`
                     }
                 });
-
-                console.log(data);
 
                 return !!data?.id;
             }

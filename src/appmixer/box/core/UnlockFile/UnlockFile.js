@@ -1,12 +1,13 @@
 'use strict';
 
 module.exports = {
+
     async receive(context) {
 
         const { fileId } = context.messages.in.content;
 
         if (!fileId) {
-            throw new context.CancelError('File Id is required!');
+            throw new context.CancelError('File ID is required!');
         }
 
         const headers = {

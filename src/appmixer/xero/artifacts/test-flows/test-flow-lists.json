@@ -1,0 +1,549 @@
+{
+    "flow": {
+        "ed9c971a-e3e7-4f78-be77-873e7b1a2f18": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 336,
+            "y": 320,
+            "source": {},
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "2eebe4d3-adf1-4856-a3e5-c34386afa423": {
+            "type": "appmixer.xero.accounting.ListTenants",
+            "x": 528,
+            "y": 320,
+            "source": {
+                "in": {
+                    "ed9c971a-e3e7-4f78-be77-873e7b1a2f18": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "ed9c971a-e3e7-4f78-be77-873e7b1a2f18": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "outputType": "items"
+                                },
+                                "modifiers": {
+                                    "outputType": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "properties": {
+                    "account": "6a341625422c3ef50ebfd509"
+                }
+            },
+            "label": "List Tenants"
+        },
+        "3007b042-274e-494b-8165-788788a59b93": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 720,
+            "y": 320,
+            "source": {
+                "in": {
+                    "2eebe4d3-adf1-4856-a3e5-c34386afa423": [
+                        "tenants"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "2eebe4d3-adf1-4856-a3e5-c34386afa423": {
+                            "tenants": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "type": "text",
+                                                "name": "tenantId",
+                                                "text": "{{{669c46a8-f33c-4bbf-ac13-a53309a776e8}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "variables": {
+                                        "669c46a8-f33c-4bbf-ac13-a53309a776e8": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_jsonPath",
+                                                    "params": [
+                                                        {
+                                                            "value": "$[0].tenantId"
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "variable": "$.2eebe4d3-adf1-4856-a3e5-c34386afa423.tenants.items"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "aba36f76-279c-4b83-be9a-8b3334b34397": {
+            "type": "appmixer.xero.accounting.ListAccounts",
+            "x": 928,
+            "y": 320,
+            "source": {
+                "in": {
+                    "3007b042-274e-494b-8165-788788a59b93": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "3007b042-274e-494b-8165-788788a59b93": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "tenantId": "{{{1a1f5448-6ec0-4dc3-b9a6-aaa4524d18b9}}}",
+                                    "outputType": "items"
+                                },
+                                "modifiers": {
+                                    "tenantId": {
+                                        "1a1f5448-6ec0-4dc3-b9a6-aaa4524d18b9": {
+                                            "functions": [],
+                                            "variable": "$.3007b042-274e-494b-8165-788788a59b93.out.tenantId"
+                                        }
+                                    },
+                                    "outputType": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "properties": {
+                    "account": "6a341625422c3ef50ebfd509"
+                }
+            },
+            "label": "List Accounts"
+        },
+        "a05bbe17-d153-4479-8c85-a0fbcd6b1eff": {
+            "type": "appmixer.xero.accounting.ListJournals",
+            "x": 1152,
+            "y": 480,
+            "source": {
+                "in": {
+                    "aba36f76-279c-4b83-be9a-8b3334b34397": [
+                        "accounts"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "aba36f76-279c-4b83-be9a-8b3334b34397": {
+                            "accounts": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "tenantId": "{{{f59558c2-0f38-430b-864c-443ac65a4d47}}}",
+                                    "outputType": "items"
+                                },
+                                "modifiers": {
+                                    "tenantId": {
+                                        "f59558c2-0f38-430b-864c-443ac65a4d47": {
+                                            "functions": [],
+                                            "variable": "$.3007b042-274e-494b-8165-788788a59b93.out.tenantId"
+                                        }
+                                    },
+                                    "outputType": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "properties": {
+                    "account": "6a341625422c3ef50ebfd509"
+                }
+            },
+            "label": "List Journals"
+        },
+        "f3e8779a-d0ed-4af3-ace0-83e4ae88d4d6": {
+            "type": "appmixer.xero.accounting.ListTrackingCategories",
+            "x": 1360,
+            "y": 640,
+            "source": {
+                "in": {
+                    "a05bbe17-d153-4479-8c85-a0fbcd6b1eff": [
+                        "journals"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "a05bbe17-d153-4479-8c85-a0fbcd6b1eff": {
+                            "journals": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "tenantId": "{{{c451e781-acf6-4a78-936a-29fde537fabb}}}",
+                                    "outputType": "items"
+                                },
+                                "modifiers": {
+                                    "tenantId": {
+                                        "c451e781-acf6-4a78-936a-29fde537fabb": {
+                                            "functions": [],
+                                            "variable": "$.3007b042-274e-494b-8165-788788a59b93.out.tenantId"
+                                        }
+                                    },
+                                    "outputType": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "properties": {
+                    "account": "6a341625422c3ef50ebfd509"
+                }
+            },
+            "label": "List Tracking Categories"
+        },
+        "58663c5d-c054-4de7-ad72-498cf6a11970": {
+            "type": "appmixer.xero.accounting.GetOrganization",
+            "x": 1600,
+            "y": 800,
+            "source": {
+                "in": {
+                    "f3e8779a-d0ed-4af3-ace0-83e4ae88d4d6": [
+                        "trackingCategories"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "f3e8779a-d0ed-4af3-ace0-83e4ae88d4d6": {
+                            "trackingCategories": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "tenantId": {
+                                        "5a05b70b-9b1d-4450-8dfe-9fd0800a19fb": {
+                                            "variable": "$.3007b042-274e-494b-8165-788788a59b93.out.tenantId",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "tenantId": "{{{5a05b70b-9b1d-4450-8dfe-9fd0800a19fb}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "label": "Get Organization"
+        },
+        "2648773a-fefe-414e-8b6d-02fd25bb6c5d": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1136,
+            "y": 320,
+            "source": {
+                "in": {
+                    "aba36f76-279c-4b83-be9a-8b3334b34397": [
+                        "accounts"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "aba36f76-279c-4b83-be9a-8b3334b34397": {
+                            "accounts": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{cd7e3b50-5f2b-4c13-a0ab-4efb7b7349b7}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "cd7e3b50-5f2b-4c13-a0ab-4efb7b7349b7": {
+                                            "functions": [],
+                                            "variable": "$.aba36f76-279c-4b83-be9a-8b3334b34397.accounts.items"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "57fa5653-450e-4dac-821c-ba2149719bc3": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1360,
+            "y": 480,
+            "source": {
+                "in": {
+                    "a05bbe17-d153-4479-8c85-a0fbcd6b1eff": [
+                        "journals"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "a05bbe17-d153-4479-8c85-a0fbcd6b1eff": {
+                            "journals": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{63700707-dcdb-42cd-ba7f-f25ee6e0ed7d}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "63700707-dcdb-42cd-ba7f-f25ee6e0ed7d": {
+                                            "functions": [],
+                                            "variable": "$.a05bbe17-d153-4479-8c85-a0fbcd6b1eff.journals.items"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "bbae7dff-e2b0-40f0-a850-57a4a72b238e": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1616,
+            "y": 640,
+            "source": {
+                "in": {
+                    "f3e8779a-d0ed-4af3-ace0-83e4ae88d4d6": [
+                        "trackingCategories"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "f3e8779a-d0ed-4af3-ace0-83e4ae88d4d6": {
+                            "trackingCategories": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{0f78d742-a1a4-4429-b99b-4fb23ccd4d95}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "0f78d742-a1a4-4429-b99b-4fb23ccd4d95": {
+                                            "functions": [],
+                                            "variable": "$.f3e8779a-d0ed-4af3-ace0-83e4ae88d4d6.trackingCategories.items"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "b8fe4b5e-7466-4ec7-bf68-607137d90b04": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1808,
+            "y": 800,
+            "source": {
+                "in": {
+                    "58663c5d-c054-4de7-ad72-498cf6a11970": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "58663c5d-c054-4de7-ad72-498cf6a11970": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "expression": {
+                                        "91c498e7-7394-43eb-b73b-964cd598464b": {
+                                            "variable": "$.58663c5d-c054-4de7-ad72-498cf6a11970.out.Name",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{91c498e7-7394-43eb-b73b-964cd598464b}}}"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "bff5e798-a155-4035-8550-fb33fb9bc021": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 2000,
+            "y": 320,
+            "source": {
+                "in": {
+                    "2648773a-fefe-414e-8b6d-02fd25bb6c5d": [
+                        "out"
+                    ],
+                    "57fa5653-450e-4dac-821c-ba2149719bc3": [
+                        "out"
+                    ],
+                    "bbae7dff-e2b0-40f0-a850-57a4a72b238e": [
+                        "out"
+                    ],
+                    "b8fe4b5e-7466-4ec7-bf68-607137d90b04": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.0",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "properties": {
+                    "timeout": 180
+                }
+            }
+        },
+        "966c505d-6ed1-4291-a90a-1a67f0e0bca9": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 2192,
+            "y": 320,
+            "source": {
+                "in": {
+                    "bff5e798-a155-4035-8550-fb33fb9bc021": [
+                        "out"
+                    ]
+                }
+            },
+            "version": "1.0.1",
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            },
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "bff5e798-a155-4035-8550-fb33fb9bc021": {
+                            "out": {
+                                "type": "json2new",
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "b54be56f-9c82-42dd-90e2-e937efab6759": {
+                                            "variable": "$.bff5e798-a155-4035-8550-fb33fb9bc021.out",
+                                            "functions": []
+                                        }
+                                    }
+                                },
+                                "lambda": {
+                                    "recipients": "test@appmixer.com",
+                                    "testCase": "E2E Xero",
+                                    "result": "{{{b54be56f-9c82-42dd-90e2-e937efab6759}}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "name": "E2E Xero - Lists (accounts, journals, tracking, organization)",
+    "type": "automation",
+    "wizard": {
+        "fields": []
+    },
+    "notes": {}
+}

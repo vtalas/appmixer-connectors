@@ -4,10 +4,10 @@ module.exports = {
 
     async receive(context) {
 
-        const { folder_id: folderId, recursive, ifMatch } = context.messages.in.content;
+        const { folderId, recursive, ifMatch } = context.messages.in.content;
 
         if (!folderId) {
-            throw new context.CancelError('Folder Id is required!');
+            throw new context.CancelError('Folder ID is required!');
         }
 
         const params = {};
@@ -27,8 +27,8 @@ module.exports = {
         await context.httpRequest({
             method: 'DELETE',
             url: `https://api.box.com/2.0/folders/${folderId}`,
-            headers: headers,
-            params: params
+            headers,
+            params
         });
 
         return context.sendJson({}, 'out');

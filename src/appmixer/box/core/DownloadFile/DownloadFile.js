@@ -47,18 +47,15 @@ module.exports = {
         }
 
         const contentType = response.headers['content-type'] || 'application/octet-stream';
-        const size = parseInt(response.headers['content-length'] || '0', 10);
 
         // Save the file and get fileId
         const savedFile = await context.saveFileStream(fileName, response.data);
-
-        await context.log({ step: 'file', savedFile });
 
         return context.sendJson({
             fileId: savedFile.fileId,
             fileName,
             contentType,
-            size
+            size: savedFile.length
         }, 'out');
     }
 };

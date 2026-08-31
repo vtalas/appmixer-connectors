@@ -12,12 +12,49 @@ This repository contains the officially maintained connectors for Appmixer. They
 ## Getting Started
 To learn how to create custom connectors, refer to our comprehensive guide: [Creating Custom Connectors](https://docs.appmixer.com/getting-started/custom-connectors).
 
+## AI Development
+
+AI-assisted connector development lives in the public
+**[appmixer-skills](https://github.com/Appmixer-ai/appmixer-skills)** repository:
+agent skills that build, test, and review connectors end-to-end
+(`build-connector`, `test-connector`, `review-connector`), installable as a
+Claude Code plugin. Start there.
+
+The instruction content AI assistants read here (`.github/copilot-instructions.md`,
+the path Copilot loads automatically) is **generated from appmixer-skills** —
+do not edit it directly. To change it, open a PR against the skills repo's
+`instructions/` — a scheduled workflow (`sync-instructions`) then regenerates
+the file here and opens a sync PR automatically (manual refresh:
+`node scripts/build-instructions.js`).
+
+## Developing a connector — commit hooks
+
+Connector development in this repo is gated by a **pre-commit hook** that
+validates the files in your diff. One-time setup:
+
+```sh
+npm install -g appmixer    # the CLI runs the validators
+                           # (until the next release ships `connector validate`,
+                           #  use the experimental tag: npm install -g appmixer@dev)
+npm run hooks:install      # git pre-commit -> validates your changes
+```
+
+From then on every commit checks your changed `bundle.json` / `component.json`
+files (strict — new work must be clean; repo-wide legacy debt does not block
+you), and CI runs the same gate on every PR into `dev`. Manual runs:
+`npm run validate:changed` (your diff) or `npm run validate` (whole repo).
+
+What the validators check is documented in the appmixer CLI — see the
+[appmixer package on npm](https://www.npmjs.com/package/appmixer) or
+`appmixer connector validate --help`.
+
 ## Contribution Guidelines
 We welcome contributions from the community! To contribute:
 1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Ensure your code adheres to our coding standards and includes tests.
-4. Submit a pull request with a clear description of your changes.
+2. Install the pre-commit hook (see *Developing a connector* above).
+3. Create a new branch for your feature or bug fix.
+4. Ensure your code adheres to our coding standards and includes tests.
+5. Submit a pull request with a clear description of your changes.
 
 
 ## Examples

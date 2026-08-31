@@ -2,10 +2,7 @@
 
 module.exports = {
     async receive(context) {
-        const {
-            file_id: fileId,
-            lock_expires_at: lockExpiresAt
-        } = context.messages.in.content;
+        const { fileId, lockExpiresAt } = context.messages.in.content;
 
         if (!fileId) {
             throw new context.CancelError('File ID is required!');
@@ -27,6 +24,9 @@ module.exports = {
             url: `https://api.box.com/2.0/files/${fileId}`,
             headers: {
                 'Authorization': `Bearer ${context.auth.accessToken}`
+            },
+            params: {
+                fields: 'id,type,name,lock,file_version,created_at,modified_at,modified_by'
             },
             data: lockData
         });

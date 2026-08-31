@@ -1,7 +1,7 @@
 {
     "name": "appmixer.box.core.FindFilesOrFolders",
     "label": "Find Files or Folders",
-    "description": "Search for files and folders by name, content, type, owner, etc. This component will return a maximum of 200 records per search.",
+    "description": "Search for files and folders by name, content, type, owner, etc. This component will return a maximum of 200 records per search. Note: Box Search uses an index that may take several minutes to index newly created or modified files. If a recently created file is not found, wait a few minutes and try again.",
     "author": "Appmixer <info@appmixer.com>",
     "version": "1.0.0",
     "auth": {
@@ -23,10 +23,10 @@
                     "type": {
                         "type": "string"
                     },
-                    "ancestor_folder_ids": {
+                    "ancestorFolderIds": {
                         "type": "string"
                     },
-                    "content_types": {
+                    "contentTypes": {
                         "type": [
                             "array",
                             "string"
@@ -38,6 +38,9 @@
                     "outputType": {
                         "type": "string",
                         "default": "array"
+                    },
+                    "exactMatch": {
+                        "type": "boolean"
                     }
                 },
                 "required": [
@@ -48,9 +51,16 @@
                 "inputs": {
                     "query": {
                         "type": "text",
-                        "index": 1,
+                        "index": 0,
                         "label": "Query",
                         "tooltip": "The search query string (e.g., file name fragment)."
+                    },
+                    "exactMatch": {
+                        "type": "toggle",
+                        "index": 1,
+                        "label": "Exact Match",
+                        "defaultValue": false,
+                        "tooltip": "When enabled, only returns items whose name exactly matches the query. Box search uses fuzzy/tokenized matching by default, so this option filters results client-side to return only exact matches."
                     },
                     "type": {
                         "type": "select",
@@ -68,13 +78,13 @@
                             }
                         ]
                     },
-                    "ancestor_folder_ids": {
+                    "ancestorFolderIds": {
                         "type": "text",
                         "index": 3,
-                        "label": "Ancestor Folder Ids",
+                        "label": "Ancestor Folder IDs",
                         "tooltip": "Comma-separated list of ancestor folder IDs to limit scope."
                     },
-                    "content_types": {
+                    "contentTypes": {
                         "type": "multiselect",
                         "index": 4,
                         "label": "Content Types",
@@ -147,7 +157,8 @@
                         "generateOutputPortOptions": true
                     },
                     "messages": {
-                        "in/outputType": "inputs/in/outputType"
+                        "in/outputType": "inputs/in/outputType",
+                        "in/query": "any"
                     }
                 }
             }
