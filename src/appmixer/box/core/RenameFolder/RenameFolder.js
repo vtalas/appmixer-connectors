@@ -26,7 +26,7 @@ module.exports = {
         }
 
         // https://developer.box.com/reference/put-folders-id/
-        await context.httpRequest({
+        const response = await context.httpRequest({
             method: 'PUT',
             url: `https://api.box.com/2.0/folders/${folderId}`,
             headers: headers,
@@ -35,6 +35,6 @@ module.exports = {
             }
         });
 
-        return context.sendJson({}, 'out');
+        return context.sendJson(response.data, 'out');
     }
 };
