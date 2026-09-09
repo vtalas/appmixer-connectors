@@ -1,0 +1,416 @@
+{
+    "name": "E2E Box - File Copy",
+    "description": "End-to-end test for the Box CopyFile component - uploads a file, copies it into the root folder under a new name, asserts the copy was created, then deletes both files.",
+    "flow": {
+        "178971ac-e25a-4a7a-9c07-3dc6ebd734f5": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 208,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {},
+            "config": {},
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "666f428d-7fa8-43c8-8298-62d419c72b69": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 416,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "178971ac-e25a-4a7a-9c07-3dc6ebd734f5": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "178971ac-e25a-4a7a-9c07-3dc6ebd734f5": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "name": "fileName",
+                                                "text": "BoxE2ECopy{{{c4d98151-0d9f-4787-8236-932236fce77b}}}",
+                                                "type": "text"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "variables": {
+                                        "c4d98151-0d9f-4787-8236-932236fce77b": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_random"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "41370a86-562d-469a-ab2e-e9a66e7075e6": {
+            "type": "appmixer.box.core.UploadFile",
+            "x": 624,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "666f428d-7fa8-43c8-8298-62d419c72b69": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "666f428d-7fa8-43c8-8298-62d419c72b69": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "fileId": "07b4c565-f65f-4e37-8166-bd6bcf76cb7b",
+                                    "fileName": "{{{25ae6983-29ea-4712-a4f2-719a578f72fa}}}.txt",
+                                    "parentId": "0"
+                                },
+                                "modifiers": {
+                                    "fileId": {},
+                                    "parentId": {},
+                                    "fileName": {
+                                        "25ae6983-29ea-4712-a4f2-719a578f72fa": {
+                                            "functions": [],
+                                            "variable": "$.666f428d-7fa8-43c8-8298-62d419c72b69.out.fileName"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "3c9cb4f6-2fc4-41a3-b96b-816d328a87ef": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 832,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "41370a86-562d-469a-ab2e-e9a66e7075e6": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "41370a86-562d-469a-ab2e-e9a66e7075e6": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{3f2feb46-8263-497a-91c4-37ea046bb8b1}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "3f2feb46-8263-497a-91c4-37ea046bb8b1": {
+                                            "functions": [],
+                                            "variable": "$.41370a86-562d-469a-ab2e-e9a66e7075e6.out.entries"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "82e27c55-9351-4438-9de0-b22dc139a70d": {
+            "type": "appmixer.box.core.CopyFile",
+            "x": 1040,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "3c9cb4f6-2fc4-41a3-b96b-816d328a87ef": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "3c9cb4f6-2fc4-41a3-b96b-816d328a87ef": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "fileId": "{{{136b904d-3f9f-46e2-b9bf-5378c5d70f80}}}",
+                                    "parentId": "0",
+                                    "name": "{{{4b6b44a5-f209-4fe8-8d9f-d16c9835dc20}}}-copy.txt"
+                                },
+                                "modifiers": {
+                                    "parentId": {},
+                                    "fileId": {
+                                        "136b904d-3f9f-46e2-b9bf-5378c5d70f80": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_jsonPath",
+                                                    "params": [
+                                                        {
+                                                            "value": "$[0].id"
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "variable": "$.41370a86-562d-469a-ab2e-e9a66e7075e6.out.entries"
+                                        }
+                                    },
+                                    "name": {
+                                        "4b6b44a5-f209-4fe8-8d9f-d16c9835dc20": {
+                                            "functions": [],
+                                            "variable": "$.666f428d-7fa8-43c8-8298-62d419c72b69.out.fileName"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "03e3e8ef-a4b7-4244-9749-a80e096f1796": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1248,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "82e27c55-9351-4438-9de0-b22dc139a70d": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "82e27c55-9351-4438-9de0-b22dc139a70d": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{423ebd02-538a-4cba-9fcd-fc907b49a650}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "423ebd02-538a-4cba-9fcd-fc907b49a650": {
+                                            "functions": [],
+                                            "variable": "$.82e27c55-9351-4438-9de0-b22dc139a70d.out.id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "b511b9fa-b326-4026-89bf-0a19625032a9": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 1456,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "3c9cb4f6-2fc4-41a3-b96b-816d328a87ef": [
+                        "out"
+                    ],
+                    "03e3e8ef-a4b7-4244-9749-a80e096f1796": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 180
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "128dcbe9-7813-4dfe-80f5-ef5c58c1445d": {
+            "type": "appmixer.box.core.DeleteFile",
+            "x": 1664,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "b511b9fa-b326-4026-89bf-0a19625032a9": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "b511b9fa-b326-4026-89bf-0a19625032a9": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "fileId": "{{{07f08987-94f3-4f00-bfb7-0725981903d3}}}"
+                                },
+                                "modifiers": {
+                                    "fileId": {
+                                        "07f08987-94f3-4f00-bfb7-0725981903d3": {
+                                            "functions": [],
+                                            "variable": "$.82e27c55-9351-4438-9de0-b22dc139a70d.out.id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "d6da0283-c2aa-46b3-8cd2-f6d893cef47c": {
+            "type": "appmixer.box.core.DeleteFile",
+            "x": 1872,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "128dcbe9-7813-4dfe-80f5-ef5c58c1445d": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "128dcbe9-7813-4dfe-80f5-ef5c58c1445d": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "fileId": "{{{db192b1a-c90a-497a-97ab-edbbf6e61bcd}}}"
+                                },
+                                "modifiers": {
+                                    "fileId": {
+                                        "db192b1a-c90a-497a-97ab-edbbf6e61bcd": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_jsonPath",
+                                                    "params": [
+                                                        {
+                                                            "value": "$[0].id"
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "variable": "$.41370a86-562d-469a-ab2e-e9a66e7075e6.out.entries"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "16fa7a00-8bba-4022-aa61-cba2df62567b": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 2080,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "d6da0283-c2aa-46b3-8cd2-f6d893cef47c": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "d6da0283-c2aa-46b3-8cd2-f6d893cef47c": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E Box - File Copy",
+                                    "result": "{{{897e7ba1-5189-4dad-9373-8cae61f8ab8a}}}"
+                                },
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "897e7ba1-5189-4dad-9373-8cae61f8ab8a": {
+                                            "functions": [],
+                                            "variable": "$.b511b9fa-b326-4026-89bf-0a19625032a9.out"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "properties": {}
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        }
+    }
+}

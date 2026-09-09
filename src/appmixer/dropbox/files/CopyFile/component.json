@@ -1,0 +1,113 @@
+{
+    "name": "appmixer.dropbox.files.CopyFile",
+    "author": "Appmixer <info@appmixer.com>",
+    "description": "Copy a file or folder to a new location.",
+    "private": false,
+    "auth": {
+        "service": "appmixer:dropbox"
+    },
+    "version": "1.0.0",
+    "inPorts": [
+        {
+            "name": "in",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "fromPath": {
+                        "type": "string",
+                        "pattern": "(/(.|[\\r\\n])*)|(ns:[0-9]+(/.*)?)"
+                    },
+                    "toPath": {
+                        "type": "string",
+                        "pattern": "(/(.|[\\r\\n])*)|(ns:[0-9]+(/.*)?)"
+                    },
+                    "autorename": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "fromPath",
+                    "toPath"
+                ]
+            },
+            "inspector": {
+                "inputs": {
+                    "fromPath": {
+                        "type": "text",
+                        "index": 1,
+                        "label": "From Path",
+                        "tooltip": "The path of the file or folder to copy. Must begin with /."
+                    },
+                    "toPath": {
+                        "type": "text",
+                        "index": 2,
+                        "label": "To Path",
+                        "tooltip": "The destination path. Must begin with /."
+                    },
+                    "autorename": {
+                        "type": "toggle",
+                        "index": 3,
+                        "label": "Auto rename",
+                        "tooltip": "If there's a conflict, try to rename to avoid it."
+                    }
+                }
+            }
+        }
+    ],
+    "outPorts": [
+        {
+            "name": "out",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    ".tag": {
+                        "type": "string",
+                        "title": "Tag",
+                        "example": "file"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "ID",
+                        "example": "id:abc123def456"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "example": "report.pdf"
+                    },
+                    "path_display": {
+                        "type": "string",
+                        "title": "Path Display",
+                        "example": "/Documents/report.pdf"
+                    },
+                    "path_lower": {
+                        "type": "string",
+                        "title": "Path Lower",
+                        "example": "/documents/report.pdf"
+                    },
+                    "size": {
+                        "type": "number",
+                        "title": "Size",
+                        "example": 102400
+                    },
+                    "client_modified": {
+                        "type": "string",
+                        "title": "Client Modified",
+                        "example": "2026-01-15T10:30:00Z"
+                    },
+                    "server_modified": {
+                        "type": "string",
+                        "title": "Server Modified",
+                        "example": "2026-01-15T10:30:05Z"
+                    },
+                    "rev": {
+                        "type": "string",
+                        "title": "Revision",
+                        "example": "0123456789abcdef"
+                    }
+                }
+            }
+        }
+    ],
+    "icon": "data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMzUuNDUgMjAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwNjFmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkRyb3Bib3hHbHlwaDwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjU4Ljg2IDAgMCAzNy41IDU4Ljg2IDc1IDExNy43MyAzNy41IDU4Ljg2IDAiLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTc2LjU5IDAgMTE3LjczIDM3LjUgMTc2LjU5IDc1IDIzNS40NSAzNy41IDE3Ni41OSAwIi8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjAgMTEyLjUgNTguODYgMTUwIDExNy43MyAxMTIuNSA1OC44NiA3NSAwIDExMi41Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjE3Ni41OSA3NSAxMTcuNzMgMTEyLjUgMTc2LjU5IDE1MCAyMzUuNDUgMTEyLjUgMTc2LjU5IDc1Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjU4Ljg2IDE2Mi41IDExNy43MyAyMDAgMTc2LjU5IDE2Mi41IDExNy43MyAxMjUgNTguODYgMTYyLjUiLz48L3N2Zz4="
+}

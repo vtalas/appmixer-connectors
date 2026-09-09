@@ -71,13 +71,13 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/dropbox/files/ListFiles?outPort=out",
+                "url": "/component/appmixer/dropbox/files/ListFiles?outPort=out&ignoreAuth=true",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true
                     },
                     "messages": {
-                        "in/path": "inputs/in/path",
+                        "in/path": "dummy",
                         "in/recursive": "inputs/in/recursive",
                         "in/outputType": "inputs/in/outputType"
                     }

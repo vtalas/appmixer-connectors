@@ -6,6 +6,10 @@ module.exports = {
 
     async receive(context) {
 
+        if (!context.messages.file.content.fileId) {
+            throw new context.CancelError('File ID is required!');
+        }
+
         let dbx = new Dropbox({
             accessToken: context.auth.accessToken
         });
