@@ -1,6 +1,6 @@
 {
     "name": "appmixer.dropbox",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "engine": ">=5.0",
     "changelog": {
         "1.0.0": [
@@ -44,6 +44,11 @@
         ],
         "1.6.0": [
             "Added `DeleteFileOrFolder`, `MoveFileOrFolder`, `CopyFile` and `CreateSharedLink` components."
+        ],
+        "1.7.0": [
+            "Output ports of CreateFolder, CreateTextFile, DownloadFile, FindFiles, FindFolders, GetFileMetadata, NewFile, NewFolder, RenameFile, SaveURL and UploadFile migrated from the legacy `options[]` form to a typed JSON `schema` with an example on every leaf, so the variable picker shows types and previews. Field names and emitted data are unchanged.",
+            "Added missing required-input validation (`CancelError`) to CreateFolder, CreateTextFile, DownloadFile, FindFiles, FindFolders, GetFileMetadata, RenameFile, SaveURL and UploadFile.",
+            "ListFiles: added `ignoreAuth=true` to the dynamic output-port source so the designer variables fetch stops requiring an account."
         ]
     }
 }

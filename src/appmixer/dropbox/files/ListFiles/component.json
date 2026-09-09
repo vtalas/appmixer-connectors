@@ -71,7 +71,7 @@
         {
             "name": "out",
             "source": {
-                "url": "/component/appmixer/dropbox/files/ListFiles?outPort=out",
+                "url": "/component/appmixer/dropbox/files/ListFiles?outPort=out&ignoreAuth=true",
                 "data": {
                     "properties": {
                         "generateOutputPortOptions": true

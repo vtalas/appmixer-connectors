@@ -10,6 +10,14 @@ module.exports = {
     receive(context) {
 
         let { path, newName } = context.messages.file.content;
+
+        if (!path) {
+            throw new context.CancelError('Path is required!');
+        }
+
+        if (!newName) {
+            throw new context.CancelError('New name is required!');
+        }
         const params = {
             from_path: path,
             to_path: `${path.substring(0, path.lastIndexOf('/') + 1)}${newName}`,

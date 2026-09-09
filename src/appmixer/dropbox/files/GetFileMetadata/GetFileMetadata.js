@@ -5,6 +5,10 @@ module.exports = {
 
     async receive(context) {
 
+        if (!context.messages.in.content.path) {
+            throw new context.CancelError('Path is required!');
+        }
+
         const dbx = new Dropbox({ accessToken: context.auth.accessToken });
         const { result } = await dbx.filesGetMetadata({
             path: context.messages.in.content.path

@@ -8,6 +8,14 @@ module.exports = {
 
         const { fileId, filename, path } = context.messages.file.content;
 
+        if (!fileId) {
+            throw new context.CancelError('File ID is required!');
+        }
+
+        if (!filename) {
+            throw new context.CancelError('Filename is required!');
+        }
+
         const fileStream = await context.getFileReadStream(fileId);
         const uploadFn = () => {
             return new Promise((resolve, reject) => {

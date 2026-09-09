@@ -40,48 +40,57 @@
     "outPorts": [
         {
             "name": "newFolder",
-            "options": [
-                {
-                    "label": ".tag",
-                    "value": ".tag",
-                    "example": "folder"
-                },
-                {
-                    "label": "id",
-                    "value": "id",
-                    "example": "id:abc123def456"
-                },
-                {
-                    "label": "name",
-                    "value": "name",
-                    "example": "My Folder"
-                },
-                {
-                    "label": "path_display",
-                    "value": "path_display",
-                    "example": "/Documents/My Folder"
-                },
-                {
-                    "label": "path_lower",
-                    "value": "path_lower",
-                    "example": "/documents/my folder"
-                },
-                {
-                    "label": "shared_folder_id",
-                    "value": "shared_folder_id",
-                    "example": "84528192421"
-                },
-                {
-                    "label": "sharing_info['read_only']",
-                    "value": "sharing_info['read_only']",
-                    "example": false
-                },
-                {
-                    "label": "sharing_info['shared_folder_id']",
-                    "value": "sharing_info['shared_folder_id']",
-                    "example": "84528192421"
+            "schema": {
+                "type": "object",
+                "properties": {
+                    ".tag": {
+                        "type": "string",
+                        "title": ".tag",
+                        "example": "folder"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "id",
+                        "example": "id:abc123def456"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "name",
+                        "example": "My Folder"
+                    },
+                    "path_display": {
+                        "type": "string",
+                        "title": "path_display",
+                        "example": "/Documents/My Folder"
+                    },
+                    "path_lower": {
+                        "type": "string",
+                        "title": "path_lower",
+                        "example": "/documents/my folder"
+                    },
+                    "shared_folder_id": {
+                        "type": "string",
+                        "title": "shared_folder_id",
+                        "example": "84528192421"
+                    },
+                    "sharing_info": {
+                        "type": "object",
+                        "title": "Sharing Info",
+                        "properties": {
+                            "read_only": {
+                                "type": "boolean",
+                                "title": "Sharing Info.Read Only",
+                                "example": false
+                            },
+                            "shared_folder_id": {
+                                "type": "string",
+                                "title": "Sharing Info.Shared Folder Id",
+                                "example": "84528192421"
+                            }
+                        }
+                    }
                 }
-            ]
+            }
         }
     ],
     "icon": "data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMzUuNDUgMjAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwNjFmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkRyb3Bib3hHbHlwaDwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjU4Ljg2IDAgMCAzNy41IDU4Ljg2IDc1IDExNy43MyAzNy41IDU4Ljg2IDAiLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTc2LjU5IDAgMTE3LjczIDM3LjUgMTc2LjU5IDc1IDIzNS40NSAzNy41IDE3Ni41OSAwIi8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjAgMTEyLjUgNTguODYgMTUwIDExNy43MyAxMTIuNSA1OC44NiA3NSAwIDExMi41Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjE3Ni41OSA3NSAxMTcuNzMgMTEyLjUgMTc2LjU5IDE1MCAyMzUuNDUgMTEyLjUgMTc2LjU5IDc1Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjU4Ljg2IDE2Mi41IDExNy43MyAyMDAgMTc2LjU5IDE2Mi41IDExNy43MyAxMjUgNTguODYgMTYyLjUiLz48L3N2Zz4="

@@ -12,6 +12,10 @@ function buildFolders(data) {
  */
 module.exports = {
     receive(context) {
+
+        if (!context.messages.query.content.name) {
+            throw new context.CancelError('Name is required!');
+        }
         let params = {
             path: '',
             query: context.messages.query.content.name,
