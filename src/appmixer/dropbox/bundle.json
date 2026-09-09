@@ -1,6 +1,6 @@
 {
     "name": "appmixer.dropbox",
-    "version": "1.7.0",
+    "version": "2.0.0",
     "engine": ">=5.0",
     "changelog": {
         "1.0.0": [
@@ -49,6 +49,11 @@
             "Output ports of CreateFolder, CreateTextFile, DownloadFile, FindFiles, FindFolders, GetFileMetadata, NewFile, NewFolder, RenameFile, SaveURL and UploadFile migrated from the legacy `options[]` form to a typed JSON `schema` with an example on every leaf, so the variable picker shows types and previews. Field names and emitted data are unchanged.",
             "Added missing required-input validation (`CancelError`) to CreateFolder, CreateTextFile, DownloadFile, FindFiles, FindFolders, GetFileMetadata, RenameFile, SaveURL and UploadFile.",
             "ListFiles: added `ignoreAuth=true` to the dynamic output-port source so the designer variables fetch stops requiring an account."
+        ],
+        "2.0.0": [
+            "(breaking change) FindFiles and FindFolders now follow the Find component standard: the per-item output ports `file` and `folder` are replaced by a single dynamic `out` port plus a `notFound` port, and a new `Output Type` input selects how the result set is delivered (first item / all at once / one at a time / CSV file). Existing flows wired to the `file` or `folder` port must be reconnected to `out` and their variable references updated.",
+            "FindFiles, FindFolders: added the shared outputType helpers (new `lib.js`) and an exported `ITEM_SCHEMA`, so the variable picker shows typed fields with examples.",
+            "ListFiles: the dynamic output-port source no longer maps the required `path` input from a flow value \u2014 schema generation sends a literal instead, so the variable picker stops degrading to Raw Output."
         ]
     }
 }

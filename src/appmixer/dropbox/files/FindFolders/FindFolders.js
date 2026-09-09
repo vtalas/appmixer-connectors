@@ -1,41 +1,83 @@
 'use strict';
 const commons = require('../../dropbox-commons');
-const Promise = require('bluebird');
-
-function buildFolders(data) {
-    return data.matches.filter((entry) => entry['metadata']['.tag'] === 'folder');
-}
+const lib = require('../../lib');
 
 /**
- * Component for find folder.
- * @extends {Component}
+ * Declared shape of a single folder match. Shared by the dynamic output port
+ * (via getOutputPortOptions) and by live verification.
  */
-module.exports = {
-    receive(context) {
+const ITEM_SCHEMA = {
+    type: 'object',
+    properties: {
+        '.tag': {
+            'type': 'string',
+            'title': 'Tag',
+            'example': 'folder'
+        },
+        'id': {
+            'type': 'string',
+            'title': 'ID',
+            'example': 'id:abc123def456'
+        },
+        'name': {
+            'type': 'string',
+            'title': 'Name',
+            'example': 'My Folder'
+        },
+        'path_display': {
+            'type': 'string',
+            'title': 'Path Display',
+            'example': '/Documents/My Folder'
+        },
+        'path_lower': {
+            'type': 'string',
+            'title': 'Path Lower',
+            'example': '/documents/my folder'
+        }
+    }
+};
 
-        if (!context.messages.query.content.name) {
+module.exports = {
+
+    ITEM_SCHEMA,
+
+    async receive(context) {
+
+        const { name, maxResults, mode, outputType } = context.messages.query.content;
+
+        // Schema generation runs without real input values.
+        if (context.properties.generateOutputPortOptions) {
+            return lib.getOutputPortOptions(context, outputType, ITEM_SCHEMA.properties, { label: 'Folders' });
+        }
+
+        if (!name) {
             throw new context.CancelError('Name is required!');
         }
-        let params = {
+
+        const params = {
             path: '',
-            query: context.messages.query.content.name,
+            query: name,
             start: 0,
-            max_results: context.messages.query.content.maxResults,
-            mode: context.messages.query.content.mode
+            max_results: maxResults,
+            mode
         };
 
-        return commons
-            .dropboxRequest(
-                context,
-                context.auth.accessToken,
-                'files',
-                'search',
-                JSON.stringify(params)
-            )
-            .then(({ data }) => {
-                return Promise.map(buildFolders(data), (folder) => {
-                    return context.sendJson(folder['metadata'], 'folder');
-                });
-            });
+        const { data } = await commons.dropboxRequest(
+            context,
+            context.auth.accessToken,
+            'files',
+            'search',
+            JSON.stringify(params)
+        );
+
+        const records = (data.matches || [])
+            .filter((entry) => entry.metadata['.tag'] === 'folder')
+            .map((entry) => entry.metadata);
+
+        if (records.length === 0) {
+            return context.sendJson({}, 'notFound');
+        }
+
+        return lib.sendArrayOutput({ context, outputType, records });
     }
 };

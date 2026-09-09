@@ -77,7 +77,7 @@
                         "generateOutputPortOptions": true
                     },
                     "messages": {
-                        "in/path": "inputs/in/path",
+                        "in/path": "dummy",
                         "in/recursive": "inputs/in/recursive",
                         "in/outputType": "inputs/in/outputType"
                     }

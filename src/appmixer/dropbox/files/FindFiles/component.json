@@ -24,6 +24,9 @@
                     },
                     "mode": {
                         "type": "string"
+                    },
+                    "outputType": {
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -85,6 +88,31 @@
                         },
                         "label": "Search mode",
                         "index": 4
+                    },
+                    "outputType": {
+                        "type": "select",
+                        "label": "Output Type",
+                        "defaultValue": "array",
+                        "tooltip": "Choose whether you want to receive the result set as one complete list, or first item only or one item at a time or stream the items to a file.",
+                        "options": [
+                            {
+                                "label": "First Item Only",
+                                "value": "first"
+                            },
+                            {
+                                "label": "All items at once",
+                                "value": "array"
+                            },
+                            {
+                                "label": "One item at a time",
+                                "value": "object"
+                            },
+                            {
+                                "label": "Store to CSV file",
+                                "value": "file"
+                            }
+                        ],
+                        "index": 5
                     }
                 },
                 "groups": {
@@ -98,62 +126,22 @@
     ],
     "outPorts": [
         {
-            "name": "file",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    ".tag": {
-                        "type": "string",
-                        "title": "'.tag'",
-                        "example": "file"
+            "name": "out",
+            "source": {
+                "url": "/component/appmixer/dropbox/files/FindFiles?outPort=out&ignoreAuth=true",
+                "data": {
+                    "properties": {
+                        "generateOutputPortOptions": true
                     },
-                    "client_modified": {
-                        "type": "string",
-                        "title": "client_modified",
-                        "example": "2024-07-15T12:30:00Z"
-                    },
-                    "content_hash": {
-                        "type": "string",
-                        "title": "content_hash",
-                        "example": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "id",
-                        "example": "id:abc123def456"
-                    },
-                    "name": {
-                        "type": "string",
-                        "title": "name",
-                        "example": "report.pdf"
-                    },
-                    "path_display": {
-                        "type": "string",
-                        "title": "path_display",
-                        "example": "/Documents/report.pdf"
-                    },
-                    "path_lower": {
-                        "type": "string",
-                        "title": "path_lower",
-                        "example": "/documents/report.pdf"
-                    },
-                    "rev": {
-                        "type": "string",
-                        "title": "rev",
-                        "example": "015f2e5d4a1c70000000109d2de60"
-                    },
-                    "server_modified": {
-                        "type": "string",
-                        "title": "server_modified",
-                        "example": "2024-07-15T12:35:00Z"
-                    },
-                    "size": {
-                        "type": "number",
-                        "title": "size",
-                        "example": 524288
+                    "messages": {
+                        "query/outputType": "inputs/query/outputType",
+                        "query/name": "any"
                     }
                 }
             }
+        },
+        {
+            "name": "notFound"
         }
     ],
     "icon": "data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMzUuNDUgMjAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzAwNjFmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkRyb3Bib3hHbHlwaDwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjU4Ljg2IDAgMCAzNy41IDU4Ljg2IDc1IDExNy43MyAzNy41IDU4Ljg2IDAiLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTc2LjU5IDAgMTE3LjczIDM3LjUgMTc2LjU5IDc1IDIzNS40NSAzNy41IDE3Ni41OSAwIi8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjAgMTEyLjUgNTguODYgMTUwIDExNy43MyAxMTIuNSA1OC44NiA3NSAwIDExMi41Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjE3Ni41OSA3NSAxMTcuNzMgMTEyLjUgMTc2LjU5IDE1MCAyMzUuNDUgMTEyLjUgMTc2LjU5IDc1Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjU4Ljg2IDE2Mi41IDExNy43MyAyMDAgMTc2LjU5IDE2Mi41IDExNy43MyAxMjUgNTguODYgMTYyLjUiLz48L3N2Zz4="
