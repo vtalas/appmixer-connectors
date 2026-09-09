@@ -1,0 +1,565 @@
+{
+    "name": "E2E Dropbox - Folder And Text File CRUD",
+    "description": "Creates a folder and a text file in it, reads the file metadata back, renames the file, then deletes both. Covers CreateFolder, CreateTextFile, GetFileMetadata, RenameFile and DeleteFileOrFolder.",
+    "flow": {
+        "f9bc0fca-ecc2-4e47-a5a8-e4933b1d9431": {
+            "type": "appmixer.utils.controls.OnStart",
+            "x": 208,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {},
+            "config": {},
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "0f37413e-4774-4f36-91e3-3573ac2394d6": {
+            "type": "appmixer.utils.controls.SetVariable",
+            "x": 416,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "f9bc0fca-ecc2-4e47-a5a8-e4933b1d9431": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "f9bc0fca-ecc2-4e47-a5a8-e4933b1d9431": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "variables": {
+                                        "ADD": [
+                                            {
+                                                "name": "folderPath",
+                                                "text": "/E2ECrud{{{c4b642e7-0db7-4fb7-a015-61cefbe1e6db}}}",
+                                                "type": "text"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "variables": {
+                                        "c4b642e7-0db7-4fb7-a015-61cefbe1e6db": {
+                                            "functions": [
+                                                {
+                                                    "name": "g_random"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "76140098-03b3-4239-b841-0eed18fd7ce7": {
+            "type": "appmixer.dropbox.files.CreateFolder",
+            "x": 624,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "folder": {
+                    "0f37413e-4774-4f36-91e3-3573ac2394d6": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "folder": {
+                        "0f37413e-4774-4f36-91e3-3573ac2394d6": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "path": "{{{22928722-5459-46ed-a538-64a3c163b954}}}",
+                                    "autorename": false
+                                },
+                                "modifiers": {
+                                    "path": {
+                                        "22928722-5459-46ed-a538-64a3c163b954": {
+                                            "functions": [],
+                                            "variable": "$.0f37413e-4774-4f36-91e3-3573ac2394d6.out.folderPath"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "a7b28363-f734-43e1-a87e-825f4c72a9dc": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 832,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "76140098-03b3-4239-b841-0eed18fd7ce7": [
+                        "newFolder"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "76140098-03b3-4239-b841-0eed18fd7ce7": {
+                            "newFolder": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{016da912-ab93-4b13-bba6-2969fb760091}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "016da912-ab93-4b13-bba6-2969fb760091": {
+                                            "functions": [],
+                                            "variable": "$.76140098-03b3-4239-b841-0eed18fd7ce7.newFolder.id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "1f5539bf-cfc5-4a51-b083-969b59cdb186": {
+            "type": "appmixer.dropbox.files.CreateTextFile",
+            "x": 1040,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "file": {
+                    "a7b28363-f734-43e1-a87e-825f4c72a9dc": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "file": {
+                        "a7b28363-f734-43e1-a87e-825f4c72a9dc": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "path": "{{{4f3c8293-9290-441b-b1a8-3cb1015771b8}}}/note.txt",
+                                    "autorename": false,
+                                    "text": "E2E test content."
+                                },
+                                "modifiers": {
+                                    "path": {
+                                        "4f3c8293-9290-441b-b1a8-3cb1015771b8": {
+                                            "functions": [],
+                                            "variable": "$.0f37413e-4774-4f36-91e3-3573ac2394d6.out.folderPath"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "e84a7173-c52d-4337-b743-0d52c9a45f69": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1248,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "1f5539bf-cfc5-4a51-b083-969b59cdb186": [
+                        "newTextFile"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "1f5539bf-cfc5-4a51-b083-969b59cdb186": {
+                            "newTextFile": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{81e83024-38e5-4cd7-bc22-f53c71db85c6}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "81e83024-38e5-4cd7-bc22-f53c71db85c6": {
+                                            "functions": [],
+                                            "variable": "$.1f5539bf-cfc5-4a51-b083-969b59cdb186.newTextFile.id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "8a78c67d-77ab-4634-9cdc-7ec15dc52d40": {
+            "type": "appmixer.dropbox.files.GetFileMetadata",
+            "x": 1456,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "e84a7173-c52d-4337-b743-0d52c9a45f69": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "e84a7173-c52d-4337-b743-0d52c9a45f69": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "path": "{{{40db571a-e9a0-4c91-bcc8-7045c8a3bfdd}}}"
+                                },
+                                "modifiers": {
+                                    "path": {
+                                        "40db571a-e9a0-4c91-bcc8-7045c8a3bfdd": {
+                                            "functions": [],
+                                            "variable": "$.1f5539bf-cfc5-4a51-b083-969b59cdb186.newTextFile.path_lower"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "b30eee03-6689-4849-9b88-31ab18395f4e": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 1664,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "8a78c67d-77ab-4634-9cdc-7ec15dc52d40": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "8a78c67d-77ab-4634-9cdc-7ec15dc52d40": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{09802fc1-401a-4637-a124-4f3537b9c546}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "09802fc1-401a-4637-a124-4f3537b9c546": {
+                                            "functions": [],
+                                            "variable": "$.8a78c67d-77ab-4634-9cdc-7ec15dc52d40.out.name"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "b4d86ce5-1fa7-4f72-a4e5-714eb88de2db": {
+            "type": "appmixer.dropbox.files.RenameFile",
+            "x": 1872,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "file": {
+                    "b30eee03-6689-4849-9b88-31ab18395f4e": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "file": {
+                        "b30eee03-6689-4849-9b88-31ab18395f4e": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "path": "{{{ac3e8aae-2f1e-41e1-84a5-c4b83c618ff6}}}",
+                                    "newName": "renamed.txt"
+                                },
+                                "modifiers": {
+                                    "path": {
+                                        "ac3e8aae-2f1e-41e1-84a5-c4b83c618ff6": {
+                                            "functions": [],
+                                            "variable": "$.1f5539bf-cfc5-4a51-b083-969b59cdb186.newTextFile.path_lower"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "e43f746e-769a-4626-925e-da5281ffd4fe": {
+            "type": "appmixer.utils.test.Assert",
+            "x": 2080,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "b4d86ce5-1fa7-4f72-a4e5-714eb88de2db": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "b4d86ce5-1fa7-4f72-a4e5-714eb88de2db": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "expression": {
+                                        "AND": [
+                                            {
+                                                "assertion": "notEmpty",
+                                                "field": "{{{a0295a0e-49ff-457b-839d-d97d66c2af47}}}"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "modifiers": {
+                                    "expression": {
+                                        "a0295a0e-49ff-457b-839d-d97d66c2af47": {
+                                            "functions": [],
+                                            "variable": "$.b4d86ce5-1fa7-4f72-a4e5-714eb88de2db.out.name"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "89bff654-94f3-4e69-9e0f-700d73a013e6": {
+            "type": "appmixer.utils.test.AfterAll",
+            "x": 2288,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "a7b28363-f734-43e1-a87e-825f4c72a9dc": [
+                        "out"
+                    ],
+                    "e84a7173-c52d-4337-b743-0d52c9a45f69": [
+                        "out"
+                    ],
+                    "b30eee03-6689-4849-9b88-31ab18395f4e": [
+                        "out"
+                    ],
+                    "e43f746e-769a-4626-925e-da5281ffd4fe": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {
+                    "timeout": 180
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "28054be2-e0d4-4675-9993-a0d3d2ac7925": {
+            "type": "appmixer.dropbox.files.DeleteFileOrFolder",
+            "x": 2496,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "89bff654-94f3-4e69-9e0f-700d73a013e6": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "89bff654-94f3-4e69-9e0f-700d73a013e6": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "path": "{{{e4dc616e-e43b-4bde-90eb-d7405e921092}}}"
+                                },
+                                "modifiers": {
+                                    "path": {
+                                        "e4dc616e-e43b-4bde-90eb-d7405e921092": {
+                                            "functions": [],
+                                            "variable": "$.b4d86ce5-1fa7-4f72-a4e5-714eb88de2db.out.path_lower"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "d86775bf-c7f3-46b2-8bb9-5da19658861c": {
+            "type": "appmixer.dropbox.files.DeleteFileOrFolder",
+            "x": 2704,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "28054be2-e0d4-4675-9993-a0d3d2ac7925": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "transform": {
+                    "in": {
+                        "28054be2-e0d4-4675-9993-a0d3d2ac7925": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "path": "{{{0a772523-2b38-431d-b90b-9f49d3081ff4}}}"
+                                },
+                                "modifiers": {
+                                    "path": {
+                                        "0a772523-2b38-431d-b90b-9f49d3081ff4": {
+                                            "functions": [],
+                                            "variable": "$.0f37413e-4774-4f36-91e3-3573ac2394d6.out.folderPath"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        },
+        "922cb3fd-4534-47e2-96ca-6bd173ee234a": {
+            "type": "appmixer.utils.test.ProcessE2EResults",
+            "x": 2912,
+            "y": 320,
+            "version": "1.0.0",
+            "source": {
+                "in": {
+                    "d86775bf-c7f3-46b2-8bb9-5da19658861c": [
+                        "out"
+                    ]
+                }
+            },
+            "config": {
+                "properties": {},
+                "transform": {
+                    "in": {
+                        "d86775bf-c7f3-46b2-8bb9-5da19658861c": {
+                            "out": {
+                                "type": "json2new",
+                                "lambda": {
+                                    "recipients": "test@appmixer.ai",
+                                    "testCase": "E2E Dropbox - Folder And Text File CRUD",
+                                    "result": "{{{d02abab0-b942-49ef-92ba-a390d96d4cbc}}}"
+                                },
+                                "modifiers": {
+                                    "recipients": {},
+                                    "testCase": {},
+                                    "result": {
+                                        "d02abab0-b942-49ef-92ba-a390d96d4cbc": {
+                                            "functions": [],
+                                            "variable": "$.89bff654-94f3-4e69-9e0f-700d73a013e6.out"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "errorHandling": {
+                "autoRetry": false,
+                "onError": "stopFlow"
+            }
+        }
+    }
+}
