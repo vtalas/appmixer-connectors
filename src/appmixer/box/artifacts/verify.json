@@ -1,0 +1,32 @@
+{
+    "fixtures": {
+        "fileId": {
+            "from": "FindFilesOrFolders",
+            "inputs": {
+                "folderId": "0",
+                "type": "file"
+            },
+            "path": "id"
+        }
+    },
+    "read": [
+        {
+            "component": "FindFilesOrFolders",
+            "inputs": {
+                "folderId": "0"
+            }
+        },
+        {
+            "component": "GetFolder",
+            "inputs": {
+                "folderId": "0"
+            }
+        },
+        {
+            "component": "GetFile",
+            "inputs": {
+                "fileId": "{fileId}"
+            }
+        }
+    ]
+}
