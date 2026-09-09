@@ -2,7 +2,7 @@
     "name": "E2E Dropbox - Folder And Text File CRUD",
     "description": "Creates a folder and a text file in it, reads the file metadata back, renames the file, then deletes both. Covers CreateFolder, CreateTextFile, GetFileMetadata, RenameFile and DeleteFileOrFolder.",
     "flow": {
-        "f9bc0fca-ecc2-4e47-a5a8-e4933b1d9431": {
+        "7f02c77e-240d-49a4-aa2b-00b3ec6b826a": {
             "type": "appmixer.utils.controls.OnStart",
             "x": 208,
             "y": 320,
@@ -14,14 +14,14 @@
                 "onError": "stopFlow"
             }
         },
-        "0f37413e-4774-4f36-91e3-3573ac2394d6": {
+        "b06fec51-d8fe-4723-b734-e2bf504b0818": {
             "type": "appmixer.utils.controls.SetVariable",
             "x": 416,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "f9bc0fca-ecc2-4e47-a5a8-e4933b1d9431": [
+                    "7f02c77e-240d-49a4-aa2b-00b3ec6b826a": [
                         "out"
                     ]
                 }
@@ -29,7 +29,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "f9bc0fca-ecc2-4e47-a5a8-e4933b1d9431": {
+                        "7f02c77e-240d-49a4-aa2b-00b3ec6b826a": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
@@ -37,7 +37,7 @@
                                         "ADD": [
                                             {
                                                 "name": "folderPath",
-                                                "text": "/E2ECrud{{{c4b642e7-0db7-4fb7-a015-61cefbe1e6db}}}",
+                                                "text": "/E2ECrud{{{f5246cd0-1d3c-435a-9e80-5fc05244e428}}}",
                                                 "type": "text"
                                             }
                                         ]
@@ -45,7 +45,7 @@
                                 },
                                 "modifiers": {
                                     "variables": {
-                                        "c4b642e7-0db7-4fb7-a015-61cefbe1e6db": {
+                                        "f5246cd0-1d3c-435a-9e80-5fc05244e428": {
                                             "functions": [
                                                 {
                                                     "name": "g_random"
@@ -64,14 +64,14 @@
                 "onError": "stopFlow"
             }
         },
-        "76140098-03b3-4239-b841-0eed18fd7ce7": {
+        "6a4a729c-d4bc-486a-8ce8-c4f25657dcba": {
             "type": "appmixer.dropbox.files.CreateFolder",
             "x": 624,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "folder": {
-                    "0f37413e-4774-4f36-91e3-3573ac2394d6": [
+                    "b06fec51-d8fe-4723-b734-e2bf504b0818": [
                         "out"
                     ]
                 }
@@ -79,18 +79,18 @@
             "config": {
                 "transform": {
                     "folder": {
-                        "0f37413e-4774-4f36-91e3-3573ac2394d6": {
+                        "b06fec51-d8fe-4723-b734-e2bf504b0818": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
-                                    "path": "{{{22928722-5459-46ed-a538-64a3c163b954}}}",
+                                    "path": "{{{93ed9dc1-08e6-4686-aed8-eabaaa9e012b}}}",
                                     "autorename": false
                                 },
                                 "modifiers": {
                                     "path": {
-                                        "22928722-5459-46ed-a538-64a3c163b954": {
+                                        "93ed9dc1-08e6-4686-aed8-eabaaa9e012b": {
                                             "functions": [],
-                                            "variable": "$.0f37413e-4774-4f36-91e3-3573ac2394d6.out.folderPath"
+                                            "variable": "$.b06fec51-d8fe-4723-b734-e2bf504b0818.out.folderPath"
                                         }
                                     }
                                 }
@@ -104,14 +104,14 @@
                 "onError": "stopFlow"
             }
         },
-        "a7b28363-f734-43e1-a87e-825f4c72a9dc": {
+        "ad877934-d3c6-4bf8-bd05-b241fb824cd0": {
             "type": "appmixer.utils.test.Assert",
             "x": 832,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "76140098-03b3-4239-b841-0eed18fd7ce7": [
+                    "6a4a729c-d4bc-486a-8ce8-c4f25657dcba": [
                         "newFolder"
                     ]
                 }
@@ -119,7 +119,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "76140098-03b3-4239-b841-0eed18fd7ce7": {
+                        "6a4a729c-d4bc-486a-8ce8-c4f25657dcba": {
                             "newFolder": {
                                 "type": "json2new",
                                 "lambda": {
@@ -127,16 +127,16 @@
                                         "AND": [
                                             {
                                                 "assertion": "notEmpty",
-                                                "field": "{{{016da912-ab93-4b13-bba6-2969fb760091}}}"
+                                                "field": "{{{4abf325f-f69f-436b-a7cd-cbc8c6daec15}}}"
                                             }
                                         ]
                                     }
                                 },
                                 "modifiers": {
                                     "expression": {
-                                        "016da912-ab93-4b13-bba6-2969fb760091": {
+                                        "4abf325f-f69f-436b-a7cd-cbc8c6daec15": {
                                             "functions": [],
-                                            "variable": "$.76140098-03b3-4239-b841-0eed18fd7ce7.newFolder.id"
+                                            "variable": "$.6a4a729c-d4bc-486a-8ce8-c4f25657dcba.newFolder.id"
                                         }
                                     }
                                 }
@@ -150,14 +150,14 @@
                 "onError": "stopFlow"
             }
         },
-        "1f5539bf-cfc5-4a51-b083-969b59cdb186": {
+        "672678b6-8825-4b3f-a76f-e5826b5e2206": {
             "type": "appmixer.dropbox.files.CreateTextFile",
             "x": 1040,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "file": {
-                    "a7b28363-f734-43e1-a87e-825f4c72a9dc": [
+                    "ad877934-d3c6-4bf8-bd05-b241fb824cd0": [
                         "out"
                     ]
                 }
@@ -165,19 +165,19 @@
             "config": {
                 "transform": {
                     "file": {
-                        "a7b28363-f734-43e1-a87e-825f4c72a9dc": {
+                        "ad877934-d3c6-4bf8-bd05-b241fb824cd0": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
-                                    "path": "{{{4f3c8293-9290-441b-b1a8-3cb1015771b8}}}/note.txt",
+                                    "path": "{{{64acd3bd-1349-4c9f-830f-6850497d572a}}}/note.txt",
                                     "autorename": false,
                                     "text": "E2E test content."
                                 },
                                 "modifiers": {
                                     "path": {
-                                        "4f3c8293-9290-441b-b1a8-3cb1015771b8": {
+                                        "64acd3bd-1349-4c9f-830f-6850497d572a": {
                                             "functions": [],
-                                            "variable": "$.0f37413e-4774-4f36-91e3-3573ac2394d6.out.folderPath"
+                                            "variable": "$.b06fec51-d8fe-4723-b734-e2bf504b0818.out.folderPath"
                                         }
                                     }
                                 }
@@ -191,14 +191,14 @@
                 "onError": "stopFlow"
             }
         },
-        "e84a7173-c52d-4337-b743-0d52c9a45f69": {
+        "f81ec5a5-9fbd-4334-98a5-9c635aa05f6c": {
             "type": "appmixer.utils.test.Assert",
             "x": 1248,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "1f5539bf-cfc5-4a51-b083-969b59cdb186": [
+                    "672678b6-8825-4b3f-a76f-e5826b5e2206": [
                         "newTextFile"
                     ]
                 }
@@ -206,7 +206,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "1f5539bf-cfc5-4a51-b083-969b59cdb186": {
+                        "672678b6-8825-4b3f-a76f-e5826b5e2206": {
                             "newTextFile": {
                                 "type": "json2new",
                                 "lambda": {
@@ -214,16 +214,16 @@
                                         "AND": [
                                             {
                                                 "assertion": "notEmpty",
-                                                "field": "{{{81e83024-38e5-4cd7-bc22-f53c71db85c6}}}"
+                                                "field": "{{{58d12414-9bed-4fda-9f0c-5fca5a745d14}}}"
                                             }
                                         ]
                                     }
                                 },
                                 "modifiers": {
                                     "expression": {
-                                        "81e83024-38e5-4cd7-bc22-f53c71db85c6": {
+                                        "58d12414-9bed-4fda-9f0c-5fca5a745d14": {
                                             "functions": [],
-                                            "variable": "$.1f5539bf-cfc5-4a51-b083-969b59cdb186.newTextFile.id"
+                                            "variable": "$.672678b6-8825-4b3f-a76f-e5826b5e2206.newTextFile.id"
                                         }
                                     }
                                 }
@@ -237,14 +237,14 @@
                 "onError": "stopFlow"
             }
         },
-        "8a78c67d-77ab-4634-9cdc-7ec15dc52d40": {
+        "505d0ece-2a06-43a4-8204-940ecd1f9bef": {
             "type": "appmixer.dropbox.files.GetFileMetadata",
             "x": 1456,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "e84a7173-c52d-4337-b743-0d52c9a45f69": [
+                    "f81ec5a5-9fbd-4334-98a5-9c635aa05f6c": [
                         "out"
                     ]
                 }
@@ -252,17 +252,17 @@
             "config": {
                 "transform": {
                     "in": {
-                        "e84a7173-c52d-4337-b743-0d52c9a45f69": {
+                        "f81ec5a5-9fbd-4334-98a5-9c635aa05f6c": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
-                                    "path": "{{{40db571a-e9a0-4c91-bcc8-7045c8a3bfdd}}}"
+                                    "path": "{{{f962e900-7dc3-45da-a6a5-7d58c7c2b48f}}}"
                                 },
                                 "modifiers": {
                                     "path": {
-                                        "40db571a-e9a0-4c91-bcc8-7045c8a3bfdd": {
+                                        "f962e900-7dc3-45da-a6a5-7d58c7c2b48f": {
                                             "functions": [],
-                                            "variable": "$.1f5539bf-cfc5-4a51-b083-969b59cdb186.newTextFile.path_lower"
+                                            "variable": "$.672678b6-8825-4b3f-a76f-e5826b5e2206.newTextFile.path_lower"
                                         }
                                     }
                                 }
@@ -276,14 +276,14 @@
                 "onError": "stopFlow"
             }
         },
-        "b30eee03-6689-4849-9b88-31ab18395f4e": {
+        "fc8ace51-3987-4a5f-a140-17b7e91926e0": {
             "type": "appmixer.utils.test.Assert",
             "x": 1664,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "8a78c67d-77ab-4634-9cdc-7ec15dc52d40": [
+                    "505d0ece-2a06-43a4-8204-940ecd1f9bef": [
                         "out"
                     ]
                 }
@@ -291,7 +291,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "8a78c67d-77ab-4634-9cdc-7ec15dc52d40": {
+                        "505d0ece-2a06-43a4-8204-940ecd1f9bef": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
@@ -299,16 +299,16 @@
                                         "AND": [
                                             {
                                                 "assertion": "notEmpty",
-                                                "field": "{{{09802fc1-401a-4637-a124-4f3537b9c546}}}"
+                                                "field": "{{{34c9d974-e607-4cb6-99a0-cd71de651027}}}"
                                             }
                                         ]
                                     }
                                 },
                                 "modifiers": {
                                     "expression": {
-                                        "09802fc1-401a-4637-a124-4f3537b9c546": {
+                                        "34c9d974-e607-4cb6-99a0-cd71de651027": {
                                             "functions": [],
-                                            "variable": "$.8a78c67d-77ab-4634-9cdc-7ec15dc52d40.out.name"
+                                            "variable": "$.505d0ece-2a06-43a4-8204-940ecd1f9bef.out.name"
                                         }
                                     }
                                 }
@@ -322,14 +322,14 @@
                 "onError": "stopFlow"
             }
         },
-        "b4d86ce5-1fa7-4f72-a4e5-714eb88de2db": {
+        "7192a5b6-370e-4d4c-a93f-f86a50422cc8": {
             "type": "appmixer.dropbox.files.RenameFile",
             "x": 1872,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "file": {
-                    "b30eee03-6689-4849-9b88-31ab18395f4e": [
+                    "fc8ace51-3987-4a5f-a140-17b7e91926e0": [
                         "out"
                     ]
                 }
@@ -337,18 +337,18 @@
             "config": {
                 "transform": {
                     "file": {
-                        "b30eee03-6689-4849-9b88-31ab18395f4e": {
+                        "fc8ace51-3987-4a5f-a140-17b7e91926e0": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
-                                    "path": "{{{ac3e8aae-2f1e-41e1-84a5-c4b83c618ff6}}}",
+                                    "path": "{{{b2e282d0-1b84-40a4-aaa2-55fca86538b7}}}",
                                     "newName": "renamed.txt"
                                 },
                                 "modifiers": {
                                     "path": {
-                                        "ac3e8aae-2f1e-41e1-84a5-c4b83c618ff6": {
+                                        "b2e282d0-1b84-40a4-aaa2-55fca86538b7": {
                                             "functions": [],
-                                            "variable": "$.1f5539bf-cfc5-4a51-b083-969b59cdb186.newTextFile.path_lower"
+                                            "variable": "$.672678b6-8825-4b3f-a76f-e5826b5e2206.newTextFile.path_lower"
                                         }
                                     }
                                 }
@@ -362,14 +362,14 @@
                 "onError": "stopFlow"
             }
         },
-        "e43f746e-769a-4626-925e-da5281ffd4fe": {
+        "e0e11dec-62f5-4474-bcfe-e29f61ad425b": {
             "type": "appmixer.utils.test.Assert",
             "x": 2080,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "b4d86ce5-1fa7-4f72-a4e5-714eb88de2db": [
+                    "7192a5b6-370e-4d4c-a93f-f86a50422cc8": [
                         "out"
                     ]
                 }
@@ -377,7 +377,7 @@
             "config": {
                 "transform": {
                     "in": {
-                        "b4d86ce5-1fa7-4f72-a4e5-714eb88de2db": {
+                        "7192a5b6-370e-4d4c-a93f-f86a50422cc8": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
@@ -385,16 +385,16 @@
                                         "AND": [
                                             {
                                                 "assertion": "notEmpty",
-                                                "field": "{{{a0295a0e-49ff-457b-839d-d97d66c2af47}}}"
+                                                "field": "{{{6251aa01-ac6a-4d01-a94b-10350d407ed8}}}"
                                             }
                                         ]
                                     }
                                 },
                                 "modifiers": {
                                     "expression": {
-                                        "a0295a0e-49ff-457b-839d-d97d66c2af47": {
+                                        "6251aa01-ac6a-4d01-a94b-10350d407ed8": {
                                             "functions": [],
-                                            "variable": "$.b4d86ce5-1fa7-4f72-a4e5-714eb88de2db.out.name"
+                                            "variable": "$.7192a5b6-370e-4d4c-a93f-f86a50422cc8.out.name"
                                         }
                                     }
                                 }
@@ -408,23 +408,23 @@
                 "onError": "stopFlow"
             }
         },
-        "89bff654-94f3-4e69-9e0f-700d73a013e6": {
+        "0d6002a5-2493-40e1-8e3a-24cfd73abb89": {
             "type": "appmixer.utils.test.AfterAll",
             "x": 2288,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "a7b28363-f734-43e1-a87e-825f4c72a9dc": [
+                    "ad877934-d3c6-4bf8-bd05-b241fb824cd0": [
                         "out"
                     ],
-                    "e84a7173-c52d-4337-b743-0d52c9a45f69": [
+                    "f81ec5a5-9fbd-4334-98a5-9c635aa05f6c": [
                         "out"
                     ],
-                    "b30eee03-6689-4849-9b88-31ab18395f4e": [
+                    "fc8ace51-3987-4a5f-a140-17b7e91926e0": [
                         "out"
                     ],
-                    "e43f746e-769a-4626-925e-da5281ffd4fe": [
+                    "e0e11dec-62f5-4474-bcfe-e29f61ad425b": [
                         "out"
                     ]
                 }
@@ -439,14 +439,14 @@
                 "onError": "stopFlow"
             }
         },
-        "28054be2-e0d4-4675-9993-a0d3d2ac7925": {
+        "0b596dac-45bb-4353-aae9-fab7b3820bae": {
             "type": "appmixer.dropbox.files.DeleteFileOrFolder",
             "x": 2496,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "89bff654-94f3-4e69-9e0f-700d73a013e6": [
+                    "0d6002a5-2493-40e1-8e3a-24cfd73abb89": [
                         "out"
                     ]
                 }
@@ -454,17 +454,17 @@
             "config": {
                 "transform": {
                     "in": {
-                        "89bff654-94f3-4e69-9e0f-700d73a013e6": {
+                        "0d6002a5-2493-40e1-8e3a-24cfd73abb89": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
-                                    "path": "{{{e4dc616e-e43b-4bde-90eb-d7405e921092}}}"
+                                    "path": "{{{a55bcc28-4929-4a0c-8c88-f4cad9dbcd4d}}}"
                                 },
                                 "modifiers": {
                                     "path": {
-                                        "e4dc616e-e43b-4bde-90eb-d7405e921092": {
+                                        "a55bcc28-4929-4a0c-8c88-f4cad9dbcd4d": {
                                             "functions": [],
-                                            "variable": "$.b4d86ce5-1fa7-4f72-a4e5-714eb88de2db.out.path_lower"
+                                            "variable": "$.7192a5b6-370e-4d4c-a93f-f86a50422cc8.out.path_lower"
                                         }
                                     }
                                 }
@@ -478,14 +478,14 @@
                 "onError": "stopFlow"
             }
         },
-        "d86775bf-c7f3-46b2-8bb9-5da19658861c": {
+        "de41ca50-418d-4eb2-bf2d-77234151553b": {
             "type": "appmixer.dropbox.files.DeleteFileOrFolder",
             "x": 2704,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "28054be2-e0d4-4675-9993-a0d3d2ac7925": [
+                    "0b596dac-45bb-4353-aae9-fab7b3820bae": [
                         "out"
                     ]
                 }
@@ -493,17 +493,17 @@
             "config": {
                 "transform": {
                     "in": {
-                        "28054be2-e0d4-4675-9993-a0d3d2ac7925": {
+                        "0b596dac-45bb-4353-aae9-fab7b3820bae": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
-                                    "path": "{{{0a772523-2b38-431d-b90b-9f49d3081ff4}}}"
+                                    "path": "{{{35b95924-ddba-49b7-b651-05e4b01274e8}}}"
                                 },
                                 "modifiers": {
                                     "path": {
-                                        "0a772523-2b38-431d-b90b-9f49d3081ff4": {
+                                        "35b95924-ddba-49b7-b651-05e4b01274e8": {
                                             "functions": [],
-                                            "variable": "$.0f37413e-4774-4f36-91e3-3573ac2394d6.out.folderPath"
+                                            "variable": "$.b06fec51-d8fe-4723-b734-e2bf504b0818.out.folderPath"
                                         }
                                     }
                                 }
@@ -517,14 +517,14 @@
                 "onError": "stopFlow"
             }
         },
-        "922cb3fd-4534-47e2-96ca-6bd173ee234a": {
+        "43102bc0-a501-4fb8-9f93-76d94e4c09cf": {
             "type": "appmixer.utils.test.ProcessE2EResults",
             "x": 2912,
             "y": 320,
             "version": "1.0.0",
             "source": {
                 "in": {
-                    "d86775bf-c7f3-46b2-8bb9-5da19658861c": [
+                    "de41ca50-418d-4eb2-bf2d-77234151553b": [
                         "out"
                     ]
                 }
@@ -533,21 +533,21 @@
                 "properties": {},
                 "transform": {
                     "in": {
-                        "d86775bf-c7f3-46b2-8bb9-5da19658861c": {
+                        "de41ca50-418d-4eb2-bf2d-77234151553b": {
                             "out": {
                                 "type": "json2new",
                                 "lambda": {
                                     "recipients": "test@appmixer.ai",
                                     "testCase": "E2E Dropbox - Folder And Text File CRUD",
-                                    "result": "{{{d02abab0-b942-49ef-92ba-a390d96d4cbc}}}"
+                                    "result": "{{{b4a47adf-70eb-4f3b-8889-8755d2d324fa}}}"
                                 },
                                 "modifiers": {
                                     "recipients": {},
                                     "testCase": {},
                                     "result": {
-                                        "d02abab0-b942-49ef-92ba-a390d96d4cbc": {
+                                        "b4a47adf-70eb-4f3b-8889-8755d2d324fa": {
                                             "functions": [],
-                                            "variable": "$.89bff654-94f3-4e69-9e0f-700d73a013e6.out"
+                                            "variable": "$.0d6002a5-2493-40e1-8e3a-24cfd73abb89.out"
                                         }
                                     }
                                 }
