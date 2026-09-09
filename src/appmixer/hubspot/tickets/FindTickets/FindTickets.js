@@ -5,7 +5,15 @@ const { formatTicket, TICKET_SCHEMA } = require('../ticketsCommons');
 
 // https://developers.hubspot.com/docs/api/crm/tickets
 
+// Shape of one emitted item (`object` mode, and every entry of the array output).
+const ITEM_SCHEMA = {
+    type: 'object',
+    properties: TICKET_SCHEMA
+};
+
 module.exports = {
+
+    ITEM_SCHEMA,
 
     async receive(context) {
 
@@ -44,8 +52,8 @@ module.exports = {
 const getOutputPortOptions = (context, outputType) => {
 
     if (outputType === 'object') {
-        const options = Object.keys(TICKET_SCHEMA).map(field => {
-            const { title: label, ...schema } = TICKET_SCHEMA[field];
+        const options = Object.keys(ITEM_SCHEMA.properties).map(field => {
+            const { title: label, ...schema } = ITEM_SCHEMA.properties[field];
             return { label, value: field, schema };
         });
         return context.sendJson(options, 'out');
@@ -55,7 +63,7 @@ const getOutputPortOptions = (context, outputType) => {
         return context.sendJson([{
             label: 'Array',
             value: 'array',
-            schema: { type: 'array', items: { type: 'object', properties: TICKET_SCHEMA } }
+            schema: { type: 'array', items: ITEM_SCHEMA }
         }], 'out');
     }
 

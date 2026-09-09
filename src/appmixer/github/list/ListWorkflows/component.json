@@ -128,7 +128,7 @@
         "inspector": {
             "inputs": {
                 "repositoryId": {
-                    "type": "select",
+                    "type": "text",
                     "group": "config",
                     "label": "Repository",
                     "index": 1,

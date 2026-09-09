@@ -3,22 +3,28 @@
 const commons = require('../../jira-commons');
 const lib = require('../../lib.outputPortOptions');
 
-const schema = {
-    'id': { 'type': 'string', 'title': 'Id' },
-    'created': { 'type': 'string', 'title': 'Created' },
-    'author': {
-        'type': 'object',
-        'title': 'Author',
-        'properties': {
-            'accountId': { 'type': 'string', 'title': 'Author.Account Id' },
-            'displayName': { 'type': 'string', 'title': 'Author.Display Name' },
-            'emailAddress': { 'type': 'string', 'title': 'Author.Email Address' }
-        }
-    },
-    'items': { 'type': 'array', 'title': 'Items' }
+// Shape of one emitted item (`object` mode, and every entry of the array output).
+const ITEM_SCHEMA = {
+    type: 'object',
+    properties: {
+        'id': { 'type': 'string', 'title': 'Id' },
+        'created': { 'type': 'string', 'title': 'Created' },
+        'author': {
+            'type': 'object',
+            'title': 'Author',
+            'properties': {
+                'accountId': { 'type': 'string', 'title': 'Author.Account Id' },
+                'displayName': { 'type': 'string', 'title': 'Author.Display Name' },
+                'emailAddress': { 'type': 'string', 'title': 'Author.Email Address' }
+            }
+        },
+        'items': { 'type': 'array', 'title': 'Items' }
+    }
 };
 
 module.exports = {
+
+    ITEM_SCHEMA,
 
     async receive(context) {
 
@@ -26,7 +32,7 @@ module.exports = {
         const { id, outputType } = context.messages.in.content;
 
         if (context.properties.generateOutputPortOptions) {
-            return lib.getOutputPortOptions(context, outputType, schema, {
+            return lib.getOutputPortOptions(context, outputType, ITEM_SCHEMA.properties, {
                 label: 'Changelog',
                 value: 'changelog'
             });

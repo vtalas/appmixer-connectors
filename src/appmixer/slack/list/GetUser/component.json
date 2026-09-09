@@ -27,7 +27,7 @@
             "inspector": {
                 "inputs": {
                     "userId": {
-                        "type": "select",
+                        "type": "text",
                         "label": "User",
                         "index": 1,
                         "source": {
@@ -96,22 +96,22 @@
                         "properties": {
                             "email": {
                                 "type": "string",
-                                "title": "Email",
+                                "title": "Profile.Email",
                                 "example": "jane@example.com"
                             },
                             "display_name": {
                                 "type": "string",
-                                "title": "Display Name",
+                                "title": "Profile.Display Name",
                                 "example": "Jane"
                             },
                             "phone": {
                                 "type": "string",
-                                "title": "Phone",
+                                "title": "Profile.Phone",
                                 "example": "+1 555 0100"
                             },
                             "image_512": {
                                 "type": "string",
-                                "title": "Avatar URL",
+                                "title": "Profile.Avatar URL",
                                 "example": "https://avatars.slack-edge.com/2020/jane_512.png"
                             }
                         }

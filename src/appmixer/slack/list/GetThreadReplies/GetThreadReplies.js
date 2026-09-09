@@ -6,16 +6,22 @@ const { WebClient } = require('@slack/web-api');
 
 const outputPortName = 'out';
 
-const schema = {
-    type:        { type: 'string', title: 'Type',                example: 'message' },
-    ts:          { type: 'string', title: 'Message ID (ts)',     example: '1609459200.000400' },
-    user:        { type: 'string', title: 'User ID',             example: 'U01234567' },
-    text:        { type: 'string', title: 'Text',                example: 'Thanks for the update!' },
-    thread_ts:   { type: 'string', title: 'Thread ID (ts)',      example: '1609459200.000400' },
-    reply_count: { type: 'number', title: 'Reply Count',         example: 3 }
+// Shape of one emitted item (`object` mode, and every entry of `records`).
+const ITEM_SCHEMA = {
+    type: 'object',
+    properties: {
+        type:        { type: 'string', title: 'Type',                example: 'message' },
+        ts:          { type: 'string', title: 'Message ID (ts)',     example: '1609459200.000400' },
+        user:        { type: 'string', title: 'User ID',             example: 'U01234567' },
+        text:        { type: 'string', title: 'Text',                example: 'Thanks for the update!' },
+        thread_ts:   { type: 'string', title: 'Thread ID (ts)',      example: '1609459200.000400' },
+        reply_count: { type: 'number', title: 'Reply Count',         example: 3 }
+    }
 };
 
 module.exports = {
+
+    ITEM_SCHEMA,
 
     /**
      * @link https://api.slack.com/methods/conversations.replies
@@ -56,7 +62,7 @@ module.exports = {
     getOutputPortOptions(context, outputType) {
 
         if (outputType === 'object' || outputType === 'first') {
-            const options = Object.entries(schema).map(([field, def]) => {
+            const options = Object.entries(ITEM_SCHEMA.properties).map(([field, def]) => {
                 const { title: label, ...rest } = def;
                 return { label, value: field, schema: rest };
             });
@@ -69,7 +75,7 @@ module.exports = {
                 value: 'records',
                 schema: {
                     type: 'array',
-                    items: { type: 'object', properties: schema }
+                    items: ITEM_SCHEMA
                 }
             }], outputPortName);
         }
